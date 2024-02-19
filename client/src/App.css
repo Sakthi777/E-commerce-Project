@@ -1,0 +1,11 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+body {
+  background-color: #f3f4f6;
+  margin: 0;
+  font-family: "Rubik", sans-serif;
+  height: 900px;
+  width: 100%;
+}
