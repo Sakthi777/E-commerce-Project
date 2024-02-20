@@ -1,0 +1,95 @@
+@import "~@fortawesome/fontawesome-free/css/fontawesome.css";
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;900&display=swap");
+
+* {
+	font-family: "Rubik", sans-serif;
+}
+
+.offers-section {
+	background-color: #f5f6f7;
+	position: relative;
+}
+
+.offer-cards {
+	position: absolute;
+	display: inline-block;
+	top: 40vh;
+	width: 100%;
+	height: 100%;
+}
+.offers-list {
+	width: 100vw;
+	height: auto;
+	display: inline-block;
+	justify-content: center;
+	align-items: center;
+}
+.offer-card {
+	display: inline-block;
+	padding: 2%;
+	width: 18vw;
+	height: auto;
+}
+.offer-card img {
+	width: 100%;
+	height: 100%;
+	border-radius: 1rem;
+}
+.offers-banner {
+	background-color: #000000aa;
+}
+.offer-tag p {
+	justify-content: space-between;
+	align-items: center;
+	text-align: center;
+}
+.offer-tag a {
+	color: #009f7f;
+	font-weight: light;
+	background: none;
+}
+.offers-banner {
+	position: absolute;
+	display: flex;
+	background-image: linear-gradient(to right, #1197447a, #00317b7a);
+	width: 100vw;
+	height: 40vh;
+}
+.offers-banner img {
+	position: relative;
+	filter: blur(0.3px);
+	display: flex;
+	z-index: -1;
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+}
+.offer-banner-content {
+	width: 100%;
+	height: 80%;
+	position: absolute;
+	color: #ffffffff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.offer-banner-content h1 {
+	font-weight: lighter;
+}
+.banner-anchors {
+	width: 100%;
+	height: 100%;
+	color: #ffffff;
+	position: absolute;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+}
+.banner-anchors a:visited,
+a:link {
+	color: #ffffff;
+	text-decoration: none;
+}
