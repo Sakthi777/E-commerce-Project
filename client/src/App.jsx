@@ -14,8 +14,9 @@ import Dashboard from "./components/admin/dashboard";
 import Offers from "./pages/user/offers";
 
 import logo from "./assets/images/logo.png";
-import offersBanner from "./assets/images/offers-image/single-banner.jpg";
+import banner from "./assets/images/offers-image/single-banner.jpg";
 import offerImage from "./assets/images/offers-image/11.jpg";
+import MyWallet from "./pages/user/myWallet";
 
 function App() {
 	const categories = [
@@ -27,10 +28,17 @@ function App() {
 			group: "Groceries",
 		},
 	];
+
 	const offersData = {
-		bannerImage: offersBanner,
+		bannerImage: banner,
 		offerImage: offerImage,
+		offerTitle: "Diwali24",
 	};
+
+	const walletData = {
+		bannerImage: banner,
+	};
+
 	return (
 		<div className="App">
 			<Router>
@@ -43,6 +51,7 @@ function App() {
 					<Route path="/login" element={<Login />} />
 					<Route path="/changePassword" element={<ChangePassword />} />
 					<Route path="/offers" element={<Offers offerData={offersData}></Offers>}></Route>
+					<Route path="/myWallet" element={<MyWallet walletData={walletData}></MyWallet>}></Route>
 					<Route path="/Contact" element={<Contact />} />
 
 					{/* adminpanel */}
