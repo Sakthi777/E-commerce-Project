@@ -1,6 +1,6 @@
 .product-description-card {
   position: fixed;
-  top: 60%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
@@ -47,9 +47,6 @@
   z-index: 998;
 }
 
-/*---------------------------------------------------------------------------------*/
-/* productDescriptionCard.css */
-
 .product-description-card {
   display: flex;
   justify-content: space-between;
@@ -61,7 +58,7 @@
   margin-right: 20px;
 }
 
-img {
+.description-image img {
   width: 100%;
   border-radius: 8px;
   cursor: pointer; /* Add cursor pointer for the clickable images */
@@ -91,13 +88,10 @@ img {
   width: 80px;
   text-align: center;
 }
-
-/* Additional styles for Carousel */
-.carousel-root {
-  max-width: 300px; /* Adjust the max-width based on your design */
-  margin: 0 auto;
-}
-
-.carousel .thumbs-wrapper {
-  display: none; /* Hide the thumbnail navigation */
+@media (max-width: 600px) {
+  .product-description-card {
+    display: flex;
+    flex-direction: column;
+    z-index: 999;
+  }
 }
