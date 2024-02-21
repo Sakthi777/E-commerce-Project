@@ -8,27 +8,42 @@ const products = [
   {
     id: 1,
     imgSrc: product1Image,
-    imageSlider: [product1Image, product2Image, product3Image, product4Image],
+    imageSlider: [
+      product1Image,
+      product2Image,
+      product3Image,
+      product4Image,
+      product5Image,
+    ],
     rating: 4,
     productName: "Product 1",
     oldPrice: 19.99,
     newPrice: 19.99,
+    discountPercentage: 15,
     setSale: true,
     setNew: false,
     productDetails:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit non tempora magni repudiandae sint suscipit tempore quis maxime explicabo veniam eos reprehenderit fuga",
   },
+
   {
     id: 2,
     imgSrc: product2Image,
-    imageSlider: [product1Image, product2Image, product3Image, product4Image],
+    imageSlider: [
+      product1Image,
+      product2Image,
+      product3Image,
+      product4Image,
+      product5Image,
+    ],
     rating: 3,
     productName: "Product 1",
     oldPrice: 19.99,
     newPrice: 19.99,
+    discountPercentage: 15,
     setSale: true,
     setNew: true,
-    productDescription:
+    pproductDetails:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit non tempora magni repudiandae sint suscipit tempore quis maxime explicabo veniam eos reprehenderit fuga",
   },
   {
@@ -39,9 +54,10 @@ const products = [
     productName: "Product 1",
     oldPrice: 19.99,
     newPrice: 19.99,
+    discountPercentage: 15,
     setSale: true,
     setNew: false,
-    productDescription:
+    productDetails:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit non tempora magni repudiandae sint suscipit tempore quis maxime explicabo veniam eos reprehenderit fuga",
   },
   {
@@ -52,9 +68,10 @@ const products = [
     productName: "Product 1",
     oldPrice: 19.99,
     newPrice: 19.99,
+    discountPercentage: 15,
     setSale: true,
     setNew: false,
-    productDescription:
+    productDetails:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit non tempora magni repudiandae sint suscipit tempore quis maxime explicabo veniam eos reprehenderit fuga",
   },
   {
@@ -67,7 +84,8 @@ const products = [
     newPrice: 19.99,
     setSale: true,
     setNew: true,
-    productDescription:
+    discountPercentage: 15,
+    productDetails:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit non tempora magni repudiandae sint suscipit tempore quis maxime explicabo veniam eos reprehenderit fuga",
   },
 ];

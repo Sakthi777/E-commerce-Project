@@ -42,7 +42,9 @@
   color: #ffffff; /* Liked text color */
 }
 
-.sale-label {
+.sale-label,
+.discount-label {
+  color: #ffffff;
   text-align: left;
   display: block;
   background-color: #e86121;
@@ -52,6 +54,10 @@
   border-radius: 3px;
   margin-bottom: 4px;
   font-size: 14px;
+}
+.discount-label {
+  background-color: red;
+  margin-top: 30px;
 }
 .new-label {
   text-align: left;

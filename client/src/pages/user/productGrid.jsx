@@ -17,6 +17,7 @@ const ProductGrid = ({ products }) => {
             newPrice={product.newPrice}
             setNew={product.setNew}
             setSale={product.setSale}
+            discountPercentage={product.discountPercentage}
             productDetails={product.productDetails}
           />
         ))}

@@ -17,6 +17,7 @@ const ProductCard = ({
   newPrice,
   setSale,
   setNew,
+  discountPercentage,
   productDetails,
 }) => {
   const [liked, setLiked] = useState(false);
@@ -40,7 +41,6 @@ const ProductCard = ({
       body.style.overflow = "auto";
     }
 
-    // Cleanup effect on component unmount
     return () => {
       body.style.overflow = "auto";
     };
@@ -72,8 +72,8 @@ const ProductCard = ({
       </div>
       <div className="product-name">{productName}</div>
       <div className="product-price">
-        <span className="oldPrice">${oldPrice}</span>
-        <span className="newPrice">${newPrice}/piece</span>
+        <span className="oldPrice">{oldPrice}</span>
+        <span className="newPrice">{newPrice}/piece</span>
       </div>
       <div className="add-to-cart-icon">
         <FaShoppingCart />
@@ -91,6 +91,7 @@ const ProductCard = ({
             newPrice: newPrice,
             setSale: setSale,
             setNew: setNew,
+            discountPercentage: discountPercentage,
             productDetails: productDetails,
           }}
           onClose={toggleDescription}
@@ -109,6 +110,7 @@ ProductCard.propTypes = {
   newPrice: PropTypes.number.isRequired,
   setSale: PropTypes.bool.isRequired,
   setNew: PropTypes.bool.isRequired,
+  discountPercentage: PropTypes.number.isRequired,
   productDetails: PropTypes.string.isRequired,
 };
 
