@@ -19,48 +19,63 @@ import offerImage from "./assets/images/offers-image/11.jpg";
 import MyWallet from "./pages/user/myWallet";
 
 function App() {
-	const categories = [
-		{
-			id: 1,
-			name: "Fruits",
-			details: "",
-			icon: logo,
-			group: "Groceries",
-		},
-	];
+  const categories = [
+    {
+      id: 1,
+      name: "Fruits",
+      details: "",
+      icon: logo,
+      group: "Groceries",
+    },
+  ];
 
-	const offersData = {
-		bannerImage: banner,
-		offerImage: offerImage,
-		offerTitle: "Diwali24",
-	};
+  const offersData = {
+    bannerImage: banner,
+    offerImage: offerImage,
+    offerTitle: "Diwali24",
+  };
 
-	const walletData = {
-		bannerImage: banner,
-	};
+  const walletData = {
+    bannerImage: banner,
+  };
 
-	return (
-		<div className="App">
-			<Router>
-				<Routes>
-					{/* userpanel */}
-					<Route path="/" element={<HeaderPage />} />
-					<Route path="/product" element={<ProductGrid products={products} />} />
-					<Route path="/register" element={<RegisterPage />} />
-					<Route path="/resetPassword" element={<ResetPassword />} />
-					<Route path="/login" element={<Login />} />
-					<Route path="/changePassword" element={<ChangePassword />} />
-					<Route path="/offers" element={<Offers offerData={offersData}></Offers>}></Route>
-					<Route path="/myWallet" element={<MyWallet walletData={walletData}></MyWallet>}></Route>
-					<Route path="/Contact" element={<Contact />} />
+  return (
+    <div className="App">
+      <Router>
+        <Routes>
+          {/* userpanel */}
+          <Route path="/" element={<ProductGrid products={products} />} />
+          <Route
+            path="/product"
+            element={<ProductGrid products={products} />}
+          />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/resetPassword" element={<ResetPassword />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/changePassword" element={<ChangePassword />} />
+          <Route
+            path="/offers"
+            element={<Offers offerData={offersData}></Offers>}
+          ></Route>
+          <Route
+            path="/myWallet"
+            element={<MyWallet walletData={walletData}></MyWallet>}
+          ></Route>
+          <Route path="/Contact" element={<Contact />} />
 
-					{/* adminpanel */}
-					<Route path="/addcategory" element={<AddCategory></AddCategory>}></Route>
-					<Route path="/dashboard" element={<Dashboard categories={categories}></Dashboard>}></Route>
-				</Routes>
-			</Router>
-		</div>
-	);
+          {/* adminpanel */}
+          <Route
+            path="/addcategory"
+            element={<AddCategory></AddCategory>}
+          ></Route>
+          <Route
+            path="/dashboard"
+            element={<Dashboard categories={categories}></Dashboard>}
+          ></Route>
+        </Routes>
+      </Router>
+    </div>
+  );
 }
 
 export default App;

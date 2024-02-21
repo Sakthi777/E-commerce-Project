@@ -1,5 +1,5 @@
 import Header from "../../components/user/Header";
-import Footer from "../../components/user/Footer";
+import Footer from "../../components/user/AuthenticFooter";
 import "../../styles/user/changePassword.css";
 import { Link } from "react-router-dom";
 const ChangePassword = () => {

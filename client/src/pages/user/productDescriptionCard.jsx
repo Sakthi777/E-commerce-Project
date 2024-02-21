@@ -61,7 +61,7 @@ const ProductDescriptionCard = ({ product, onClose }) => {
 
   return (
     <div className="overlay-1">
-      <div className="product-description-card">
+      <div className="product-description-card " style={{ zIndex: 3 }}>
         <div className="description-left">
           <div className="description-image">
             <img src={mainImage} alt={productName} />
@@ -101,11 +101,11 @@ const ProductDescriptionCard = ({ product, onClose }) => {
             <p>{productDetails}</p>
           </div>
           <div className="des-add-to-cart-icon">
-            <FaShoppingCart className="card" />
+            <FaShoppingCart size="2em" className="card" />
             <span>ADD TO CARD</span>
           </div>
           <div className="des-add-to-like-icon">
-            <AiFillHeart className="like" />
+            <AiFillHeart size="2em" className="like" />
             <span>ADD TO WISH</span>
           </div>
 

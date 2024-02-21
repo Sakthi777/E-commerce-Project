@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <div className="footer">
+    <div className="Authenticfooter">
       <p>
         Greeny | © Copyright by <span>Mironcoder</span>
       </p>

@@ -21,7 +21,6 @@
   z-index: 999;
   display: flex;
   flex-direction: row;
-  z-index: 999;
   justify-content: space-between;
   overflow: auto;
 }
@@ -99,6 +98,7 @@
   text-align: justify;
   padding-bottom: 30px;
 }
+
 .des-add-to-cart-icon {
   display: flex;
   justify-content: center;
@@ -133,9 +133,11 @@
 .des-add-to-like-icon .like {
   color: #555;
   padding-right: 10px;
-  font-size: 20px;
-  text-align: center;
-  justify-content: center;
+}
+
+.des-add-to-like-icon span,
+.des-add-to-cart-icon span {
+  padding-top: 7px;
 }
 .close-button {
   margin-top: 10px;
@@ -167,9 +169,13 @@
 }
 .slick-slide {
   border: 2px solid transparent; /* Set initial border color to transparent */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Set initial box shadow */
   box-sizing: border-box;
+  border-radius: 5px;
 }
-
+.item {
+  border-color: red;
+}
 .description-thumbnails img {
   width: 100%;
   height: auto;
