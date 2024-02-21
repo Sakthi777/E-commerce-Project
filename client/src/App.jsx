@@ -7,7 +7,11 @@ import ChangePassword from "./pages/user/changePasswordPage";
 import HeaderPage from "./components/user/HeaderPage";
 import ProductGrid from "./pages/user/productGrid";
 import products from "./pages/user/productList";
-import Contact from "./pages/user/Contact";
+
+import NotFound from "./pages/user/NotFound";
+import Privacy from "./pages/user/Privacy";
+import Footer from "./pages/user/Footer";
+import FAQ from "./pages/user/FAQ";
 
 import AddCategory from "./components/admin/addCategory";
 import Dashboard from "./components/admin/dashboard";
@@ -17,6 +21,10 @@ import logo from "./assets/images/logo.png";
 import banner from "./assets/images/offers-image/single-banner.jpg";
 import offerImage from "./assets/images/offers-image/11.jpg";
 import MyWallet from "./pages/user/myWallet";
+import UserContact from "./pages/user/UserContact";
+
+
+
 
 function App() {
 	const categories = [
@@ -52,8 +60,15 @@ function App() {
 					<Route path="/changePassword" element={<ChangePassword />} />
 					<Route path="/offers" element={<Offers offerData={offersData}></Offers>}></Route>
 					<Route path="/myWallet" element={<MyWallet walletData={walletData}></MyWallet>}></Route>
-					<Route path="/Contact" element={<Contact />} />
-
+					
+					<Route path="/notfound" element={<NotFound/>} />
+					<Route path="/privacy" element = {<Privacy/>} />
+					<Route path="/footer" element={<Footer/>} />
+					<Route path="/faq" element={<FAQ/>} />
+					<Route path="us" element = {<UserContact/>} />
+					
+					
+					
 					{/* adminpanel */}
 					<Route path="/addcategory" element={<AddCategory></AddCategory>}></Route>
 					<Route path="/dashboard" element={<Dashboard categories={categories}></Dashboard>}></Route>

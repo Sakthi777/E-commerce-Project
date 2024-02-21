@@ -208,23 +208,23 @@ body{
         padding-top: 10px;
     }
   }
-
 /*Branch.css*/
-.address {
+.greeny-address {
     padding-top: 50px;
     width: 100%;
     position: relative;
     display: flex;
     justify-content: center;
+}
   
-    .branch {
+    .greeny-branch {
       position: relative;
       display: flex;
       flex-direction: row;
     }
-  }
   
-  .branch img {
+  
+  .greeny-branch img {
     padding-left: 40px;
     padding-right: 20px;
     width: 300px;
@@ -232,7 +232,7 @@ body{
     align-items: center;
   }
   
-  .branch img {
+  .greeny-branch img {
     display: flex;
     filter: brightness(50%);
     -webkit-filter: brightness(50%);
@@ -242,7 +242,7 @@ body{
     margin-left: -15px;
   }
   
-  .branch .text {
+  .greeny-branch .text {
     font-size: 50px;
     font-weight: 200px;
     color: white;
@@ -252,7 +252,7 @@ body{
     transform: translate(-50%, -50%);
   }
   
-  .overlay h3 {
+  .greeny-overlay h3 {
     color: white;
     font-size: 20px;
     position: absolute;
@@ -264,7 +264,7 @@ body{
     text-align: center;
   }
   
-  .text1 {
+  .greeny-text1 {
   
     color: white;
     font-size: 20px;
@@ -277,7 +277,7 @@ body{
     text-align: center;
   }
   
-  .coimbatore .overlay1 {
+  .coimbatore .greeny-overlay1 {
     color: #fff;
     position: absolute;
     bottom: 0;
@@ -287,7 +287,7 @@ body{
     width: 25%;
     height: 0;
     transition: .5s ease;
-    z-index: -1;
+    z-index: 2;
   }
   
   /* .coimbatore:hover .overlay1 {
@@ -342,27 +342,27 @@ body{
         width: 22.8%;
         height: 100%; 
       } */
-  .overlay1 .text1 {
+  .overlay1 .greeny-text1 {
     margin-top: 50px;
   }
   
   @media (max-width: 575px) {
-    .address .branch {
+    .greeny-address .greeny-branch {
       flex-direction: column;
       padding: 15px
     }
   
-    .branch .overlay {
+    .greeny-branch .greeny-overlay {
       width: 100%;
     }
-    .branch img {
+    .greeny-branch img {
       width: 100%;
       padding-right: 0;
       align-items: center;
       
     }
   
-    .overlay h3 {
+    .greeny-overlay h3 {
       position: relative;
       transform: translate(2%, -90px);
       justify-content: center;
