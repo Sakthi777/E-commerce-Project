@@ -1,3 +1,4 @@
+// FeaturedItems.js
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AiFillStar } from "react-icons/ai";
@@ -8,7 +9,7 @@ import "../../styles/user/productCard.css";
 import ProductDescriptionCard from "../../pages/user/productDescriptionCard";
 import "../../styles/user/productDescriptionCard.css";
 
-const ProductCard = ({
+const FeaturedItems = ({
   imgSrc,
   imageSlider,
   rating,
@@ -18,6 +19,7 @@ const ProductCard = ({
   setSale,
   setNew,
   discountPercentage,
+  featuredItem,
   productDetails,
 }) => {
   const [liked, setLiked] = useState(false);
@@ -47,37 +49,43 @@ const ProductCard = ({
   }, [showDescription]);
 
   return (
-    <div className="product-card">
-      <div
-        className={`productLike ${liked ? "liked" : ""}`}
-        onClick={toggleLike}
-      >
-        <AiFillHeart className="icon" />
-      </div>
+    <div className="featuredItem-card">
+      <div className="featureItem-card-left">
+        <div
+          className={`featureLike ${liked ? "liked" : ""}`}
+          onClick={toggleLike}
+        >
+          <AiFillHeart className="icon" />
+        </div>
+        <div className="label">
+          <span className="feature-label">Feature</span>
+        </div>
 
-      <span className={`sale-label ${setSale ? "visible" : "hidden"}`}>
-        Sale
-      </span>
-      <span className={`new-label ${setNew ? "visible" : "hidden"}`}>New</span>
-      <img src={imgSrc} alt={productName} className="product-img" />
-      <div className="viewIcon" onClick={toggleDescription}>
-        <FaEye />
+        <img src={imgSrc} alt={productName} className="feature-img" />
+        <div className="viewIcon" onClick={toggleDescription}>
+          <FaEye />
+        </div>
       </div>
-      <div class="product-line"></div>
-      <div className="product-rating">
-        {Array.from({ length: rating }, (_, index) => (
-          <AiFillStar key={index} />
-        ))}
-        <p>({rating})</p>
-      </div>
-      <div className="product-name">{productName}</div>
-      <div className="product-price">
-        <span className="oldPrice">{oldPrice}</span>
-        <span className="newPrice">{newPrice}/piece</span>
-      </div>
-      <div className="add-to-cart-icon">
-        <FaShoppingCart />
-        <span>Add</span>
+      <div class="feature-line"></div>
+      <div className="featureItem-card-right">
+        <div className="feature-name">{productName}</div>
+        <div className="feature-rating">
+          {Array.from({ length: rating }, (_, index) => (
+            <AiFillStar key={index} />
+          ))}
+          <p>({rating})</p>
+        </div>
+        <div className="feature-price">
+          <span className="oldPrice">{oldPrice}</span>
+          <span className="newPrice">{newPrice}/piece</span>
+        </div>
+        <div className="feature-des">{productDetails}</div>
+        <div className="add-to-cart-icon">
+          <FaShoppingCart />
+          <span>Add</span>
+        </div>
+
+        {/* Right content goes here */}
       </div>
 
       {showDescription && (
@@ -101,7 +109,7 @@ const ProductCard = ({
   );
 };
 
-ProductCard.propTypes = {
+FeaturedItems.propTypes = {
   imgSrc: PropTypes.string.isRequired,
   imageSlider: PropTypes.arrayOf(PropTypes.string).isRequired,
   rating: PropTypes.number.isRequired,
@@ -111,7 +119,8 @@ ProductCard.propTypes = {
   setSale: PropTypes.bool.isRequired,
   setNew: PropTypes.bool.isRequired,
   discountPercentage: PropTypes.number.isRequired,
+  featuredItem: PropTypes.bool.isRequired,
   productDetails: PropTypes.string.isRequired,
 };
 
-export default ProductCard;
+export default FeaturedItems;

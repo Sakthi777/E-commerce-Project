@@ -18,7 +18,7 @@
 .Register-card {
   background-color: white;
   width: 70%;
-  height: 470px;
+  height: 520px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -190,7 +190,7 @@
 .Register-card-bottom {
   background-color: white;
   width: 70%;
-  height: 40px;
+  height: 70px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -211,13 +211,13 @@
   color: #555555;
 }
 
-.footer {
+.Authenticfooterr {
   margin-bottom: 15px;
 }
-.footer p {
+.Authenticfooter p {
   color: #555555;
 }
-.footer p span {
+.Authenticfooter p span {
   color: #119744;
 }
 @media (max-width: 850px) {
