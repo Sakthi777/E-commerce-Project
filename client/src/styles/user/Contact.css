@@ -287,7 +287,7 @@ body{
     width: 25%;
     height: 0;
     transition: .5s ease;
-    z-index: 2;
+    z-index: -1;
   }
   
   /* .coimbatore:hover .overlay1 {
