@@ -20,12 +20,12 @@ import categoriesData from "./pages/user/categoriesData";
 import offersData from "./pages/user/offersData";
 import walletData from "./pages/user/walletData";
 import MyWallet from "./pages/user/myWallet";
-import ComingSoon from "./pages/user/comingSoon";
-import comingSoonData from "./pages/user/comingSoonData";
 import UserContact from "./pages/user/UserContact";
 
 
 
+import ComingSoon from "./pages/user/comingSoon";
+import comingSoonData from "./pages/user/comingSoonData";
 
 function App() {
 	return (
@@ -41,7 +41,18 @@ function App() {
 					<Route path="/changePassword" element={<ChangePassword />} />
 					<Route path="/offers" element={<Offers offerData={offersData}></Offers>}></Route>
 					<Route path="/myWallet" element={<MyWallet walletData={walletData}></MyWallet>}></Route>
-					<Route path="/Contact" element={<Contact />} />
+					
+					<Route path="/notfound" element={<NotFound/>} />
+					<Route path="/privacy" element = {<Privacy/>} />
+					<Route path="/footer" element={<Footer/>} />
+					<Route path="/faq" element={<FAQ/>} />
+					<Route path="us" element = {<UserContact/>} />
+					
+					
+					
+					<Route path="/offers" element={<Offers offerData={offersData} />}></Route>
+					<Route path="/myWallet" element={<MyWallet walletData={walletData} />}></Route>
+					<Route path="/comingSoon" element={<ComingSoon comingSoonData={comingSoonData} />}></Route>
 
 					{/* adminpanel */}
 					<Route path="/addcategory" element={<AddCategory></AddCategory>}></Route>
