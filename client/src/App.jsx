@@ -12,33 +12,14 @@ import Contact from "./pages/user/Contact";
 import AddCategory from "./components/admin/addCategory";
 import Dashboard from "./components/admin/dashboard";
 import Offers from "./pages/user/offers";
-
-import logo from "./assets/images/logo.png";
-import banner from "./assets/images/offers-image/single-banner.jpg";
-import offerImage from "./assets/images/offers-image/11.jpg";
+import categoriesData from "./pages/user/categoriesData";
+import offersData from "./pages/user/offersData";
+import walletData from "./pages/user/walletData";
 import MyWallet from "./pages/user/myWallet";
+import ComingSoon from "./pages/user/comingSoon";
+import comingSoonData from "./pages/user/comingSoonData";
 
 function App() {
-	const categories = [
-		{
-			id: 1,
-			name: "Fruits",
-			details: "",
-			icon: logo,
-			group: "Groceries",
-		},
-	];
-
-	const offersData = {
-		bannerImage: banner,
-		offerImage: offerImage,
-		offerTitle: "Diwali24",
-	};
-
-	const walletData = {
-		bannerImage: banner,
-	};
-
 	return (
 		<div className="App">
 			<Router>
@@ -50,13 +31,14 @@ function App() {
 					<Route path="/resetPassword" element={<ResetPassword />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/changePassword" element={<ChangePassword />} />
-					<Route path="/offers" element={<Offers offerData={offersData}></Offers>}></Route>
-					<Route path="/myWallet" element={<MyWallet walletData={walletData}></MyWallet>}></Route>
+					<Route path="/offers" element={<Offers offerData={offersData} />}></Route>
+					<Route path="/myWallet" element={<MyWallet walletData={walletData} />}></Route>
 					<Route path="/Contact" element={<Contact />} />
+					<Route path="/comingSoon" element={<ComingSoon comingSoonData={comingSoonData} />}></Route>
 
 					{/* adminpanel */}
 					<Route path="/addcategory" element={<AddCategory></AddCategory>}></Route>
-					<Route path="/dashboard" element={<Dashboard categories={categories}></Dashboard>}></Route>
+					<Route path="/dashboard" element={<Dashboard categories={categoriesData} />}></Route>
 				</Routes>
 			</Router>
 		</div>

@@ -1,4 +1,4 @@
-.myWallet-section {
+.wallet-section {
 	position: relative;
 	width: 100%;
 	background-color: #f3f4f6;
@@ -63,36 +63,156 @@
 .wallet-details {
 	display: flex;
 	width: 90%;
+	height: 100%;
 	flex-wrap: wrap;
 	justify-content: center;
-	margin: 0 auto;
-	/* background-color: black; */
+	margin: 1% auto;
+	/* for debugging */
+	/* background-color: #80808080; */
 }
 
 .my-wallet,
 .add-wallet {
-	margin: 5% 1%;
-	width: calc(100% - 70px);
-	padding: 1%;
+	display: flex;
+	flex-direction: column;
+	width: 48%;
+	min-height: 80%;
 	background-color: #fff;
-	box-shadow: 5px 5px 5px gray;
+	margin: 1% 1%;
+	padding: 1%;
 	border-radius: 10px;
 }
 
-.my-wallet h1,
-.add-wallet h1 {
+.cb {
 	color: #39404a;
-	text-align: center;
-	font-size: 24px;
-	line-height: 32px;
-	vertical-align: baseline;
-	font-weight: 500;
-	text-decoration: none #39404a;
-	text-align: start;
-	border-bottom: 1px solid #39404a;
+	border-bottom: 1px solid #39404a3f;
+	padding: 1%;
+	width: 100%;
 }
 
-.my-wallet p {
+.balance-amount {
+	color: #119744;
+	font-size: xx-large;
+	padding: 2%;
+	font-weight: 400;
+}
+
+.account-summary {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	gap: 2%;
+}
+
+.total-credit,
+.total-debit {
 	color: #39404a;
-	font-size: 24px;
+	width: 48%;
+	height: 100%;
+	background-color: #f3f4f6;
+	padding: 5% 5%;
+	border-radius: 10px;
+}
+
+#add-amount-input {
+	padding: 2%;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin-top: 3%;
+	background-color: #f3f4f6;
+	border: 1px solid #39404a3f;
+	border-radius: 5px;
+}
+
+.add-amount {
+	align-items: start;
+	margin: 1%;
+	width: 30%;
+	height: 20%;
+	border-radius: 5px;
+	border: 1px solid #39404a3f;
+	background-color: #f3f4f6;
+	color: #ffffff;
+	background-color: #119744;
+	text-wrap: ellipsis;
+}
+
+.amount-buttons {
+	padding: 3%;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: start;
+	color: #39404a;
+}
+
+.amount-buttons div {
+	display: flex;
+	width: 30%;
+	color: #39404a;
+	font-size: 18px;
+}
+
+.amouunts-list {
+	display: flex;
+	width: 70%;
+	justify-content: space-between;
+}
+
+.amt {
+	display: flex;
+	color: #39404a;
+	flex-direction: column;
+	padding: 2% 5%;
+	margin: 0 3%;
+	border: 1px solid #39404a3f;
+	background-color: #f3f4f6;
+	width: 100%;
+}
+
+.transaction-details {
+	width: 90%;
+	padding: 1% 1%;
+	background-color: #ffffff;
+}
+
+.pagination {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+	align-items: start;
+}
+
+.pagination p {
+	padding: 0 2%;
+}
+
+.pagination select {
+	padding: 0.5% 1%;
+	border-radius: 5px;
+	background-color: #f3f4f6;
+	outline: #39404a3f;
+}
+
+@media (max-width: 840px) {
+	.wallet-details {
+		display: block;
+	}
+	.my-wallet,
+	.add-wallet {
+		width: 100%;
+		margin: 5% 0;
+		padding: 2%;
+	}
+	.add-amount {
+		min-height: 50%;
+		padding: 2% 0;
+	}
+	.amounts-buttons {
+		display: block;
+	}
 }

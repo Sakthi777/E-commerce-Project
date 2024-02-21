@@ -112,9 +112,26 @@
 }
 
 .offer-link {
+	font-size: 18px;
 	color: #009f7f;
 	text-decoration: none;
 	font-weight: light;
 	border: 0;
-	background-color: none;
+	background-color: #f3f4f6;
+}
+
+@media screen and (max-width: 768px) {
+	.offers-banner {
+		width: fit-content;
+	}
+	.offer-title,
+	.offer-link {
+		font-size: 60%;
+	}
+	.offer-cards {
+		padding-top: 10%;
+	}
+	.offer-card {
+		width: calc(48% - 20px);
+	}
 }
