@@ -31,7 +31,6 @@
   margin-top: 10px;
   text-align: center;
   background: none;
-  margin-bottom: 20px;
 }
 
 .Register-content .Register-content-heading {
@@ -154,7 +153,6 @@
 .Register-form .terms {
   background: none;
   display: flex;
-  align-items: center;
   margin-bottom: 10px;
   font-size: 15px;
 }
@@ -182,7 +180,7 @@
   margin-bottom: 20px;
   color: #555555;
 }
-.terms a {
+.header-terms a {
   background: none;
   color: #00acee;
   text-decoration: none;
@@ -252,7 +250,7 @@
   .Register-card-bottom {
     background-color: white;
     width: 80%;
-    height: 30px;
+    height: 80px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -262,7 +260,7 @@
     margin-bottom: 5%;
   }
   .Register-card-bottom .content p {
-    font-size: 15px;
+    font-size: 14px;
     text-align: center;
     margin: 1px;
   }

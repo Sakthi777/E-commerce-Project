@@ -8,8 +8,8 @@ import { FiChevronDown } from "react-icons/fi";
 import { FaPhone, FaEnvelope } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import { BiSolidCategory } from "react-icons/bi";
-import { FaShoppingCart } from "react-icons/fa";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 
 const HeaderPage = () => {
   const [isFixed, setIsFixed] = useState(false);
@@ -53,7 +53,7 @@ const HeaderPage = () => {
         <div
           className={`header-card-top ${isFixed ? "fixed" : ""}`}
           ref={cardRef}
-          style={{ zIndex: 3 }}
+          // style={{ zIndex: 3 }}
         >
           <div className="alignItem">
             <div className="alignMyAccount">
@@ -82,7 +82,7 @@ const HeaderPage = () => {
 
           <div className="card-container">
             <div className="cart-icon">
-              <IoIosCart className="card-svg" />
+              <FontAwesomeIcon icon={faShoppingBag} className="card-svg" />
             </div>
             <div className="pop-up-item">
               <p>9+</p>
@@ -117,15 +117,15 @@ const HeaderPage = () => {
             </ul>
           </div>
           <div className="contact-details">
-            <div className="contact-item">
-              <FaPhone className="icon" />
+            <div className="header-contact-item">
+              <FaPhone className="header-icon" />
               <div className="phone">
                 <p>Call Us</p>
-                <span>(+880) 183 8288 389</span>
+                <span>(+880) 183 828 8389</span>
               </div>
             </div>
-            <div className="contact-item">
-              <FaEnvelope className="icon" />
+            <div className="header-contact-item">
+              <FaEnvelope className="header-icon" />
               <div className="email">
                 <p>Email Us</p>
                 <span>support@example.com</span>
@@ -143,7 +143,7 @@ const HeaderPage = () => {
             <span>Category</span>
           </div>
           <div className="icon-container">
-            <FaShoppingCart />
+            <FontAwesomeIcon icon={faShoppingBag} />
             <span>Cart</span>
           </div>
         </div>

@@ -1,7 +1,7 @@
 .card-login {
   background-color: white;
   width: 70%;
-  height: 400px;
+  height: 450px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -91,7 +91,7 @@
   }
 }
 @media (max-width: 550px) {
-  .card-bottom .content p {
+  .Register-card-bottom .content p {
     font-size: 14.5px;
     text-align: center;
     padding: 0px;
