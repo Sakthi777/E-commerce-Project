@@ -11,6 +11,7 @@ import NotFound from "./pages/user/NotFound";
 import Privacy from "./pages/user/Privacy";
 import Footer from "./pages/user/Footer";
 import FAQ from "./pages/user/FAQ";
+
 import AddCategory from "./components/admin/addCategory";
 import Dashboard from "./components/admin/dashboard";
 import Offers from "./pages/user/offers";
@@ -22,48 +23,33 @@ import UserContact from "./pages/user/UserContact";
 import ComingSoon from "./pages/user/comingSoon";
 import comingSoonData from "./pages/user/comingSoonData";
 
+
 function App() {
-  return (
-    <div className="App">
-      <Router>
-        <Routes>
-          {/* userpanel */}
-          <Route path="/" element={<HeaderPage />} />
-          <Route
-            path="/product"
-            element={<ProductGrid products={products} />}
-          />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/resetPassword" element={<ResetPassword />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/changePassword" element={<ChangePassword />} />
-          <Route
-            path="/offers"
-            element={<Offers offerData={offersData}></Offers>}
-          ></Route>
-          <Route
-            path="/myWallet"
-            element={<MyWallet walletData={walletData}></MyWallet>}
-          ></Route>
-
-          <Route path="/notfound" element={<NotFound />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/footer" element={<Footer />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="us" element={<UserContact />} />
-
-          <Route
-            path="/offers"
-            element={<Offers offerData={offersData} />}
-          ></Route>
-          <Route
-            path="/myWallet"
-            element={<MyWallet walletData={walletData} />}
-          ></Route>
-          <Route
-            path="/comingSoon"
-            element={<ComingSoon comingSoonData={comingSoonData} />}
-          ></Route>
+	return (
+		<div className="App">
+			<Router>
+				<Routes>
+					{/* userpanel */}
+					<Route path="/" element={<HeaderPage />} />
+					<Route path="/product" element={<ProductGrid products={products} />} />
+					<Route path="/register" element={<RegisterPage />} />
+					<Route path="/resetPassword" element={<ResetPassword />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/changePassword" element={<ChangePassword />} />
+					<Route path="/offers" element={<Offers offerData={offersData}></Offers>}></Route>
+					<Route path="/myWallet" element={<MyWallet walletData={walletData}></MyWallet>}></Route>
+					
+					<Route path="/notfound" element={<NotFound/>} />
+					<Route path="/privacy" element = {<Privacy/>} />
+					<Route path="/footer" element={<Footer/>} />
+					<Route path="/faq" element={<FAQ/>} />
+					<Route path="us" element = {<UserContact/>} />
+					
+					
+					
+					<Route path="/offers" element={<Offers offerData={offersData} />}></Route>
+					<Route path="/myWallet" element={<MyWallet walletData={walletData} />}></Route>
+					<Route path="/comingSoon" element={<ComingSoon comingSoonData={comingSoonData} />}></Route>
 
           {/* adminpanel */}
           <Route
