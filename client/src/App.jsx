@@ -8,11 +8,9 @@ import HeaderPage from "./components/user/HeaderPage";
 import ProductGrid from "./pages/user/productGrid";
 import products from "./pages/user/productList";
 import Contact from "./pages/user/Contact";
-
 import AddCategory from "./components/admin/addCategory";
 import Dashboard from "./components/admin/dashboard";
 import Offers from "./pages/user/offers";
-
 import logo from "./assets/images/logo.png";
 import banner from "./assets/images/offers-image/single-banner.jpg";
 import offerImage from "./assets/images/offers-image/11.jpg";

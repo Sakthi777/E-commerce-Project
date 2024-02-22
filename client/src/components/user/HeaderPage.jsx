@@ -9,7 +9,7 @@ import { FaPhone, FaEnvelope } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import { BiSolidCategory } from "react-icons/bi";
 import { FaShoppingCart } from "react-icons/fa";
-import { Link } from "react-router-dom";
+
 
 const HeaderPage = () => {
   const [isFixed, setIsFixed] = useState(false);
@@ -21,14 +21,12 @@ const HeaderPage = () => {
       const card = cardRef.current;
       const currentScrollY = window.scrollY;
 
-      // Adjust the scroll threshold as needed
       const scrollThreshold = 100;
 
       setIsFixed(
         currentScrollY > scrollThreshold || currentScrollY < prevScrollY
       );
 
-      // If the user has scrolled to the top, remove fixed
       if (currentScrollY === 0) {
         setIsFixed(false);
       }
@@ -38,7 +36,6 @@ const HeaderPage = () => {
 
     window.addEventListener("scroll", handleScroll);
 
-    // Cleanup the event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
