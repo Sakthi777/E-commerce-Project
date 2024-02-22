@@ -1,52 +1,55 @@
-.found{
-    text-align: center;
-    height: 100%;
-}
-.found div {
-    display: block;
-}
 body{
     background-color: #F1F1F1;
 
 }
-.head h1 {
+.notfound{
+    margin-top: 4%;
+    text-align: center;
+    height: 100%;
+}
+.notfound div {
+    display: block;
+}
+.notfound .notfound-head h1 {
     width: 100%;
     position: relative;
     line-height: 60px;
     font-size: 60px;
-    font-weight: 1;
+    font-weight: normal;
     text-shadow: 0 1px 0 #fff;
     position: relative;
     display: block;
     justify-content: center;
     align-items: center;
 }
-.found p a:hover{
+.notfound p a:hover{
     color: rgb(14, 151, 197);
     text-decoration: underline;
 }
-.head p{
-    line-height: 1.6;
+.notfound-head p{
+    margin-top: 1%;
+    line-height: 2.6rem;
     color: gray;
     align-items: center;
+    
 }
-.head strong{
+.notfound-head strong{
     font-weight: bold;
 }
-.site {
+.notfound-site {
     margin-top: 35px;
     color: #ccc;
 }
-.site a{
+.notfound-site a{
     margin: 0 10px;
    color: gray;
    text-decoration: none;
 }
-.found p a{
+.notfound p a{
     color: rgb(14, 151, 197);
     text-decoration: none;
 }
-.site  a:hover {
+.notfound-site  a:hover {
     color: gray;
     text-decoration: underline;
 }
@@ -54,5 +57,5 @@ body{
     background-color: #F1F1F1;
     padding-top: 20px;
     width: 40px;
-    height: 40px;
+    height: 60px;
 }

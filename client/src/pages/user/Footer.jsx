@@ -1,5 +1,22 @@
 import React from 'react'
-import './Footer.css'
+import "../../styles/user/Footer.css";
+import footimg from '../../../src/assets/images/footer-img/back-faq.jpg'
+import greenylogo from '../../../src/assets/images/footer-img/grocery-logo.png'
+import apple from '../../../src/assets/images/footer-img/app-store.png'
+import paypal1 from '../../../src/assets/images/footer-img/paypal.jpg'
+import visa1 from '../../../src/assets/images/footer-img/visa.jpg'
+import discover1 from '../../../src/assets/images/footer-img/discover.jpg'
+import maestro1 from '../../../src/assets/images/footer-img/maestro.jpg'
+import google from '../../../src/assets/images/footer-img/google-store.png'
+
+
+
+
+
+
+
+
+
 
 export default function Footer() {
   return (
@@ -7,7 +24,7 @@ export default function Footer() {
         <div className='office-discount'>
                 <div className='discount'>
                     <div className='image'>
-                        <img src={"icons/shopping.png"} alt='' />
+                        <img src={footimg} alt='' />
                         <div className='percent'>
                             <div className='geting'>
                                 <h3>Get 20% Discount For Subscriber</h3>
@@ -59,7 +76,7 @@ export default function Footer() {
             <div className='footer-part'>
                 <div className='footer_box_social'>
                     <div className='footer-logo'>
-                        <img src={"icons/grocery-logo.png"} alt='' height={"100px"} width={250} />
+                        <img src={greenylogo} alt='' height={"100px"} width={250} />
                     </div>
                     <div className='text'>
                         <p className='footer-desc'>Adipisci asperiores ipsum ipsa repellat consequatur repudiandae quisquam assumenda dolor perspiciatis sit ipsum dolor amet.</p>
@@ -102,7 +119,7 @@ export default function Footer() {
                         </li>
                         <br/>
                         <li>
-                            <p>
+                            <p className='num'>
                                 <span>+120 279 532 13</span><br />
                                 <span>+120 279 532 14</span>
                             </p>
@@ -181,10 +198,10 @@ export default function Footer() {
                     <p className='footer-desc'>Lorem ipsum dolor sit amet tenetur dignissimos ipsum eligendi autem obcaecati minus ducimus totam reprehenderit exercitationem!</p>
                     <div className='footer-app'>
                         <a href='...'>
-                            <img src={"icons/app-store.png"} alt='' />
+                            <img src={apple} alt='' />
                         </a>
                         <a href='...'>
-                            <img src={"icons/google-store.png"} alt='' />
+                            <img src={google} alt='' />
                         </a>
 
                     </div>
@@ -199,16 +216,16 @@ export default function Footer() {
                 </p>
                 <div className='coder-card'>
                     <a href='...'>
-                        <img src={"icons/visa.jpg"} alt=''/>
+                        <img src={visa1} alt=''/>
                     </a>
                     <a href='...'>
-                        <img src={"icons/paypal.jpg"} alt=''/>
+                        <img src={paypal1} alt=''/>
                     </a>
                     <a href='...'>
-                        <img src={"icons/maestro.jpg"} alt=''/>
+                        <img src={maestro1} alt=''/>
                     </a>
                     <a href='...'>
-                        <img src={"icons/discover.jpg"} alt=''/>
+                        <img src={discover1} alt=''/>
                     </a>
 
                 </div>

@@ -1,5 +1,6 @@
 import React from 'react'
-import './Privacy.css'
+import "../../styles/user/Privacy.css";
+
 export default function Privacy() {
   return (
     <div>

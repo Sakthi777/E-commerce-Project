@@ -1,6 +1,6 @@
 import "../../styles/admin/addcategory.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import { faUpload } from "@fortawesome/free-solid-svg-icons";
 
 function AddCategory() {
 	return (
@@ -19,7 +19,7 @@ function AddCategory() {
 						<div>
 							<label htmlFor="category-image">
 								<span style={{ fontSize: "256%" }}>
-									<FontAwesomeIcon icon="fa-solid fa-arrow-up" />
+									<FontAwesomeIcon icon={faUpload} />
 								</span>
 								<br />
 								<br />
