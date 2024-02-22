@@ -12,6 +12,8 @@ import NotFound from "./pages/user/NotFound";
 import Privacy from "./pages/user/Privacy";
 import Footer from "./pages/user/Footer";
 import FAQ from "./pages/user/FAQ";
+import AddProductdata from "./components/admin/AddProductdata";
+
 
 import AddCategory from "./components/admin/addCategory";
 import Dashboard from "./components/admin/dashboard";
@@ -26,6 +28,7 @@ import UserContact from "./pages/user/UserContact";
 
 import ComingSoon from "./pages/user/comingSoon";
 import comingSoonData from "./pages/user/comingSoonData";
+
 
 function App() {
 	return (
@@ -46,8 +49,8 @@ function App() {
 					<Route path="/privacy" element = {<Privacy/>} />
 					<Route path="/footer" element={<Footer/>} />
 					<Route path="/faq" element={<FAQ/>} />
-					<Route path="us" element = {<UserContact/>} />
-					
+					<Route path="/us" element = {<UserContact/>} />					
+					<Route path="/productdata" element = {<AddProductdata/>} />					
 					
 					
 					<Route path="/offers" element={<Offers offerData={offersData} />}></Route>

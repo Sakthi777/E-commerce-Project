@@ -1,0 +1,78 @@
+body {
+	background-color: #f3f4f6;
+    padding: 20px;
+}
+.add-image-title p{
+    padding-top: 30px;
+    padding-bottom: 10px;
+}
+.head1 {
+    padding-top: 20px;
+	color: #1f2937;
+	font-size: 250%;
+	font-weight: 500;
+}
+.panel{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2%;
+    justify-content: center;
+}
+.image-input-img {
+    align-items: center;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid lightgray;
+    justify-content: center;
+    height: 220px;
+    width: 22%;
+    border-radius: 8px;
+}
+/* .image-input-img img {
+    
+    height: auto;
+} */
+.hovering a {
+    text-decoration: none;
+    color: green;
+}
+.hovering a:hover {
+    
+    text-decoration: underline;
+}
+.pu-attribute {
+    display: flex;
+    display: flex;
+    flex-direction: row;
+}
+.pu-attribute select{
+    padding: 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+  }
+  .kilo input{
+    padding: 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    
+  }
+  .pu-attribute .description-box{
+   position: relative;
+    display: flex;
+    flex-direction: row;
+}
+  .description-box input {
+    padding: 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 36%;
+  }
