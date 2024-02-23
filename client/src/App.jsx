@@ -11,7 +11,6 @@ import NotFound from "./pages/user/NotFound";
 import Privacy from "./pages/user/Privacy";
 import Footer from "./pages/user/Footer";
 import FAQ from "./pages/user/FAQ";
-
 import AddCategory from "./components/admin/addCategory";
 import Dashboard from "./components/admin/dashboard";
 import Offers from "./pages/user/offers";
@@ -38,7 +37,6 @@ function App() {
 					<Route path="/changePassword" element={<ChangePassword />} />
 					<Route path="/offers" element={<Offers offerData={offersData}></Offers>}></Route>
 					<Route path="/myWallet" element={<MyWallet walletData={walletData}></MyWallet>}></Route>
-					
 					<Route path="/notfound" element={<NotFound/>} />
 					<Route path="/privacy" element = {<Privacy/>} />
 					<Route path="/footer" element={<Footer/>} />

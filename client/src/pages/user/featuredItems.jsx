@@ -100,10 +100,14 @@ const FeaturedItems = ({
         <div className="viewIcon" onClick={toggleDescription}>
           <FaEye />
         </div>
-        <Modal show={showModal} onHide={closeModal} centered size="lg">
-          <Modal.Header closeButton>
-            <Modal.Title>{productName}</Modal.Title>
-          </Modal.Header>
+        <Modal
+          show={showModal}
+          onHide={closeModal}
+          className="model-container"
+          centered
+          size="lg"
+        >
+          <Modal.Header closeButton></Modal.Header>
           <Modal.Body>
             <div className="product-description-card">
               <div className="description-left">
@@ -165,7 +169,11 @@ const FeaturedItems = ({
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={closeModal}>
+            <Button
+              variant="secondary"
+              className="green-background-button"
+              onClick={closeModal}
+            >
               Close
             </Button>
           </Modal.Footer>

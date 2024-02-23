@@ -4,6 +4,15 @@
   justify-content: space-between;
   overflow: auto;
 }
+.model-container .modal-header,
+.model-container .modal-footer {
+  border: none;
+  text-decoration: none;
+}
+.model-container .modal-footer .green-background-button {
+  background-color: #119744;
+}
+
 .description-image {
   display: flex;
   flex-direction: column;

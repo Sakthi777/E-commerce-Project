@@ -65,6 +65,12 @@
   font-size: 17px;
   color: #555555;
 }
+@media (max-width: 1120px) {
+  .card-login {
+    width: 90%;
+    margin-bottom: 10px;
+  }
+}
 
 @media (max-width: 850px) {
   .card-login {
@@ -77,33 +83,35 @@
     height: 1px;
     background-color: #ccc;
     position: absolute;
-    top: 48%;
+    top: 47%;
+    margin-left: 20px;
     transform: translateY(-50%);
-    margin-top: 5px;
+    margin-top: 15px;
   }
-  .card-bottom .content p {
-    font-size: 15px;
-    text-align: center;
-    margin: 1px;
-  }
+
   .circle {
     display: none;
   }
 }
 @media (max-width: 550px) {
-  .Register-card-bottom .content p {
-    font-size: 14.5px;
-    text-align: center;
-    padding: 0px;
-    margin: 0px;
+  .card-login {
+    width: 90%;
   }
+  .Register-card-bottom {
+    width: 90%;
+  }
+
   .resetHere p {
     background: none;
     color: #555555;
     text-align: center;
-    font-size: 14.5px;
+    font-size: 16px;
   }
   .circle {
     display: none;
+  }
+  .verticalLine {
+    top: 47%;
+    margin-left: 20px;
   }
 }

@@ -4,6 +4,7 @@ import HeaderPage from "../../components/user/HeaderPage";
 import { FaArrowCircleDown } from "react-icons/fa";
 import image1 from "../../assets/images/homePageImage/home-page-img1.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Footer from "../../pages/user/Footer";
 import {
   faShoppingBag,
   faStar,
@@ -20,7 +21,7 @@ const ProductGrid = ({ products }) => {
     setSelectedOption(option);
   };
   return (
-    <div className="product-container" style={{ zIndex: 1 }}>
+    <div className="product-container">
       <HeaderPage />
       <div className="productTitle">Recently Sold Items</div>
       <div className="product-grid">
@@ -47,7 +48,7 @@ const ProductGrid = ({ products }) => {
         </button>
       </div>
       <div className="homePage-imageBox">
-        <img src={image1} alt="product-Image" className="homepage-image-1" />
+        <img src={image1} alt="product" className="homepage-image-1" />
       </div>
       <div className="productTitle">Our Featured Items</div>
       <div className="featuredItem-grid">
@@ -105,7 +106,7 @@ const ProductGrid = ({ products }) => {
         </button>
       </div>
       <div className="homePage-imageBox">
-        <img src={image1} alt="product-Image" className="homepage-image-1" />
+        <img src={image1} alt="product" className="homepage-image-1" />
       </div>
       <div className="productTitle">Browse By Top Niche</div>
       <div className="topNiche-card">
@@ -214,6 +215,7 @@ const ProductGrid = ({ products }) => {
           SHOW MORE
         </button>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -3,7 +3,7 @@ import "../../styles/user/headerPage.css";
 import image from "../../assets/images/logo.png";
 import profile from "../../assets/images/homePageImage/profile.png";
 import { useState, useRef, useEffect } from "react";
-import { IoIosSearch, IoIosCart } from "react-icons/io";
+import { IoIosSearch } from "react-icons/io";
 import { FiChevronDown } from "react-icons/fi";
 import { FaPhone, FaEnvelope } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
@@ -18,7 +18,6 @@ const HeaderPage = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const card = cardRef.current;
       const currentScrollY = window.scrollY;
 
       const scrollThreshold = 100;

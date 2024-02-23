@@ -5,6 +5,7 @@ import { AiFillHeart } from "react-icons/ai";
 import "../../styles/user/productCard.css";
 import "../../styles/user/productDescriptionCard.css";
 import { Modal, Button } from "react-bootstrap";
+
 import { useState, useEffect, useRef } from "react";
 import {
   faShoppingBag,
@@ -94,10 +95,14 @@ const ProductCard = ({
       <div className="viewIcon" onClick={toggleDescription}>
         <FaEye />
       </div>
-      <Modal show={showModal} onHide={closeModal} centered size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title>{productName}</Modal.Title>
-        </Modal.Header>
+      <Modal
+        show={showModal}
+        className="model-container"
+        onHide={closeModal}
+        centered
+        size="lg"
+      >
+        <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
           <div className="product-description-card">
             <div className="description-left">
@@ -157,7 +162,11 @@ const ProductCard = ({
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={closeModal}>
+          <Button
+            variant="secondary"
+            className="green-background-button"
+            onClick={closeModal}
+          >
             Close
           </Button>
         </Modal.Footer>

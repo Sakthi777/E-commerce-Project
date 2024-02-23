@@ -6,7 +6,7 @@
   display: none;
   width: 100%;
 }
-.header-top {
+.header-container .header-top {
   background-color: #119744;
   width: 100%;
   top: 1px;
@@ -47,6 +47,9 @@
   transform: translateX(-50%);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+.header-card-top.fixed .search-bar {
+  border: 1px solid #119744;
+}
 .relative {
   position: relative;
 }
@@ -62,6 +65,9 @@
   display: flex;
   color: #555560;
   align-items: center;
+}
+.myAccount p {
+  margin-bottom: 0px;
 }
 .myAccount img {
   width: 45px;
@@ -125,7 +131,7 @@
   font-size: 10px;
   color: #f3f4f6;
   text-align: center;
-  padding-top: 0px;
+  padding-top: 1.5px;
 }
 .price {
   display: flex;
@@ -206,6 +212,10 @@
 .phone,
 .email {
   margin-right: 90px;
+}
+.phone p,
+.email p {
+  margin-bottom: 0px;
 }
 .phone span,
 .email span {
