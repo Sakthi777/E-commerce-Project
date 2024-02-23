@@ -19,13 +19,14 @@ import MyWallet from "./pages/user/myWallet";
 import UserContact from "./pages/user/UserContact";
 
 import ComingSoon from "./pages/user/comingSoon";
+import AddProductdata from "./components/admin/AddProductdata";
 
 function App() {
 	return (
 		<div className="App">
 			<Router>
 				<Routes>
-					{/* userpanel */}
+				
 					<Route path="/" element={<HeaderPage />} />
 					<Route path="/product" element={<ProductGrid products={products} />} />
 					<Route path="/register" element={<RegisterPage />} />
@@ -41,10 +42,13 @@ function App() {
 					<Route path="us" element={<UserContact />} />
 					<Route path="/comingSoon" element={<ComingSoon />}></Route>
 					<Route path="/myProfile" element={<MyProfile />}></Route>
+					
 
 					{/* adminpanel */}
 					<Route path="/addcategory" element={<AddCategory></AddCategory>}></Route>
 					<Route path="/dashboard" element={<Dashboard />}></Route>
+					<Route path="/productdata" element={<AddProductdata />}></Route>
+
 				</Routes>
 			</Router>
 		</div>
