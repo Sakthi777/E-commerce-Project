@@ -1,76 +1,78 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;900&display=swap");
-*{
-    font-family: "Rubik", sans-serif;
-    margin: 0;
+* {
+	font-family: "Rubik", sans-serif;
+	margin: 0;
 }
-body{
-    background-color: #F5F6F7;
+body {
+	background-color: #f5f6f7;
 }
 .faq-body-part {
-    margin-top: 10%;
-    width: 75%;
-    margin-left: 13%;
+	margin-top: 10%;
+	width: 75%;
+	margin-left: 13%;
 }
 
 .faqback img {
-    width: 100%;
-    display: flex;
-    filter: brightness(50%);
-    -webkit-filter: brightness(50%);
-    -moz-filter: brightness(50%);
-    -o-filter: brightness(50%);
-    -ms-filter: brightness(50%);
+	width: 100%;
+	display: flex;
+	filter: brightness(50%);
+	-webkit-filter: brightness(50%);
+	-moz-filter: brightness(50%);
+	-o-filter: brightness(50%);
+	-ms-filter: brightness(50%);
 }
 .faq-title {
-    top: 20%;
-    font-size: 50px;
-    color: #fff;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  .ques-ans {
-    border-radius: 8px;
-    margin-bottom: 30px;
-    background: white;
-    border-left: 3px solid green;
-    border-right: 3px solid green;
-    -webkit-box-shadow: 0px 0px 25px 0px rgba(0,0,0,0.1);
-    box-shadow: 0px 0px 25px 0px rgba(0,0,0,0.1);
-    
+	top: 20%;
+	font-size: 50px;
+	color: #fff;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.ques-ans {
+	border-radius: 8px;
+	margin-bottom: 30px;
+	background: white;
+	border-left: 3px solid green;
+	border-right: 3px solid green;
+	-webkit-box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.1);
 }
 .ques-ans:hover .faq-ques button {
-    color: green;
+	color: green;
 }
 
 .ques-ans:last-child {
-    margin-bottom: 0px;
+	margin-bottom: 0px;
 }
 .faq-ques button {
-    width: 100%;
-    border: none;
-    outline: none;
-    background: none;
-    text-align: left;
-    padding: 22px 25px;
-    font-size: 18px;
-    font-weight: 500;
-    cursor: pointer;
+	width: 100%;
+	border: none;
+	outline: none;
+	background: none;
+	text-align: left;
+	padding: 22px 25px;
+	font-size: 18px;
+	font-weight: 500;
+	transition: all 0.3s;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-ms-transition: all 0.3s;
+	-o-transition: all 0.3s;
 }
 
 .faq-ans p {
-    font-size: 16px;
-    line-height: 26px;
-    padding: 20px 25px;
-    border-top: 1px solid lightgray;
-    
+	font-size: 16px;
+	line-height: 26px;
+	padding: 20px 25px;
+	border-top: 1px solid lightgray;
 }
 
 .faq-body-part :hover .faq-ans {
-    display: block;
+	display: block;
 }
 .faq-ans {
-    &:not(.show) {
-      display: none;  
-    }
-  }
+	&:not(.show) {
+		display: none;
+	}
+}

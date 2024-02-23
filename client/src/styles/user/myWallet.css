@@ -127,7 +127,7 @@
 }
 
 .add-amount {
-	align-items: start;
+	align-items: flex-flex-start;
 	margin: 1%;
 	width: 30%;
 	height: 20%;
@@ -145,7 +145,7 @@
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: start;
+	justify-content: flex-flex-start;
 	color: #39404a;
 }
 
@@ -171,11 +171,14 @@
 	border: 1px solid #39404a3f;
 	background-color: #f3f4f6;
 	width: 100%;
+	align-items: center;
+	justify-content: center;
 }
 
 .transaction-details {
 	width: 90%;
-	padding: 1% 1%;
+	padding: 2% 2%;
+	border-radius: 10px;
 	background-color: #ffffff;
 }
 
@@ -183,8 +186,8 @@
 	width: 100%;
 	display: flex;
 	flex-direction: row;
-	justify-content: start;
-	align-items: start;
+	justify-content: flex-start;
+	align-items: flex-start;
 }
 
 .pagination p {
@@ -196,6 +199,80 @@
 	border-radius: 5px;
 	background-color: #f3f4f6;
 	outline: #39404a3f;
+}
+
+.transaction-table {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	padding: 2%;
+}
+
+.transaction-table table {
+	width: 100%;
+	color: #39404a;
+	text-align: center;
+	/* border: 1px solid #39404a; */
+	border-collapse: collapse;
+}
+
+.transaction-table table th,
+td {
+	padding: 8px;
+	border: 1px solid #39404a;
+	/* border-collapse: collapse; */
+}
+
+.transaction-table table thead {
+	background-color: #8080803f;
+}
+
+.transaction-paid {
+	color: #119744;
+}
+
+.transaction-due {
+	color: #ffc107;
+}
+
+.transaction-return {
+	color: #212529;
+}
+
+.transaction-cancel {
+	color: #ff0000;
+}
+
+.transaction-process {
+	color: #0dcaf0;
+}
+
+.showing-results {
+	display: flex;
+	width: 100%;
+	height: auto;
+	justify-content: space-between;
+	padding: 0 2%;
+}
+
+.sr-text {
+	width: 45%;
+}
+
+.transaction-page-buttons {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	align-items: center;
+	padding-right: 5%;
+}
+
+.transaction-page-buttons button {
+	border: 1px solid #39404a3f;
+	margin: 3px;
+	height: 25px;
+	width: 25px;
+	border-radius: 50%;
 }
 
 @media (max-width: 840px) {
@@ -214,5 +291,16 @@
 	}
 	.amounts-buttons {
 		display: block;
+	}
+
+	.transaction-table {
+		display: flex;
+		justify-content: flex-start;
+		overflow-x: scroll;
+		overflow-y: scroll;
+	}
+
+	.transaction-page-buttons {
+		padding-right: 5%;
 	}
 }

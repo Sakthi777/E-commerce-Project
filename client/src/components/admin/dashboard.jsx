@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 import "../../styles/admin/dashboard.css";
+import greenyIcon from "../../assets/images/logo.png";
 
-function Dashboard(props) {
-	const { categories } = props;
+function Dashboard() {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(10); // Default rows per page
 	const categoriesPerPage = rowsPerPage;
 
+	const categories = [];
+
 	const loopList = () => {
-		const category = categories[0];
-		if (categories.length <= 1) {
-			for (var i = 1; i < 30; i++) {
-				categories.push({ ...category });
-			}
+		for (var i = 1; i < 30; i++) {
+			categories.push({
+				id: 1,
+				name: "Fruits",
+				details: "heathy",
+				icon: greenyIcon,
+				group: "Groceries",
+			});
 		}
 	};
 	loopList();
