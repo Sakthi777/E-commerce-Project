@@ -44,6 +44,7 @@
   position: fixed;
   top: 0;
   left: 50%;
+  width: 100%;
   transform: translateX(-50%);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -118,6 +119,10 @@
   padding: 14px;
   border-radius: 50%;
 }
+.cart-icon:hover {
+  background-color: #119744;
+  color: #ffffff;
+}
 
 .pop-up-item {
   background-color: green;
@@ -149,8 +154,85 @@
   margin: 0px;
   margin-top: 3px;
   font-size: 16px;
+  color: #39404a;
+}
+/*------------------------------------------------------OFF CANVAS STYLE---------------------------------------------------------------*/
+
+.offcanvas-header .offcanvas-title {
+  margin-left: 30%;
+  color: #119744;
+}
+.card {
+  text-align: center;
+  height: auto;
+  margin: 20px 0px;
+  position: relative;
+}
+.card span {
+  font-size: 18px;
+  font-weight: lighter;
+  color: #119744;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+.card p {
+  font-size: 18px;
+  display: inline;
+  text-align: center;
+  padding: 5px;
+}
+.offcanvas-border {
+  background-color: #119744;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 5px;
+  color: white;
+}
+.hrLine {
+  border-right: 1px solid #ffffff;
+  padding-right: 7px;
+  width: 1px;
+}
+.offcanvas-card {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  padding: 15px;
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid #f3f4f5;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+.offcanvas-img {
+  width: 40%;
+}
+.offcanvas-img img {
+  width: 80%;
+}
+.card-item-selector button {
+  border: none;
+  padding: 5px 10px;
+  font-size: large;
+  border-radius: 5px;
+  margin-top: 15px;
 }
 
+.card-item-selector p {
+  display: inline;
+  margin-left: 17px;
+  font-size: 18px;
+  color: #119744;
+}
+.card-item-selector span {
+  padding: 8px 20px;
+  margin: 0px 5px;
+  font-size: large;
+  background-color: #f0f0f0;
+  color: #119744;
+  border-radius: 5px;
+}
+/*-----------------------------------------------------------------------------------------------------------------------------------------*/
 .header-card-bottom {
   position: relative;
   width: 100%;
@@ -321,7 +403,7 @@
   }
   .bottom-card {
     position: fixed;
-    z-index: 999;
+    z-index: 9;
     height: auto;
     padding-bottom: 4px;
     bottom: 0;

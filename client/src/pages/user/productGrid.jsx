@@ -3,6 +3,7 @@ import ProductCard from "../../pages/user/productCard";
 import HeaderPage from "../../components/user/HeaderPage";
 import { FaArrowCircleDown } from "react-icons/fa";
 import image1 from "../../assets/images/homePageImage/home-page-img1.jpg";
+import countdownImage from "../../assets/images/homePageImage/countdown.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Footer from "../../pages/user/Footer";
 import {
@@ -77,7 +78,58 @@ const ProductGrid = ({ products }) => {
           SHOW MORE
         </button>
       </div>
+      <div className="specialDiscount">
+        <div className="discountContent">
+          <h1>SPECIAL DISCOUNT OFFER FOR VEGETABLE ITEMS</h1>
+          <p>
+            Reprehenderit sed quod autem molestiae aut modi minus veritatis iste
+            dolorum suscipit quis voluptatum fugiat mollitia quia minima
+          </p>
+          <div className="countdown specialdiscount">
+            <div className="days">
+              <span className="countdown-time">
+                00
+                <span>:</span>
+              </span>
+              <p>days</p>
+            </div>
 
+            <div className="hours">
+              <span className="countdown-time">
+                00
+                <span>:</span>
+              </span>
+              <p>hours</p>
+            </div>
+
+            <div className="minutes">
+              <span className="countdown-time">
+                00
+                <span>:</span>
+              </span>
+              <p>minutes</p>
+            </div>
+
+            <div className="seconds">
+              <span className="countdown-time">00</span>
+              <p>seconds</p>
+            </div>
+          </div>
+          <div className="showNowButton">
+            <button className="show-now-button">
+              <FontAwesomeIcon icon={faShoppingBag} className="shop-icon" />
+              SHOW NOW
+            </button>
+          </div>
+        </div>
+        <div className="discountImage">
+          <div className="discount-percent">
+            <h1>20%</h1>
+            <h1>OFF</h1>
+          </div>
+          <img src={countdownImage} alt="product" className="countdownImage" />
+        </div>
+      </div>
       <div className="productTitle">Collected New Items</div>
       <div className="product-grid">
         {products.map(
@@ -215,7 +267,7 @@ const ProductGrid = ({ products }) => {
           SHOW MORE
         </button>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
