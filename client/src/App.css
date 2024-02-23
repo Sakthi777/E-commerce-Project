@@ -6,6 +6,12 @@ body {
   background-color: #f3f4f6;
   margin: 0;
   font-family: "Rubik", sans-serif;
-  height: 100%;
+  height: auto;
   width: 100%;
+}
+body p {
+  margin-bottom: 0px;
+}
+label {
+  display: inline;
 }

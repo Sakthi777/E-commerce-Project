@@ -6,7 +6,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  margin-bottom: 2%;
+  background-color: #f3f4f5;
+  height: 100%;
 }
 
 .Authentic-logo {
@@ -18,7 +19,7 @@
 .Register-card {
   background-color: white;
   width: 70%;
-  height: 520px;
+  height: auto;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -31,7 +32,6 @@
   margin-top: 10px;
   text-align: center;
   background: none;
-  margin-bottom: 20px;
 }
 
 .Register-content .Register-content-heading {
@@ -59,7 +59,7 @@
 
 .Register-row {
   display: flex;
-  align-items: center;
+
   flex-direction: row;
   background: none;
   justify-content: space-between;
@@ -70,6 +70,9 @@
   background: none;
   flex-direction: column;
   margin-right: 15px;
+  display: flex;
+  align-items: center;
+  padding-top: 20px;
 }
 
 .socialBox {
@@ -113,15 +116,16 @@
   color: white;
   font-variant: normal;
   font-size: 17px;
+  margin-bottom: 0px;
   text-transform: lowercase;
 }
 
 .verticalLine-register {
   width: 2px;
-  height: 90%;
+  height: 350px;
   background-color: #e8e8e8;
   margin-top: 5px;
-  margin-left: 2%;
+  margin-left: 5%;
   margin-right: 3%;
   display: flex;
   flex-direction: column;
@@ -154,7 +158,6 @@
 .Register-form .terms {
   background: none;
   display: flex;
-  align-items: center;
   margin-bottom: 10px;
   font-size: 15px;
 }
@@ -174,18 +177,19 @@
   margin-right: 10px;
   height: 15px;
   width: 15px;
-  margin-left: 3px;
   accent-color: #119744;
 }
 .Register-form label {
   background: none;
   margin-bottom: 20px;
   color: #555555;
+  display: inline;
 }
-.terms a {
+.header-terms a {
   background: none;
   color: #00acee;
   text-decoration: none;
+  font-size: 14px;
 }
 .Register-card-bottom {
   background-color: white;
@@ -207,18 +211,27 @@
 .Register-card-bottom .bottom-content p {
   text-align: center;
   background: none;
-  font-size: 17px;
+  font-size: 16px;
   color: #555555;
 }
 
-.Authenticfooterr {
-  margin-bottom: 15px;
-}
 .Authenticfooter p {
   color: #555555;
 }
 .Authenticfooter p span {
   color: #119744;
+}
+@media (max-width: 1120px) {
+  .Register-card {
+    height: 100%;
+    width: 90%;
+    margin-bottom: 10px;
+  }
+  .Register-card-bottom {
+    background-color: white;
+    width: 90%;
+    height: 80px;
+  }
 }
 @media (max-width: 850px) {
   .Register-card {
@@ -240,9 +253,9 @@
     height: 1px;
     background-color: #ccc;
     position: absolute;
-    top: 42%;
+    top: 40.5%;
     transform: translateY(-50%);
-    margin-top: 5px;
+    margin-top: 15px;
   }
 
   .Register-form {
@@ -252,7 +265,7 @@
   .Register-card-bottom {
     background-color: white;
     width: 80%;
-    height: 30px;
+    height: 80px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -262,7 +275,7 @@
     margin-bottom: 5%;
   }
   .Register-card-bottom .content p {
-    font-size: 15px;
+    font-size: 14px;
     text-align: center;
     margin: 1px;
   }
@@ -285,7 +298,12 @@
 .circle-register p {
   text-align: center;
   background: none;
-  margin-top: 7.5px;
+  margin-top: 7px;
   font-size: 17px;
   color: #555555;
+}
+@media (max-width: 550px) {
+  .Register-card {
+    width: 90%;
+  }
 }

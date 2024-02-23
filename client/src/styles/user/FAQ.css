@@ -68,6 +68,11 @@ body {
 	border-top: 1px solid lightgray;
 }
 
-/* .faq-body-part :hover .faq-ans {
-    display: block;
-} */
+.faq-body-part :hover .faq-ans {
+	display: block;
+}
+.faq-ans {
+	&:not(.show) {
+		display: none;
+	}
+}

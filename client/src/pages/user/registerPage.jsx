@@ -56,7 +56,7 @@ const RegisterPage = () => {
                 name="repeatPassword"
               />
 
-              <div className="terms">
+              <div className="header-terms">
                 <input type="checkbox" id="terms" name="terms" />
                 <label htmlFor="terms">
                   Accept all the <a href="...">Terms & Conditions</a>

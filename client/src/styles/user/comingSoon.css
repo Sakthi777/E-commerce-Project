@@ -43,7 +43,8 @@
 .countdown .days,
 .countdown .hours,
 .countdown .minutes,
-.countdown .seconds {
+.countdown .seconds,
+.countdown span {
 	width: calc(25% - 20px);
 	text-align: center;
 	font-weight: lighter;
