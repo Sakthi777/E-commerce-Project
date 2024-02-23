@@ -2,7 +2,7 @@ import "../../styles/user/comingSoon.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faInstagram, faLinkedinIn, faPinterestP, faTwitter } from "@fortawesome/free-brands-svg-icons";
-
+import comingSoonImage from "../../assets/images/coming-soon/coming-soon.png";
 function ComingSoon({ comingSoonData }) {
 	return (
 		<>
@@ -76,7 +76,7 @@ function ComingSoon({ comingSoonData }) {
 				</div>
 
 				<div className="coming-soon-banner">
-					<img src={comingSoonData.comingSoonBanner} alt="Coming-soon-banner" />
+					<img src={comingSoonImage} alt="" />
 				</div>
 			</div>
 		</>

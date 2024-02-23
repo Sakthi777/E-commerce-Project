@@ -1,61 +1,60 @@
-body{
+/* body{
     background-color: #F1F1F1;
 
-}
-.notfound{
-    margin-top: 4%;
-    text-align: center;
-    height: 100%;
+} */
+.notfound {
+	margin-top: 4%;
+	text-align: center;
+	height: 100%;
 }
 .notfound div {
-    display: block;
+	display: block;
 }
 .notfound .notfound-head h1 {
-    width: 100%;
-    position: relative;
-    line-height: 60px;
-    font-size: 60px;
-    font-weight: normal;
-    text-shadow: 0 1px 0 #fff;
-    position: relative;
-    display: block;
-    justify-content: center;
-    align-items: center;
+	width: 100%;
+	position: relative;
+	line-height: 60px;
+	font-size: 60px;
+	font-weight: normal;
+	text-shadow: 0 1px 0 #fff;
+	position: relative;
+	display: block;
+	justify-content: center;
+	align-items: center;
 }
-.notfound p a:hover{
-    color: rgb(14, 151, 197);
-    text-decoration: underline;
+.notfound p a:hover {
+	color: rgb(14, 151, 197);
+	text-decoration: underline;
 }
-.notfound-head p{
-    margin-top: 1%;
-    line-height: 2.6rem;
-    color: gray;
-    align-items: center;
-    
+.notfound-head p {
+	margin-top: 1%;
+	line-height: 2.6rem;
+	color: gray;
+	align-items: center;
 }
-.notfound-head strong{
-    font-weight: bold;
+.notfound-head strong {
+	font-weight: bold;
 }
 .notfound-site {
-    margin-top: 35px;
-    color: #ccc;
+	margin-top: 35px;
+	color: #ccc;
 }
-.notfound-site a{
-    margin: 0 10px;
-   color: gray;
-   text-decoration: none;
+.notfound-site a {
+	margin: 0 10px;
+	color: gray;
+	text-decoration: none;
 }
-.notfound p a{
-    color: rgb(14, 151, 197);
-    text-decoration: none;
+.notfound p a {
+	color: rgb(14, 151, 197);
+	text-decoration: none;
 }
-.notfound-site  a:hover {
-    color: gray;
-    text-decoration: underline;
+.notfound-site a:hover {
+	color: gray;
+	text-decoration: underline;
 }
-.git-logo img{
-    background-color: #F1F1F1;
-    padding-top: 20px;
-    width: 40px;
-    height: 60px;
+.git-logo img {
+	background-color: #f1f1f1;
+	padding-top: 20px;
+	width: 40px;
+	height: 60px;
 }

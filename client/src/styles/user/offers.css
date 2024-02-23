@@ -120,7 +120,7 @@
 	background-color: #f3f4f6;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 840px) {
 	.offers-banner {
 		width: fit-content;
 	}
