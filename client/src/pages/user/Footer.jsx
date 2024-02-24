@@ -30,7 +30,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="office-delivary">
+      
         <div className="delivary">
           <div className="del-title">
             <div className="del">
@@ -59,7 +59,6 @@ export default function Footer() {
             </div>
           </div>
         </div>
-      </div>
       <div className="footer">
         <div className="footer-part">
           <div className="footer_box_social">
@@ -98,7 +97,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="footer-part ">
+        <div className="footer-part footer-cont">
           <h3 className="footer-title">Contact Us</h3>
           <div className="footer-contact">
             <li>
@@ -108,7 +107,6 @@ export default function Footer() {
                 carrer@example.com
               </p>
             </li>
-            <br />
             <li>
               <p className="num">
                 <span>+120 279 532 13</span>
@@ -116,7 +114,6 @@ export default function Footer() {
                 <span>+120 279 532 14</span>
               </p>
             </li>
-            <br />
             <li>
               <p>
                 1Hd- 50, 010 Avenue,

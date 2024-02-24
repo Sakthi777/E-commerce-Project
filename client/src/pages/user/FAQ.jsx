@@ -16,7 +16,11 @@ export default function FAQ() {
               height={"350px"}
             />
             <div class="faq-title">FAQ QUESTIONS</div>
-            
+            <div className="offers-banner-anchors">
+						<p>
+							<a href="/">Home</a> / FAQ
+						</p>
+					</div>
           </div>
         </div>
         <div className="faq-body">

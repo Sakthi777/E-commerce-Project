@@ -2,9 +2,9 @@ import React from "react";
 import "../../styles/admin/addProduct.css";
 import upload from "../../../src/assets/images/AddProduct/upload.png";
 import ipay from "../../../src/assets/images/AddProduct/applepay.svg";
-import bpay from "../../../src/assets/images/AddProduct/bitpay.svg";
+// import bpay from "../../../src/assets/images/AddProduct/bitpay.svg";
 import gpay from "../../../src/assets/images/AddProduct/googlepay.svg";
-import mcpay from "../../../src/assets/images/AddProduct/mc.svg";
+// import mcpay from "../../../src/assets/images/AddProduct/mc.svg";
 // import paypalpay from "../../../src/assets/images/AddProduct/paypal.svg";
 import vpay from "../../../src/assets/images/AddProduct/visa.svg";
 
@@ -119,7 +119,7 @@ export default function AddProductdata() {
         </div>
         <br />
         <div className="user-product">
-          <div className="user-product-input">
+          <div className="user-product-input pro-in">
             <label className="user-product-label">Product Name</label>
             <input type="text" placeholder="Enter Product Name"></input>
           </div>
@@ -211,10 +211,10 @@ export default function AddProductdata() {
                   <input class="hidden" type="radio" id="" value={""}></input>
                   <img src={gpay} alt="" width={"40px"} />
                 </div>
-                <div className="payments">
+                {/* <div className="payments">
                   <input class="hidden" type="radio" id="" value={""}></input>
                   <img src={bpay} alt="" width={"40px"} />
-                </div>
+                </div> */}
                 {/* <div className="payments">
                   <input class="hidden" type="radio" id="" value={""}></input>
                   <img src={paypalpay} alt="" width={"40px"} />
@@ -224,10 +224,10 @@ export default function AddProductdata() {
                   <img src={vpay} alt="" width={"40px"} />
                 
                 </div>
-                <div className="payments">
+                {/* <div className="payments">
                   <input class="hidden" type="radio" id="" value={""}></input>
                   <img src={mcpay} alt="" width={"40px"} />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
