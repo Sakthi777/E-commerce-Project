@@ -56,7 +56,7 @@ const HeaderPage = () => {
         <div
           className={`header-card-top ${isFixed ? "fixed" : ""}`}
           ref={cardRef}
-          style={{ zIndex: 3 }}
+          // style={{ zIndex: 3 }}
         >
           <div className="alignItem">
             <div className="alignMyAccount">

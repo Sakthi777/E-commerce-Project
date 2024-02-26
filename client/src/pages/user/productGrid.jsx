@@ -10,7 +10,7 @@ import "../../styles/user/featuredItem.css";
 
 const ProductGrid = ({ products }) => {
   return (
-    <div className="product-container" style={{ zIndex: 1 }}>
+    <div className="product-container">
       <HeaderPage />
       <div className="productTitle">Recently Sold Items</div>
       <div className="product-grid">

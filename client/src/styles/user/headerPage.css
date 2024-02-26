@@ -38,7 +38,8 @@
   display: flex;
   justify-content: space-between;
   transition: transform 0.3s ease;
-  z-index: 9;
+  position: relative;
+  z-index: 2;
 }
 .fixed {
   position: fixed;
@@ -299,7 +300,6 @@
   }
   .bottom-card {
     position: fixed;
-    z-index: 999;
     height: auto;
     padding-bottom: 4px;
     bottom: 0;

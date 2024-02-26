@@ -51,6 +51,7 @@ const ProductDescriptionCard = ({ product, onClose }) => {
     slickSliderRef.current.slickNext();
   };
 
+
   const sliderSettings = {
     dots: true,
     infinite: true,
@@ -61,7 +62,7 @@ const ProductDescriptionCard = ({ product, onClose }) => {
 
   return (
     <div className="overlay-1">
-      <div className="product-description-card " style={{ zIndex: 3 }}>
+      <div className="product-description-card ">
         <div className="description-left">
           <div className="description-image">
             <img src={mainImage} alt={productName} />
