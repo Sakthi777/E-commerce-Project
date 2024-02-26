@@ -31,7 +31,6 @@
 }
 .header-card-top {
   width: 100%;
-  top: 40px;
   background-color: #ffffffff;
   height: auto;
   padding: 20px 0px;
@@ -209,6 +208,29 @@
 }
 .offcanvas-img img {
   width: 80%;
+  display: block;
+}
+.overlay {
+  position: absolute;
+  top: 7px;
+  left: 0;
+  width: 37%;
+  height: 90%;
+  background-color: rgba(204, 204, 204, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 10px;
+}
+
+.delete-icon {
+  color: red;
+  font-size: 24px;
+}
+.offcanvas-card:hover .overlay {
+  opacity: 1;
 }
 .card-item-selector button {
   border: none;
@@ -232,6 +254,7 @@
   color: #119744;
   border-radius: 5px;
 }
+
 /*-----------------------------------------------------------------------------------------------------------------------------------------*/
 .header-card-bottom {
   position: relative;

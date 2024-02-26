@@ -267,7 +267,7 @@ const ProductGrid = ({ products }) => {
           SHOW MORE
         </button>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };

@@ -117,7 +117,6 @@
   margin: 8px 0;
   text-align: center;
   color: #555;
-  padding-bottom: 8px;
 }
 
 .product-price {
@@ -289,7 +288,7 @@
 .countdown.specialdiscount .seconds,
 .countdown.specialdiscount span {
   padding: 7px;
-  width: 100%;
+
   text-align: center;
 }
 .showNowButton {
