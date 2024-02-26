@@ -9,7 +9,7 @@ import erode1 from '../../../src/assets/images/contactus-image/erode.jpg'
 
 export default function UserContact() {
   return (
-    <div>
+    <div className="greenypage">
       <div className="contactus-page">
         <div className="contact">
           <img
@@ -19,6 +19,11 @@ export default function UserContact() {
             height={"350px"}
           />
           <div class="centered">CONTACT US</div>
+          <div className="offers-banner-anchors">
+						<p>
+							<a href="/">Home</a> / Contact
+						</p>
+					</div>
         </div>
 
         <div className="add">

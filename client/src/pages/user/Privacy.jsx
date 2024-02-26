@@ -4,7 +4,7 @@ import "../../styles/user/Privacy.css";
 export default function Privacy() {
   return (
     <div>
-      <div className='terms'>
+      <div className='terms1'>
             <div className='privacy'>
                 <div className='privacy-title'>
                     <h1>Privacy Policy</h1>

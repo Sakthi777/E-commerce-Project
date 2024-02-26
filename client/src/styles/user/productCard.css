@@ -1,11 +1,12 @@
 .productTitle {
   font-size: 50px;
   letter-spacing: 2px;
-  color: #555;
+  color: #39404a;
   margin-bottom: 10px;
   margin-top: 30px;
   text-align: center;
 }
+
 .product-grid {
   position: relative;
   display: grid;
@@ -40,7 +41,9 @@
   fill: #119744; /* Liked fill color */
   color: #ffffff; /* Liked text color */
 }
-
+.card-icon {
+  padding-right: 5px;
+}
 .sale-label,
 .discount-label {
   color: #ffffff;
@@ -88,22 +91,21 @@
   border-radius: 8px;
 }
 .product-line {
-  border: 0.5px solid #f3f3f3; /* Set the color of the border */
-  width: 80%; /* Set the desired length */
-  margin: 20px auto; /* Optional: Center the hr element */
+  border: 0.5px solid #f3f3f3;
+  width: 80%;
+  margin: 20px auto;
 }
 
 .product-rating {
   display: flex;
   justify-content: center;
-  margin-top: 8px;
+  align-items: center;
 }
 
 .product-rating svg {
   color: #f8d828;
-  margin-right: 4px;
-  padding-bottom: 8px;
-  font-size: 24px;
+  margin-right: 5px;
+  font-size: 14px;
 }
 .product-rating p {
   color: #555;
@@ -239,24 +241,185 @@
   position: relative;
   margin-bottom: 50px;
 }
-.homePage-imageBox2 {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 25%;
-  overflow: hidden;
-  position: relative;
-  margin-bottom: 50px;
-}
-
 .homepage-image-1 {
   width: 80%;
   height: 100%;
   transition: transform 0.3s;
   object-fit: cover;
 }
-
-
 .homePage-imageBox:hover .homepage-image-1 {
   transform: scale(1.1); /* Adjust the scale factor based on your preference */
+}
+.specialDiscount {
+  background: #aef7ca;
+  background: linear-gradient(#aef7ca, #aef7ca);
+  width: 100%;
+  height: 800px;
+  display: flex;
+  flex-direction: row;
+}
+.discountContent {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 60%;
+  height: 100%;
+  padding-left: 100px;
+  padding-right: 50px;
+}
+.discountContent h1 {
+  text-align: center;
+  font-weight: bold;
+  font-size: 34px;
+  padding-bottom: 15px;
+}
+.discountContent p {
+  text-align: center;
+  padding-bottom: 25px;
+}
+
+.countdown.specialdiscount {
+  border: none;
+  width: 100%;
+  padding: 0px;
+  justify-content: center;
+}
+.countdown.specialdiscount .days,
+.countdown.specialdiscount.hours,
+.countdown.specialdiscount .minutes,
+.countdown.specialdiscount .seconds,
+.countdown.specialdiscount span {
+  padding: 7px;
+  width: 100%;
+  text-align: center;
+}
+.showNowButton {
+  text-align: center;
+}
+
+.show-now-button {
+  background-color: #119744;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #ffffff;
+}
+.discountImage {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  align-items: center;
+}
+.discount-percent {
+  background-color: #ff3838;
+  padding: 30px 40px;
+  top: 150px;
+  left: 70px;
+  width: auto;
+  border-radius: 50%;
+  text-align: center;
+  color: #ffffff;
+  position: absolute;
+}
+.countdownImage {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.discount-percent h1 {
+  font-size: 28px;
+  margin: 0px;
+  padding: 0px;
+}
+.discountImage img {
+  padding-left: 70px;
+}
+.shop-icon {
+  margin-right: 5px;
+}
+
+.topNiche-card {
+  border: 1px solid #ffffff;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  border-radius: 5px;
+  width: 80%;
+  margin: 60px auto; /* Center the card */
+}
+
+/* Styles for the list items */
+.topNiche-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+.topNiche-list svg {
+  padding-right: 5px;
+  width: auto;
+  height: 18px;
+}
+.topNiche-list .item-1,
+.item-2,
+.item-3 {
+  padding-right: 50px;
+  color: #39404a;
+  font-size: 18px;
+  cursor: pointer;
+}
+.topNiche-list li:hover {
+  color: #119744;
+}
+.topNiche-list li.active {
+  color: #119744;
+}
+
+@media (max-width: 1000px) {
+  .specialDiscount {
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+  }
+  .discountContent {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    padding: 50px 20px;
+    height: 100%;
+  }
+  .discountImage {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    align-items: center;
+    padding: 0px;
+  }
+  .discount-percent {
+    background-color: #ff3838;
+    padding: 30px 40px;
+    top: 0;
+    left: 10px;
+    width: auto;
+    border-radius: 50%;
+    text-align: center;
+    color: #ffffff;
+    position: absolute;
+  }
+  .discountImage img {
+    padding: 0px;
+  }
+}
+/* Responsive layout for smaller screens */
+@media (max-width: 600px) {
+  .topNiche-list {
+    flex-direction: column;
+  }
+  .topNiche-list li {
+    margin-bottom: 10px;
+  }
 }

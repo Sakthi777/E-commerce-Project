@@ -47,8 +47,8 @@ const LoginCmp = () => {
                 name="password"
               />
 
-              <div className="terms">
-                <input type="checkbox" id="terms" name="terms" />
+              <div className="header-terms">
+                <input type="checkbox" id="header-terms" name="terms" />
                 <label htmlFor="terms">Remember me</label>
               </div>
 

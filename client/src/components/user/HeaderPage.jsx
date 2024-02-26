@@ -3,13 +3,16 @@ import "../../styles/user/headerPage.css";
 import image from "../../assets/images/logo.png";
 import profile from "../../assets/images/homePageImage/profile.png";
 import { useState, useRef, useEffect } from "react";
-import { IoIosSearch, IoIosCart } from "react-icons/io";
+import { IoIosSearch } from "react-icons/io";
 import { FiChevronDown } from "react-icons/fi";
 import { FaPhone, FaEnvelope } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import { BiSolidCategory } from "react-icons/bi";
-import { FaShoppingCart } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+
+import products from "../../pages/user/productList";
 
 const HeaderPage = () => {
   const [isFixed, setIsFixed] = useState(false);
@@ -18,31 +21,35 @@ const HeaderPage = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const card = cardRef.current;
       const currentScrollY = window.scrollY;
-
-      // Adjust the scroll threshold as needed
       const scrollThreshold = 100;
-
       setIsFixed(
         currentScrollY > scrollThreshold || currentScrollY < prevScrollY
       );
-
-      // If the user has scrolled to the top, remove fixed
       if (currentScrollY === 0) {
         setIsFixed(false);
       }
-
       setPrevScrollY(currentScrollY);
     };
-
     window.addEventListener("scroll", handleScroll);
-
-    // Cleanup the event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [prevScrollY]);
+  const [quantity, setQuantity] = useState(1);
+  const handleIncrement = () => {
+    setQuantity(quantity + 1);
+  };
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const toggleCardSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
   return (
     <>
       <div className="header-container">
@@ -82,10 +89,17 @@ const HeaderPage = () => {
               <IoIosSearch />
             </span>
           </div>
-
           <div className="card-container">
             <div className="cart-icon">
-              <IoIosCart className="card-svg" />
+              <FontAwesomeIcon icon={faHeart} className="heart-icon" />
+            </div>
+            <div className="pop-up-item">
+              <p>9+</p>
+            </div>
+          </div>
+          <div className="card-container">
+            <div className="cart-icon" onClick={toggleCardSidebar}>
+              <FontAwesomeIcon icon={faShoppingBag} className="card-svg" />
             </div>
             <div className="pop-up-item">
               <p>9+</p>
@@ -96,6 +110,72 @@ const HeaderPage = () => {
             <h6>$345.00</h6>
           </div>
         </div>
+
+        <div
+          className={`offcanvas offcanvas-end ${isSidebarOpen ? "show" : ""}`}
+          tabIndex="-1"
+          id="shoppingCartOffcanvas"
+          aria-labelledby="shoppingCartOffcanvasLabel"
+        >
+          <div className="offcanvas-header">
+            <h5 className="offcanvas-title" id="shoppingCartOffcanvasLabel">
+              <FontAwesomeIcon icon={faShoppingBag} className="card-svg" />{" "}
+              Total Item (5)
+            </h5>
+            <button
+              type="button"
+              className="btn-close text-reset"
+              onClick={toggleCardSidebar}
+            ></button>
+          </div>
+          <div className="offcanvas-body">
+            <div className="offcanvas-grid">
+              {products.map((product) => (
+                <div className="offcanvas-card">
+                  <div className="offcanvas-img">
+                    <img src={product.imgSrc} alt="product" />
+                  </div>
+                  <div className="offcanvas-content">
+                    <h6>{product.productName}</h6>
+                    <p>Unit Price {product.newPrice}</p>
+                    <div className="card-item-selector">
+                      <button
+                        className="selector-button"
+                        onClick={handleDecrement}
+                      >
+                        -
+                      </button>
+                      <span className="selector-value">{quantity}</span>
+                      <button
+                        className="selector-button"
+                        onClick={handleIncrement}
+                      >
+                        +
+                      </button>
+                      <p>${product.newPrice}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="card">
+            <span>Do you have a coupon code?</span>
+            <div className="offcanvas-border">
+              <p>Proceed To Checkout</p>
+              <p className="hrLine"></p>
+              <p>456.90</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Optional: Overlay for background dimming */}
+        {isSidebarOpen && (
+          <div
+            className="offcanvas-backdrop show"
+            onClick={toggleCardSidebar}
+          ></div>
+        )}
         <div className="header-card-bottom">
           <div className="list-item">
             <ul>
@@ -120,15 +200,15 @@ const HeaderPage = () => {
             </ul>
           </div>
           <div className="contact-details">
-            <div className="contact-item">
-              <FaPhone className="icon" />
+            <div className="header-contact-item">
+              <FaPhone className="header-icon" />
               <div className="phone">
                 <p>Call Us</p>
-                <span>(+880) 183 8288 389</span>
+                <span>(+880) 183 828 8389</span>
               </div>
             </div>
-            <div className="contact-item">
-              <FaEnvelope className="icon" />
+            <div className="header-contact-item">
+              <FaEnvelope className="header-icon" />
               <div className="email">
                 <p>Email Us</p>
                 <span>support@example.com</span>
@@ -146,7 +226,11 @@ const HeaderPage = () => {
             <span>Category</span>
           </div>
           <div className="icon-container">
-            <FaShoppingCart />
+            <FontAwesomeIcon icon={faHeart} className="heart-icon" />
+            <span>WISHLIST</span>
+          </div>
+          <div className="icon-container">
+            <FontAwesomeIcon icon={faShoppingBag} onClick={toggleCardSidebar} />
             <span>Cart</span>
           </div>
         </div>
