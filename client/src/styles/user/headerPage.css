@@ -37,7 +37,8 @@
   display: flex;
   justify-content: space-between;
   transition: transform 0.3s ease;
-  z-index: 9;
+  position: relative;
+  z-index: 2;
 }
 .fixed {
   position: fixed;
