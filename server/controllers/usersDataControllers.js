@@ -9,7 +9,6 @@ exports.userDatasControllers = asyncHandler((async(req, res, next)=>{
 
     const userExists = await userDataSchema.findOne({email});
     if(userExists){
-        // res.status(401).json({status:false, message:"user already exist"});
         throw new Error("User already exist");
     }
     else{
@@ -27,5 +26,37 @@ exports.userDatasControllers = asyncHandler((async(req, res, next)=>{
        createToken(res, data._id);
        res.json(data);
     }
-
 })) 
+
+// user-Login - login/loginUser
+
+exports.loginUserControllers = asyncHandler(async(req, res, next)=>{
+    const {email, password} = req.body;
+    const existingUser = await userDataSchema.findOne({email});
+
+    if(existingUser){
+        const verifyPassword = await bcrypt.compare(password, existingUser.password);
+
+        if(verifyPassword){
+            createToken(res, existingUser._id);
+            res.json(existingUser);
+            return;
+        }
+    }
+    else{
+        res.status(401)
+        throw new Error("Email or password does not exist");
+    }
+})
+
+
+// user-Logout - /logOut/logOutUser
+
+exports.logOutUserControllers = asyncHandler(((req, res)=>{
+    res.cookie("jwt", "" , {
+        httpOnly:true,
+        expires: new Date(0),
+    })
+
+    res.json({message:"logout sucessfully"});
+} ))
