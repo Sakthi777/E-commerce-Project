@@ -9,6 +9,8 @@ body {
   font-family: "Rubik", sans-serif;
   width: 100%;
   height: auto;
+  width: 100%;
+  overflow-x: hidden;
 }
 body p {
   margin-bottom: 0px;

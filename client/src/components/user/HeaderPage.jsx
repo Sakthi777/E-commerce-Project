@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-
+import { Link } from "react-router-dom";
 import products from "../../pages/user/productList";
 
 const HeaderPage = () => {
@@ -87,10 +87,12 @@ const HeaderPage = () => {
           <div className="logo">
             <img src={image} alt="" className="logo" />
           </div>
-          <div className="myAccount">
-            <img src={profile} alt="" className="profile-logo" />
-            <p className="join">Join</p>
-          </div>
+          <Link to="/login" style={{ textDecoration: "none" }}>
+            <div className="myAccount">
+              <img src={profile} alt="" className="profile-logo" />
+              <p className="join">Join</p>
+            </div>
+          </Link>
           <div className="search-container">
             <input type="text" className="search-bar" placeholder="Search..." />
             <span className="search-icon">
@@ -195,22 +197,30 @@ const HeaderPage = () => {
           <div className="list-item">
             <ul>
               <li>
-                Home <FiChevronDown />
+                <a href="/">
+                  Home <FiChevronDown />
+                </a>
+              </li>
+
+              <li>
+                <a href="/myWallet">
+                  Shop <FiChevronDown />
+                </a>
               </li>
               <li>
-                Shop <FiChevronDown />
+                <a href="/myProfile">
+                  Category <FiChevronDown />
+                </a>
               </li>
               <li>
-                Category <FiChevronDown />
+                <a href="/offers">
+                  Pages <FiChevronDown />
+                </a>
               </li>
               <li>
-                Pages <FiChevronDown />
-              </li>
-              <li>
-                Authentic <FiChevronDown />
-              </li>
-              <li>
-                Blogs <FiChevronDown />
+                <a href="/comingSoon">
+                  Blogs <FiChevronDown />
+                </a>
               </li>
             </ul>
           </div>

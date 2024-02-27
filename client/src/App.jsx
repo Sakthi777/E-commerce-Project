@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import RegisterPage from "./pages/user/registerPage";
 import Login from "./pages/user/loginPage";
 import ResetPassword from "./pages/user/resetPasswordPage";
-import ProductDes from "./pages/user/productDescriptionCard";
 import ChangePassword from "./pages/user/changePasswordPage";
 import HeaderPage from "./components/user/HeaderPage";
 import Wishlist from "./pages/user/wishlist";
@@ -27,12 +26,7 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<HeaderPage />} />
-          <Route
-            path="/product"
-            element={<ProductGrid products={products} />}
-          />
-          <Route path="/p" element={<ProductDes />} />
+          <Route path="/" element={<ProductGrid products={products} />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/resetPassword" element={<ResetPassword />} />
