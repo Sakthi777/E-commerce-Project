@@ -23,6 +23,7 @@ import ComingSoon from "./pages/user/comingSoon";
 import AddProductdata from "./components/admin/AddProductdata";
 import CheckOut from "./pages/user/checkOut";
 import AboutUs from "./pages/user/aboutUs";
+// import FooterPart from "./pages/user/FooterPart";
 
 function App() {
 	return (
