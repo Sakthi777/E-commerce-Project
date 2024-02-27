@@ -62,7 +62,7 @@
 
 .wallet-details {
 	display: flex;
-	width: 90%;
+	width: 100%;
 	height: 100%;
 	flex-wrap: wrap;
 	justify-content: center;
@@ -145,7 +145,7 @@
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: flex-flex-start;
+	justify-content: flex-start;
 	color: #39404a;
 }
 
@@ -156,10 +156,11 @@
 	font-size: 18px;
 }
 
-.amouunts-list {
-	display: flex;
-	width: 70%;
-	justify-content: space-between;
+.amount-buttons .amounts-list {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: 20px;
+	margin-left: 10px;
 }
 
 .amt {
@@ -278,6 +279,7 @@
 @media (max-width: 840px) {
 	.wallet-details {
 		display: block;
+		padding: 0 20px;
 	}
 	.my-wallet,
 	.add-wallet {
@@ -297,10 +299,14 @@
 		display: flex;
 		justify-content: flex-start;
 		overflow-x: scroll;
-		overflow-y: scroll;
+		/* overflow-y: scroll; */
 	}
 
 	.transaction-page-buttons {
 		padding-right: 5%;
+	}
+
+	.amounts-list .amounts-list button {
+		padding: 3px;
 	}
 }

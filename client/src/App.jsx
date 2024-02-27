@@ -43,9 +43,11 @@ function App() {
 					<Route path="/privacy" element={<Privacy />} />
 					<Route path="/footer" element={<Footer />} />
 					<Route path="/faq" element={<FAQ />} />
-					<Route path="us" element={<UserContact />} />
+					<Route path="/us" element={<UserContact />} />
 					<Route path="/comingSoon" element={<ComingSoon />}></Route>
 					<Route path="/myProfile" element={<MyProfile />}></Route>
+					<Route path="/checkOut" element={<CheckOut />}></Route>
+					<Route path="/aboutus" element={<AboutUs />}></Route>
 
 					{/* adminpanel */}
 					<Route path="/addcategory" element={<AddCategory></AddCategory>}></Route>

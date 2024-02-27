@@ -64,7 +64,7 @@
 	display: grid;
 	grid-template-columns: 100%;
 	gap: 30px;
-	padding: 50px 10%;
+	padding: 50px 75px;
 	justify-content: center;
 	color: #39404a;
 }
@@ -276,5 +276,9 @@
 	.profiles-content-containers {
 		grid-template-columns: 100%;
 		justify-items: stretch;
+	}
+
+	.myprofile-details {
+		padding: 50px 25px;
 	}
 }
