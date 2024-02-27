@@ -41,6 +41,7 @@
   font-weight: 500;
   background: none;
 }
+
 .Register-content-heading h2 {
   background: none;
   font-size: 28px;
@@ -142,14 +143,32 @@
   flex-direction: column;
 }
 
+.form_error {
+  margin-top: -10px;
+  margin-left: 5px;
+  display: flex;
+  justify-content: flex-start;
+  align-self: flex-start;
+  color: #e60023;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+#form_error_icon {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
 .Register-form input {
-  margin-bottom: 20px;
+  margin-top: 5px;
+  margin-bottom: 15px;
   padding: 13px;
   border: 1px solid #ccc;
   border-radius: 5px;
   background: #f3f4f5;
   transition: border-color 0.3s ease-in-out;
 }
+
 .Register-form input:focus {
   outline: none;
   border-color: #119744;
@@ -170,6 +189,7 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: 15px;
+  margin-top: 10px;
 }
 
 /* Style the checkbox */
@@ -179,18 +199,21 @@
   width: 15px;
   accent-color: #119744;
 }
+
 .Register-form label {
   background: none;
   margin-bottom: 20px;
   color: #555555;
   display: inline;
 }
+
 .header-terms a {
   background: none;
   color: #00acee;
   text-decoration: none;
   font-size: 14px;
 }
+
 .Register-card-bottom {
   background-color: white;
   width: 70%;
@@ -203,11 +226,13 @@
   flex-direction: column;
   margin-bottom: 1.5%;
 }
+
 .Register-card-bottom .bottom-content {
   background: none;
   margin: 5px;
   text-align: center;
 }
+
 .Register-card-bottom .bottom-content p {
   text-align: center;
   background: none;
@@ -218,27 +243,32 @@
 .Authenticfooter p {
   color: #555555;
 }
+
 .Authenticfooter p span {
   color: #119744;
 }
+
 @media (max-width: 1120px) {
   .Register-card {
     height: 100%;
     width: 90%;
     margin-bottom: 10px;
   }
+
   .Register-card-bottom {
     background-color: white;
     width: 90%;
     height: 80px;
   }
 }
+
 @media (max-width: 850px) {
   .Register-card {
     height: 100%;
     width: 80%;
     margin-bottom: 10px;
   }
+
   .Register-row {
     flex-direction: column;
     position: relative;
@@ -262,6 +292,7 @@
     width: 100%;
     margin-top: 10px;
   }
+
   .Register-card-bottom {
     background-color: white;
     width: 80%;
@@ -274,14 +305,17 @@
     flex-direction: column;
     margin-bottom: 5%;
   }
+
   .Register-card-bottom .content p {
     font-size: 14px;
     text-align: center;
     margin: 1px;
   }
+
   .footer {
     margin-bottom: 5%;
   }
+
   .circle-register {
     display: none;
   }
@@ -295,6 +329,7 @@
   background-color: #e8e8e8;
   font-style: italic;
 }
+
 .circle-register p {
   text-align: center;
   background: none;
@@ -302,6 +337,7 @@
   font-size: 17px;
   color: #555555;
 }
+
 @media (max-width: 550px) {
   .Register-card {
     width: 90%;

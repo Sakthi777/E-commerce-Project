@@ -33,6 +33,20 @@
 .description-image span {
   position: absolute;
 }
+.discount-label {
+  background-color: red;
+}
+.new-label-des {
+  text-align: left;
+  display: block;
+  background-color: #119744;
+  width: 50px;
+  padding: 0px 10px;
+  color: #fff;
+  border-radius: 3px;
+  font-size: 14px;
+  top: 32px;
+}
 .description-content {
   display: flex;
   flex-direction: column;
@@ -68,7 +82,6 @@
   color: #f8d828;
   margin-right: 3px;
   font-size: 18px;
-  margin-bottom: 1rem;
 }
 .des-product-rating p {
   color: #555;
@@ -94,6 +107,7 @@
   line-height: 25px;
   text-align: justify;
   padding-bottom: 30px;
+  font-size: 15px;
 }
 .des-add-to-cart-icon span,
 .des-add-to-like-icon span {
