@@ -2,11 +2,10 @@
   position: relative;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  gap: 30px;
   justify-content: center;
-
   z-index: 1;
-  width: 90%;
+  width: 100%;
 }
 .featuredItem-card {
   position: relative;
