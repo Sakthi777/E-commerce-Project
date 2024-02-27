@@ -20,6 +20,8 @@ import MyWallet from "./pages/user/myWallet";
 import UserContact from "./pages/user/UserContact";
 import ComingSoon from "./pages/user/comingSoon";
 import AddProductdata from "./components/admin/AddProductdata";
+import CheckOut from "./pages/user/checkOut";
+import AboutUs from "./pages/user/aboutUs";
 
 function App() {
   return (

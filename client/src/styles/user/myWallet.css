@@ -217,7 +217,7 @@
 }
 
 .transaction-table table th,
-td {
+.transaction-table table td {
 	padding: 8px;
 	border: 1px solid #39404a;
 	/* border-collapse: collapse; */
