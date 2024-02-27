@@ -11,20 +11,21 @@
   width: 100%;
   top: 1px;
   height: 100%;
-  padding: 10px 0px;
+  padding: 5px 0px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 .header-top p {
   color: #ffffffff;
-  margin-left: 35px;
+  margin-left: 90px;
   font-size: 14px;
 }
 .right-span span {
   margin-right: 45px;
   color: #ffffffff;
   font-size: 14px;
+  cursor: pointer;
 }
 .right-span .contact-us {
   margin-right: 90px;
@@ -33,7 +34,8 @@
   width: 100%;
   background-color: #ffffffff;
   height: auto;
-  padding: 20px 0px;
+  padding-top: 15px;
+  padding-bottom: 12px;
   display: flex;
   justify-content: space-between;
   transition: transform 0.3s ease;
@@ -56,7 +58,8 @@
 }
 
 .logo {
-  width: 160px;
+  width: 150px;
+  height: auto;
   margin-left: 5%;
   display: flex;
   justify-content: center;
@@ -71,8 +74,8 @@
   margin-bottom: 0px;
 }
 .myAccount img {
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   margin-right: 10px;
 }
 .search-container,
@@ -83,7 +86,7 @@
 }
 
 .search-bar {
-  padding: 14px 0px;
+  padding: 12px 0px;
   padding-left: 20px;
   padding-right: 450px;
   background-color: #f3f4f6;
@@ -102,7 +105,7 @@
 
 .search-icon {
   position: absolute;
-  transform: translate(1150%, 10%);
+  transform: translate(1150%, 14%);
   font-size: 24px;
   color: #555;
   cursor: pointer;
@@ -114,9 +117,9 @@
   justify-content: center;
   background-color: #f3f4f5;
   color: #555;
-  font-size: 20px;
+  font-size: 16px;
   cursor: pointer;
-  padding: 14px;
+  padding: 10px;
   border-radius: 50%;
 }
 .cart-icon:hover {
@@ -127,7 +130,7 @@
 .pop-up-item {
   background-color: green;
   border-radius: 50px;
-  transform: translate(-100%, -120%);
+  transform: translate(-80%, -90%);
   width: 20px;
   height: 20px;
   text-align: center;
@@ -260,9 +263,9 @@
 .header-card-bottom {
   position: relative;
   width: 100%;
-  background-color: #ffffffff;
+  background-color: #ffffff;
   height: auto;
-  padding: 20px 0px;
+  padding: 10px 0px;
   display: flex;
   justify-content: space-between;
 }
@@ -282,6 +285,8 @@
   margin-right: 10px;
   color: #555;
   font: 16px/1 "Rubik", sans-serif;
+  padding-top: 10px;
+  position: relative;
 }
 .list-item :hover {
   color: #119744;
@@ -290,7 +295,9 @@
 .list-item li svg {
   margin-left: 5px;
   vertical-align: middle;
+  font-size: 20px;
 }
+
 .contact-details {
   display: flex;
   justify-content: space-between;
@@ -304,7 +311,7 @@
 .header-icon {
   margin-right: 20px;
   color: #119744;
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .phone,
@@ -313,6 +320,7 @@
   flex-direction: column;
   color: #555560;
   font-size: 14px;
+  font-weight: 500;
 }
 
 .phone,
@@ -322,6 +330,7 @@
 .phone p,
 .email p {
   margin-bottom: 0px;
+  padding: 0px;
 }
 .phone span,
 .email span {
@@ -397,15 +406,15 @@
   }
 
   .alignMyAccount img {
-    width: 50px;
+    width: 40px;
     margin-left: 20px;
   }
   .alignlogo img {
-    width: 180px;
+    width: 160px;
   }
 
   .alignSearch-icon svg {
-    font-size: 50px;
+    font-size: 42px;
     align-items: center;
     background-color: #f3f4f6;
     padding: 10px;
@@ -442,25 +451,70 @@
   }
 
   .icon-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 8px;
-    font-size: 14px;
+    margin: 0px auto;
+    padding-top: 3px;
+    font-size: 12px;
     color: #555;
     cursor: pointer;
+  }
+  .icon-container.cart,
+  .icon-container.wishlist {
+    top: 10px;
+  }
+  .pop-up-cart {
+    position: relative;
+    background-color: #119744;
+    border-radius: 50px;
+    transform: translate(90%, -210%);
+    width: 20px;
+    height: 20px;
+    text-align: center;
+  }
+  .pop-up-cart p {
+    font-size: 10px;
+    color: #f3f4f6;
+    text-align: center;
+    padding-top: 2px;
+  }
+  .pop-up-wishlist {
+    position: relative;
+    background-color: #119744;
+    border-radius: 50px;
+    transform: translate(-1000%, -50%);
+    width: 20px;
+    height: 20px;
+    text-align: center;
+  }
+  .pop-up-wishlist p {
+    font-size: 10px;
+    color: #f3f4f6;
+    text-align: center;
+    padding-top: 2px;
   }
   .icon-container:hover {
     color: #119744;
   }
   .icon-container svg {
-    margin-bottom: 3px;
+    margin-bottom: 2px;
   }
 }
-@media (max-width: 640px) {
-  .header-top {
+@media (max-width: 770px) {
+  .header-top p {
     display: none;
+    width: 100%;
   }
+  .right-span {
+    text-align: center;
+    margin: 0px auto;
+  }
+  .right-span .contact-us {
+    margin: 0px;
+  }
+
   .header-card-top {
     top: 1px;
   }

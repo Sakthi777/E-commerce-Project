@@ -13,3 +13,6 @@ body {
 body p {
   margin-bottom: 0px;
 }
+body svg {
+  vertical-align: initial; /* or vertical-align: unset; */
+}

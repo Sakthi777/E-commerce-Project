@@ -48,14 +48,17 @@ const ProductCard = ({
       >
         <AiFillHeart className="icon" />
       </div>
-
-      <span className={`sale-label ${setSale ? "visible" : "hidden"}`}>
-        Sale
-      </span>
-      <span className={`new-label ${setNew ? "visible" : "hidden"}`}>New</span>
-      <img src={imgSrc} alt={productName} className="product-img" />
-      <div className="viewIcon" onClick={toggleDescription}>
-        <FaEye />
+      <div className="product-img-container">
+        <span className={`sale-label ${setSale ? "visible" : "hidden"}`}>
+          Sale
+        </span>
+        <span className={`new-label ${setNew ? "visible" : "hidden"}`}>
+          New
+        </span>
+        <img src={imgSrc} alt={productName} className="product-img" />
+        <div className="viewIcon" onClick={toggleDescription}>
+          <FaEye />
+        </div>
       </div>
       <Modal
         show={showModal}

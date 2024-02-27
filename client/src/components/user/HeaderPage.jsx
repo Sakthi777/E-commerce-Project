@@ -63,6 +63,7 @@ const HeaderPage = () => {
         <div className="header-top">
           <p>Welcome to Ecomart in Your Dream Online Store!</p>
           <div className="right-span">
+            <span className="need-help">Offers</span>
             <span className="need-help">Need Help</span>
             <span className="contact-us">Contact Us</span>
           </div>
@@ -231,7 +232,7 @@ const HeaderPage = () => {
           </div>
         </div>
         <div className="bottom-card">
-          <div className="icon-container" >
+          <div className="icon-container">
             <FaHome />
             <span>Home</span>
           </div>
@@ -239,17 +240,23 @@ const HeaderPage = () => {
             <BiSolidCategory />
             <span>Category</span>
           </div>
-          <div className="icon-container">
+          <div className="icon-container wishlist">
             <FontAwesomeIcon
               icon={faHeart}
               className="heart-icon"
               onClick={naviagteWhislist}
             />
-            <span>WISHLIST</span>
+            <span>Wishlist</span>
+            <div className="pop-up-cart">
+              <p>9+</p>
+            </div>
           </div>
-          <div className="icon-container">
+          <div className="icon-container cart">
             <FontAwesomeIcon icon={faShoppingBag} onClick={toggleCardSidebar} />
             <span>Cart</span>
+            <div className="pop-up-cart">
+              <p>9+</p>
+            </div>
           </div>
         </div>
       </div>
