@@ -20,13 +20,14 @@ import UserContact from "./pages/user/UserContact";
 
 import ComingSoon from "./pages/user/comingSoon";
 import AddProductdata from "./components/admin/AddProductdata";
+import CheckOut from "./pages/user/checkOut";
+import AboutUs from "./pages/user/aboutUs";
 
 function App() {
 	return (
 		<div className="App">
 			<Router>
 				<Routes>
-				
 					<Route path="/" element={<HeaderPage />} />
 					<Route path="/product" element={<ProductGrid products={products} />} />
 					<Route path="/register" element={<RegisterPage />} />
@@ -42,13 +43,13 @@ function App() {
 					<Route path="us" element={<UserContact />} />
 					<Route path="/comingSoon" element={<ComingSoon />}></Route>
 					<Route path="/myProfile" element={<MyProfile />}></Route>
-					
+					<Route path="/checkout" element={<CheckOut />}></Route>
+					<Route path="/aboutus" element={<AboutUs />}></Route>
 
 					{/* adminpanel */}
 					<Route path="/addcategory" element={<AddCategory></AddCategory>}></Route>
 					<Route path="/dashboard" element={<Dashboard />}></Route>
 					<Route path="/productdata" element={<AddProductdata />}></Route>
-
 				</Routes>
 			</Router>
 		</div>
