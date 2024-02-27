@@ -1,11 +1,11 @@
 import React from "react";
-import ProductCard from "../../pages/user/productCard";
+import ProductCard from "./productCard";
 import HeaderPage from "../../components/user/HeaderPage";
 import { FaArrowCircleDown } from "react-icons/fa";
 import image1 from "../../assets/images/homePageImage/home-page-img1.jpg";
 import countdownImage from "../../assets/images/homePageImage/countdown.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Footer from "../../pages/user/Footer";
+import Footer from "./Footer";
 import {
   faShoppingBag,
   faStar,
@@ -15,7 +15,7 @@ import FeaturedItems from "./featuredItems";
 import "../../styles/user/featuredItem.css";
 import { useState } from "react";
 
-const ProductGrid = ({ products }) => {
+const Home = ({ products }) => {
   const [selectedOption, setSelectedOption] = useState("Top Order");
 
   const handleOptionClick = (option) => {
@@ -278,4 +278,4 @@ const ProductGrid = ({ products }) => {
   );
 };
 
-export default ProductGrid;
+export default Home;

@@ -61,7 +61,7 @@
 }
 
 .geting h3 {
-    margin-top: 30px;
+    margin-top: 42px;
 }
 
 .subscribe {
@@ -275,11 +275,22 @@ padding-top: 20px;
 }
 .footer-cont .cont-i{
     color: green;
-    width: 10%;
-    height: 40%;
+    width: 16px;
+    height: 8%;
+    margin-right: 15px;
+}
+.footer-cont .cont-i_first{
+    color: green;
+    width: 20px;
+    height: 15%;
+    margin-right: 15px;
 }
 .footer-contact li {
-    line-height: 1.9;
+    /* line-height: 2.2; */
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .footer-contact td {

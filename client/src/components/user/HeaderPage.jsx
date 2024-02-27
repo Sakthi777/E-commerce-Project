@@ -5,7 +5,7 @@ import profile from "../../assets/images/homePageImage/profile.png";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoIosSearch } from "react-icons/io";
-import { FiChevronDown } from "react-icons/fi";
+// import { FiChevronDown } from "react-icons/fi";
 import { FaPhone, FaEnvelope } from "react-icons/fa";
 import { FaHome } from "react-icons/fa";
 import { BiSolidCategory } from "react-icons/bi";
@@ -197,30 +197,35 @@ const HeaderPage = () => {
           <div className="list-item">
             <ul>
               <li>
-                <a href="/">
-                  Home <FiChevronDown />
-                </a>
+                <Link to="/">
+                  Home 
+                  {/* <FiChevronDown /> */}
+                </Link>
               </li>
 
               <li>
-                <a href="/myWallet">
-                  Shop <FiChevronDown />
-                </a>
+                <Link to="/myWallet">
+                  Wallet
+                  {/* <FiChevronDown /> */}
+                </Link>
               </li>
               <li>
-                <a href="/myProfile">
-                  Category <FiChevronDown />
-                </a>
+                <Link to="/myProfile">
+                  Category
+                   {/* <FiChevronDown /> */}
+                </Link>
               </li>
               <li>
-                <a href="/offers">
-                  Pages <FiChevronDown />
-                </a>
+                <Link to="/offers">
+                  Offers
+                  {/* <FiChevronDown /> */}
+                </Link>
               </li>
               <li>
-                <a href="/comingSoon">
-                  Blogs <FiChevronDown />
-                </a>
+                <Link to="/comingSoon">
+                  Blogs 
+                  {/* <FiChevronDown /> */}
+                </Link>
               </li>
             </ul>
           </div>

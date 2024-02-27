@@ -65,12 +65,12 @@ function CheckOut() {
 		);
 	};
 
-	const [liked, setLiked] = useState(false);
+	// const [liked, setLiked] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 
-	const toggleLike = () => {
-		setLiked(!liked);
-	};
+	// const toggleLike = () => {
+	// 	setLiked(!liked);
+	// };
 
 	const toggleDescription = () => {
 		setShowModal(true);
@@ -101,7 +101,7 @@ function CheckOut() {
 				<div className="myprofile-details">
 					<div className="returning-customer">
 						<p>
-							Returning Customer? <a href="">Click here to login</a>
+							Returning Customer? <a href="...">Click here to login</a>
 						</p>
 					</div>
 
@@ -173,7 +173,7 @@ function CheckOut() {
 							</table>
 						</div>
 						<div className="checkout-summary" style={{ textAlign: "center" }}>
-							<a href="" style={{ color: "#119744" }}>
+							<a href="..." style={{ color: "#119744" }}>
 								Do you have a coupon code?
 							</a>
 
