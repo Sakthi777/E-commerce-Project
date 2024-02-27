@@ -10,4 +10,9 @@ body {
   width: 100%;
   height: auto;
 }
-
+body p {
+  margin-bottom: 0px;
+}
+body svg {
+  vertical-align: initial; /* or vertical-align: unset; */
+}

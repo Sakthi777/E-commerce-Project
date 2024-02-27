@@ -3,6 +3,7 @@ import "../../styles/user/headerPage.css";
 import image from "../../assets/images/logo.png";
 import profile from "../../assets/images/homePageImage/profile.png";
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { IoIosSearch } from "react-icons/io";
 import { FiChevronDown } from "react-icons/fi";
 import { FaPhone, FaEnvelope } from "react-icons/fa";
@@ -11,6 +12,7 @@ import { BiSolidCategory } from "react-icons/bi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import products from "../../pages/user/productList";
 
@@ -18,6 +20,11 @@ const HeaderPage = () => {
   const [isFixed, setIsFixed] = useState(false);
   const [prevScrollY, setPrevScrollY] = useState(0);
   const cardRef = useRef(null);
+  const navigate = useNavigate();
+
+  const naviagteWhislist = () => {
+    navigate("/wishlist");
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -56,6 +63,7 @@ const HeaderPage = () => {
         <div className="header-top">
           <p>Welcome to Ecomart in Your Dream Online Store!</p>
           <div className="right-span">
+            <span className="need-help">Offers</span>
             <span className="need-help">Need Help</span>
             <span className="contact-us">Contact Us</span>
           </div>
@@ -90,7 +98,7 @@ const HeaderPage = () => {
             </span>
           </div>
           <div className="card-container">
-            <div className="cart-icon">
+            <div className="cart-icon" onClick={naviagteWhislist}>
               <FontAwesomeIcon icon={faHeart} className="heart-icon" />
             </div>
             <div className="pop-up-item">
@@ -133,7 +141,14 @@ const HeaderPage = () => {
               {products.map((product) => (
                 <div className="offcanvas-card">
                   <div className="offcanvas-img">
-                    <img src={product.imgSrc} alt="product" />
+                    <img
+                      src={product.imgSrc}
+                      alt="product"
+                      className="offcanvas-prod-img"
+                    />
+                    <div className="overlay">
+                      <FontAwesomeIcon icon={faTrash} className="delete-icon" />
+                    </div>
                   </div>
                   <div className="offcanvas-content">
                     <h6>{product.productName}</h6>
@@ -225,21 +240,26 @@ const HeaderPage = () => {
             <BiSolidCategory />
             <span>Category</span>
           </div>
-          <div className="icon-container">
-            <FontAwesomeIcon icon={faHeart} className="heart-icon" />
-            <span>WISHLIST</span>
+          <div className="icon-container wishlist">
+            <FontAwesomeIcon
+              icon={faHeart}
+              className="heart-icon"
+              onClick={naviagteWhislist}
+            />
+            <span>Wishlist</span>
+            <div className="pop-up-cart">
+              <p>9+</p>
+            </div>
           </div>
-          <div className="icon-container">
+          <div className="icon-container cart">
             <FontAwesomeIcon icon={faShoppingBag} onClick={toggleCardSidebar} />
             <span>Cart</span>
+            <div className="pop-up-cart">
+              <p>9+</p>
+            </div>
           </div>
         </div>
       </div>
-      {/* <div className="product">
-        <Link to="/product" id="link">
-          Product Page
-        </Link>
-      </div> */}
     </>
   );
 };
