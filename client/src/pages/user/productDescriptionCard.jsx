@@ -55,19 +55,16 @@ const ProductDescriptionCard = ({ product, onClose }) => {
     slidesToScroll: 1,
   };
 
-
-
-
   return (
     <div className="helo">
       <div className="product-description-card">
         <div className="description-left">
           <div className="description-image">
             <img src={mainImage} alt={productName} />
-            <span className={`new-label ${setNew ? "visible" : "hidden"}`}>
+            <span className="discount-label">-{discountPercentage}%</span>
+            <span className={`new-label-des ${setNew ? "visible" : "hidden"}`}>
               New
             </span>
-            <span className="discount-label">-{discountPercentage}%</span>
           </div>
           <div className="description-thumbnails">
             <Slider {...sliderSettings} ref={slickSliderRef}>

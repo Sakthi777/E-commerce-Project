@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import RegisterPage from "./pages/user/registerPage";
 import Login from "./pages/user/loginPage";
 import ResetPassword from "./pages/user/resetPasswordPage";
-import ProductDes from "./pages/user/productDescriptionCard";
 import ChangePassword from "./pages/user/changePasswordPage";
 import HeaderPage from "./components/user/HeaderPage";
 import Wishlist from "./pages/user/wishlist";
@@ -23,6 +22,7 @@ import ComingSoon from "./pages/user/comingSoon";
 import AddProductdata from "./components/admin/AddProductdata";
 import CheckOut from "./pages/user/checkOut";
 import AboutUs from "./pages/user/aboutUs";
+// import FooterPart from "./pages/user/FooterPart";
 
 function App() {
 	return (

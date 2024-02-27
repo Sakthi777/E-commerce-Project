@@ -49,6 +49,7 @@
   width: 100%;
   transform: translateX(-50%);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 3;
 }
 .header-card-top.fixed .search-bar {
   border: 1px solid #119744;
@@ -65,14 +66,18 @@
   justify-content: center;
   align-items: center;
 }
+
+.myAccount:hover p {
+  color: #119744;
+}
 .myAccount {
   display: flex;
   color: #555560;
   align-items: center;
+  cursor: pointer;
+  margin-top: 2px;
 }
-.myAccount p {
-  margin-bottom: 0px;
-}
+
 .myAccount img {
   width: 40px;
   height: 40px;
@@ -168,19 +173,19 @@
 .card {
   text-align: center;
   height: auto;
-  margin: 20px 0px;
+
   position: relative;
 }
 .card span {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: lighter;
   color: #119744;
   margin-top: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   text-align: center;
 }
 .card p {
-  font-size: 18px;
+  font-size: 16px;
   display: inline;
   text-align: center;
   padding: 5px;
@@ -188,8 +193,8 @@
 .offcanvas-border {
   background-color: #119744;
   border-radius: 5px;
-  padding: 20px;
-  margin: 5px;
+  padding: 10px 40px;
+  margin: 3px auto;
   color: white;
 }
 .hrLine {
@@ -268,6 +273,10 @@
   padding: 10px 0px;
   display: flex;
   justify-content: space-between;
+}
+.list-item a {
+  text-decoration: none;
+  color: #555;
 }
 .list-item ul {
   list-style: none;
@@ -469,7 +478,7 @@
     position: relative;
     background-color: #119744;
     border-radius: 50px;
-    transform: translate(90%, -210%);
+    transform: translate(90%, -200%);
     width: 20px;
     height: 20px;
     text-align: center;
