@@ -6,13 +6,16 @@
   margin-top: 30px;
   text-align: center;
 }
-
+.product-container {
+  padding: 0px 80px;
+}
 .product-grid {
   position: relative;
   display: grid;
+  width: 100%;
   grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
-  margin: 30px 80px;
+  gap: 25px;
+
   /* z-index: 1; */
 }
 
@@ -21,6 +24,7 @@
   background-color: #fff;
   border: 1px solid #ddd;
   padding: 15px;
+  width: auto;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
@@ -51,7 +55,8 @@
   display: block;
   background-color: #e86121;
   width: 50px;
-  padding: 3px 10px;
+  padding: 0px 10px;
+  top: 7px;
   color: #fff;
   border-radius: 3px;
   margin-bottom: 4px;
@@ -66,34 +71,41 @@
   display: block;
   background-color: #119744;
   width: 50px;
-  padding: 3px 10px;
+  padding: 0px 10px;
   color: #fff;
   border-radius: 3px;
   font-size: 14px;
+  top: 35px;
 }
 
 .sale-label.visible,
 .new-label.visible {
   display: block;
+  position: absolute;
 }
 .sale-label,
 .new-label {
   opacity: 0;
+  position: absolute;
 }
 .sale-label.visible,
 .new-label.visible {
   opacity: 1;
 }
+.product-img-container {
+  width: 90%;
+}
 .product-img {
   width: 100%;
-  max-height: 140px;
+  height: auto;
   object-fit: cover;
   border-radius: 8px;
 }
 .product-line {
   border: 0.5px solid #f3f3f3;
   width: 80%;
-  margin: 20px auto;
+  margin: 0px auto;
+  margin-bottom: 10px;
 }
 
 .product-rating {
@@ -117,7 +129,6 @@
   margin: 8px 0;
   text-align: center;
   color: #555;
-  padding-bottom: 8px;
 }
 
 .product-price {
@@ -145,7 +156,7 @@
 .add-to-cart-icon {
   color: #555;
   background-color: #cccccc;
-  padding: 10px;
+  padding: 7px 10px;
   cursor: pointer;
   text-align: center;
   border-radius: 5px;
@@ -190,18 +201,25 @@
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 990px) {
   .product-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 780px) {
   .product-grid {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
-
+@media (max-width: 600px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .product-container {
+    padding: 10px;
+  }
+}
 /* --------------------------------------------------------------------------------------------------------------------------------------- */
 .showMoreButton {
   display: flex;
@@ -290,7 +308,7 @@
 .countdown.specialdiscount .seconds,
 .countdown.specialdiscount span {
   padding: 7px;
-  width: 100%;
+
   text-align: center;
 }
 .showNowButton {

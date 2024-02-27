@@ -64,12 +64,13 @@
 	display: grid;
 	grid-template-columns: 100%;
 	gap: 30px;
-	padding: 15px 15px;
+	padding: 50px 10%;
 	justify-content: center;
 	color: #39404a;
 }
 
 .profile-element {
+	height: auto;
 	display: grid;
 	grid-template-columns: 1fr;
 	align-items: center;
@@ -223,11 +224,51 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border: 1px solid #39404a3f;
+	border: none;
 	width: 30px;
 	height: 30px;
+	border: none;
 	border-radius: 50%;
-	background-color: #fff;
+}
+
+.profile-action-edit-btn:hover {
+	background-color: #119744;
+	color: #ffffff;
+}
+
+.profile-action-del-btn:hover {
+	background-color: #ff3838;
+	color: #ffffff;
+}
+
+.profile-action-edit-btn {
+	color: #119744;
+	background-color: #f3f4f6;
+}
+
+.profile-action-del-btn {
+	color: #ff3838;
+	background-color: #f3f4f6;
+}
+
+.modal-popup {
+	display: grid;
+	grid-template-columns: 100%;
+	padding: 30px 50px;
+	color: #39404a;
+}
+
+.modal-popup select,
+.modal-popup input {
+	margin: 20px 0;
+	padding: 10px;
+	border-radius: 5px;
+	border: 1px solid #39404a;
+}
+
+.modal-popup Button {
+	background-color: #119744;
+	height: 50px;
 }
 
 @media (max-width: 840px) {
