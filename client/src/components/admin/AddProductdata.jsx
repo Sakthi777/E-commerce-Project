@@ -10,7 +10,7 @@ import vpay from "../../../src/assets/images/AddProduct/visa.svg";
 
 export default function AddProductdata() {
   return (
-    <div style={{padding: "20px"}}>
+    <div className="adddata" style={{padding: "20px"}}>
       <div>
         <div className="head1">
           <h6>Product Settings</h6>

@@ -22,7 +22,7 @@ import ComingSoon from "./pages/user/comingSoon";
 import AddProductdata from "./components/admin/AddProductdata";
 import CheckOut from "./pages/user/checkOut";
 import AboutUs from "./pages/user/aboutUs";
-import ProductDescriptionCard from "./pages/user/productDescriptionCard";
+// import ProductDescriptionCard from "./pages/user/productDescriptionCard";
 // import Home from "./pages/user/home";
 // import FooterPart from "./pages/user/FooterPart";
 
@@ -31,9 +31,8 @@ function App() {
 		<div className="App">
 			<Router>
 				<Routes>
-					<Route path="/" element={<HeaderPage />} />
-					<Route path="/product" element={<ProductGrid products={products} />} />
-					<Route path="/p" element={<ProductDes />} />
+					<Route path="/" element={<Home products={products} />} />
+					
 					<Route path="/wishlist" element={<Wishlist />} />
 					<Route path="/register" element={<RegisterPage />} />
 					<Route path="/resetPassword" element={<ResetPassword />} />
@@ -48,7 +47,6 @@ function App() {
 					<Route path="us" element={<UserContact />} />
 					<Route path="/comingSoon" element={<ComingSoon />}></Route>
 					<Route path="/myProfile" element={<MyProfile />}></Route>
-
 					<Route path="/checkout" element={<CheckOut />}></Route>
 					<Route path="/about" element={<AboutUs />}></Route>
 
