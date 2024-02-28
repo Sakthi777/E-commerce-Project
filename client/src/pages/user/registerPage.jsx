@@ -37,46 +37,53 @@ const RegisterPage = () => {
 
 		const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
 
-		if (name === "") {
-			setError({ ...error, userName: { status: true, message: "Username is required !" } });
-		} else if (email === "") {
-			setError({ ...error, email: { status: true, message: "Email is required !" } });
-		} else if (password === "") {
-			setError({ ...error, password: { status: true, message: "Password is required !" } });
-		} else if (password.length < 8) {
-			setError({ ...error, password: { status: true, message: "Your password should have at least 8 characters" } });
-		} else if (!pattern.test(password)) {
-			setError({ ...error, password: { status: true, message: "Your password must have atleast one lowercase letter, one uppercase letter, one number, and one special character (!@#$%^&*)." } });
-		} else if (confirmPassword === "") {
-			setError({ ...error, confirmPassword: { status: true, message: "confirm Password is required !" } });
-		} else if (password !== confirmPassword) {
-			setError({ ...error, confirmPassword: { status: true, message: "confirm Password is not same !" } });
-		} else if (!checkBox) {
-			setError({ ...error, checkBox: { status: true, message: "Agree Terms & conditions !" } });
-		} else {
-			const handlePost = {
-				userName: userData.userName,
-				email: userData.email,
-				password: userData.password,
-				confirmPassword: userData.confirmPassword,
-			};
-			setUserData({ ...userData, loader: true });
-			axios
-				.post(`${url}/userDatas/users`, handlePost)
-				.then((res) => {
-					console.log(res.data);
-				})
-				.catch((error) => {
-					console.log(error.response.data.message);
-					// if (error.response.data.message === "User already exists") {
-					//   console.log(error);
-					//   console.log("User already exists one");
-					//   setError({ ...error, customError: { status: true, message: "User Already Exist !" } });
-					//   setUserData({ ...userData, loader: false });
-					// }
-				});
-		}
-	};
+    if (name === "") {
+      setError({ ...error, userName: { status: true, message: "Username is required !" } });
+    }
+    else if (email === "") {
+      setError({ ...error, email: { status: true, message: "Email is required !" } });
+    }
+    else if (password === "") {
+      setError({ ...error, password: { status: true, message: "Password is required !" } });
+    }
+    else if (password.length < 8) {
+      setError({ ...error, password: { status: true, message: "Your password should have at least 8 characters" } });
+    }
+    else if (!pattern.test(password)) {
+      setError({ ...error, password: { status: true, message: "Your password must have atleast one lowercase letter, one uppercase letter, one number, and one special character (!@#$%^&*)." } });
+    }
+    else if (confirmPassword === "") {
+      setError({ ...error, confirmPassword: { status: true, message: "confirm Password is required !" } });
+    }
+    else if (password !== confirmPassword) {
+      setError({ ...error, confirmPassword: { status: true, message: "confirm Password is not same !" } });
+    }
+    else if (!checkBox) {
+      setError({ ...error, checkBox: { status: true, message: "Agree Terms & conditions !" } });
+    }
+    else {
+      const handlePost = {
+        userName: userData.userName,
+        email: userData.email,
+        password: userData.password,
+        confirmPassword: userData.confirmPassword
+      }
+      setUserData({ ...userData, loader: true });
+      axios.post(`${url}/userDatas/users`, handlePost).then((res) => {
+        console.log(res.data);
+          }).catch((error) => {
+            console.log(error.response.data.message )
+            const dataError = error.response.data.message ;
+            console.log(dataError);
+            if (dataError) {
+              console.log("User already exists one");
+              setUserData({ ...userData, loader: false });
+              setError({ ...error, customError: { status: true, message: "Your password should have at least 8 characters" } });
+            }  
+          });
+    }
+
+  }
 
 	return (
 		<div className="Authentic-container">
@@ -265,24 +272,24 @@ const RegisterPage = () => {
 								""
 							)}
 
-							<button type="submit">Register</button>
-						</form>
-					</div>
-				</div>
-			</div>
-			<div className="Register-card-bottom">
-				<div className="bottom-content">
-					<p>
-						Already Have An Account?
-						<Link to="/login" id="link">
-							Login Here
-						</Link>
-					</p>
-				</div>
-			</div>
-			<Footer />
-		</div>
-	);
+              <button type="submit">Register</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div className="Register-card-bottom">
+        <div className="bottom-content">
+          <p>
+            Already Have An Account?
+            <Link to="/login" id="link">
+              Login Here
+            </Link>
+          </p>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
 };
 
 export default RegisterPage;

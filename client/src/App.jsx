@@ -47,9 +47,6 @@ function App() {
 					<Route path="/comingSoon" element={<ComingSoon />}></Route>
 					<Route path="/myProfile" element={<MyProfile />}></Route>
 
-					<Route path="/checkout" element={<CheckOut />}></Route>
-					<Route path="/about" element={<AboutUs />}></Route>
-
 					{/* adminpanel */}
 					<Route path="/addcategory" element={<AddCategory></AddCategory>}></Route>
 					<Route path="/dashboard" element={<Dashboard />}></Route>
