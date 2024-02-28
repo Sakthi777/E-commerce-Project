@@ -146,11 +146,16 @@
 	border-radius: 50%;
 	border: 8px solid white;
 	margin-left: 50px;
+	display: flex;
+	align-self: center;
 }
 
 .testimonal-content {
-	padding: 0 100px;
-	text-align: center;
+	padding: 0 4%;
+	text-align: justify;
+	margin: auto;
+	text-indent: 50px;
+	padding-right: 15%;
 }
 
 .testimonal-content p {
@@ -165,8 +170,77 @@
 	align-items: center;
 }
 
+.custom-arrow {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 40px;
+	height: 40px;
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1;
+	background-color: #fff;
+	border-radius: 50%;
+	color: #119744;
+
+	&:hover {
+		color: #fff;
+		background-color: #119744;
+	}
+}
+
+.prev-arrow {
+	left: 10px;
+}
+
+.next-arrow {
+	right: 10px;
+}
+
 .slick-slide {
 	box-shadow: none;
+}
+
+.slick-slide > div {
+	margin: 0 3%;
+}
+
+.our-team-members {
+	background-image: radial-gradient(640px, #ffffff, #aaaaaa50);
+	margin: 50px 0;
+	border-radius: 15px;
+	padding: 1% 5%;
+}
+
+.our-team-members h2 {
+	display: flex;
+	flex-direction: column;
+	/* justify-self: center; */
+	align-items: center;
+}
+
+.team-card {
+	display: flex;
+	flex-direction: column;
+	/* justify-content: center; */
+	align-items: center;
+}
+
+.team-card img {
+	width: calc(20vw - 25px);
+	height: auto;
+}
+
+.our-team-members .prev-arrow {
+	left: -10px;
+}
+
+.our-team-members .next-arrow {
+	right: -10px;
 }
 
 @media (max-width: 1080px) {
@@ -178,6 +252,30 @@
 
 	.about-us-intro-text {
 		padding: 0 30px;
+	}
+
+	.testimonal-item {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.testimonal-item img {
+		margin-left: 0;
+		width: 200px;
+		height: 200px;
+	}
+
+	.testimonal-carousel {
+		padding: 10px;
+	}
+
+	.testimonal-content {
+		padding-top: 25px;
+	}
+
+	.team-card img {
+		width: calc(90% - 10px);
+		height: auto;
 	}
 }
 
@@ -206,14 +304,21 @@
 		width: 20%;
 	}
 
-	.testimonal-item {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
+	.custom-arrow {
+		width: 20px;
+		height: 20px;
 	}
 
-	.testimonal-content {
-		padding: 30px 0 0 0;
-		text-align: center;
+	.prev-arrow {
+		left: -10px;
+	}
+
+	.next-arrow {
+		right: -10px;
+	}
+
+	.team-card img {
+		width: calc(100% - 25px);
+		height: auto;
 	}
 }
