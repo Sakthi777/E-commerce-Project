@@ -292,6 +292,7 @@
 .list-item li {
   display: inline-block;
   margin-right: 10px;
+  margin-left: 20px;
   color: #555;
   font: 16px/1 "Rubik", sans-serif;
   padding-top: 10px;

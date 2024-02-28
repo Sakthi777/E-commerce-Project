@@ -8,6 +8,10 @@ import visa1 from "../../../src/assets/images/footer-img/visa.jpg";
 import discover1 from "../../../src/assets/images/footer-img/discover.jpg";
 import maestro1 from "../../../src/assets/images/footer-img/maestro.jpg";
 import google from "../../../src/assets/images/footer-img/google-store.png";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowUp, faAt, faHeadset, faLock, faMapMarkerAlt, faMobile, faSyncAlt, faTruck } from '@fortawesome/free-solid-svg-icons'
+import { faFacebook, faInstagram, faLinkedin, faPinterest, faTwitter } from "@fortawesome/free-brands-svg-icons";
+
 
 export default function Footer() {
   return (
@@ -15,7 +19,7 @@ export default function Footer() {
       <div className="office-discount">
         <div className="discount">
           <div className="image">
-            <img src={footimg} alt=""  />
+            <img src={footimg} alt="" />
             <div className="percent">
               <div className="geting">
                 <h3>Get 20% Discount For Subscriber</h3>
@@ -29,92 +33,89 @@ export default function Footer() {
           </div>
         </div>
       </div>
+      <div className="delivary">
+        <div className="del-title">
+          <div className="del">
+            <div className="del-icons">
+              <FontAwesomeIcon icon={faTruck} className="delivary-icon" />
+            </div>
+            <div className="home">
+              <h5 className="wait">Free Home Delivery</h5>
+              <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
+            </div>
+          </div>
+          <div className="del">
+            <div className="del-icons">
+              <FontAwesomeIcon icon={faSyncAlt} /></div>
+            <div className="return">
 
-      
-        <div className="delivary">
-          <div className="del-title">
-            <div className="del">
-              <div className="home">
-                <h4>Free Home Delivery</h4>
-                <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
-              </div>
+              <h5 className="wait">Instant Return Policy</h5>
+              <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
             </div>
-            <div className="del">
-              <div className="return">
-                <h4>Instant Return Policy</h4>
-                <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
-              </div>
+          </div>
+          <div className="del">
+            <div className="del-icons">
+              <FontAwesomeIcon icon={faHeadset} /></div>
+            <div className="support">
+
+              <h5 className="wait">Quick Support System</h5>
+              <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
             </div>
-            <div className="del">
-              <div className="support">
-                <h4>Quick Support System</h4>
-                <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
-              </div>
-            </div>
-            <div className="del">
-              <div className="payment">
-                <h4>Secure Payment Way</h4>
-                <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
-              </div>
+          </div>
+          <div className="del">
+            <div className="del-icons">
+              <FontAwesomeIcon icon={faLock} /></div>
+            <div className="payment">
+
+              <h5 className="wait">Secure Payment Way</h5>
+              <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
             </div>
           </div>
         </div>
+      </div>
       <div className="footer">
         <div className="footer-part">
           <div className="footer_box_social">
             <div className="footer-logo">
               <img src={greenylogo} alt="" height={"100px"} width={250} />
             </div>
-            <div className="text">
-              <p className="footer-desc">
-                Adipisci asperiores ipsum ipsa repellat consequatur repudiandae
-                quisquam assumenda dolor perspiciatis sit ipsum dolor amet.
-              </p>
-            </div>
-            <div className="footer_social">
-              {/* <ul>
-                            <div className='google'>
-                                <li> <a href='...'>
-                                    <img src={"icons/Google-Logo.jpg"} alt='' />
-                                </a></li>
-                            </div>
-                            <div className='facebook'>
-                                <li><a href='#'>
-                                    <img src={"icons/Facebook_Logo.png"} alt='' />
-                                </a></li>
-                            </div>
-                            <div className='insta'>
-                                <li><a href='#'>
-                                    <img src={"icons/insta-logo.png"} alt='' />
-                                </a></li>
-                            </div>
-                            <div className='twitter'>
-                                <li><a href='#'>
-                                    <img src={"icons/Logo_Twitter.png"} alt='' />
-                                </a></li>
-                            </div>
-                        </ul> */}
-            </div>
+
+            <p className="footer-desc">
+              Adipisci asperiores ipsum ipsa repellat consequatur repudiandae
+              quisquam assumenda dolor perspiciatis sit ipsum dolor amet.
+            </p>
+            <li className="footer-social">
+              <li><FontAwesomeIcon icon={faFacebook} /></li>
+              <li><FontAwesomeIcon icon={faTwitter} /></li>
+              <li><FontAwesomeIcon icon={faInstagram} /></li>
+              <li><FontAwesomeIcon icon={faLinkedin} /></li>
+              <li><FontAwesomeIcon icon={faPinterest} /></li>
+            </li>
           </div>
         </div>
         <div className="footer-part footer-cont">
           <h3 className="footer-title">Contact Us</h3>
           <div className="footer-contact">
             <li>
-              <p>
-                support@example.com
-                <br />
-                carrer@example.com
-              </p>
+              <div>
+                <FontAwesomeIcon icon={faAt} className="cont-i_first" />
+              </div>
+              <div>
+                <span>
+                  support@example.com
+                  <br />
+                  carrer@example.com
+                </span>
+              </div>
             </li>
-            <li>
+            <li><FontAwesomeIcon icon={faMobile} className="cont-i" />
               <p className="num">
                 <span>+120 279 532 13</span>
                 <br />
                 <span>+120 279 532 14</span>
               </p>
             </li>
-            <li>
+            <li><FontAwesomeIcon icon={faMapMarkerAlt} className="cont-i" />
               <p>
                 1Hd- 50, 010 Avenue,
                 <br />
@@ -174,7 +175,7 @@ export default function Footer() {
         <div className="footer-part">
           <div className="app">
             <h3 className="footer-title">Download App</h3>
-            <p className="footer-desc">
+            <p className="footer-desc lorem">
               Lorem ipsum dolor sit amet tenetur dignissimos ipsum eligendi
               autem obcaecati minus ducimus totam reprehenderit exercitationem!
             </p>
@@ -207,6 +208,11 @@ export default function Footer() {
           <a href="...">
             <img src={discover1} alt="" />
           </a>
+        </div>
+      </div>
+      <div className="arow">
+        <div className="itemarow">
+          <a className="arrow1" href="/"><FontAwesomeIcon icon={faArrowUp} /></a>
         </div>
       </div>
     </div>

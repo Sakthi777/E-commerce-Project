@@ -4,14 +4,18 @@ import "../../styles/user/register.css";
 import { Link } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { useState } from "react";
+import axios from "axios";
 const RegisterPage = () => {
+
+  const url = "http://localhost:8000";
 
   const [userData, setUserData] = useState({
     userName: "",
     email: "",
     password: "",
     confirmPassword: "",
-    checkBox:false
+    checkBox: false,
+    loader: false
   })
 
   const [error, setError] = useState({
@@ -19,7 +23,8 @@ const RegisterPage = () => {
     email: { status: false, message: "" },
     password: { status: false, message: "" },
     confirmPassword: { status: false, message: "" },
-    checkBox: { status: false, message: "" }
+    checkBox: { status: false, message: "" },
+    customError: { status: false, message: "" }
   });
 
   const handleUserDataSubmit = (e) => {
@@ -57,8 +62,27 @@ const RegisterPage = () => {
     else if (!checkBox) {
       setError({ ...error, checkBox: { status: true, message: "Agree Terms & conditions !" } });
     }
-    
-    
+    else {
+      const handlePost = {
+        userName: userData.userName,
+        email: userData.email,
+        password: userData.password,
+        confirmPassword: userData.confirmPassword
+      }
+      setUserData({ ...userData, loader: true });
+      axios.post(`${url}/userDatas/users`, handlePost).then((res) => {
+        console.log(res.data);
+          }).catch((error) => {
+            console.log(error.response.data.message )
+            // if (error.response.data.message === "User already exists") {
+            //   console.log(error);
+            //   console.log("User already exists one");
+            //   setError({ ...error, customError: { status: true, message: "User Already Exist !" } });
+            //   setUserData({ ...userData, loader: false });
+            // }  
+          });
+    }
+
   }
 
   return (
@@ -138,7 +162,7 @@ const RegisterPage = () => {
                   setError({ ...error, password: { status: false, message: "" } });
                 }}
               />
-               {error.password.status === true ? (<div className="form_error">
+              {error.password.status === true ? (<div className="form_error">
                 <div >
                   <FaStar id="form_error_icon" />
                 </div>
@@ -166,15 +190,15 @@ const RegisterPage = () => {
               </div>) : ""}
 
               <div className="header-terms">
-                <input type="checkbox" checked={userData.checkBox} onChange={(e)=>{
-                  setUserData({...userData, checkBox:e.target.checked});
+                <input type="checkbox" checked={userData.checkBox} onChange={(e) => {
+                  setUserData({ ...userData, checkBox: e.target.checked });
                   setError({ ...error, checkBox: { status: false, message: "" } })
-                  }} id="terms" name="terms" />
-                   
+                }} id="terms" name="terms" />
+
                 <label htmlFor="terms">
                   Accept all the <a href="...">Terms & Conditions</a>
                 </label>
-               
+
 
               </div>
               {error.checkBox.status === true ? (<div className="form_error">
@@ -185,6 +209,31 @@ const RegisterPage = () => {
                   <span style={{ marginLeft: "5px" }}>{error.checkBox.message}</span>
                 </div>
               </div>) : ""}
+
+              {userData.loader === true ? (<div className="spinner_overview">
+                <div className="spinner">
+                  <div class="spinner-border text-primary" id="spinner_d_flex" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </div>
+
+              </div>) : ""}
+
+              {error.customError.status === true ? (
+                <div className="spinner">
+                  <div id="spinner_d_flex">
+                    <div className="form_error ">
+                      <div>
+                        <FaStar id="form_error_icon" />
+                      </div>
+                      <div>
+                        <span style={{ marginLeft: "5px" }}>{error.customError.message}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : ""}
+
 
               <button type="submit">Register</button>
             </form>

@@ -3,13 +3,18 @@ const app = express();
 const dotenv = require("dotenv");
 const path = require("path");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 // backend configuration
 
 dotenv.config({path:path.join(__dirname, "config/config.env")});
 
 const mongoose = require("mongoose");
-const userDatas = require("./routes/usersDataRoute");
+// const {userDatas, login, logOut} = require("./routes/usersDataRoute");
+const userDatas = require("./routes/usersDataRoute")
+const login = require("./routes/usersDataRoute")
+const logOut = require("./routes/usersDataRoute")
+
 
 mongoose.set("strictQuery", true);
 
@@ -19,9 +24,15 @@ app.use(express.json());
 
 app.use(cookieParser());
 
+app.use(cors());
+
 // Routes
 
 app.use("/userDatas", userDatas);
+
+app.use("/login", userDatas);
+
+app.use("/logOut", userDatas);
 
 // mongodb connection
 

@@ -4,9 +4,9 @@ import RegisterPage from "./pages/user/registerPage";
 import Login from "./pages/user/loginPage";
 import ResetPassword from "./pages/user/resetPasswordPage";
 import ChangePassword from "./pages/user/changePasswordPage";
-import HeaderPage from "./components/user/HeaderPage";
+// import HeaderPage from "./components/user/HeaderPage";
 import Wishlist from "./pages/user/wishlist";
-import ProductGrid from "./pages/user/productGrid";
+import Home from "./pages/user/home";
 import products from "./pages/user/productList";
 import NotFound from "./pages/user/NotFound";
 import Privacy from "./pages/user/Privacy";
@@ -20,15 +20,20 @@ import MyWallet from "./pages/user/myWallet";
 import UserContact from "./pages/user/UserContact";
 import ComingSoon from "./pages/user/comingSoon";
 import AddProductdata from "./components/admin/AddProductdata";
-import CheckOut from "./pages/user/checkOut";
-import AboutUs from "./pages/user/aboutUs";
+// import CheckOut from "./pages/user/checkOut";
+// import AboutUs from "./pages/user/aboutUs";
+import ProductDescriptionCard from "./pages/user/productDescriptionCard";
+// import Home from "./pages/user/home";
+// import FooterPart from "./pages/user/FooterPart";
 
 function App() {
 	return (
 		<div className="App">
 			<Router>
 				<Routes>
-					<Route path="/" element={<ProductGrid products={products} />} />
+					<Route path="/" element={<HeaderPage />} />
+					<Route path="/product" element={<ProductGrid products={products} />} />
+					<Route path="/p" element={<ProductDes />} />
 					<Route path="/wishlist" element={<Wishlist />} />
 					<Route path="/register" element={<RegisterPage />} />
 					<Route path="/resetPassword" element={<ResetPassword />} />

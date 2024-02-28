@@ -8,10 +8,10 @@
         margin: 10px 0;
     }
 }
-
 .image {
     position: relative;
     width: 100%;
+    height: 100%;
 }
 
 .image img {
@@ -39,11 +39,10 @@
 }
 
 .percent {
-    justify-content: center;
     position: relative;
     text-align: center;
     width: 100%;
-    height: 35vh;
+    height: 90%;
     display: flex;
     flex-direction: row;
 }
@@ -52,19 +51,17 @@
     width: 100%;
     height: 100%;
     color: #fff;
-    justify-content: center;
-    align-items: center;
 }
 
 .geting h3 p {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    
 }
 
 .geting h3 {
-    margin-top: 100px;
+    margin-top: 42px;
 }
 
 .subscribe {
@@ -154,31 +151,58 @@
 }
 
 /*Delivary.css*/
-.delivary {
-    width: 100%;
-    height: 100%;
-}
-
 .del {
-    padding: 50px;
+    max-width: 960px;
+    display: flex;
+    flex-direction: row;
+    padding: 45px;
     background-color: #F8FFFA;
+    gap: 1rem;
 }
 
 .del-title {
     display: flex;
     flex-direction: row;
 }
-
+.del h5{
+    font-size: 15px;
+    margin-bottom: 8px;
+}
 .del p {
+    font-size: 15px;
     padding-top: 10px;
 }
-
+.del-icons{
+    width: 100px;
+    height: 50px;
+    font-size: 18px;
+    line-height: 43px;
+    border-radius: 50%;
+    text-align: center;
+    display: inline-block;
+    color: green;
+    background: #fff;
+    border: 3px double green;
+    -webkit-box-shadow: #fff;
+    box-shadow: green;
+    transition: all linear .3s;
+    -webkit-transition: all linear .3s;
+    -moz-transition: all linear .3s;
+    -ms-transition: all linear .3s;
+    -o-transition: all linear .3s
+}
+.del:hover .del-icons {
+    color: #fff;
+    background: green;
+}
 @media (max-width: 575px) {
     .delivary {
         width: 100%;
-
     }
-
+    .del-icons{
+        width: 50px;
+        height: 50px;
+    }
     .del-title {
         width: 100%;
         position: relative;
@@ -192,6 +216,7 @@
 
 
 .footer {
+    padding: 55px;
     position: relative;
     display: flex;
     flex-direction: row;
@@ -203,11 +228,9 @@
 .footer-part {
     width: 100%;
     display: grid;
-
 }
 
 .footer .text {
-    padding-left: 10%;
     width: 100%;
     line-height: 26px;
 }
@@ -216,21 +239,58 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    padding-left: 10%;
-    top: 0;
     width: 70%;
-    height: 50px;
+    height: 60px;
 }
-.footer-cont {
-    padding-top: 2.5%;
-    padding-left: 5%;
+.footer-social{
+padding-top: 20px;
 }
-.footer-title {
-    padding-top: 10px;
+.footer-social li {
+    display: inline-block;
+    margin-right: 7px;
 }
 
+.footer-social li:last-child {
+    margin-right: 0px
+}
+
+.footer-social li{
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    line-height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    color: green;
+    background: #fff;
+    transition: all linear .3s;
+    -webkit-transition: all linear .3s;
+}
+.footer-social li:hover {
+    color: #fff;
+    background: green;
+}
+.footer-cont {
+    padding-left: 5%;
+}
+.footer-cont .cont-i{
+    color: green;
+    width: 16px;
+    height: 8%;
+    margin-right: 15px;
+}
+.footer-cont .cont-i_first{
+    color: green;
+    width: 20px;
+    height: 15%;
+    margin-right: 15px;
+}
 .footer-contact li {
-    line-height: 1.7;
+    /* line-height: 2.2; */
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .footer-contact td {
@@ -251,11 +311,6 @@
     position: relative;
     grid-template-columns: 1fr;
 }
-.link tr{
-    line-height: 1.2;
-   
-}
-
 .footer-links a {
     color: black;
     text-transform: capitalize;
@@ -265,7 +320,9 @@
     -ms-transition: all .3s;
     -o-transition: all .3s
 }
-
+.footer-links .table a{
+    background-color: #F5F6F7;
+}
 .footer-links a {
     text-decoration: none;
 }
@@ -304,6 +361,7 @@
 
 .footer-links td {
     padding-right: 35px;
+    line-height: 2rem;
 }
 
 .app {
@@ -317,17 +375,16 @@
     line-height: 2.5;
 }
 
-@media (max-width: 575px) {
+@media (max-width: 840px) {
     .footer {
         flex-direction: column;
         width: 100%;
         height: 50%;
-        text-align: center;
+        padding: 10px;
     }
 
     .footer-links {
         margin: 0% auto;
-        padding-left: 10%;
         height: 100%;        
     }
     .footer-links table.table {
@@ -336,10 +393,8 @@
     }
 
     .footer-logo img {
-        width: 100%;
-        height: 50%;
-        padding-left: 20%;
-        padding-right: 20%;
+        width: 40%;
+        height: 40%;
     }
 
     .footer_box_social {
@@ -356,15 +411,19 @@
 }
 
 .coder {
-    width: 100%;
-    height: 100%;
-    margin-top: 75px;
+    position: relative;
+    padding: 55px;
+    width: 90%;
+    height: 90%;
     padding: 20px 35px 15px;
     border-top: 1px solid gray;
     border-radius: 8px;
     display: flex;
     justify-content: space-between;
     background-color: #119744;
+    align-items: center;
+    margin: 75px auto 0 auto;
+
 }
 
 .coder .copytext {
@@ -373,6 +432,7 @@
 }
 
 .coder .copytext a {
+    text-decoration: none;
     color: #ddffd5;
 }
 
@@ -389,7 +449,7 @@
     border-radius: 3px
 }
 
-@media (max-width: 767px) {
+@media (max-width: 840px) {
     .coder {
         padding: 25px 15px 75px;
         width: 100%;
@@ -412,5 +472,51 @@
         width: 100%;
         padding: 25px 30px 75px;
 
+    }
+}
+
+
+.arow a{
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        z-index: 2;
+        width: 48px;
+        height: 48px;
+        font-size: 15px;
+        color: #fff;
+        line-height: 48px;
+        text-align: center;
+        /* display: none; */
+        border-radius: 50%;
+        background: #119744;
+        -webkit-box-shadow: 0px 0px 15px 3px rgba(71,254,126,0.5);
+        box-shadow: 0px 0px 15px 3px rgba(71,254,126,0.5);
+        animation: mahmud 2s infinite;
+        transition: all linear .3s;
+        -webkit-transition: all linear .3s;
+        animation: animi1 1.5s infinite linear;
+}
+@keyframes animi1{
+    0%{
+        bottom: 20px;
+    }
+    50%{
+        bottom:  40px;
+    }
+    100%{
+        bottom: 20px;
+    }
+}
+.backtop:hover {
+    color: #fff;
+}
+@media (max-width: 840px) {
+    .arow {
+        width:42px;
+        height: 42px;
+        line-height: 42px;
+        font-size: 14px;
+        bottom: 55px;
     }
 }
