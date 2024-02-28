@@ -9,7 +9,7 @@ import bottomright from "../../assets/images/aboutus/04.jpg";
 import "../../styles/user/aboutUs.css";
 import Footer from "./Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAppleAlt, faExchangeAlt, faPhoneVolume, faShippingFast } from "@fortawesome/free-solid-svg-icons";
+import { faAppleAlt, faArrowLeft, faArrowRight, faExchangeAlt, faPhoneVolume, faShippingFast } from "@fortawesome/free-solid-svg-icons";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -17,11 +17,60 @@ import "slick-carousel/slick/slick-theme.css";
 
 import testimonal1 from "../../assets/images/aboutus/testimonals/01.jpg";
 import testimonal2 from "../../assets/images/aboutus/testimonals/02.jpg";
-import { useRef } from "react";
+
+import team1 from "../../assets/images/aboutus/team/01.jpg";
+import team2 from "../../assets/images/aboutus/team/02.jpg";
+import team3 from "../../assets/images/aboutus/team/03.jpg";
+import team4 from "../../assets/images/aboutus/team/04.jpg";
+import team5 from "../../assets/images/aboutus/team/05.jpg";
+
+import { useEffect, useState } from "react";
+
+const PrevArrow = (props) => {
+	const { onClick } = props;
+	return (
+		<div className="custom-arrow prev-arrow" onClick={onClick}>
+			<FontAwesomeIcon icon={faArrowLeft} />
+		</div>
+	);
+};
+
+// Custom arrow component for the "next" arrow
+const NextArrow = (props) => {
+	const { onClick } = props;
+	return (
+		<div className="custom-arrow next-arrow" onClick={onClick}>
+			<FontAwesomeIcon icon={faArrowRight} />
+		</div>
+	);
+};
 
 function AboutUs() {
-	let sliderRef = useRef(null);
-	var settings = {
+	const [slidesToShow, setSlidesToShow] = useState(4);
+
+	useEffect(() => {
+		const handleResize = () => {
+			let newSlidesToShow;
+			if (window.innerWidth >= 1080) {
+				newSlidesToShow = 4;
+			} else if (window.innerWidth >= 840) {
+				newSlidesToShow = 3;
+			} else {
+				newSlidesToShow = 2;
+			}
+
+			setSlidesToShow(newSlidesToShow);
+		};
+
+		handleResize();
+
+		window.addEventListener("resize", handleResize);
+
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
+	}, []);
+	var testimonalSettings = {
 		dots: false,
 		infinite: true,
 		speed: 500,
@@ -29,7 +78,22 @@ function AboutUs() {
 		slidesToScroll: 1,
 		autoplay: true,
 		autoplaySpeed: 3600,
-		arrows: false,
+		arrows: true,
+		prevArrow: <PrevArrow />,
+		nextArrow: <NextArrow />,
+	};
+
+	var teamMembSettings = {
+		dots: false,
+		infinite: true,
+		speed: 500,
+		slidesToShow: slidesToShow,
+		slidesToScroll: 1,
+		autoplay: true,
+		autoplaySpeed: 3600,
+		arrows: true,
+		prevArrow: <PrevArrow />,
+		nextArrow: <NextArrow />,
 	};
 
 	const testimonalData = [
@@ -37,7 +101,7 @@ function AboutUs() {
 			id: 1,
 			testimonalImage: testimonal1,
 			description:
-				"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem fugiat accusamus rerum, adipisci dicta natus sunt quibusdam minima officiis quasi tempora odio similique, esse libero, harum animi dolore vitae nihil nemo modi maiores doloribus ab exercitationem impedit? Ratione error ad qui a corrupti. Fugit magnam veniam corporis, incidunt modi nostrum. Tenetur veritatis repudiandae explicabo est id qui, corrupti repellendus pariatur, facilis sit quo aliquid voluptas debitis delectus optio molestias ad. Iste modi, pariatur fugit sit ut nulla sed incidunt? Quidem dicta enim a sapiente optio dolore incidunt? Dicta provident suscipit a eligendi sint inventore atque cumque quam placeat, porro reiciendis vitae voluptate animi exercitationem odit? Atque molestias perspiciatis, sunt obcaecati nobis nisi repellendus, saepe dolor explicabo in ullam eveniet autem.",
+				"Lorem, ipsum dolor sit amet consectetur adipisicing elit. A numquam molestiae vero corrupti id perspiciatis quidem magnam provident, aliquam accusantium, nulla nam sunt odit quaerat ullam non eum pariatur explicabo velit ducimus minima ut. Quae soluta ad ipsa reiciendis similique excepturi. Libero neque enim repellendus obcaecati assumenda? Modi, ea accusantium.",
 			authorName: "Greeny",
 			designation: "CEO",
 		},
@@ -45,15 +109,48 @@ function AboutUs() {
 			id: 2,
 			testimonalImage: testimonal2,
 			description:
-				"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem fugiat accusamus rerum, adipisci dicta natus sunt quibusdam minima officiis quasi tempora odio similique, esse libero, harum animi dolore vitae nihil nemo modi maiores doloribus ab exercitationem impedit? Ratione error ad qui a corrupti. Fugit magnam veniam corporis, incidunt modi nostrum. Tenetur veritatis repudiandae explicabo est id qui, corrupti repellendus pariatur, facilis sit quo aliquid voluptas debitis delectus optio molestias ad. Iste modi, pariatur fugit sit ut nulla sed incidunt? Quidem dicta enim a sapiente optio dolore incidunt? Dicta provident suscipit a eligendi sint inventore atque cumque quam placeat, porro reiciendis vitae voluptate animi exercitationem odit? Atque molestias perspiciatis, sunt obcaecati nobis nisi repellendus, saepe dolor explicabo in ullam eveniet autem.",
+				"Lorem, ipsum dolor sit amet consectetur adipisicing elit. A numquam molestiae vero corrupti id perspiciatis quidem magnam provident, aliquam accusantium, nulla nam sunt odit quaerat ullam non eum pariatur explicabo velit ducimus minima ut. Quae soluta ad ipsa reiciendis similique excepturi. Libero neque enim repellendus obcaecati assumenda? Modi, ea accusantium.",
 			authorName: "Reddish",
 			designation: "Manager",
 		},
 	];
 
+	const teamMembData = [
+		{
+			id: 1,
+			personImage: team1,
+			name: "Jhonson",
+			designation: "Developer",
+		},
+		{
+			id: 2,
+			personImage: team2,
+			name: "Jhonson",
+			designation: "Developer",
+		},
+		{
+			id: 3,
+			personImage: team3,
+			name: "Jhonson",
+			designation: "Developer",
+		},
+		{
+			id: 4,
+			personImage: team4,
+			name: "Jhonson",
+			designation: "Developer",
+		},
+		{
+			id: 5,
+			personImage: team5,
+			name: "Jhonson",
+			designation: "Developer",
+		},
+	];
+
 	const carouselItem = (item) => {
 		return (
-			<div className="testimonal-slide">
+			<div className="testimonal slide">
 				<div className="testimonal-item" key={item.id}>
 					<img src={item.testimonalImage} alt="" />
 
@@ -63,6 +160,20 @@ function AboutUs() {
 							<h4>{item.authorName}</h4>
 							<h4>{item.designation}</h4>
 						</span>
+					</div>
+				</div>
+			</div>
+		);
+	};
+
+	const carouselTeam = (item) => {
+		return (
+			<div className="team slide">
+				<div className="team-card" key={item.id}>
+					<img src={item.personImage} alt="" />
+					<div className="team-text">
+						<h4>{item.name}</h4>
+						<p>{item.designation}</p>
 					</div>
 				</div>
 			</div>
@@ -122,9 +233,7 @@ function AboutUs() {
 					</div>
 
 					<div className="testimonal-carousel">
-						<Slider ref={(slider) => (sliderRef = slider)} {...settings}>
-							{testimonalData.map((item) => carouselItem(item))}
-						</Slider>
+						<Slider {...testimonalSettings}>{testimonalData.map((item) => carouselItem(item))}</Slider>
 					</div>
 
 					<div className="daily-life-organic">
@@ -162,6 +271,11 @@ function AboutUs() {
 								</div>
 							</div>
 						</div>
+					</div>
+
+					<div className="our-team-members">
+						<h2>Our Team Members</h2>
+						<Slider {...teamMembSettings}>{teamMembData.map((item) => carouselTeam(item))}</Slider>
 					</div>
 				</div>
 			</div>

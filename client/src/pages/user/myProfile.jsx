@@ -99,7 +99,10 @@ function MyProfile() {
 								<label htmlFor="profile-email">E-Mail</label>
 								<input type="email" id="profile-email" placeholder="Your Email" />
 							</div>
-							<button className="change-pass-btn">Change Password</button>
+						</div>
+
+						<div className="change-pass-btn">
+							<button>Change Password</button>
 						</div>
 					</div>
 
@@ -119,6 +122,11 @@ function MyProfile() {
 								<p>+91 81845 12648</p>
 								{actionButtons()}
 							</div>
+							<div className="secondary-number profiles-content">
+								<h5>Secondary Number</h5>
+								<p>+91 81845 12648</p>
+								{actionButtons()}
+							</div>{" "}
 							<div className="secondary-number profiles-content">
 								<h5>Secondary Number</h5>
 								<p>+91 81845 12648</p>

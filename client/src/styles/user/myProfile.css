@@ -117,34 +117,49 @@
 	border: 1px solid #119744;
 }
 
+/* .profiles-content-containers {
+	display: grid;
+	width: 100%;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 20px 10px;
+	grid-template-rows: auto;
+	height: 100%;
+	justify-items: center;
+	align-self: center;
+} */
+
+/* .yourprofile-content.profiles-content-containers {
+	grid-template-columns: repeat(4, 1fr);
+} */
+
 .profiles-content-containers {
 	display: grid;
+	width: 100%;
+	height: 100%;
 	grid-template-columns: repeat(3, 1fr);
+	gap: 10px 10px;
+	grid-template-rows: auto;
 	align-items: center;
 	padding: 3px 9px;
 	padding-bottom: 0;
 }
 
+.yourprofile-content.profiles-content-containers {
+	grid-template-columns: 2fr 3fr 3fr;
+}
+
 .profile-img {
-	align-items: last baseline;
+	/* align-items: center; */
+	justify-self: center;
 }
 
 .profile-img img {
 	display: flex;
-	width: 75px;
-	height: 75px;
+	width: 100px;
+	height: 100px;
 	border: 1px solid #119744;
 	border-radius: 50%;
 	padding: 2px;
-}
-
-.yourprofile-content.profiles-content-containers {
-	height: auto;
-	display: grid;
-	grid-template-columns: 1fr 3fr 3fr 1fr;
-	gap: 20px;
-	justify-content: center;
-	align-items: last baseline;
 }
 
 .name-input,
@@ -173,6 +188,11 @@
 }
 
 .change-pass-btn {
+	justify-self: end;
+	padding-right: 2%;
+}
+
+.change-pass-btn button {
 	width: 150px;
 	text-overflow: ellipsis;
 	height: 40px;
@@ -181,16 +201,6 @@
 	background-color: #119744;
 	color: #ffffff;
 	font-size: 14px;
-	align-items: baseline;
-}
-
-.profiles-content-containers {
-	display: grid;
-	width: 100%;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 20px 10px;
-	grid-template-rows: auto;
-	height: 100%;
 }
 
 .profiles-content {

@@ -4,7 +4,7 @@ import RegisterPage from "./pages/user/registerPage";
 import Login from "./pages/user/loginPage";
 import ResetPassword from "./pages/user/resetPasswordPage";
 import ChangePassword from "./pages/user/changePasswordPage";
-import HeaderPage from "./components/user/HeaderPage";
+// import HeaderPage from "./components/user/HeaderPage";
 import Wishlist from "./pages/user/wishlist";
 import Home from "./pages/user/home";
 import products from "./pages/user/productList";

@@ -9,10 +9,10 @@
 	overflow-x: scroll;
 }
 
-.checkout .wishlist-table-container .wishlist-table td,
-.checkout .wishlist-table-container .wishlist-table th {
+.checkout .wishlist-table-container .wishlist-table td {
 	border-collapse: collapse;
-	border: none;
+	border: 1px solid #39404a30;
+	border-top: none;
 }
 
 .checkout.wishlist-table-container table {
