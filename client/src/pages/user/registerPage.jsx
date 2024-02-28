@@ -74,12 +74,13 @@ const RegisterPage = () => {
         console.log(res.data);
           }).catch((error) => {
             console.log(error.response.data.message )
-            // if (error.response.data.message === "User already exists") {
-            //   console.log(error);
-            //   console.log("User already exists one");
-            //   setError({ ...error, customError: { status: true, message: "User Already Exist !" } });
-            //   setUserData({ ...userData, loader: false });
-            // }  
+            const dataError = error.response.data.message ;
+            console.log(dataError);
+            if (dataError) {
+              console.log("User already exists one");
+              setUserData({ ...userData, loader: false });
+              setError({ ...error, customError: { status: true, message: "Your password should have at least 8 characters" } });
+            }  
           });
     }
 
@@ -236,6 +237,8 @@ const RegisterPage = () => {
 
 
               <button type="submit">Register</button>
+
+              
             </form>
           </div>
         </div>

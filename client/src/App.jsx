@@ -20,7 +20,7 @@ import MyWallet from "./pages/user/myWallet";
 import UserContact from "./pages/user/UserContact";
 import ComingSoon from "./pages/user/comingSoon";
 import AddProductdata from "./components/admin/AddProductdata";
-// import CheckOut from "./pages/user/checkOut";
+import CheckOut from "./pages/user/checkOut";
 // import AboutUs from "./pages/user/aboutUs";
 import ProductDescriptionCard from "./pages/user/productDescriptionCard";
 // import Home from "./pages/user/home";
@@ -47,7 +47,7 @@ function App() {
 					<Route path="us" element={<UserContact />} />
 					<Route path="/comingSoon" element={<ComingSoon />}></Route>
 					<Route path="/myProfile" element={<MyProfile />}></Route>
-
+					<Route path="/checkout" element={<CheckOut></CheckOut>}></Route>
 					{/* adminpanel */}
 					<Route path="/addcategory" element={<AddCategory></AddCategory>}></Route>
 					<Route path="/dashboard" element={<Dashboard />}></Route>
