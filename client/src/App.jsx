@@ -28,9 +28,7 @@ function App() {
 		<div className="App">
 			<Router>
 				<Routes>
-					<Route path="/" element={<HeaderPage />} />
-					<Route path="/product" element={<ProductGrid products={products} />} />
-					<Route path="/p" element={<ProductDes />} />
+					<Route path="/" element={<ProductGrid products={products} />} />
 					<Route path="/wishlist" element={<Wishlist />} />
 					<Route path="/register" element={<RegisterPage />} />
 					<Route path="/resetPassword" element={<ResetPassword />} />
@@ -45,6 +43,9 @@ function App() {
 					<Route path="us" element={<UserContact />} />
 					<Route path="/comingSoon" element={<ComingSoon />}></Route>
 					<Route path="/myProfile" element={<MyProfile />}></Route>
+
+					<Route path="/checkout" element={<CheckOut />}></Route>
+					<Route path="/about" element={<AboutUs />}></Route>
 
 					{/* adminpanel */}
 					<Route path="/addcategory" element={<AddCategory></AddCategory>}></Route>
