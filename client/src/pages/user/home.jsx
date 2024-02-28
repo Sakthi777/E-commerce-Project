@@ -5,7 +5,7 @@ import { FaArrowCircleDown } from "react-icons/fa";
 import image1 from "../../assets/images/homePageImage/home-page-img1.jpg";
 import countdownImage from "../../assets/images/homePageImage/countdown.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import Footer from "../../pages/user/Footer";
+import Footer from "../../pages/user/Footer";
 import { faShoppingBag, faStar, faPercent } from "@fortawesome/free-solid-svg-icons";
 import FeaturedItems from "./featuredItems";
 import "../../styles/user/featuredItem.css";
