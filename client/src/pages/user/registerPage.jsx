@@ -1,12 +1,17 @@
 import Header from "../../components/user/Header";
 import Footer from "../../components/user/AuthenticFooter";
 import "../../styles/user/register.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const RegisterPage = () => {
+
 	const url = "http://localhost:8000";
+
+  const nav = useNavigate();
 
 	const [userData, setUserData] = useState({
 		userName: "",
@@ -22,9 +27,10 @@ const RegisterPage = () => {
 		email: { status: false, message: "" },
 		password: { status: false, message: "" },
 		confirmPassword: { status: false, message: "" },
-		checkBox: { status: false, message: "" },
-		customError: { status: false, message: "" },
+		checkBox: { status: false, message: "" }
 	});
+
+  const [ disable, setDisable ] = useState(false);
 
 	const handleUserDataSubmit = (e) => {
 		e.preventDefault();
@@ -70,25 +76,45 @@ const RegisterPage = () => {
       }
       setUserData({ ...userData, loader: true });
       axios.post(`${url}/userDatas/users`, handlePost).then((res) => {
-        console.log(res.data);
+        if(res.data){
+          setUserData({
+            userName: "",
+            email: "",
+            password: "",
+            confirmPassword: ""
+          });
+          setUserData({ ...userData, loader: false });
+          setDisable(true);
+          toast.success("Registered Successfull !", {
+            autoClose:2000,
+            onClose:()=>{
+              setTimeout(()=>{
+                nav("/login")
+              },200);
+            }
+          });
+        }       
           }).catch((error) => {
-            console.log(error.response.data.message )
-            const dataError = error.response.data.message ;
+            console.log(error.response.status )
+            const dataError = error.response.status  ;
             console.log(dataError);
-            if (dataError) {
+            if (dataError === 500) {
               console.log("User already exists one");
               setUserData({ ...userData, loader: false });
-              setError({ ...error, customError: { status: true, message: "Your password should have at least 8 characters" } });
+              toast.error("User Already Exist!");
             }  
+            else{
+              toast.error("Internal Server Error!");
+            }
           });
     }
-
   }
 
 	return (
 		<div className="Authentic-container">
 			<Header />
 			<div className="Register-card">
+      <ToastContainer />
 				<div className="Register-content">
 					<div className="Register-content-heading">
 						<h2>Join Now!</h2>
@@ -255,24 +281,9 @@ const RegisterPage = () => {
 								""
 							)}
 
-							{error.customError.status === true ? (
-								<div className="spinner">
-									<div id="spinner_d_flex">
-										<div className="form_error ">
-											<div>
-												<FaStar id="form_error_icon" />
-											</div>
-											<div>
-												<span style={{ marginLeft: "5px" }}>{error.customError.message}</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							) : (
-								""
-							)}
+							
 
-              <button type="submit">Register</button>
+              <button type="submit" id={disable ? "register_form_btn" : ""} disabled={disable}>Register</button>
             </form>
           </div>
         </div>

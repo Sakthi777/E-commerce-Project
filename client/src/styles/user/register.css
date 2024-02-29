@@ -201,9 +201,13 @@ left:45%;
   padding: 15px;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
   font-size: 15px;
   margin-top: 10px;
+}
+
+#register_form_btn{
+  cursor: pointer;
+  background-color: #5aac79e3;
 }
 
 /* Style the checkbox */
