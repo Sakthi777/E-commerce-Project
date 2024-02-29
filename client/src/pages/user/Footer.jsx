@@ -19,7 +19,7 @@ export default function Footer() {
       <div className="office-discount">
         <div className="discount">
           <div className="image">
-            <img src={footimg} alt="" />
+          <img src={footimg} alt="Offer Banner" />
             <div className="percent">
               <div className="geting">
                 <h3>Get 20% Discount For Subscriber</h3>

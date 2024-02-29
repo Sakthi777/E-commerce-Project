@@ -1,6 +1,7 @@
 /*Discount.css */
 .userpanel-footer {
     width: 100%;
+    padding-top: 100px;
 }
 @media (max-width: 768px) {
     .userpanel-footer {
@@ -42,7 +43,7 @@
     position: relative;
     text-align: center;
     width: 100%;
-    height: 90%;
+    height: 100%;
     display: flex;
     flex-direction: row;
 }
@@ -161,8 +162,15 @@
 }
 
 .del-title {
-    display: flex;
-    flex-direction: row;
+    max-width: 100%;
+    width: 100%;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    background-color: #F8FFFA;
 }
 .del h5{
     font-size: 15px;
@@ -492,7 +500,6 @@ padding-top: 20px;
         background: #119744;
         -webkit-box-shadow: 0px 0px 15px 3px rgba(71,254,126,0.5);
         box-shadow: 0px 0px 15px 3px rgba(71,254,126,0.5);
-        animation: mahmud 2s infinite;
         transition: all linear .3s;
         -webkit-transition: all linear .3s;
         animation: animi1 1.5s infinite linear;
@@ -519,4 +526,9 @@ padding-top: 20px;
         font-size: 14px;
         bottom: 55px;
     }
+}
+@media (max-width: 991px){
+.arow {
+    bottom: 55px;
+}
 }

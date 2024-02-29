@@ -88,7 +88,7 @@ function CheckOut() {
 			<div className="myprofile-banner">
 				<img src={banner} alt="Banner" />
 				<div className="myprofile-banner-content">
-					<h1>MY PROFILE</h1>
+					<h1>CHECKOUT</h1>
 				</div>
 				<div className="myprofile-banner-anchors">
 					<p>

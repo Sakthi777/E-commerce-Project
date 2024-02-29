@@ -1,35 +1,41 @@
 import React from "react";
 import "../../styles/user/ContactUs.css";
-import contimg from '../../../src/assets/images/contactus-image/back-faq.jpg';
-import bangalore1 from '../../../src/assets/images/contactus-image/bangalore.jpg';
-import chennai1 from '../../../src/assets/images/contactus-image/chennai.jpg'
-import kovai from '../../../src/assets/images/contactus-image/coimbatore.jpg'
-import erode1 from '../../../src/assets/images/contactus-image/erode.jpg'
-
+import contimg from "../../../src/assets/images/contactus-image/back-faq.jpg";
+import bangalore1 from "../../../src/assets/images/contactus-image/bangalore.jpg";
+import chennai1 from "../../../src/assets/images/contactus-image/chennai.jpg";
+import kovai from "../../../src/assets/images/contactus-image/coimbatore.jpg";
+import erode1 from "../../../src/assets/images/contactus-image/erode.jpg";
+import HeaderPage from "../../components/user/HeaderPage";
+import Footer from "./Footer";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope, faMapMarkerAlt, faPhone } from "@fortawesome/free-solid-svg-icons";
 
 export default function UserContact() {
   return (
     <div className="greenypage">
+      <HeaderPage />
       <div className="contactus-page">
-        <div className="contact">
-          <img
-            src={contimg}
-            alt=""
-            width={"110%"}
-            height={"350px"}
-          />
+      <div className="offers-banner">
+        <img src={contimg} alt="Offer Banner" />
+        <div className="offer-banner-content">
+          <h1>CONTACT US</h1>
+          <a href="/">Home</a>/<a href="...">ContactUs</a>
+        </div>
+      </div>
+        {/* <div className="contact">
+          <img src={contimg} alt="" width={"110%"} height={"350px"} />
           <div class="centered">CONTACT US</div>
           <div className="offers-banner-anchors">
-						<p>
-							<a href="/">Home</a> / Contact
-						</p>
-					</div>
-        </div>
+            <p>
+              <a href="/">Home</a> / Contact
+            </p>
+          </div>
+        </div> */}
 
         <div className="add">
           <div class="address1">
             <div class="contact-card">
-              <i class="icofont-location-pin"></i>
+            <FontAwesomeIcon icon={faMapMarkerAlt} className="fa-icon"/>
               <h4>Head Office</h4>
               <p>
                 1Hd- 50, 010 Avenue,
@@ -40,7 +46,7 @@ export default function UserContact() {
           <br />
           <div class="address1">
             <div class="contact-card active">
-              <i class="icofont-phone"></i>
+            <FontAwesomeIcon icon={faPhone} className="fa-icon"/>
               <div className="color">
                 <h4>Phone Number</h4>
                 <p>
@@ -58,7 +64,7 @@ export default function UserContact() {
           <br />
           <div class="address1">
             <div class="contact-card">
-              <i class="icofont-email"></i>
+            <FontAwesomeIcon icon={faEnvelope} className="fa-icon"/>
               <h4>Support Mail</h4>
               <p>
                 contact@example.com
@@ -133,48 +139,52 @@ export default function UserContact() {
           </div>
         </div>
       </div>
-      <div className='greeny-address'>
-                    <div className='greeny-branch'>
-                        <div className='coimbatore'>
-                            <img src={kovai} alt='' />
-                            <div className='greeny-overlay'>
-                                <h3>Coimbatore</h3>
-                                <div class="greeny-overlay1">
-                                    <div class="greeny-text1">Sarojini St,Ram Nagar,Coimbatore</div>
-                                </div>
-                            </div>
-                        </div><br />
-                        <div className='erode'>
-                            <img src={erode1} alt='' />
-                            <div className='greeny-overlay'>
-                                <h3>Erode</h3>
-                                <div class="overlay1">
-                                    <div class="greeny-text1">Annamalai Layout,Erode</div>
-                                </div>
-                            </div>
-
-                        </div><br />
-                        <div className='chennai'>
-                            <img src={chennai1} alt='' />
-                            <div className='greeny-overlay'>
-                                <h3>Chennai</h3>
-                                <div class="overlay1">
-                                    <div class="greeny-text1">IDM Tech Park,Tharamani,Chennai</div>
-                                </div>
-
-                            </div>
-                        </div><br />
-                        <div className='bangalore'>
-                            <img src={bangalore1} alt='' />
-                            <div className='greeny-overlay'>
-                                <h3>Bangalore</h3>
-                                <div class="overlay1">
-                                    <div class="greeny-text1">1st floor,41st Cross Rd,Bengaluru</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+      <div className="greeny-address">
+        <div className="greeny-branch">
+          <div className="coimbatore">
+            <img src={kovai} alt="" />
+            <div className="greeny-overlay">
+              <h3>Coimbatore</h3>
+              <div class="greeny-overlay1">
+                <div class="greeny-text1">Sarojini St,Ram Nagar,Coimbatore</div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div className="erode">
+            <img src={erode1} alt="" />
+            <div className="greeny-overlay">
+              <h3>Erode</h3>
+              <div class="overlay1">
+                <div class="greeny-text1">Annamalai Layout,Erode</div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div className="chennai">
+            <img src={chennai1} alt="" />
+            <div className="greeny-overlay">
+              <h3>Chennai</h3>
+              <div class="overlay1">
+                <div class="greeny-text1">IDM Tech Park,Tharamani,Chennai</div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div className="bangalore">
+            <img src={bangalore1} alt="" />
+            <div className="greeny-overlay">
+              <h3>Bangalore</h3>
+              <div class="overlay1">
+                <div class="greeny-text1">
+                  1st floor,41st Cross Rd,Bengaluru
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Footer />
     </div>
   );
 }

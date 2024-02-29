@@ -1,28 +1,22 @@
 import React from "react";
 import '../../styles/user/FAQ.css'
 import faqimg from '../../../src/assets/images/contactus-image/back-faq.jpg';
+import HeaderPage from "../../components/user/HeaderPage";
+import Footer from "./Footer";
 
 
 export default function FAQ() {
   return (
     <div>
+      <HeaderPage/>
       <div className="faq">
-        <div>
-          <div className="faqback">
-            <img
-              src={faqimg}
-              alt=""
-              width={"100%"}
-              height={"350px"}
-            />
-            <div class="faq-title">FAQ QUESTIONS</div>
-            <div className="offers-banner-anchors">
-						<p>
-							<a href="/">Home</a> / FAQ
-						</p>
-					</div>
-          </div>
+      <div className="offers-banner">
+        <img src={faqimg} alt="Offer Banner" />
+        <div className="offer-banner-content">
+          <h1>FAQ QUESTIONS</h1>
+          <a href="/">Home</a>/<a href="...">FAQ</a>
         </div>
+      </div>
         <div className="faq-body">
           <div className="faq-body-part">
             <div className="ques-ans">
@@ -93,6 +87,7 @@ export default function FAQ() {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }

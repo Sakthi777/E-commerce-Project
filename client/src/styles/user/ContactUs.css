@@ -5,9 +5,9 @@
 	margin: 0;
 	box-sizing: border-box;
 }
-.greenypage {
+/* .greenypage {
 	background-color: #f5f6f7;
-}
+} */
 .contact {
 	position: relative;
 	display: flex;
@@ -42,8 +42,11 @@
 	margin-top: 5%;
 	justify-content: center;
 }
+.add .fa-icon {
+	width: 30px;
+	height: 30px;
+}
 .address1 {
-	padding-top: 10px;
 	text-align: center;
 	position: relative;
 	margin-inline: 1%;
@@ -211,8 +214,11 @@ body {
 .greeny-address {
 	padding-top: 50px;
 	width: 100%;
-	position: relative;
-	display: flex;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    padding: 45px;
+    gap: 1rem;
 	justify-content: center;
 }
 
