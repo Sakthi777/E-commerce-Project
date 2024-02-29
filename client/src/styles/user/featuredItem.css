@@ -86,7 +86,7 @@
 .feature-rating svg {
   color: #f8d828;
   margin-right: 4px;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .feature-rating p {
@@ -95,20 +95,19 @@
 }
 
 .feature-name {
-  font-size: 20px;
+  font-size: 19px;
   margin: 8px 0;
   text-align: left;
-  color: #555;
+  color: #39404a;
   padding-bottom: 8px;
 }
 
 .feature-price {
-  font-size: 14px;
+  font-size: 18px;
   color: #555;
   margin-bottom: 8px;
   text-align: left;
   padding-bottom: 8px;
-  font-weight: bold;
 }
 
 .feature-price .oldPrice {
@@ -189,6 +188,9 @@
     display: none;
   }
   .feature-price {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
+  }
+  .featuredItem-grid {
+    padding: 0px 20px;
   }
 }

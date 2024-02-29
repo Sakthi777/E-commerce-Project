@@ -8,18 +8,20 @@ import visa1 from "../../../src/assets/images/footer-img/visa.jpg";
 import discover1 from "../../../src/assets/images/footer-img/discover.jpg";
 import maestro1 from "../../../src/assets/images/footer-img/maestro.jpg";
 import google from "../../../src/assets/images/footer-img/google-store.png";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowUp, faAt, faHeadset, faLock, faMapMarkerAlt, faMobile, faSyncAlt, faTruck } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowUp, faAt, faHeadset, faLock, faMapMarkerAlt, faMobile, faSyncAlt, faTruck } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faInstagram, faLinkedin, faPinterest, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
-
 export default function Footer() {
+  const MoveToTopPage = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   return (
     <div className="userpanel-footer">
       <div className="office-discount">
         <div className="discount">
           <div className="image">
-          <img src={footimg} alt="Offer Banner" />
+            <img src={footimg} alt="Offer Banner" />
             <div className="percent">
               <div className="geting">
                 <h3>Get 20% Discount For Subscriber</h3>
@@ -46,27 +48,27 @@ export default function Footer() {
           </div>
           <div className="del">
             <div className="del-icons">
-              <FontAwesomeIcon icon={faSyncAlt} /></div>
+              <FontAwesomeIcon icon={faSyncAlt} />
+            </div>
             <div className="return">
-
               <h5 className="wait">Instant Return Policy</h5>
               <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
             </div>
           </div>
           <div className="del">
             <div className="del-icons">
-              <FontAwesomeIcon icon={faHeadset} /></div>
+              <FontAwesomeIcon icon={faHeadset} />
+            </div>
             <div className="support">
-
               <h5 className="wait">Quick Support System</h5>
               <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
             </div>
           </div>
           <div className="del">
             <div className="del-icons">
-              <FontAwesomeIcon icon={faLock} /></div>
+              <FontAwesomeIcon icon={faLock} />
+            </div>
             <div className="payment">
-
               <h5 className="wait">Secure Payment Way</h5>
               <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
             </div>
@@ -80,16 +82,23 @@ export default function Footer() {
               <img src={greenylogo} alt="" height={"100px"} width={250} />
             </div>
 
-            <p className="footer-desc">
-              Adipisci asperiores ipsum ipsa repellat consequatur repudiandae
-              quisquam assumenda dolor perspiciatis sit ipsum dolor amet.
-            </p>
+            <p className="footer-desc">Adipisci asperiores ipsum ipsa repellat consequatur repudiandae quisquam assumenda dolor perspiciatis sit ipsum dolor amet.</p>
             <li className="footer-social">
-              <li><FontAwesomeIcon icon={faFacebook} /></li>
-              <li><FontAwesomeIcon icon={faTwitter} /></li>
-              <li><FontAwesomeIcon icon={faInstagram} /></li>
-              <li><FontAwesomeIcon icon={faLinkedin} /></li>
-              <li><FontAwesomeIcon icon={faPinterest} /></li>
+              <li>
+                <FontAwesomeIcon icon={faFacebook} />
+              </li>
+              <li>
+                <FontAwesomeIcon icon={faTwitter} />
+              </li>
+              <li>
+                <FontAwesomeIcon icon={faInstagram} />
+              </li>
+              <li>
+                <FontAwesomeIcon icon={faLinkedin} />
+              </li>
+              <li>
+                <FontAwesomeIcon icon={faPinterest} />
+              </li>
             </li>
           </div>
         </div>
@@ -108,14 +117,16 @@ export default function Footer() {
                 </span>
               </div>
             </li>
-            <li><FontAwesomeIcon icon={faMobile} className="cont-i" />
+            <li>
+              <FontAwesomeIcon icon={faMobile} className="cont-i" />
               <p className="num">
                 <span>+120 279 532 13</span>
                 <br />
                 <span>+120 279 532 14</span>
               </p>
             </li>
-            <li><FontAwesomeIcon icon={faMapMarkerAlt} className="cont-i" />
+            <li>
+              <FontAwesomeIcon icon={faMapMarkerAlt} className="cont-i" />
               <p>
                 1Hd- 50, 010 Avenue,
                 <br />
@@ -175,10 +186,7 @@ export default function Footer() {
         <div className="footer-part">
           <div className="app">
             <h3 className="footer-title">Download App</h3>
-            <p className="footer-desc lorem">
-              Lorem ipsum dolor sit amet tenetur dignissimos ipsum eligendi
-              autem obcaecati minus ducimus totam reprehenderit exercitationem!
-            </p>
+            <p className="footer-desc lorem">Lorem ipsum dolor sit amet tenetur dignissimos ipsum eligendi autem obcaecati minus ducimus totam reprehenderit exercitationem!</p>
             <div className="footer-app">
               <a href="...">
                 <img src={apple} alt="" />
@@ -212,7 +220,9 @@ export default function Footer() {
       </div>
       <div className="arow">
         <div className="itemarow">
-          <a className="arrow1" href="/"><FontAwesomeIcon icon={faArrowUp} /></a>
+          <a className="arrow1" onClick={MoveToTopPage}>
+            <FontAwesomeIcon icon={faArrowUp} />
+          </a>
         </div>
       </div>
     </div>
