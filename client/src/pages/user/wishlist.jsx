@@ -35,7 +35,8 @@ const Wishlist = () => {
         <img src={banner} alt="Offer Banner" />
         <div className="offer-banner-content">
           <h1>WISHLIST</h1>
-          <a href="/">Home</a>/<a href="...">Shop Grid</a>/<a href="...">Wishlist</a>
+          <a href="/">Home</a>/<a href="...">Shop Grid</a>/
+          <a href="...">Wishlist</a>
         </div>
       </div>
       <div className="wishlist-table-container">
@@ -61,7 +62,9 @@ const Wishlist = () => {
                 </td>
                 <td>{product.productName}</td>
                 <td>{product.newPrice}</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
+                <td>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </td>
                 <td>In Stock</td>
                 <td className="wishlist-card">
                   <div className="wishlist-add-to-cart">
@@ -69,8 +72,18 @@ const Wishlist = () => {
                   </div>
                 </td>
                 <td>
-                  <FontAwesomeIcon icon={faEye} className="wishlist-view" onClick={toggleDescription} />
-                  <Modal show={showModal} className="model-container" onHide={closeModal} centered size="lg">
+                  <FontAwesomeIcon
+                    icon={faEye}
+                    className="wishlist-view"
+                    onClick={toggleDescription}
+                  />
+                  <Modal
+                    show={showModal}
+                    className="model-container"
+                    onHide={closeModal}
+                    centered
+                    size="lg"
+                  >
                     <Modal.Header closeButton></Modal.Header>
                     <Modal.Body>
                       <ProductDescriptionCard
@@ -90,7 +103,11 @@ const Wishlist = () => {
                       />
                     </Modal.Body>
                     <Modal.Footer>
-                      <Button variant="secondary" className="green-background-button" onClick={closeModal}>
+                      <Button
+                        variant="secondary"
+                        className="green-background-button"
+                        onClick={closeModal}
+                      >
                         Close
                       </Button>
                     </Modal.Footer>
