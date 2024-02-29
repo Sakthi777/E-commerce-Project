@@ -197,13 +197,10 @@
   margin: 3px auto;
   color: white;
 }
-
-.offcanvas-content h6 {
-  font-size: 19px;
-  color: #39404a;
-}
-.offcanvas-content .unit-price {
-  color: #555555;
+.hrLine {
+  border-right: 1px solid #ffffff;
+  padding-right: 7px;
+  width: 1px;
 }
 .offcanvas-card {
   display: flex;
@@ -212,7 +209,7 @@
   padding: 15px;
   width: 100%;
   height: auto;
-  border-bottom: 1px solid #5555552f;
+  border-bottom: 1px solid #f3f4f5;
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 .offcanvas-img {
@@ -261,7 +258,7 @@
 .card-item-selector span {
   padding: 8px 20px;
   margin: 0px 5px;
-  font-size: 16px;
+  font-size: large;
   background-color: #f0f0f0;
   color: #119744;
   border-radius: 5px;
@@ -462,19 +459,7 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px 10px 0px 0px;
   }
-  .icon-container a {
-    text-decoration: none;
-    color: #555;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0px auto;
-    padding-top: 3px;
-    font-size: 12px;
-    color: #555;
-    cursor: pointer;
-  }
+
   .icon-container {
     position: relative;
     display: flex;

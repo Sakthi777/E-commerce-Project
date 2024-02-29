@@ -5,7 +5,7 @@ import { FaArrowCircleDown } from "react-icons/fa";
 import image1 from "../../assets/images/homePageImage/home-page-img1.jpg";
 import countdownImage from "../../assets/images/homePageImage/countdown.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import Footer from "../../pages/user/Footer";
+import Footer from "../../pages/user/Footer";
 import { faShoppingBag, faStar, faPercent } from "@fortawesome/free-solid-svg-icons";
 import FeaturedItems from "./featuredItems";
 import "../../styles/user/featuredItem.css";
@@ -85,7 +85,7 @@ const ProductGrid = ({ products }) => {
                   00
                   <span>:</span>
                 </span>
-                <p>Days</p>
+                <p>days</p>
               </div>
 
               <div className="hours">
@@ -93,7 +93,7 @@ const ProductGrid = ({ products }) => {
                   00
                   <span>:</span>
                 </span>
-                <p>Hours</p>
+                <p>hours</p>
               </div>
 
               <div className="minutes">
@@ -101,12 +101,12 @@ const ProductGrid = ({ products }) => {
                   00
                   <span>:</span>
                 </span>
-                <p>Minutes</p>
+                <p>minutes</p>
               </div>
 
               <div className="seconds">
                 <span className="countdown-time">00</span>
-                <p>Seconds</p>
+                <p>seconds</p>
               </div>
             </div>
             <div className="showNowButton">
@@ -195,61 +195,61 @@ const ProductGrid = ({ products }) => {
             </div>
           )}
 
-					{selectedOption === "Top Rating" && (
-						<div className="featuredItem-grid">
-							{products.map(
-								(product) =>
-									product.featuredItems && (
-										<FeaturedItems
-											key={product.id}
-											imgSrc={product.imgSrc}
-											imageSlider={product.imageSlider}
-											rating={product.rating}
-											productName={product.productName}
-											oldPrice={product.oldPrice}
-											newPrice={product.newPrice}
-											setNew={product.setNew}
-											setSale={product.setSale}
-											discountPercentage={product.discountPercentage}
-											productDetails={product.productDetails}
-										/>
-									),
-							)}
-						</div>
-					)}
-					{selectedOption === "Top Discount" && (
-						<div className="product-grid">
-							{products.map(
-								(product) =>
-									product.setNew && (
-										<ProductCard
-											key={product.id}
-											imgSrc={product.imgSrc}
-											imageSlider={product.imageSlider}
-											rating={product.rating}
-											productName={product.productName}
-											oldPrice={product.oldPrice}
-											newPrice={product.newPrice}
-											setNew={product.setNew}
-											setSale={product.setSale}
-											discountPercentage={product.discountPercentage}
-											productDetails={product.productDetails}
-										/>
-									),
-							)}
-						</div>
-					)}
-				</div>
-				<div className="showMoreButton">
-					<button className="show-more-button">
-						<FaArrowCircleDown className="showmore-icon" />
-						SHOW MORE
-					</button>
-				</div>
-			</div>
-			<Footer />
-		</>
-	);
+          {selectedOption === "Top Rating" && (
+            <div className="featuredItem-grid">
+              {products.map(
+                (product) =>
+                  product.featuredItems && (
+                    <FeaturedItems
+                      key={product.id}
+                      imgSrc={product.imgSrc}
+                      imageSlider={product.imageSlider}
+                      rating={product.rating}
+                      productName={product.productName}
+                      oldPrice={product.oldPrice}
+                      newPrice={product.newPrice}
+                      setNew={product.setNew}
+                      setSale={product.setSale}
+                      discountPercentage={product.discountPercentage}
+                      productDetails={product.productDetails}
+                    />
+                  )
+              )}
+            </div>
+          )}
+          {selectedOption === "Top Discount" && (
+            <div className="product-grid">
+              {products.map(
+                (product) =>
+                  product.setNew && (
+                    <ProductCard
+                      key={product.id}
+                      imgSrc={product.imgSrc}
+                      imageSlider={product.imageSlider}
+                      rating={product.rating}
+                      productName={product.productName}
+                      oldPrice={product.oldPrice}
+                      newPrice={product.newPrice}
+                      setNew={product.setNew}
+                      setSale={product.setSale}
+                      discountPercentage={product.discountPercentage}
+                      productDetails={product.productDetails}
+                    />
+                  )
+              )}
+            </div>
+          )}
+        </div>
+        <div className="showMoreButton">
+          <button className="show-more-button">
+            <FaArrowCircleDown className="showmore-icon" />
+            SHOW MORE
+          </button>
+        </div>
+      </div>
+      {/* <Footer /> */}
+    </>
+  );
 };
 
 export default ProductGrid;
