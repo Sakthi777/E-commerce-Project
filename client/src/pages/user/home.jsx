@@ -10,6 +10,7 @@ import { faShoppingBag, faStar, faPercent } from "@fortawesome/free-solid-svg-ic
 import FeaturedItems from "./featuredItems";
 import "../../styles/user/featuredItem.css";
 import { useState } from "react";
+import { Foods, Highlight } from "../../components/user/homePageCarousels";
 
 const ProductGrid = ({ products }) => {
   const [selectedOption, setSelectedOption] = useState("Top Order");
@@ -20,6 +21,8 @@ const ProductGrid = ({ products }) => {
   return (
     <>
       <HeaderPage />
+      <Highlight />
+      <Foods />
       <div className="product-container">
         <div className="productTitle">Recently Sold Items</div>
         <div className="product-grid">
@@ -247,7 +250,7 @@ const ProductGrid = ({ products }) => {
           </button>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
