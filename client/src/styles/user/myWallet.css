@@ -1,0 +1,313 @@
+.wallet-section {
+	position: relative;
+	width: 100%;
+	background-color: #f3f4f6;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.wallet-banner {
+	position: relative;
+	width: 100%;
+	height: 300px;
+	overflow: hidden;
+	background-color: #00000078;
+}
+
+.wallet-banner:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: linear-gradient(to right, #1197447a, #00317b7a);
+	z-index: 1;
+}
+
+.wallet-banner img {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	z-index: 0;
+}
+
+.wallet-banner-content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: #ffffff;
+	text-align: center;
+	z-index: 2;
+}
+
+.wallet-banner-anchors {
+	position: absolute;
+	bottom: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+	color: #ffffff;
+	text-align: center;
+	z-index: 2;
+}
+
+.wallet-banner-anchors a {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.wallet-details {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin: 1% auto;
+	padding: 0 4.2%;
+	/* for debugging */
+	/* background-color: #80808080; */
+}
+
+.my-wallet,
+.add-wallet {
+	display: flex;
+	flex-direction: column;
+	width: 48%;
+	min-height: 80%;
+	background-color: #fff;
+	margin: 1% 1%;
+	padding: 1%;
+	border-radius: 10px;
+}
+
+.cb {
+	color: #39404a;
+	border-bottom: 1px solid #39404a3f;
+	padding: 1%;
+	width: 100%;
+}
+
+.balance-amount {
+	color: #119744;
+	font-size: xx-large;
+	padding: 2%;
+	font-weight: 400;
+}
+
+.account-summary {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	gap: 2%;
+}
+
+.total-credit,
+.total-debit {
+	color: #39404a;
+	width: 48%;
+	height: 100%;
+	background-color: #f3f4f6;
+	padding: 5% 5%;
+	border-radius: 10px;
+}
+
+#add-amount-input {
+	padding: 2%;
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin-top: 3%;
+	background-color: #f3f4f6;
+	border: 1px solid #39404a3f;
+	border-radius: 5px;
+}
+
+.add-amount {
+	align-items: flex-flex-start;
+	margin: 1%;
+	width: 30%;
+	height: 20%;
+	border-radius: 5px;
+	border: 1px solid #39404a3f;
+	background-color: #f3f4f6;
+	color: #ffffff;
+	background-color: #119744;
+	text-wrap: ellipsis;
+}
+
+.amount-buttons {
+	padding: 3%;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	color: #39404a;
+}
+
+.amount-buttons div {
+	display: flex;
+	width: 30%;
+	color: #39404a;
+	font-size: 18px;
+}
+
+.amount-buttons .amounts-list {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 20px;
+	margin-left: 10px;
+}
+
+.amt {
+	display: flex;
+	color: #39404a;
+	flex-direction: column;
+	padding: 2px 5px;
+	margin: 0 3%;
+	border: 1px solid #39404a3f;
+	background-color: #f3f4f6;
+	width: 100%;
+	align-items: center;
+	justify-content: center;
+}
+
+.transaction-details {
+	width: 90%;
+	padding: 2% 2%;
+	border-radius: 10px;
+	background-color: #ffffff;
+	margin-bottom: 50px;
+}
+
+.pagination {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+
+.pagination p {
+	padding: 0 2%;
+}
+
+.pagination select {
+	padding: 0.5% 1%;
+	border-radius: 5px;
+	background-color: #f3f4f6;
+	outline: #39404a3f;
+}
+
+.transaction-table {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	padding: 2%;
+}
+
+.transaction-table table {
+	width: 100%;
+	color: #39404a;
+	text-align: center;
+	/* border: 1px solid #39404a; */
+	border-collapse: collapse;
+}
+
+.transaction-table table th,
+.transaction-table table td {
+	padding: 8px;
+	border: 1px solid #39404a;
+	/* border-collapse: collapse; */
+}
+
+.transaction-table table thead {
+	background-color: #8080803f;
+}
+
+.transaction-paid {
+	color: #119744;
+}
+
+.transaction-due {
+	color: #ffc107;
+}
+
+.transaction-return {
+	color: #212529;
+}
+
+.transaction-cancel {
+	color: #ff0000;
+}
+
+.transaction-process {
+	color: #0dcaf0;
+}
+
+.showing-results {
+	display: flex;
+	width: 100%;
+	height: auto;
+	justify-content: space-between;
+	padding: 0 2%;
+}
+
+.sr-text {
+	width: 45%;
+}
+
+.transaction-page-buttons {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	align-items: center;
+	padding-right: 5%;
+}
+
+.transaction-page-buttons button {
+	border: 1px solid #39404a3f;
+	margin: 3px;
+	height: 25px;
+	width: 25px;
+	border-radius: 50%;
+}
+
+@media (max-width: 840px) {
+	.wallet-details {
+		display: block;
+	}
+	.my-wallet,
+	.add-wallet {
+		width: 100%;
+		margin: 5% 0;
+		padding: 2%;
+	}
+	.add-amount {
+		min-height: 50%;
+		padding: 2% 0;
+	}
+	.amounts-buttons {
+		display: block;
+	}
+
+	.transaction-table {
+		display: flex;
+		justify-content: flex-start;
+		overflow-x: scroll;
+		/* overflow-y: scroll; */
+	}
+
+	.transaction-page-buttons {
+		padding-right: 5%;
+	}
+
+	.amounts-list .amounts-list button {
+		padding: 3px;
+	}
+}
