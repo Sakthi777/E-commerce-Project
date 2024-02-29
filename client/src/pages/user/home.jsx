@@ -252,7 +252,7 @@ const ProductGrid = ({ products }) => {
       </div>
       <Footer />
     </>
-  );
+  )
 };
 
 export default ProductGrid;
