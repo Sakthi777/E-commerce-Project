@@ -22,7 +22,7 @@ import AddProductdata from "./components/admin/AddProductdata";
 import CheckOut from "./pages/user/checkOut";
 import AboutUs from "./pages/user/aboutUs";
 //import ProductDescriptionCard from "./pages/user/productDescriptionCard";
-// import Home from "./pages/user/home";
+import Home from "./pages/user/home";
 // import FooterPart from "./pages/user/FooterPart";
 
 function App() {
@@ -31,7 +31,7 @@ function App() {
       <Router>
         <Routes>
           {/* <Route path="/" element={< products={products} />} /> */}
-          <Route path="/" element={<Home  products={products}></Home>}></Route>
+          <Route path="/" element={<Home products={products}></Home>}></Route>
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/resetPassword" element={<ResetPassword />} />
