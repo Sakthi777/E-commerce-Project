@@ -26,6 +26,18 @@ const LoginCmp = () => {
 
   const [disable, setDisable] = useState(false);
 
+  const setCookie = (name, value, days)=>{
+    var expires = "";
+    if(days){
+      var date = new Date();
+      date.setTime(date.getTime() + (days + 24*60*60*1000));
+      expires = "; expires=" + date.toUTCString();
+    }
+
+    document.cookie = name + "=" + encodeURIComponent(value) + expires + ";path=/";
+
+  }
+
   const handleUserDataSubmit = (event) => {
     event.preventDefault();
 
@@ -48,52 +60,28 @@ const LoginCmp = () => {
       setUserData({ ...userData, loader: true });
       axios.post(`${url}/login/loginUser`, handlePost).then((res) => {
         console.log(res.data);
-        console.log(res.headers.authorization);
-        console.log(res.headers['x-access-token']);
+        const token = res.data;
+        setCookie("LoginToken", token, 30);
         setDisable(true);
+        if(token){
+          setUserData({...userData, email:"", password:""})
+          toast.success("Registered Successfull !", {
+            autoClose:2000,
+            onClose:()=>{
+              setTimeout(()=>{
+                nav("/")
+              },200);
+            }
+          });
+        }
       }).catch((error) => {
-        console.log(error);
+        console.log(error.code);
+        if(error.code === "ERR_BAD_RESPONSE"){
+          toast.error("Invalid credentials");
+          setUserData({...userData, email:"", password:""})
+        }
       });
     }
-    // else {
-    //   const handlePost = {
-    //     email: userData.email,
-    //     password: userData.password
-    //   }
-    //   console.log(handlePost)
-    //   setUserData({ ...userData, loader: true });
-    //   axios.post(`${url}/login/loginUser`, handlePost).then((res) => {
-    //     console.log(res.data);
-    //     if (res.data) {
-    //       setUserData({
-    //         userName: "",
-    //         email: ""
-    //       });
-    //       setUserData({ ...userData, loader: false });
-    //       setDisable(true);
-    //       toast.success("Login Successfull !", {
-    //         autoClose: 2000,
-    //         onClose: () => {
-    //           setTimeout(() => {
-    //             nav("/")
-    //           }, 200);
-    //         }
-    //       });
-    //     }
-    //   }).catch((error) => {
-    //     console.log(error)
-    //     const dataError = error.response.status;
-    //     console.log(dataError);
-    //     if (dataError === 500) {
-    //       console.log("User already exists one");
-    //       setUserData({ ...userData, loader: false });
-    //       toast.error("User Already Exist!");
-    //     }
-    //     else {
-    //       toast.error("Internal Server Error!");
-    //     }
-    //   });
-    // }
   }
 
   return (

@@ -40,7 +40,10 @@ exports.loginUserControllers = asyncHandler(async(req, res, next)=>{
         if(verifyPassword){
             const loginToken =   generateLoginToken(res, existingUser._id);
             res.status(200).json( loginToken.token);
-            return;
+            // return;
+        }
+        else{
+            throw new Error("Email or password does not exist");
         }
     }
     else{
