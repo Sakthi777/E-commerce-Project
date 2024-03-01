@@ -251,7 +251,7 @@ const ProductGrid = ({ products }) => {
         </div>
       </div>
       <Footer />
-    </>
+    </> 
   )
 };
 
