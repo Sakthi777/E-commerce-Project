@@ -10,6 +10,8 @@ import "react-toastify/dist/ReactToastify.css";
 const RegisterPage = () => {
 	const url = "http://localhost:8000";
 
+	const nav = useNavigate();
+
 	const [userData, setUserData] = useState({
 		userName: "",
 		email: "",
@@ -29,6 +31,15 @@ const RegisterPage = () => {
 	});
 
 	const [disable, setDisable] = useState(false);
+	const [error, setError] = useState({
+		userName: { status: false, message: "" },
+		email: { status: false, message: "" },
+		password: { status: false, message: "" },
+		confirmPassword: { status: false, message: "" },
+		checkBox: { status: false, message: "" },
+	});
+
+	const [disable, setDisable] = useState(false);
 
 	const handleUserDataSubmit = (e) => {
 		e.preventDefault();
@@ -42,57 +53,21 @@ const RegisterPage = () => {
 		const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
 
 		if (name === "") {
-			setError({
-				...error,
-				userName: { status: true, message: "Username is required !" },
-			});
+			setError({ ...error, userName: { status: true, message: "Username is required !" } });
 		} else if (email === "") {
-			setError({
-				...error,
-				email: { status: true, message: "Email is required !" },
-			});
+			setError({ ...error, email: { status: true, message: "Email is required !" } });
 		} else if (password === "") {
-			setError({
-				...error,
-				password: { status: true, message: "Password is required !" },
-			});
+			setError({ ...error, password: { status: true, message: "Password is required !" } });
 		} else if (password.length < 8) {
-			setError({
-				...error,
-				password: {
-					status: true,
-					message: "Your password should have at least 8 characters",
-				},
-			});
+			setError({ ...error, password: { status: true, message: "Your password should have at least 8 characters" } });
 		} else if (!pattern.test(password)) {
-			setError({
-				...error,
-				password: {
-					status: true,
-					message: "Your password must have atleast one lowercase letter, one uppercase letter, one number, and one special character (!@#$%^&*).",
-				},
-			});
+			setError({ ...error, password: { status: true, message: "Your password must have atleast one lowercase letter, one uppercase letter, one number, and one special character (!@#$%^&*)." } });
 		} else if (confirmPassword === "") {
-			setError({
-				...error,
-				confirmPassword: {
-					status: true,
-					message: "confirm Password is required !",
-				},
-			});
+			setError({ ...error, confirmPassword: { status: true, message: "confirm Password is required !" } });
 		} else if (password !== confirmPassword) {
-			setError({
-				...error,
-				confirmPassword: {
-					status: true,
-					message: "confirm Password is not same !",
-				},
-			});
+			setError({ ...error, confirmPassword: { status: true, message: "confirm Password is not same !" } });
 		} else if (!checkBox) {
-			setError({
-				...error,
-				checkBox: { status: true, message: "Agree Terms & conditions !" },
-			});
+			setError({ ...error, checkBox: { status: true, message: "Agree Terms & conditions !" } });
 		} else {
 			const handlePost = {
 				userName: userData.userName,
@@ -124,13 +99,15 @@ const RegisterPage = () => {
 					}
 				})
 				.catch((error) => {
-					console.log(error.response.data.message);
-					const dataError = error.response.data.message;
+					console.log(error.response.status);
+					const dataError = error.response.status;
 					console.log(dataError);
-					if (dataError) {
+					if (dataError === 500) {
 						console.log("User already exists one");
 						setUserData({ ...userData, loader: false });
-						setError({ ...error, customError: { status: true, message: "Your password should have at least 8 characters" } });
+						toast.error("User Already Exist!");
+					} else {
+						toast.error("Internal Server Error!");
 					}
 				});
 		}
@@ -307,24 +284,9 @@ const RegisterPage = () => {
 								""
 							)}
 
-							{error.customError.status === true ? (
-								<div className="spinner">
-									<div id="spinner_d_flex">
-										<div className="form_error ">
-											<div>
-												<FaStar id="form_error_icon" />
-											</div>
-											<div>
-												<span style={{ marginLeft: "5px" }}>{error.customError.message}</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							) : (
-								""
-							)}
-
-							<button type="submit">Register</button>
+							<button type="submit" id={disable ? "register_form_btn" : ""} disabled={disable}>
+								Register
+							</button>
 						</form>
 					</div>
 				</div>
