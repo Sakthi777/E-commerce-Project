@@ -40,7 +40,8 @@
 .tablebody tr td {
     padding: 12px 20px;
     text-align: center;
-    border-right: 1px solid #e8e8e8;
+    border: 1px solid #e8e8e8;
+    font-size: 35px;
 }
 .tablebody tr td:last-child {
     border-right: none
