@@ -23,11 +23,19 @@ import CheckOut from "./pages/user/checkOut";
 import AboutUs from "./pages/user/aboutUs";
 //import ProductDescriptionCard from "./pages/user/productDescriptionCard";
 import Home from "./pages/user/home";
+import { useEffect } from "react";
+import Cookies from "js-cookie";
+
 // import FooterPart from "./pages/user/FooterPart";
+const MyComponent = () => {
+	const cookie = Cookies.get();
+	console.log(`cookie: ${Object.entries(cookie)}`);
+};
 
 function App() {
 	return (
 		<div className="App">
+			{MyComponent()}
 			<Router>
 				<Routes>
 					{/* <Route path="/" element={< products={products} />} /> */}

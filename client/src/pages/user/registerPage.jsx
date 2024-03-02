@@ -21,15 +21,6 @@ const RegisterPage = () => {
 		loader: false,
 	});
 
-	const [error, setError] = useState({
-		userName: { status: false, message: "" },
-		email: { status: false, message: "" },
-		password: { status: false, message: "" },
-		confirmPassword: { status: false, message: "" },
-		checkBox: { status: false, message: "" },
-		customError: { status: false, message: "" },
-	});
-
 	const [disable, setDisable] = useState(false);
 	const [error, setError] = useState({
 		userName: { status: false, message: "" },
@@ -38,8 +29,6 @@ const RegisterPage = () => {
 		confirmPassword: { status: false, message: "" },
 		checkBox: { status: false, message: "" },
 	});
-
-	const [disable, setDisable] = useState(false);
 
 	const handleUserDataSubmit = (e) => {
 		e.preventDefault();
