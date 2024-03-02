@@ -22,6 +22,7 @@ import ComingSoon from "./pages/user/comingSoon";
 import AddProductdata from "./components/admin/AddProductdata";
 import CheckOut from "./pages/user/checkOut";
 import AboutUs from "./pages/user/aboutUs";
+import RegisterData from "./components/admin/RegisterData";
 // import ProductDescriptionCard from "./pages/user/productDescriptionCard";
 // import Home from "./pages/user/home";
 // import FooterPart from "./pages/user/FooterPart";
@@ -54,6 +55,8 @@ function App() {
 					<Route path="/addcategory" element={<AddCategory></AddCategory>}></Route>
 					<Route path="/dashboard" element={<Dashboard />}></Route>
 					<Route path="/productdata" element={<AddProductdata />}></Route>
+					<Route path="/registerdata" element={<RegisterData />}></Route>
+
 				</Routes>
 			</Router>
 		</div>
