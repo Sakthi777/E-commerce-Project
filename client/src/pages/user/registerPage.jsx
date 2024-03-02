@@ -1,12 +1,16 @@
 import Header from "../../components/user/Header";
 import Footer from "../../components/user/AuthenticFooter";
 import "../../styles/user/register.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const RegisterPage = () => {
 	const url = "http://localhost:8000";
+
+	const nav = useNavigate();
 
 	const [userData, setUserData] = useState({
 		userName: "",
@@ -17,13 +21,13 @@ const RegisterPage = () => {
 		loader: false,
 	});
 
+	const [disable, setDisable] = useState(false);
 	const [error, setError] = useState({
 		userName: { status: false, message: "" },
 		email: { status: false, message: "" },
 		password: { status: false, message: "" },
 		confirmPassword: { status: false, message: "" },
 		checkBox: { status: false, message: "" },
-		customError: { status: false, message: "" },
 	});
 
 	const handleUserDataSubmit = (e) => {
@@ -37,58 +41,72 @@ const RegisterPage = () => {
 
 		const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
 
-    if (name === "") {
-      setError({ ...error, userName: { status: true, message: "Username is required !" } });
-    }
-    else if (email === "") {
-      setError({ ...error, email: { status: true, message: "Email is required !" } });
-    }
-    else if (password === "") {
-      setError({ ...error, password: { status: true, message: "Password is required !" } });
-    }
-    else if (password.length < 8) {
-      setError({ ...error, password: { status: true, message: "Your password should have at least 8 characters" } });
-    }
-    else if (!pattern.test(password)) {
-      setError({ ...error, password: { status: true, message: "Your password must have atleast one lowercase letter, one uppercase letter, one number, and one special character (!@#$%^&*)." } });
-    }
-    else if (confirmPassword === "") {
-      setError({ ...error, confirmPassword: { status: true, message: "confirm Password is required !" } });
-    }
-    else if (password !== confirmPassword) {
-      setError({ ...error, confirmPassword: { status: true, message: "confirm Password is not same !" } });
-    }
-    else if (!checkBox) {
-      setError({ ...error, checkBox: { status: true, message: "Agree Terms & conditions !" } });
-    }
-    else {
-      const handlePost = {
-        userName: userData.userName,
-        email: userData.email,
-        password: userData.password,
-        confirmPassword: userData.confirmPassword
-      }
-      setUserData({ ...userData, loader: true });
-      axios.post(`${url}/userDatas/users`, handlePost).then((res) => {
-        console.log(res.data);
-          }).catch((error) => {
-            console.log(error.response.data.message )
-            const dataError = error.response.data.message ;
-            console.log(dataError);
-            if (dataError) {
-              console.log("User already exists one");
-              setUserData({ ...userData, loader: false });
-              setError({ ...error, customError: { status: true, message: "Your password should have at least 8 characters" } });
-            }  
-          });
-    }
-
-  }
+		if (name === "") {
+			setError({ ...error, userName: { status: true, message: "Username is required !" } });
+		} else if (email === "") {
+			setError({ ...error, email: { status: true, message: "Email is required !" } });
+		} else if (password === "") {
+			setError({ ...error, password: { status: true, message: "Password is required !" } });
+		} else if (password.length < 8) {
+			setError({ ...error, password: { status: true, message: "Your password should have at least 8 characters" } });
+		} else if (!pattern.test(password)) {
+			setError({ ...error, password: { status: true, message: "Your password must have atleast one lowercase letter, one uppercase letter, one number, and one special character (!@#$%^&*)." } });
+		} else if (confirmPassword === "") {
+			setError({ ...error, confirmPassword: { status: true, message: "confirm Password is required !" } });
+		} else if (password !== confirmPassword) {
+			setError({ ...error, confirmPassword: { status: true, message: "confirm Password is not same !" } });
+		} else if (!checkBox) {
+			setError({ ...error, checkBox: { status: true, message: "Agree Terms & conditions !" } });
+		} else {
+			const handlePost = {
+				userName: userData.userName,
+				email: userData.email,
+				password: userData.password,
+				confirmPassword: userData.confirmPassword,
+			};
+			setUserData({ ...userData, loader: true });
+			axios
+				.post(`${url}/userDatas/users`, handlePost)
+				.then((res) => {
+					if (res.data) {
+						setUserData({
+							userName: "",
+							email: "",
+							password: "",
+							confirmPassword: "",
+						});
+						setUserData({ ...userData, loader: false });
+						setDisable(true);
+						toast.success("Registered Successfull !", {
+							autoClose: 2000,
+							onClose: () => {
+								setTimeout(() => {
+									nav("/login");
+								}, 200);
+							},
+						});
+					}
+				})
+				.catch((error) => {
+					console.log(error.response.status);
+					const dataError = error.response.status;
+					console.log(dataError);
+					if (dataError === 500) {
+						console.log("User already exists one");
+						setUserData({ ...userData, loader: false });
+						toast.error("User Already Exist!");
+					} else {
+						toast.error("Internal Server Error!");
+					}
+				});
+		}
+	};
 
 	return (
 		<div className="Authentic-container">
 			<Header />
 			<div className="Register-card">
+				<ToastContainer />
 				<div className="Register-content">
 					<div className="Register-content-heading">
 						<h2>Join Now!</h2>
@@ -255,41 +273,26 @@ const RegisterPage = () => {
 								""
 							)}
 
-							{error.customError.status === true ? (
-								<div className="spinner">
-									<div id="spinner_d_flex">
-										<div className="form_error ">
-											<div>
-												<FaStar id="form_error_icon" />
-											</div>
-											<div>
-												<span style={{ marginLeft: "5px" }}>{error.customError.message}</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							) : (
-								""
-							)}
-
-              <button type="submit">Register</button>
-            </form>
-          </div>
-        </div>
-      </div>
-      <div className="Register-card-bottom">
-        <div className="bottom-content">
-          <p>
-            Already Have An Account?
-            <Link to="/login" id="link">
-              Login Here
-            </Link>
-          </p>
-        </div>
-      </div>
-      <Footer />
-    </div>
-  );
+							<button type="submit" id={disable ? "register_form_btn" : ""} disabled={disable}>
+								Register
+							</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div className="Register-card-bottom">
+				<div className="bottom-content">
+					<p>
+						Already Have An Account?
+						<Link to="/login" id="link">
+							Login Here
+						</Link>
+					</p>
+				</div>
+			</div>
+			<Footer />
+		</div>
+	);
 };
 
 export default RegisterPage;

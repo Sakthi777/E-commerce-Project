@@ -6,24 +6,13 @@ import "../../styles/user/productCard.css";
 import "../../styles/user/productDescriptionCard.css";
 import { Modal, Button } from "react-bootstrap";
 import { useState } from "react";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faShoppingBag, faStar } from "@fortawesome/free-solid-svg-icons";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 import ProductDescriptionCard from "../../pages/user/productDescriptionCard";
 
-const ProductCard = ({
-  imgSrc,
-  imageSlider,
-  rating,
-  productName,
-  oldPrice,
-  newPrice,
-  setSale,
-  setNew,
-  discountPercentage,
-  productDetails,
-}) => {
+const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPrice, setSale, setNew, discountPercentage, productDetails }) => {
   const [liked, setLiked] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
@@ -42,31 +31,18 @@ const ProductCard = ({
 
   return (
     <div className="product-card">
-      <div
-        className={`productLike ${liked ? "liked" : ""}`}
-        onClick={toggleLike}
-      >
+      <div className={`productLike ${liked ? "liked" : ""}`} onClick={toggleLike}>
         <AiFillHeart className="icon" />
       </div>
       <div className="product-img-container">
-        <span className={`sale-label ${setSale ? "visible" : "hidden"}`}>
-          Sale
-        </span>
-        <span className={`new-label ${setNew ? "visible" : "hidden"}`}>
-          New
-        </span>
+        <span className={`sale-label ${setSale ? "visible" : "hidden"}`}>Sale</span>
+        <span className={`new-label ${setNew ? "visible" : "hidden"}`}>New</span>
         <img src={imgSrc} alt={productName} className="product-img" />
         <div className="viewIcon" onClick={toggleDescription}>
-          <FaEye />
+          <FontAwesomeIcon icon={faEye} />
         </div>
       </div>
-      <Modal
-        show={showModal}
-        className="model-container"
-        onHide={closeModal}
-        centered
-        size="lg"
-      >
+      <Modal show={showModal} className="model-container" onHide={closeModal} centered size="lg">
         <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
           <ProductDescriptionCard
@@ -86,11 +62,7 @@ const ProductCard = ({
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button
-            variant="secondary"
-            className="green-background-button"
-            onClick={closeModal}
-          >
+          <Button variant="secondary" className="green-background-button" onClick={closeModal}>
             Close
           </Button>
         </Modal.Footer>

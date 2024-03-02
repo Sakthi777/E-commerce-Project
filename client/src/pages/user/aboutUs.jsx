@@ -286,3 +286,5 @@ function AboutUs() {
 }
 
 export default AboutUs;
+
+export { PrevArrow, NextArrow };

@@ -32,6 +32,7 @@
   background: none;
   color: #555555;
   text-align: center;
+  font-size: calc(15px + (35 - 33) * (100vw - 320px) / (1920 - 320));
 }
 #link {
   background: none;
@@ -99,13 +100,6 @@
   }
   .Register-card-bottom {
     width: 90%;
-  }
-
-  .resetHere p {
-    background: none;
-    color: #555555;
-    text-align: center;
-    font-size: 16px;
   }
   .circle {
     display: none;

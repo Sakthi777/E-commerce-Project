@@ -1,6 +1,6 @@
 const userDataSchema = require("../models/userDataSchema");
 const bcrypt = require("bcryptjs");
-const createToken = require("../utlis/createToken");
+const {generateLoginToken, generateRegisterToken} = require("../utlis/createToken");
 const asyncHandler = require("../middlewares/catchAsyncError");
 
 // userData - /userDatas/users
@@ -23,7 +23,7 @@ exports.userDatasControllers = asyncHandler((async(req, res, next)=>{
         })
     
        await data.save();
-       createToken(res, data._id);
+       generateRegisterToken(res, data._id);
        res.json(data);
     }
 })) 
@@ -38,13 +38,16 @@ exports.loginUserControllers = asyncHandler(async(req, res, next)=>{
         const verifyPassword = await bcrypt.compare(password, existingUser.password);
 
         if(verifyPassword){
-            createToken(res, existingUser._id);
-            res.json(existingUser);
-            return;
+            const loginToken =   generateLoginToken(res, existingUser._id);
+            res.status(200).json( loginToken.token);
+            // return;
+        }
+        else{
+            throw new Error("Email or password does not exist");
         }
     }
     else{
-        res.status(401)
+        // res.status(401)
         throw new Error("Email or password does not exist");
     }
 })

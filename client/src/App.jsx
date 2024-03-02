@@ -4,9 +4,8 @@ import RegisterPage from "./pages/user/registerPage";
 import Login from "./pages/user/loginPage";
 import ResetPassword from "./pages/user/resetPasswordPage";
 import ChangePassword from "./pages/user/changePasswordPage";
-// import HeaderPage from "./components/user/HeaderPage";
+//import HeaderPage from "./components/user/HeaderPage";
 import Wishlist from "./pages/user/wishlist";
-import Home from "./pages/user/home";
 import products from "./pages/user/productList";
 import NotFound from "./pages/user/NotFound";
 import Privacy from "./pages/user/Privacy";
@@ -22,17 +21,22 @@ import ComingSoon from "./pages/user/comingSoon";
 import AddProductdata from "./components/admin/AddProductdata";
 import CheckOut from "./pages/user/checkOut";
 import AboutUs from "./pages/user/aboutUs";
-import RegisterData from "./components/admin/RegisterData";
 // import ProductDescriptionCard from "./pages/user/productDescriptionCard";
 // import Home from "./pages/user/home";
 // import FooterPart from "./pages/user/FooterPart";
+const MyComponent = () => {
+	const cookie = Cookies.get();
+	console.log(`cookie: ${Object.entries(cookie)}`);
+};
 
 function App() {
 	return (
 		<div className="App">
+			{MyComponent()}
 			<Router>
 				<Routes>
-					<Route path="/" element={<Home products={products} />} />
+					{/* <Route path="/" element={< products={products} />} /> */}
+					<Route path="/" element={<Home products={products}></Home>}></Route>
 					<Route path="/wishlist" element={<Wishlist />} />
 					<Route path="/register" element={<RegisterPage />} />
 					<Route path="/resetPassword" element={<ResetPassword />} />
@@ -45,6 +49,7 @@ function App() {
 					<Route path="/footer" element={<Footer />} />
 					<Route path="/faq" element={<FAQ />} />
 					<Route path="us" element={<UserContact />} />
+					<Route path="/aboutUs" element={<AboutUs></AboutUs>}></Route>
 					<Route path="/comingSoon" element={<ComingSoon />}></Route>
 					<Route path="/myProfile" element={<MyProfile />}></Route>
 
