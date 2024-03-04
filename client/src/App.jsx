@@ -24,6 +24,7 @@ import AboutUs from "./pages/user/aboutUs";
 // import ProductDescriptionCard from "./pages/user/productDescriptionCard";
 import Home from "./pages/user/home";
 import RegisterData from "./components/admin/RegisterData";
+import OrderHistory from "./pages/user/OrderHistory";
 // import FooterPart from "./pages/user/FooterPart";
 const MyComponent = () => {
 	// const cookie = Cookies.get();
@@ -49,7 +50,9 @@ function App() {
 					<Route path="/privacy" element={<Privacy />} />
 					<Route path="/footer" element={<Footer />} />
 					<Route path="/faq" element={<FAQ />} />
-					<Route path="us" element={<UserContact />} />
+					<Route path="/us" element={<UserContact />} />
+					<Route path="/orderhistory" element={<OrderHistory />}></Route>
+
 					<Route path="/aboutUs" element={<AboutUs></AboutUs>}></Route>
 					<Route path="/comingSoon" element={<ComingSoon />}></Route>
 					<Route path="/myProfile" element={<MyProfile />}></Route>
