@@ -1,7 +1,10 @@
+import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import RegisterPage from "./pages/user/registerPage";
 import Login from "./pages/user/loginPage";
 import ResetPassword from "./pages/user/resetPasswordPage";
 import ChangePassword from "./pages/user/changePasswordPage";
+//import HeaderPage from "./components/user/HeaderPage";
 import Wishlist from "./pages/user/wishlist";
 import products from "./pages/user/productList";
 import NotFound from "./pages/user/NotFound";
@@ -18,6 +21,7 @@ import ComingSoon from "./pages/user/comingSoon";
 import AddProductdata from "./components/admin/AddProductdata";
 import CheckOut from "./pages/user/checkOut";
 import AboutUs from "./pages/user/aboutUs";
+// import ProductDescriptionCard from "./pages/user/productDescriptionCard";
 import Home from "./pages/user/home";
 import OrderList from "./pages/admin/orderList";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
