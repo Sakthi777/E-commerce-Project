@@ -20,16 +20,10 @@ import CheckOut from "./pages/user/checkOut";
 import AboutUs from "./pages/user/aboutUs";
 import Home from "./pages/user/home";
 import OrderList from "./pages/admin/orderList";
-import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from "react-router-dom";
-import Cookies from "js-cookie";
-
-function ProtectRoute() {
-  // const cookie = Cookies.get();
-  // console.log(`cookie: ${Object.entries(cookie)}`);
-  const cookie = { login: false };
-  return cookie.login ? <Outlet /> : <Navigate to="/login" />;
-}
-
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ProtectRoute from "./pages/protectRoute/productRoute";
+import ShopPage from "./pages/user/shop";
+import AdminHomePage from "./components/admin/adminHomePage";
 function App() {
   return (
     <div className="App">
@@ -52,8 +46,10 @@ function App() {
           <Route path="/myProfile" element={<MyProfile />} />
           <Route path="/checkout" element={<CheckOut />} />
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/shop" element={<ShopPage />}></Route>
 
           {/* admin panel */}
+          <Route path="/admin" element={<AdminHomePage />}></Route>
           <Route path="/addcategory" element={<AddCategory />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/productdata" element={<AddProductdata />} />
