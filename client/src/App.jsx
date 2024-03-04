@@ -24,7 +24,6 @@ import AboutUs from "./pages/user/aboutUs";
 // import ProductDescriptionCard from "./pages/user/productDescriptionCard";
 import Home from "./pages/user/home";
 import OrderList from "./pages/admin/orderList";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProtectRoute from "./pages/protectRoute/productRoute";
 import ShopPage from "./pages/user/shop";
 import AdminHomePage from "./components/admin/adminHomePage";
