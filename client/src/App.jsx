@@ -1,10 +1,7 @@
-import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import RegisterPage from "./pages/user/registerPage";
 import Login from "./pages/user/loginPage";
 import ResetPassword from "./pages/user/resetPasswordPage";
 import ChangePassword from "./pages/user/changePasswordPage";
-//import HeaderPage from "./components/user/HeaderPage";
 import Wishlist from "./pages/user/wishlist";
 import products from "./pages/user/productList";
 import NotFound from "./pages/user/NotFound";
@@ -21,52 +18,55 @@ import ComingSoon from "./pages/user/comingSoon";
 import AddProductdata from "./components/admin/AddProductdata";
 import CheckOut from "./pages/user/checkOut";
 import AboutUs from "./pages/user/aboutUs";
-//import ProductDescriptionCard from "./pages/user/productDescriptionCard";
 import Home from "./pages/user/home";
-import { useEffect } from "react";
+import OrderList from "./pages/admin/orderList";
+import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from "react-router-dom";
 import Cookies from "js-cookie";
 
-// import FooterPart from "./pages/user/FooterPart";
-const MyComponent = () => {
-	const cookie = Cookies.get();
-	console.log(`cookie: ${Object.entries(cookie)}`);
-};
+function ProtectRoute() {
+  // const cookie = Cookies.get();
+  // console.log(`cookie: ${Object.entries(cookie)}`);
+  const cookie = { login: false };
+  return cookie.login ? <Outlet /> : <Navigate to="/login" />;
+}
 
 function App() {
-	return (
-		<div className="App">
-			{MyComponent()}
-			<Router>
-				<Routes>
-					{/* <Route path="/" element={< products={products} />} /> */}
-					<Route path="/" element={<Home products={products}></Home>}></Route>
-					<Route path="/wishlist" element={<Wishlist />} />
-					<Route path="/register" element={<RegisterPage />} />
-					<Route path="/resetPassword" element={<ResetPassword />} />
-					<Route path="/login" element={<Login />} />
-					<Route path="/changePassword" element={<ChangePassword />} />
-					<Route path="/offers" element={<Offers />}></Route>
-					<Route path="/myWallet" element={<MyWallet />}></Route>
-					<Route path="/notfound" element={<NotFound />} />
-					<Route path="/privacy" element={<Privacy />} />
-					<Route path="/footer" element={<Footer />} />
-					<Route path="/faq" element={<FAQ />} />
-					<Route path="us" element={<UserContact />} />
-					<Route path="/aboutUs" element={<AboutUs></AboutUs>}></Route>
-					<Route path="/comingSoon" element={<ComingSoon />}></Route>
-					<Route path="/myProfile" element={<MyProfile />}></Route>
+  return (
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home products={products} />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/resetPassword" element={<ResetPassword />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/changePassword" element={<ChangePassword />} />
+          <Route path="/offers" element={<Offers />} />
+          <Route path="/notfound" element={<NotFound />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/footer" element={<Footer />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="us" element={<UserContact />} />
+          <Route path="/aboutUs" element={<AboutUs />} />
+          <Route path="/comingSoon" element={<ComingSoon />} />
+          <Route path="/myProfile" element={<MyProfile />} />
+          <Route path="/checkout" element={<CheckOut />} />
+          <Route path="/about" element={<AboutUs />} />
 
-					<Route path="/checkout" element={<CheckOut />}></Route>
-					<Route path="/about" element={<AboutUs />}></Route>
+          {/* admin panel */}
+          <Route path="/addcategory" element={<AddCategory />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/productdata" element={<AddProductdata />} />
+          <Route path="/orderList" element={<OrderList />} />
 
-					{/* adminpanel */}
-					<Route path="/addcategory" element={<AddCategory></AddCategory>}></Route>
-					<Route path="/dashboard" element={<Dashboard />}></Route>
-					<Route path="/productdata" element={<AddProductdata />}></Route>
-				</Routes>
-			</Router>
-		</div>
-	);
+          {/* Use ProtectRoute to protect routes */}
+          <Route element={<ProtectRoute />}>
+            <Route path="/myWallet" element={<MyWallet />} />
+          </Route>
+        </Routes>
+      </Router>
+    </div>
+  );
 }
 
 export default App;
