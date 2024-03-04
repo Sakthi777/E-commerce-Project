@@ -20,6 +20,7 @@
   color: #ffffffff;
   margin-left: 90px;
   font-size: 14px;
+  margin-bottom: 0px;
 }
 .right-span span {
   margin-right: 45px;
@@ -77,7 +78,9 @@
   cursor: pointer;
   margin-top: 2px;
 }
-
+.myAccount p {
+  margin-bottom: 0px;
+}
 .myAccount img {
   width: 40px;
   height: 40px;
@@ -201,6 +204,9 @@
 .offcanvas-content h6 {
   font-size: 19px;
   color: #39404a;
+}
+.offcanvas-content p {
+  margin-bottom: 0px;
 }
 .offcanvas-content .unit-price {
   color: #555555;

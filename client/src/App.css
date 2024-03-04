@@ -14,7 +14,7 @@ body {
 }
 
 body p {
-  margin-bottom: 0px;
+  margin-bottom: 0rem;
 }
 body svg {
   vertical-align: initial; /* or vertical-align: unset; */

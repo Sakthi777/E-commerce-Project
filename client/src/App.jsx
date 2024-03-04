@@ -29,33 +29,39 @@ const MyComponent = () => {
 	// const cookie = Cookies.get();
 	// console.log(`cookie: ${Object.entries(cookie)}`);
 };
+import OrderList from "./pages/admin/orderList";
+import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from "react-router-dom";
+import Cookies from "js-cookie";
+
+function ProtectRoute() {
+  // const cookie = Cookies.get();
+  // console.log(`cookie: ${Object.entries(cookie)}`);
+  const cookie = { login: false };
+  return cookie.login ? <Outlet /> : <Navigate to="/login" />;
+}
 
 function App() {
-	return (
-		<div className="App">
-			{MyComponent()}
-			<Router>
-				<Routes>
-					{/* <Route path="/" element={< products={products} />} /> */}
-					<Route path="/" element={<Home products={products}></Home>}></Route>
-					<Route path="/wishlist" element={<Wishlist />} />
-					<Route path="/register" element={<RegisterPage />} />
-					<Route path="/resetPassword" element={<ResetPassword />} />
-					<Route path="/login" element={<Login />} />
-					<Route path="/changePassword" element={<ChangePassword />} />
-					<Route path="/offers" element={<Offers />}></Route>
-					<Route path="/myWallet" element={<MyWallet />}></Route>
-					<Route path="/notfound" element={<NotFound />} />
-					<Route path="/privacy" element={<Privacy />} />
-					<Route path="/footer" element={<Footer />} />
-					<Route path="/faq" element={<FAQ />} />
-					<Route path="us" element={<UserContact />} />
-					<Route path="/aboutUs" element={<AboutUs></AboutUs>}></Route>
-					<Route path="/comingSoon" element={<ComingSoon />}></Route>
-					<Route path="/myProfile" element={<MyProfile />}></Route>
-
-					<Route path="/checkout" element={<CheckOut />}></Route>
-					<Route path="/about" element={<AboutUs />}></Route>
+  return (
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home products={products} />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/resetPassword" element={<ResetPassword />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/changePassword" element={<ChangePassword />} />
+          <Route path="/offers" element={<Offers />} />
+          <Route path="/notfound" element={<NotFound />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/footer" element={<Footer />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="us" element={<UserContact />} />
+          <Route path="/aboutUs" element={<AboutUs />} />
+          <Route path="/comingSoon" element={<ComingSoon />} />
+          <Route path="/myProfile" element={<MyProfile />} />
+          <Route path="/checkout" element={<CheckOut />} />
+          <Route path="/about" element={<AboutUs />} />
 
 					{/* adminpanel */}
 					<Route path="/addcategory" element={<AddCategory></AddCategory>}></Route>

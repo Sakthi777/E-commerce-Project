@@ -121,6 +121,7 @@
 .product-rating p {
   color: #555;
   font-size: 14px;
+  margin-bottom: 0px;
 }
 
 .product-name {
