@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import "../../styles/admin/dashboard.css";
 import greenyIcon from "../../assets/images/logo.png";
-import AdminHomePage from "../../components/admin/adminHomePage"
-
 function Dashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10); // Default rows per page
@@ -36,7 +34,6 @@ function Dashboard() {
 
   return (
     <>
-      <AdminHomePage />
       <div className="category-table-page">
         <table className="category-table">
           <thead>

@@ -2,7 +2,10 @@ import "../../styles/user/orderList.css";
 import AuthenticFooter from "../../components/user/AuthenticFooter";
 import products from "../../pages/user/productList";
 import HeaderPage from "../../components/user/HeaderPage";
-const orderList = () => {
+import AdminHomePage from "../../components/admin/adminHomePage";
+import { useOffCanvasContext } from "../../components/admin/adminHomePage";
+const OrderList = () => {
+  const { showOffCanvas, backdrop, handleToggleOffCanvas, handleClose } = useOffCanvasContext();
   const getStatusColor = (status) => {
     let statusColor;
 
@@ -31,9 +34,8 @@ const orderList = () => {
 
   return (
     <>
-      <HeaderPage />
-
-      <div className="orderList-container">
+      <AdminHomePage />
+      <div className={`orderList-container ${showOffCanvas ? "content-shifted" : ""}`}>
         <table className="orderList-table">
           <thead>
             <tr>
@@ -84,4 +86,4 @@ const orderList = () => {
   );
 };
 
-export default orderList;
+export default OrderList;

@@ -8,13 +8,13 @@ export const SidebarData = [
   {
     heading: "Main",
     title: "Dashboard",
-    path: "/dashboard",
+    path: "/orderList",
     icon: <AiIcons.AiFillHome className="icon" />,
     isFirstHeading: true,
   },
   {
     title: "Shops",
-    path: "/shops",
+    path: "",
     icon: <IoIcons.IoIosPaper className="icon" />,
     subNav: [
       {

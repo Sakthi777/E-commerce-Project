@@ -63,8 +63,15 @@
   cursor: pointer;
 }
 .admin-sidebar {
-  width: 350px;
+  width: 300px !important;
   top: 80px;
+}
+.admin-offcanvas-header {
+  display: none !important;
+  cursor: pointer;
+}
+.sidebar {
+  padding: 0px !important;
 }
 
 .sidebar::-webkit-scrollbar {
@@ -85,10 +92,10 @@
   text-decoration: none;
   display: flex;
   justify-content: left;
-  padding: 20px 20px;
+  padding: 10px 20px;
   list-style: none;
-  height: 60px;
-  font-size: 18px;
+  height: auto;
+  font-size: 15px;
   cursor: pointer;
 }
 
@@ -100,15 +107,12 @@
   transition: border-radius 0.3s ease;
 }
 
-.close-icon:hover {
-  color: #119744;
-}
 .SidebarLink:hover {
   background: #e5f5f2;
   border-left: 4px solid #119744;
   cursor: pointer;
   border-radius: 5px;
-  width: 350px;
+  width: 98%;
 }
 
 .SidebarLabel {
@@ -120,15 +124,16 @@
   border-left: 4px solid #119744;
   cursor: pointer;
   border-radius: 5px;
-  width: 350px;
 }
 
 .ArrowContainer {
-  font-size: 20px;
-  margin-top: 7px;
   color: #119744;
-  margin-left: auto;
+  margin: auto;
   position: relative;
+}
+.ArrowContainer svg {
+  font-size: large;
+  vertical-align: middle;
 }
 
 .SubMenu {
@@ -145,9 +150,7 @@
   font-size: 14px;
   text-transform: uppercase;
 }
-.SubMenu .HeadingContainer.FirstHeading {
-  margin-top: 15px;
-}
+
 .TitleContainer {
   display: flex;
   align-items: center;
@@ -180,7 +183,6 @@
   padding: 0;
   margin: 0;
 }
-
 .profile-list li {
   display: flex;
   align-items: center;
@@ -188,23 +190,30 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
 .profile-list li:hover {
   background: #f3f4f5;
   border-left: 4px solid #119744;
   cursor: pointer;
 }
-
 .profile-list span {
   margin-left: 10px;
 }
-
 .profile-list li svg {
   width: 30px;
   height: 30px;
   margin-right: 10px;
   fill: #555555;
   font-weight: bold;
+}
+@media screen and (max-width: 1000px) {
+  .admin-offcanvas-header {
+    display: flex !important;
+    justify-content: flex-end; /* Align items to the end (right side) */
+    align-items: center;
+    padding: 0px !important;
+    padding-top: 15px !important;
+    padding-right: 20px !important;
+  }
 }
 @media screen and (max-width: 780px) {
   body[data-sidebar="true"]::after {
@@ -221,6 +230,10 @@
   .nav-button {
     display: none;
   }
+  .admin-sidebar {
+    width: 300px !important;
+    top: 0px !important;
+  }
   .close-icon {
     display: flex;
     justify-content: center;
@@ -228,13 +241,7 @@
     cursor: pointer;
     font-size: 25px;
   }
-  .SidebarLink:hover {
-    background: #e5f5f2;
-    border-left: 4px solid #119744;
-    cursor: pointer;
-    border-radius: 5px;
-    width: 400px;
-  }
+
   .close-icon:hover {
     background-color: #119744;
     border-radius: 50px; /* rounded border */
@@ -243,11 +250,6 @@
     padding: 3px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
-  .sidebar {
-    width: 55%;
-    top: 0px;
-    z-index: 999;
   }
 
   .profile-info {
@@ -272,11 +274,6 @@
 
   .nav-button {
     display: none;
-  }
-
-  .sidebar {
-    width: 100%;
-    top: 0px;
   }
 
   .profile-info {

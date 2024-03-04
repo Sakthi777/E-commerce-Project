@@ -32,7 +32,7 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
   return (
     <div className="product-card">
       <div className={`productLike ${liked ? "liked" : ""}`} onClick={toggleLike}>
-        <AiFillHeart className="icon" />
+        <AiFillHeart className="icon" style={{ verticalAlign: "unset" }} />
       </div>
       <div className="product-img-container">
         <span className={`sale-label ${setSale ? "visible" : "hidden"}`}>Sale</span>
