@@ -31,6 +31,8 @@ import ShopPage from "./pages/user/shop";
 import AdminHeader from "./components/admin/adminHeader";
 import { OffCanvasProvider } from "../../client/src/components/admin/adminHeader";
 import OrderHistory from "./pages/user/OrderHistory";
+import RegisterData from "./components/admin/RegisterData";
+import AllCategory from "./pages/user/AllCategory";
 function App() {
 	return (
 		<div className="App">
@@ -49,7 +51,8 @@ function App() {
 						<Route path="/footer" element={<Footer />} />
 						<Route path="/faq" element={<FAQ />} />
 						<Route path="us" element={<UserContact />} />
-						<Route path="/orderhitory" element={<OrderHistory />} />
+						<Route path="/orderhistory" element={<OrderHistory />} />
+						<Route path="/allcategory" element={<AllCategory />} />
 						<Route path="/aboutUs" element={<AboutUs />} />
 						<Route path="/comingSoon" element={<ComingSoon />} />
 						<Route path="/myProfile" element={<MyProfile />} />
@@ -63,7 +66,7 @@ function App() {
 						<Route path="/dashboard" element={<Dashboard />} />
 						<Route path="/productdata" element={<AddProductdata />} />
 						<Route path="/orderList" element={<OrderList />} />
-
+						<Route path="/registerdata" element={<RegisterData />} />
 						{/* Use ProtectRoute to protect routes */}
 						<Route element={<ProtectRoute />}>
 							<Route path="/myWallet" element={<MyWallet />} />
