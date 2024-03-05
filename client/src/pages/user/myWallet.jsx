@@ -9,6 +9,7 @@ function MyWallet() {
 	return (
 		<>
 			<HeaderPage />
+
 			<div className="wallet-section">
 				<div className="wallet-banner">
 					<img src={banner} alt="Wallet Banner" />
@@ -109,8 +110,6 @@ function MyWallet() {
 								<FontAwesomeIcon icon={faArrowLeft} />
 							</button>
 							<button>1</button>
-							<button>2</button>
-							<button>3</button>
 							<p>....</p>
 							<button>60</button>
 							<button>

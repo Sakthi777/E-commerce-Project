@@ -47,7 +47,7 @@
 
 .myprofile-banner-anchors {
 	position: absolute;
-	bottom: 20px;
+	top: 60%;
 	left: 50%;
 	transform: translateX(-50%);
 	color: #ffffff;

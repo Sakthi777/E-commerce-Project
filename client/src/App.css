@@ -12,7 +12,9 @@ body {
   width: 100%;
   overflow-x: hidden;
 }
-
+body .modal-open {
+  overflow: auto;
+}
 body p {
   margin-bottom: 0rem;
 }

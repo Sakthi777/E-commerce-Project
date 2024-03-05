@@ -1,15 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;900&display=swap");
+body[data-sidebar="false"] {
+  overflow: scroll !important;
+  padding-right: 0px !important;
+}
 .nav-logo {
   text-align: center;
   width: 170px;
   margin-left: 10px;
 }
-.sidebar-logo {
-  display: none;
-  visibility: hidden;
-  height: 0px;
-}
-
 .right-section {
   margin-left: auto;
   display: flex;
@@ -49,6 +47,9 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  position: fixed;
+  width: 100%;
+  z-index: 3;
 }
 
 .nav a {
@@ -63,12 +64,17 @@
   cursor: pointer;
 }
 .admin-sidebar {
-  width: 300px !important;
+  width: 270px !important;
   top: 80px;
+  position: fixed;
 }
 .admin-offcanvas-header {
   display: none !important;
   cursor: pointer;
+}
+.admin-offcanvas-header img {
+  width: 170px;
+  display: none;
 }
 .sidebar {
   padding: 0px !important;
@@ -102,7 +108,7 @@
 .menu-bar {
   color: #555555;
   font-size: 25px;
-  margin-left: 50px;
+  margin-left: 40px;
   margin-top: 1px;
   transition: border-radius 0.3s ease;
 }
@@ -208,15 +214,12 @@
 @media screen and (max-width: 1000px) {
   .admin-offcanvas-header {
     display: flex !important;
-    justify-content: flex-end; /* Align items to the end (right side) */
+    justify-content: flex-end;
     align-items: center;
-    padding: 0px !important;
-    padding-top: 15px !important;
-    padding-right: 20px !important;
   }
 }
 @media screen and (max-width: 780px) {
-  body[data-sidebar="true"]::after {
+  /* body[data-sidebar="true"]::after {
     content: "";
     position: fixed;
     top: 0;
@@ -225,7 +228,7 @@
     height: 100%;
     background: #9999;
     pointer-events: none;
-  }
+  } */
 
   .nav-button {
     display: none;
@@ -234,49 +237,44 @@
     width: 300px !important;
     top: 0px !important;
   }
-  .close-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-size: 25px;
+  .admin-offcanvas-header {
+    justify-content: space-between;
   }
-
-  .close-icon:hover {
-    background-color: #119744;
-    border-radius: 50px; /* rounded border */
-    color: white;
-    font-size: 27px;
-    padding: 3px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  .admin-offcanvas-header img {
+    display: block;
   }
 
   .profile-info {
     display: none;
-  }
-  .sidebar-logo {
-    text-align: center;
-    width: 170px;
-    margin-left: 10px;
-    margin-top: 10px;
-    display: inline;
   }
 }
 
 @media screen and (max-width: 550px) {
-  .sidebar-logo {
-    text-align: center;
-    width: 170px;
-    margin-left: 10px;
-    display: block;
-  }
-
   .nav-button {
     display: none;
   }
-
   .profile-info {
     display: none;
+  }
+  .menu-bar {
+    margin-left: 0px;
+  }
+  .content-shifted {
+    margin-left: 0px;
+    transition: margin-left 0.3s ease;
+  }
+}
+@media screen and (max-width: 360px) {
+  .menu-bar {
+    margin-left: 0px;
+    font-size: 25px;
+  }
+  .nav-logo {
+    text-align: center;
+    width: 150px;
+    margin-left: 10px;
+  }
+  .profile-icon {
+    font-size: 40px;
   }
 }

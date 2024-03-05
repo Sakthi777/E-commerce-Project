@@ -85,10 +85,10 @@ const Foods = () => {
 	useEffect(() => {
 		const handleResize = () => {
 			let newSlidesToScroll, newSlidesToShow;
-			if (window.innerWidth >= 1080) {
-				newSlidesToShow = 5;
-			} else if (window.innerWidth >= 840) {
+			if (window.innerWidth >= 1180) {
 				newSlidesToShow = 4;
+			} else if (window.innerWidth >= 840) {
+				newSlidesToShow = 3;
 			} else {
 				newSlidesToShow = 2;
 				newSlidesToScroll = 1;
@@ -109,55 +109,56 @@ const Foods = () => {
 	const foodData = [
 		{
 			id: 1,
+			key: 1,
 			foodImg: vegetables,
 			category: "Vegetable Foods",
 			quantity: "63 Items",
 		},
 		{
 			id: 2,
-			foodImg: fruits,
-			category: "Fruits",
-			quantity: "63 Items",
-		},
-		{
-			id: 1,
 			foodImg: groceries,
 			category: "Groceries",
 			quantity: "63 Items",
 		},
 		{
-			id: 1,
+			id: 3,
 			foodImg: dairy,
 			category: "Dairy",
 			quantity: "63 Items",
 		},
 		{
-			id: 1,
+			id: 4,
 			foodImg: seafood,
 			category: "Sea Foods",
 			quantity: "63 Items",
 		},
 		{
-			id: 1,
+			id: 15,
 			foodImg: vegan,
 			category: "Vegan Foods",
 			quantity: "63 Items",
 		},
 		{
-			id: 1,
+			id: 6,
 			foodImg: dryFood,
 			category: "Dry Foods",
 			quantity: "63 Items",
 		},
 		{
-			id: 1,
+			id: 7,
 			foodImg: fastFood,
 			category: "Fast Foods",
 			quantity: "63 Items",
 		},
+		{
+			id:8,
+			foodImg: fruits,
+			category: "Fruits",
+			quantity: "63 Items",
+		},
 	];
 
-	var settings = {
+	var setting = {
 		dots: false,
 		infinite: true,
 		speed: 500,
@@ -172,7 +173,7 @@ const Foods = () => {
 	return (
 		<div className="suggest-food">
 			{/* <div className="foods-list"> */}
-			<Slider {...settings}>
+			<Slider {...setting}>
 				{foodData.map((d) => (
 					<div className="food" key={d.key}>
 						<div className="food-img">

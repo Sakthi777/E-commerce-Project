@@ -6,7 +6,7 @@ const generateRegisterToken = (res, userId)=>{
         httpOnly:true,
         secure:process.env.NODE_ENV == "development",
         samesite:"strict",
-        maxAge:30*24*60*1000
+        // maxAge:30*24*60*1000
     })
 
     return token;
