@@ -5,7 +5,7 @@
   top: 70px;
 }
 .content-shifted {
-  margin-left: 320px;
+  margin-left: 280px;
   transition: margin-left 0.3s ease;
 }
 .orderList-table {

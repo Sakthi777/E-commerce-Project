@@ -102,7 +102,6 @@ const Sidebar = () => {
         <Offcanvas.Body style={{ overflow: "visible" }} className="sidebar">
           <div>
             <div className="sidebar-wrap">
-              <div className="close-container"></div>
               {SidebarData.map((item, index) => (
                 <SubMenu item={item} key={index} />
               ))}
