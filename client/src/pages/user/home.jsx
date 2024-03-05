@@ -250,9 +250,9 @@ const ProductGrid = ({ products }) => {
           </button>
         </div>
       </div>
-      <Footer />
-    </> 
-  )
+      {/* <Footer /> */}
+    </>
+  );
 };
 
 export default ProductGrid;

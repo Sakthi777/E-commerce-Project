@@ -26,8 +26,8 @@ import Home from "./pages/user/home";
 import OrderList from "./pages/admin/orderList";
 import ProtectRoute from "./pages/protectRoute/productRoute";
 import ShopPage from "./pages/user/shop";
-import AdminHomePage from "./components/admin/adminHomePage";
-import { OffCanvasProvider } from "../../client/src/components/admin/adminHomePage";
+import AdminHeader from "./components/admin/adminHeader";
+import { OffCanvasProvider } from "../../client/src/components/admin/adminHeader";
 function App() {
   return (
     <div className="App">
@@ -54,7 +54,7 @@ function App() {
             <Route path="/shop" element={<ShopPage />}></Route>
 
             {/* admin panel */}
-            <Route path="/admin" element={<AdminHomePage />}></Route>
+            <Route path="/admin" element={<AdminHeader />}></Route>
             <Route path="/addcategory" element={<AddCategory />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/productdata" element={<AddProductdata />} />
