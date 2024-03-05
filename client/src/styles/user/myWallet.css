@@ -47,7 +47,7 @@
 
 .wallet-banner-anchors {
 	position: absolute;
-	bottom: 20px;
+	top: 60%;
 	left: 50%;
 	transform: translateX(-50%);
 	color: #ffffff;
@@ -82,6 +82,7 @@
 	margin: 1% 1%;
 	padding: 1%;
 	border-radius: 10px;
+	height: auto;
 }
 
 .cb {
@@ -128,10 +129,10 @@
 }
 
 .add-amount {
-	align-items: flex-flex-start;
+	align-items: flex-start;
 	margin: 1%;
-	width: 30%;
-	height: 20%;
+	width: 120px;
+	height: 40px;
 	border-radius: 5px;
 	border: 1px solid #39404a3f;
 	background-color: #f3f4f6;
@@ -159,20 +160,20 @@
 
 .amount-buttons .amounts-list {
 	display: grid;
-	grid-template-columns: repeat(5, 1fr);
+	grid-template-columns: repeat(3, 1fr);
 	gap: 20px;
+	width: 100px;
+	height: 25px;
 	margin-left: 10px;
 }
 
 .amt {
-	display: flex;
 	color: #39404a;
-	flex-direction: column;
 	padding: 2px 5px;
 	margin: 0 3%;
 	border: 1px solid #39404a3f;
 	background-color: #f3f4f6;
-	width: 100%;
+	width: 75px;
 	align-items: center;
 	justify-content: center;
 }
@@ -217,17 +218,36 @@
 	text-align: center;
 	/* border: 1px solid #39404a; */
 	border-collapse: collapse;
+	box-shadow: 5px 5px 15px #80808030;
+	border-radius: 5px;
 }
 
 .transaction-table table th,
 .transaction-table table td {
 	padding: 8px;
-	border: 1px solid #39404a;
 	/* border-collapse: collapse; */
 }
 
-.transaction-table table thead {
-	background-color: #8080803f;
+.transaction-table th {
+	background-color: #119744;
+	color: #fff;
+	border-top: 5px;
+}
+
+.transaction-table th:first-child {
+	border-top-left-radius: 5px;
+}
+
+.transaction-table th:last-child {
+	border-top-right-radius: 5px;
+}
+
+.transaction-table tr:nth-child(odd) {
+	background-color: #1197440a;
+}
+
+.transaction-table tr:nth-child(even) {
+	background-color: #11974401;
 }
 
 .transaction-paid {
@@ -271,11 +291,19 @@
 }
 
 .transaction-page-buttons button {
-	border: 1px solid #39404a3f;
+	border: none;
 	margin: 3px;
 	height: 25px;
 	width: 25px;
 	border-radius: 50%;
+	background-color: #119744;
+	color: #ffffff;
+}
+
+@media (max-width: 960px) {
+	.amount-buttons .amounts-list {
+		grid-template-columns: repeat(2, 1fr);
+	}
 }
 
 @media (max-width: 840px) {
@@ -287,10 +315,11 @@
 		width: 100%;
 		margin: 5% 0;
 		padding: 2%;
+		height: 300px;
 	}
 	.add-amount {
-		min-height: 50%;
-		padding: 2% 0;
+		width: 100px;
+		height: 30px;
 	}
 	.amounts-buttons {
 		display: block;
@@ -303,11 +332,23 @@
 		/* overflow-y: scroll; */
 	}
 
+	.amount-buttons .amounts-list {
+		grid-template-columns: 1fr 1fr;
+	}
+
 	.transaction-page-buttons {
 		padding-right: 5%;
 	}
 
+	.amount-buttons .amounts-list {
+		margin-left: 10%;
+	}
+
 	.amounts-list .amounts-list button {
 		padding: 3px;
+	}
+
+	.amt {
+		width: 60px;
 	}
 }

@@ -23,30 +23,21 @@ import CheckOut from "./pages/user/checkOut";
 import AboutUs from "./pages/user/aboutUs";
 //import ProductDescriptionCard from "./pages/user/productDescriptionCard";
 import Home from "./pages/user/home";
-import { useEffect } from "react";
-import Cookies from "js-cookie";
-
-// import FooterPart from "./pages/user/FooterPart";
-const MyComponent = () => {
-	const cookie = Cookies.get();
-	console.log(`cookie: ${Object.entries(cookie)}`);
-};
+import { useEffect, createContext } from "react";
+import TransactionDetails from "./pages/admin/transactionDetails";
+import Protect from "./pages/protectRoute/protectRoute";
 
 function App() {
 	return (
 		<div className="App">
-			{MyComponent()}
 			<Router>
 				<Routes>
 					{/* <Route path="/" element={< products={products} />} /> */}
 					<Route path="/" element={<Home products={products}></Home>}></Route>
-					<Route path="/wishlist" element={<Wishlist />} />
 					<Route path="/register" element={<RegisterPage />} />
 					<Route path="/resetPassword" element={<ResetPassword />} />
 					<Route path="/login" element={<Login />} />
-					<Route path="/changePassword" element={<ChangePassword />} />
 					<Route path="/offers" element={<Offers />}></Route>
-					<Route path="/myWallet" element={<MyWallet />}></Route>
 					<Route path="/notfound" element={<NotFound />} />
 					<Route path="/privacy" element={<Privacy />} />
 					<Route path="/footer" element={<Footer />} />
@@ -54,15 +45,21 @@ function App() {
 					<Route path="us" element={<UserContact />} />
 					<Route path="/aboutUs" element={<AboutUs></AboutUs>}></Route>
 					<Route path="/comingSoon" element={<ComingSoon />}></Route>
-					<Route path="/myProfile" element={<MyProfile />}></Route>
+					<Route element={<Protect />}>
+						<Route path="/myProfile" element={<MyProfile />}></Route>
+						<Route path="/myWallet" element={<MyWallet />}></Route>
+						<Route path="/changePassword" element={<ChangePassword />} />
+						<Route path="/wishlist" element={<Wishlist />} />
+						<Route path="/checkout" element={<CheckOut />}></Route>
+					</Route>
 
-					<Route path="/checkout" element={<CheckOut />}></Route>
 					<Route path="/about" element={<AboutUs />}></Route>
 
 					{/* adminpanel */}
 					<Route path="/addcategory" element={<AddCategory></AddCategory>}></Route>
 					<Route path="/dashboard" element={<Dashboard />}></Route>
 					<Route path="/productdata" element={<AddProductdata />}></Route>
+					<Route path="/transactionDetails" element={<TransactionDetails />} />
 				</Routes>
 			</Router>
 		</div>

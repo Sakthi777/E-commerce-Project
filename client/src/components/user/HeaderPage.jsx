@@ -188,7 +188,7 @@ const HeaderPage = () => {
 							</li>
 							<li>
 								<Link to="/myProfile">
-									Category
+									Profile
 									{/* <FiChevronDown /> */}
 								</Link>
 							</li>
@@ -200,7 +200,13 @@ const HeaderPage = () => {
 							</li>
 							<li>
 								<Link to="/comingSoon">
-									Blogs
+									Coming Soon
+									{/* <FiChevronDown /> */}
+								</Link>
+							</li>
+							<li>
+								<Link to="/aboutus">
+									About Us
 									{/* <FiChevronDown /> */}
 								</Link>
 							</li>
