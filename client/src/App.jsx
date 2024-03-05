@@ -25,11 +25,12 @@ import AboutUs from "./pages/user/aboutUs";
 import Home from "./pages/user/home";
 import TransactionDetails from "./pages/admin/transactionDetails";
 
-import OrderList from "./pages/admin/orderList";
+import { CanceledOrders, CompletedOrders, PendingOrders } from "./pages/admin/orderList";
 import ProtectRoute from "./pages/protectRoute/productRoute";
 import ShopPage from "./pages/user/shop";
 import AdminHeader from "./components/admin/adminHeader";
 import { OffCanvasProvider } from "../../client/src/components/admin/adminHeader";
+import OrderHistory from "./pages/user/OrderHistory";
 function App() {
   return (
     <div className="App">
@@ -47,7 +48,8 @@ function App() {
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/footer" element={<Footer />} />
             <Route path="/faq" element={<FAQ />} />
-            <Route path="us" element={<UserContact />} />
+            <Route path="/us" element={<UserContact />} />
+            <Route path="/orderhitory" element={<OrderHistory />} />
             <Route path="/aboutUs" element={<AboutUs />} />
             <Route path="/comingSoon" element={<ComingSoon />} />
             <Route path="/myProfile" element={<MyProfile />} />
@@ -59,8 +61,10 @@ function App() {
             <Route path="/admin" element={<AdminHeader />}></Route>
             <Route path="/addcategory" element={<AddCategory />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/productdata" element={<AddProductdata />} />
-            <Route path="/orderList" element={<OrderList />} />
+            <Route path="/addProduct" element={<AddProductdata />} />
+            <Route path="/completedOrders" element={<CompletedOrders />} />
+            <Route path="/pendingOrders" element={<PendingOrders />} />
+            <Route path="/canceledOrders" element={<CanceledOrders />} />
 
             {/* Use ProtectRoute to protect routes */}
             <Route element={<ProtectRoute />}>

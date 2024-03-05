@@ -65,9 +65,17 @@ const HeaderPage = () => {
         <div className="header-top">
           <p>Welcome to Ecomart in Your Dream Online Store!</p>
           <div className="right-span">
-            <span className="need-help">Offers</span>
-            <span className="need-help">Need Help</span>
-            <span className="contact-us">Contact Us</span>
+            <Link to="/offers">
+              <span className="need-help">Offers</span>
+            </Link>
+
+            <Link to="/faq">
+              <span className="need-help">Need Help</span>
+            </Link>
+
+            <Link to="/us">
+              <span className="contact-us">Contact Us</span>
+            </Link>
           </div>
         </div>
         <div
@@ -81,7 +89,7 @@ const HeaderPage = () => {
                 <img src={profile} alt=""></img>
               </div>
             </Link>
-            <div className="alignlogo">
+            <div className="alignlogo" onClick={() => navigate("/")}>
               <img src={image} alt="Greeny" />
             </div>
             <div className="alignSearch-icon">
@@ -89,7 +97,7 @@ const HeaderPage = () => {
             </div>
           </div>
           <div className="logo">
-            <img src={image} alt="" className="logo" />
+            <img src={image} alt="" className="logo" onClick={() => navigate("/")} />
           </div>
           <Link to="/login" style={{ textDecoration: "none" }}>
             <div className="myAccount">
@@ -181,12 +189,7 @@ const HeaderPage = () => {
                   {/* <FiChevronDown /> */}
                 </Link>
               </li>
-              <li>
-                <Link to="/shop">
-                  Shop
-                  {/* <FiChevronDown /> */}
-                </Link>
-              </li>
+
               <li>
                 <Link to="/myWallet">
                   Wallet
@@ -238,7 +241,7 @@ const HeaderPage = () => {
         </div>
         <div className="bottom-card">
           <div className="icon-container">
-            <FaHome />
+            <FaHome onClick={() => navigate("/")} />
             <span>Home</span>
           </div>
           <div className="icon-container">

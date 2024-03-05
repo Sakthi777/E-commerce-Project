@@ -1,0 +1,120 @@
+.order-history{
+    padding: 60px;
+}
+.totalorder {
+    padding: 20px 25px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+}
+
+.order-selection {
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+.order-selection .form-label {
+    font-size: 18px;
+    margin: 0px 8px 0px 0px;
+    color: black;
+}
+
+.order-selection .select-history {
+    width: 150px;
+    background: #f5f5f5;
+}
+.select-history {
+    height: 45px;
+    font-size: 15px;
+    padding: 0px 7px;
+    letter-spacing: 0.3px;
+    background-size: 12px 10px;
+    text-transform: capitalize;
+    cursor: pointer;
+    border-radius: 6px;
+    border: none;
+}
+.list-of-order {
+    padding: 0px 30px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    transition: all linear .3s;
+}
+
+.order1{
+    padding: 25px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-content: space-between;
+    cursor: pointer
+}
+
+.order1 h5 {
+    color: green;
+    text-transform: capitalize
+}
+.delivary-list {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+}
+.order-details {
+    padding: 25px;
+    border-radius: 8px;
+    background: #f5f5f5;
+    margin-bottom: 25px;
+    width: 33%;
+}
+
+.order-details li {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    justify-content: space-between;
+    margin-bottom: 20px
+}
+.order-details li:last-child {
+    margin-bottom: 0px
+}
+
+.order-details li h6 {
+    line-height: 26px;
+    white-space: nowrap;
+    text-transform: capitalize
+}
+
+.order-details li h6 {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.order-details li p {
+    width: 250px;
+    text-align: right
+}
+.order-address {
+    height: 215px;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    background: #f5f5f5;
+}
+
+.order-address h6 {
+    margin-bottom: 15px;
+    white-space: nowrap;
+    text-transform: capitalize
+}
+
+.order-address p {
+    text-transform: capitalize
+}
