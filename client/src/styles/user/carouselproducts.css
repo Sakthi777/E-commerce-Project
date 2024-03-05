@@ -40,6 +40,10 @@
 	height: 520px;
 }
 
+#description {
+	padding-left: 5%;
+}
+
 #description h1 {
 	color: rgb(57, 64, 74);
 	font-size: 50px;
@@ -117,13 +121,8 @@
 		display: none;
 	}
 
-	#desscription {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		display: -webkit-box;
-		-webkit-line-clamp: 18;
-		-webkit-box-orient: vertical;
+	#description {
+		padding-left: 0;
 	}
 }
 
