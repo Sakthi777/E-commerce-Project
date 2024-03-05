@@ -23,9 +23,7 @@ import CheckOut from "./pages/user/checkOut";
 import AboutUs from "./pages/user/aboutUs";
 // import ProductDescriptionCard from "./pages/user/productDescriptionCard";
 import Home from "./pages/user/home";
-import { useEffect, createContext } from "react";
 import TransactionDetails from "./pages/admin/transactionDetails";
-import Protect from "./pages/protectRoute/protectRoute";
 
 import OrderList from "./pages/admin/orderList";
 import ProtectRoute from "./pages/protectRoute/productRoute";
