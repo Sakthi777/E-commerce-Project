@@ -75,6 +75,7 @@
 	}
 	.centered {
 		padding-left: 55px;
+		padding-right: 20px;
 		justify-content: center;
 		align-items: center;
 		width: 100%;
@@ -215,17 +216,22 @@ body {
 	padding-top: 50px;
 	width: 100%;
     height: auto;
-    display: flex;
+    display: grid;
     flex-direction: row;
     padding: 45px;
     gap: 1rem;
 	justify-content: center;
+	--bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .greeny-branch {
-	position: relative;
 	display: flex;
 	flex-direction: row;
+	margin: 0px 2.5px 30px;
+    position: relative;
 }
 
 .greeny-branch img {
@@ -238,6 +244,7 @@ body {
 
 .greeny-branch img {
 	display: flex;
+	flex-wrap: wrap;
 	filter: brightness(50%);
 	-webkit-filter: brightness(50%);
 	-moz-filter: brightness(50%);
@@ -349,7 +356,7 @@ body {
 	margin-top: 50px;
 }
 
-@media (max-width: 575px) {
+@media (max-width: 840px) {
 	.greeny-address .greeny-branch {
 		flex-direction: column;
 		padding: 15px;

@@ -76,9 +76,11 @@ const HeaderPage = () => {
 					// style={{ zIndex: 3 }}
 				>
 					<div className="alignItem">
-						<div className="alignMyAccount">
-							<img src={profile} alt="" />
-						</div>
+						<Link to="/">
+							<div className="alignMyAccount">
+								<img src={profile} alt=""></img>
+							</div>
+						</Link>
 						<div className="alignlogo">
 							<img src={image} alt="Greeny" />
 						</div>
