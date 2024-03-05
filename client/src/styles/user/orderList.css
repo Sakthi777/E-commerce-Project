@@ -4,7 +4,10 @@
 
   overflow: auto;
 }
-
+.content-shifted {
+  margin-left: 320px;
+  transition: margin-left 0.3s ease;
+}
 .orderList-table {
   width: 100%;
   border-collapse: collapse;

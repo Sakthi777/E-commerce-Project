@@ -44,8 +44,8 @@
   cursor: pointer;
 }
 .productLike.liked .icon {
-  fill: #119744; /* Liked fill color */
-  color: #ffffff; /* Liked text color */
+  fill: #119744;
+  color: #ffffff;
 }
 .card-icon {
   padding-right: 5px;
