@@ -30,6 +30,7 @@ import ProtectRoute from "./pages/protectRoute/productRoute";
 import ShopPage from "./pages/user/shop";
 import AdminHeader from "./components/admin/adminHeader";
 import { OffCanvasProvider } from "../../client/src/components/admin/adminHeader";
+import OrderHistory from "./pages/user/OrderHistory";
 function App() {
 	return (
 		<div className="App">
@@ -48,6 +49,7 @@ function App() {
 						<Route path="/footer" element={<Footer />} />
 						<Route path="/faq" element={<FAQ />} />
 						<Route path="us" element={<UserContact />} />
+						<Route path="/orderhitory" element={<OrderHistory />} />
 						<Route path="/aboutUs" element={<AboutUs />} />
 						<Route path="/comingSoon" element={<ComingSoon />} />
 						<Route path="/myProfile" element={<MyProfile />} />
