@@ -1,9 +1,8 @@
 import "../../styles/user/orderList.css";
 import AuthenticFooter from "../../components/user/AuthenticFooter";
 import products from "../../pages/user/productList";
-import HeaderPage from "../../components/user/HeaderPage";
-import AdminHomePage from "../../components/admin/adminHomePage";
-import { useOffCanvasContext } from "../../components/admin/adminHomePage";
+import AdminHomePage from "../../components/admin/adminHeader";
+import { useOffCanvasContext } from "../../components/admin/adminHeader";
 const OrderList = () => {
   const { showOffCanvas, backdrop, handleToggleOffCanvas, handleClose } = useOffCanvasContext();
   const getStatusColor = (status) => {
@@ -29,13 +28,14 @@ const OrderList = () => {
       padding: "5px 7px",
       borderRadius: "5px",
       margin: "0px 10px",
+      cursor: "pointer",
     };
   };
 
   return (
     <>
       <AdminHomePage />
-      <div className={`orderList-container ${showOffCanvas ? "content-shifted" : ""}`}>
+      <div className={`orderList-container ${showOffCanvas ? "content-shifted" : ""} `}>
         <table className="orderList-table">
           <thead>
             <tr>

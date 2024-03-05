@@ -1,16 +1,17 @@
 .orderList-container {
   text-align: center;
-  padding: 10px 50px;
-
   overflow: auto;
+  position: relative;
+  top: 70px;
 }
 .content-shifted {
   margin-left: 320px;
   transition: margin-left 0.3s ease;
 }
 .orderList-table {
-  width: 100%;
+  width: 93%;
   border-collapse: collapse;
+  margin: 30px auto;
 }
 .orderList-table th {
   background-color: #119744;

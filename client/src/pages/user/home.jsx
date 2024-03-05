@@ -250,7 +250,7 @@ const ProductGrid = ({ products }) => {
 					</button>
 				</div>
 			</div>
-			<Footer />
+			{/* <Footer /> */}
 		</>
 	);
 };
