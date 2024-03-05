@@ -19,7 +19,7 @@ export const SidebarData = [
     subNav: [
       {
         title: "All shops",
-        path: "",
+        path: "/dashboard",
         icon: <IoIcons.IoIosPaper className="icon" />,
       },
       {

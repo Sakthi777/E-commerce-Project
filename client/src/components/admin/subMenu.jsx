@@ -27,12 +27,7 @@ const SubMenu = ({ item, closeSidebar }) => {
       {subnav && (
         <div className="SubItemsContainer">
           {item.subNav.map((subItem, index) => (
-            <Link
-              to={subItem.path}
-              className="DropdownLink"
-              key={index}
-              onClick={closeSidebar} // Close the sidebar when a sub-item is clicked
-            >
+            <Link to={subItem.path} className="DropdownLink" key={index} onClick={closeSidebar}>
               {subItem.icon}
               <span className="SidebarLabel">{subItem.title}</span>
             </Link>

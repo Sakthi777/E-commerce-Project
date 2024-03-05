@@ -31,47 +31,47 @@ import ShopPage from "./pages/user/shop";
 import AdminHeader from "./components/admin/adminHeader";
 import { OffCanvasProvider } from "../../client/src/components/admin/adminHeader";
 function App() {
-	return (
-		<div className="App">
-			<Router>
-				<OffCanvasProvider>
-					<Routes>
-						<Route path="/" element={<Home products={products} />} />
-						<Route path="/wishlist" element={<Wishlist />} />
-						<Route path="/register" element={<RegisterPage />} />
-						<Route path="/resetPassword" element={<ResetPassword />} />
-						<Route path="/login" element={<Login />} />
-						<Route path="/changePassword" element={<ChangePassword />} />
-						<Route path="/offers" element={<Offers />} />
-						<Route path="/notfound" element={<NotFound />} />
-						<Route path="/privacy" element={<Privacy />} />
-						<Route path="/footer" element={<Footer />} />
-						<Route path="/faq" element={<FAQ />} />
-						<Route path="us" element={<UserContact />} />
-						<Route path="/aboutUs" element={<AboutUs />} />
-						<Route path="/comingSoon" element={<ComingSoon />} />
-						<Route path="/myProfile" element={<MyProfile />} />
-						<Route path="/checkout" element={<CheckOut />} />
-						<Route path="/about" element={<AboutUs />} />
-						<Route path="/shop" element={<ShopPage />}></Route>
+  return (
+    <div className="App">
+      <Router>
+        <OffCanvasProvider>
+          <Routes>
+            <Route path="/" element={<Home products={products} />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/resetPassword" element={<ResetPassword />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/changePassword" element={<ChangePassword />} />
+            <Route path="/offers" element={<Offers />} />
+            <Route path="/notfound" element={<NotFound />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/footer" element={<Footer />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="us" element={<UserContact />} />
+            <Route path="/aboutUs" element={<AboutUs />} />
+            <Route path="/comingSoon" element={<ComingSoon />} />
+            <Route path="/myProfile" element={<MyProfile />} />
+            <Route path="/checkout" element={<CheckOut />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/shop" element={<ShopPage products={products} />}></Route>
 
-						{/* admin panel */}
-						<Route path="/admin" element={<AdminHeader />}></Route>
-						<Route path="/addcategory" element={<AddCategory />} />
-						<Route path="/dashboard" element={<Dashboard />} />
-						<Route path="/productdata" element={<AddProductdata />} />
-						<Route path="/orderList" element={<OrderList />} />
+            {/* admin panel */}
+            <Route path="/admin" element={<AdminHeader />}></Route>
+            <Route path="/addcategory" element={<AddCategory />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/productdata" element={<AddProductdata />} />
+            <Route path="/orderList" element={<OrderList />} />
 
-						{/* Use ProtectRoute to protect routes */}
-						<Route element={<ProtectRoute />}>
-							<Route path="/myWallet" element={<MyWallet />} />
-						</Route>
-						<Route path="/transactionDetails" element={<TransactionDetails />} />
-					</Routes>
-				</OffCanvasProvider>
-			</Router>
-		</div>
-	);
+            {/* Use ProtectRoute to protect routes */}
+            <Route element={<ProtectRoute />}>
+              <Route path="/myWallet" element={<MyWallet />} />
+            </Route>
+            <Route path="/transactionDetails" element={<TransactionDetails />} />
+          </Routes>
+        </OffCanvasProvider>
+      </Router>
+    </div>
+  );
 }
 
 export default App;
