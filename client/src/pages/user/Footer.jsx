@@ -218,7 +218,7 @@ export default function Footer() {
           </a>
         </div>
       </div>
-      <div className="arow">
+      <div className="arow1">
         <div className="itemarow">
           <a className="arrow1" onClick={MoveToTopPage}>
             <FontAwesomeIcon icon={faArrowUp} />
