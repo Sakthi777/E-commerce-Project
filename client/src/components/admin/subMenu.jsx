@@ -8,7 +8,7 @@ const SubMenu = ({ item, closeSidebar }) => {
   const showSubnav = () => setSubnav(!subnav);
 
   const handleItemClick = () => {
-    // closeSidebar();
+    //closeSidebar();
     if (item.onClick) {
       item.onClick();
     }
