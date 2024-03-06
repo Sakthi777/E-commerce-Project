@@ -15,22 +15,22 @@ export const SidebarData = [
     subNav: [
       {
         title: "Total Orders",
-        path: "/dashboard",
+        path: "/admin/dashboard",
         icon: <AiIcons.AiTwotoneDashboard className="icon" />,
       },
       {
         title: "Completed Orders",
-        path: "/completedOrders",
+        path: "/admin/completedOrders",
         icon: <FaIcons.FaCheckCircle className="icon" />,
       },
       {
         title: "Pending Orders",
-        path: "/pendingOrders",
+        path: "/admin/pendingOrders",
         icon: <MDIcons.MdOutlinePendingActions className="icon" />,
       },
       {
         title: "Canceled Orders",
-        path: "/canceledOrders",
+        path: "/admin/canceledOrders",
         icon: <MDIcons.MdCancel className="icon" />,
       },
     ],

@@ -27,7 +27,6 @@ export const OffCanvasProvider = ({ children }) => {
         setBackdrop(false);
       }
     };
-
     handleResize();
     window.addEventListener("resize", handleResize);
 

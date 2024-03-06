@@ -37,44 +37,52 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <OffCanvasProvider>
-          <Routes>
-            <Route path="/" element={<Home products={products} />} />
-            <Route path="/wishlist" element={<Wishlist />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/resetPassword" element={<ResetPassword />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/changePassword/:token" element={<ChangePassword />} />
-            <Route path="/offers" element={<Offers />} />
-            <Route path="/notfound" element={<NotFound />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/footer" element={<Footer />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/us" element={<UserContact />} />
-            <Route path="/orderhitory" element={<OrderHistory />} />
-            <Route path="/aboutUs" element={<AboutUs />} />
-            <Route path="/comingSoon" element={<ComingSoon />} />
-            <Route path="/myProfile" element={<MyProfile />} />
-            <Route path="/checkout" element={<CheckOut />} />
-            <Route path="/about" element={<AboutUs />} />
-            <Route path="/shop" element={<ShopPage products={products} />}></Route>
+        <Routes>
+          <Route path="/" element={<Home products={products} />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/resetPassword" element={<ResetPassword />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/changePassword/:token" element={<ChangePassword />} />
+          <Route path="/offers" element={<Offers />} />
+          <Route path="/notfound" element={<NotFound />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/footer" element={<Footer />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/us" element={<UserContact />} />
+          <Route path="/orderhitory" element={<OrderHistory />} />
+          <Route path="/aboutUs" element={<AboutUs />} />
+          <Route path="/comingSoon" element={<ComingSoon />} />
+          <Route path="/myProfile" element={<MyProfile />} />
+          <Route path="/checkout" element={<CheckOut />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/shop" element={<ShopPage products={products} />}></Route>
+          <Route element={<ProtectRoute />}>
+            <Route path="/myWallet" element={<MyWallet />} />
+          </Route>
+          <Route path="/transactionDetails" element={<TransactionDetails />} />
 
-            {/* admin panel */}
-            <Route path="/admin" element={<AdminHeader />}></Route>
-            <Route path="/addcategory" element={<AddCategory />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/addProduct" element={<AddProductdata />} />
-            <Route path="/completedOrders" element={<CompletedOrders />} />
-            <Route path="/pendingOrders" element={<PendingOrders />} />
-            <Route path="/canceledOrders" element={<CanceledOrders />} />
+          {/* admin panel */}
 
-            {/* Use ProtectRoute to protect routes */}
-            <Route element={<ProtectRoute />}>
-              <Route path="/myWallet" element={<MyWallet />} />
-            </Route>
-            <Route path="/transactionDetails" element={<TransactionDetails />} />
-          </Routes>
-        </OffCanvasProvider>
+          <Route
+            path="/admin/*"
+            element={
+              <OffCanvasProvider>
+                <AdminHeader />
+                <Routes>
+                  <Route path="addcategory" element={<AddCategory />} />
+                  <Route path="dashboard" element={<Dashboard />} />
+                  <Route path="addProduct" element={<AddProductdata />} />
+                  <Route path="completedOrders" element={<CompletedOrders />} />
+                  <Route path="pendingOrders" element={<PendingOrders />} />
+                  <Route path="canceledOrders" element={<CanceledOrders />} />
+                </Routes>
+              </OffCanvasProvider>
+            }
+          />
+
+          {/* Use ProtectRoute to protect routes */}
+        </Routes>
       </Router>
     </div>
   );
