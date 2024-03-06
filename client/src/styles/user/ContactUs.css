@@ -34,6 +34,7 @@
 }
 .add {
 	padding-left: 19px;
+	
 	position: relative;
 	display: flex;
 	flex-direction: row;
@@ -61,10 +62,11 @@
 @media (max-width: 575px) {
 	.contact {
 		flex-direction: column;
-		width: 105%;
+		width: 100%;
 	}
 	.add {
 		flex-direction: column;
+		padding-right: 25px;
 	}
 	.address1 {
 		width: 100%;
@@ -197,14 +199,14 @@ body {
 		padding: 15px;
 	}
 	.contact-map {
-		width: 104%;
+		width: 100%;
 		position: relative;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 	}
 	.user {
-		width: 104%;
+		width: 100%;
 		padding-bottom: 20px;
 	}
 	.user .text {

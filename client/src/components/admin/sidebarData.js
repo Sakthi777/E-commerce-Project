@@ -3,14 +3,37 @@ import React from "react";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import * as IoIcons from "react-icons/io";
+import * as MDIcons from "react-icons/md";
 
 export const SidebarData = [
   {
     heading: "Main",
     title: "Dashboard",
-    path: "/orderList",
+    path: "",
     icon: <AiIcons.AiFillHome className="icon" />,
     isFirstHeading: true,
+    subNav: [
+      {
+        title: "Total Orders",
+        path: "/dashboard",
+        icon: <AiIcons.AiTwotoneDashboard className="icon" />,
+      },
+      {
+        title: "Completed Orders",
+        path: "/completedOrders",
+        icon: <FaIcons.FaCheckCircle className="icon" />,
+      },
+      {
+        title: "Pending Orders",
+        path: "/pendingOrders",
+        icon: <MDIcons.MdOutlinePendingActions className="icon" />,
+      },
+      {
+        title: "Canceled Orders",
+        path: "/canceledOrders",
+        icon: <MDIcons.MdCancel className="icon" />,
+      },
+    ],
   },
   {
     title: "Shops",
@@ -42,7 +65,7 @@ export const SidebarData = [
   {
     heading: "Product Management",
     title: "Products",
-    path: "/products",
+    path: "",
     icon: <IoIcons.IoMdHelpCircle className="icon" />,
 
     subNav: [
@@ -60,6 +83,11 @@ export const SidebarData = [
         title: "All Low & Out of stock products",
         path: "/products/out-of-stocks",
         icon: <IoIcons.IoIosPaper className="icon" />,
+      },
+      {
+        title: "Add New Product",
+        path: "/addProduct",
+        icon: <MDIcons.MdPlaylistAdd className="icon" />,
       },
     ],
   },

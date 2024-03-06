@@ -8,9 +8,9 @@ const SubMenu = ({ item, closeSidebar }) => {
   const showSubnav = () => setSubnav(!subnav);
 
   const handleItemClick = () => {
-    closeSidebar(); // Close the sidebar when an item is clicked
+    //closeSidebar();
     if (item.onClick) {
-      item.onClick(); // Call the provided onClick function if it exists
+      item.onClick();
     }
   };
 
