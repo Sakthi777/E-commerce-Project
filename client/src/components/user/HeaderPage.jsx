@@ -195,7 +195,6 @@ const HeaderPage = () => {
 									{/* <FiChevronDown /> */}
 								</Link>
 							</li>
-
 							<li>
 								<Link to="/myWallet">
 									Wallet
