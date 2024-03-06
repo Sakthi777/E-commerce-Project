@@ -43,18 +43,22 @@
     border: 1px solid #e8e8e8;
     font-size: 35px;
 }
-.tablebody tr td:last-child {
-    border-right: none
-}
+/* .tablebody tr td:last-child {
+    border-right: none;
+    border-left: none;
+} */
 .tablename {
     white-space: nowrap;
     text-transform: capitalize;
 }
-.tablebody tr:nth-child(even){
+/* .tablebody tr:nth-child(even){
     background-color: rgb(240, 240, 240);
-}
+} */
 @media (max-width: 1199px){
 .registerAdmindata {
     overflow-x: scroll;
+}
+.table-row{
+    width: 100%;
 }
 }

@@ -31,6 +31,8 @@ import ShopPage from "./pages/user/shop";
 import AdminHeader from "./components/admin/adminHeader";
 import { OffCanvasProvider } from "../../client/src/components/admin/adminHeader";
 import OrderHistory from "./pages/user/OrderHistory";
+import RegisterData from "./components/admin/RegisterData";
+import AllCategory from "./pages/user/AllCategory";
 function App() {
   return (
     <div className="App">
