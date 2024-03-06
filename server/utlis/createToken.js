@@ -26,4 +26,13 @@ const generateLoginToken = (res, userId)=>{
     return {token};
 }
 
-module.exports = { generateRegisterToken, generateLoginToken };
+
+const forgetPasswordTokenVerify = (res, userId)=>{
+    const token = jwt.sign({userId}, process.env.JWT_SECRET_KEY, {
+        expiresIn:"5m"});
+
+        return token;
+}
+
+
+module.exports = { generateRegisterToken, generateLoginToken, forgetPasswordTokenVerify };

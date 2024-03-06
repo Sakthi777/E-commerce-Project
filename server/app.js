@@ -12,8 +12,7 @@ dotenv.config({path:path.join(__dirname, "config/config.env")});
 const mongoose = require("mongoose");
 // const {userDatas, login, logOut} = require("./routes/usersDataRoute");
 const userDatas = require("./routes/usersDataRoute")
-const login = require("./routes/usersDataRoute")
-const logOut = require("./routes/usersDataRoute")
+
 
 
 mongoose.set("strictQuery", true);
@@ -33,6 +32,10 @@ app.use("/userDatas", userDatas);
 app.use("/login", userDatas);
 
 app.use("/logOut", userDatas);
+
+app.use("/forgetPassword", userDatas);
+
+app.use("/changePassword", userDatas)
 
 // mongodb connection
 
