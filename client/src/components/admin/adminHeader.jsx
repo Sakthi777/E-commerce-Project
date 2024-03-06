@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as FaIcon from "react-icons/fa";
 import SubMenu from "./subMenu";
 import "../../styles/admin/adminHeader.css";
@@ -6,7 +6,7 @@ import { SidebarData } from "./sidebarData";
 import logo from "../../assets/images/logo.png";
 import { CgProfile } from "react-icons/cg";
 import ProfileCard from "./profileCard";
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useRef } from "react";
 import { Offcanvas } from "react-bootstrap";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 const OffCanvasContext = createContext();
@@ -43,38 +43,27 @@ export const useOffCanvasContext = () => {
 
 const Sidebar = () => {
   const { showOffCanvas, handleToggleOffCanvas, handleClose, backdrop } = useOffCanvasContext();
-  const [sidebar, setSidebar] = useState(false);
-  const showSidebar = () => setSidebar(!sidebar);
-  useEffect(() => {
-    document.body.setAttribute("data-sidebar", sidebar);
-  }, [sidebar]);
   const [showProfileCard, setShowProfileCard] = useState(false);
+  const profileCardRef = useRef(null);
+
   const toggleProfileCard = () => {
     setShowProfileCard(!showProfileCard);
   };
+  const handleClickOutside = (event) => {
+    if (profileCardRef.current && !profileCardRef.current.contains(event.target)) {
+      setShowProfileCard(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
 
-  // const [showOffCanvas, setShowOffCanvas] = useState(true);
-  // const [backdrop, setBackdrop] = useState(true);
-  // const handleClose = () => setShowOffCanvas(false);
-  // const handleToggleOffCanvas = () => setShowOffCanvas(!showOffCanvas);
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     if (window.innerWidth < 768) {
-  //       setBackdrop(true);
-  //       setShowOffCanvas(false);
-  //     } else {
-  //       setBackdrop(false);
-  //     }
-  //   };
-
-  //   handleResize();
-  //   window.addEventListener("resize", handleResize);
-  //   return () => window.removeEventListener("resize", handleResize);
-  // }, []);
-
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
     <>
-      <div className="nav">
+      <div className="nav" ref={profileCardRef}>
         <div className="logo-container">
           <img src={logo} alt="Logo" className="nav-logo" />
         </div>
