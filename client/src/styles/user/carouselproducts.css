@@ -76,6 +76,10 @@
 	text-indent: 0px;
 }
 
+#shop svg,
+#offer svg {
+	margin-right: 7px;
+}
 #shop,
 #offer {
 	width: 167px;
