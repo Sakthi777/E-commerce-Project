@@ -189,7 +189,12 @@ const HeaderPage = () => {
                   {/* <FiChevronDown /> */}
                 </Link>
               </li>
-
+              <li>
+                <Link to="/shop">
+                  Shop
+                  {/* <FiChevronDown /> */}
+                </Link>
+              </li>
               <li>
                 <Link to="/myWallet">
                   Wallet

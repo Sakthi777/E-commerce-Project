@@ -16,7 +16,7 @@ const ShopPage = ({ products }) => {
         <div className="offers-banner">
           <img src={banner} alt="Offer Banner" />
           <div className="offer-banner-content">
-            <h1>WISHLIST</h1>
+            <h1>SHOP</h1>
             <a href="/">Home</a>/<a href="/shop">Shop Grid</a>
           </div>
         </div>
