@@ -36,18 +36,18 @@ export const SidebarData = [
     ],
   },
   {
-    title: "Shops",
+    title: "Category",
     path: "",
     icon: <IoIcons.IoIosPaper className="icon" />,
     subNav: [
       {
-        title: "All shops",
-        path: "",
+        title: "Add Category",
+        path: "/admin/addcategory",
         icon: <IoIcons.IoIosPaper className="icon" />,
       },
       {
-        title: "Add new shop",
-        path: "/shops/add-new-shops",
+        title: "Add Product",
+        path: "/admin/addProduct",
         icon: <IoIcons.IoIosPaper className="icon" />,
       },
       {

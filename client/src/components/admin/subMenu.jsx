@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 
-const SubMenu = ({ item, closeSidebar }) => {
+const SubMenu = ({ item }) => {
   const [subnav, setSubnav] = useState(false);
 
   const showSubnav = () => setSubnav(!subnav);
 
   const handleItemClick = () => {
-    //closeSidebar();
     if (item.onClick) {
       item.onClick();
     }
@@ -27,12 +26,7 @@ const SubMenu = ({ item, closeSidebar }) => {
       {subnav && (
         <div className="SubItemsContainer">
           {item.subNav.map((subItem, index) => (
-            <Link
-              to={subItem.path}
-              className="DropdownLink"
-              key={index}
-              onClick={closeSidebar} // Close the sidebar when a sub-item is clicked
-            >
+            <Link to={subItem.path} className="DropdownLink" key={index}>
               {subItem.icon}
               <span className="SidebarLabel">{subItem.title}</span>
             </Link>

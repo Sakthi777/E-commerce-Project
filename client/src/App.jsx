@@ -57,6 +57,8 @@ function App() {
           <Route path="/checkout" element={<CheckOut />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/shop" element={<ShopPage products={products} />}></Route>
+
+          {/* Use ProtectRoute to protect routes */}
           <Route element={<ProtectRoute />}>
             <Route path="/myWallet" element={<MyWallet />} />
           </Route>
@@ -68,8 +70,8 @@ function App() {
             path="/admin/*"
             element={
               <OffCanvasProvider>
-                <AdminHeader />
                 <Routes>
+                  {/* <Route path="admin" element={<AdminHeader />} /> */}
                   <Route path="addcategory" element={<AddCategory />} />
                   <Route path="dashboard" element={<Dashboard />} />
                   <Route path="addProduct" element={<AddProductdata />} />
@@ -80,8 +82,6 @@ function App() {
               </OffCanvasProvider>
             }
           />
-
-          {/* Use ProtectRoute to protect routes */}
         </Routes>
       </Router>
     </div>

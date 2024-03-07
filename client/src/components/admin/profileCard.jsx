@@ -8,7 +8,7 @@ const ProfileCard = () => {
     <div className="profile-card">
       <div className="profile-container">
         <CgIcon.CgProfile className="profile-icon" />
-        <div className="profile-info">
+        <div className="profile-info visible">
           <span className="profile-name">Sakthi</span>
           <span className="profile-role">Super Admin</span>
         </div>
