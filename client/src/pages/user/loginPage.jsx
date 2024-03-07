@@ -62,7 +62,7 @@ const LoginCmp = () => {
 					setDisable(true);
 					if (token) {
 						setUserData({ ...userData, email: "", password: "" });
-						toast.success("Registered Successfull !", {
+						toast.success("Login Successfull !", {
 							autoClose: 2000,
 							onClose: () => {
 								setTimeout(() => {

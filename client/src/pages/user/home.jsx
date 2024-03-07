@@ -11,6 +11,8 @@ import FeaturedItems from "./featuredItems";
 import "../../styles/user/featuredItem.css";
 import { useState } from "react";
 import { Highlight } from "../../components/user/homePageCarousels";
+import Cookies from "js-cookie";
+
 
 const ProductGrid = ({ products }) => {
   const [selectedOption, setSelectedOption] = useState("Top Order");
@@ -18,6 +20,10 @@ const ProductGrid = ({ products }) => {
   const handleOptionClick = (option) => {
     setSelectedOption(option);
   };
+
+  const cookie = Cookies.get("LoginToken");
+  console.log(cookie)
+
   return (
     <>
       <HeaderPage />
