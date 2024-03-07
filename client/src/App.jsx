@@ -57,33 +57,33 @@ function App() {
 					<Route path="/checkout" element={<CheckOut />} />
 					<Route path="/about" element={<AboutUs />} />
 					<Route path="/shop" element={<ShopPage products={products} />}></Route>
+
+          {/* Use ProtectRoute to protect routes */}
 					<Route path="/myWallet" element={<ProtectedRoute><MyWallet /></ProtectedRoute>} />
 					<Route path="/transactionDetails" element={<TransactionDetails />} />
 
 					{/* admin panel */}
 
-					<Route
-						path="/admin/*"
-						element={
-							<OffCanvasProvider>
-								<AdminHeader />
-								<Routes>
-									<Route path="addcategory" element={<AddCategory />} />
-									<Route path="dashboard" element={<Dashboard />} />
-									<Route path="addProduct" element={<AddProductdata />} />
-									<Route path="completedOrders" element={<CompletedOrders />} />
-									<Route path="pendingOrders" element={<PendingOrders />} />
-									<Route path="canceledOrders" element={<CanceledOrders />} />
-								</Routes>
-							</OffCanvasProvider>
-						}
-					/>
-
-					{/* Use ProtectRoute to protect routes */}
-				</Routes>
-			</Router>
-			</div>
-	);
+          <Route
+            path="/admin/*"
+            element={
+              <OffCanvasProvider>
+                <Routes>
+                  {/* <Route path="admin" element={<AdminHeader />} /> */}
+                  <Route path="addcategory" element={<AddCategory />} />
+                  <Route path="dashboard" element={<Dashboard />} />
+                  <Route path="addProduct" element={<AddProductdata />} />
+                  <Route path="completedOrders" element={<CompletedOrders />} />
+                  <Route path="pendingOrders" element={<PendingOrders />} />
+                  <Route path="canceledOrders" element={<CanceledOrders />} />
+                </Routes>
+              </OffCanvasProvider>
+            }
+          />
+        </Routes>
+      </Router>
+    </div>
+  );
 }
 
 export default App;

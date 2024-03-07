@@ -16,7 +16,9 @@ export const OffCanvasProvider = ({ children }) => {
   const [backdrop, setBackdrop] = useState(true);
 
   const handleClose = () => setShowOffCanvas(false);
-  const handleToggleOffCanvas = () => setShowOffCanvas((prev) => !prev);
+  const handleToggleOffCanvas = () => {
+    setShowOffCanvas((prev) => !prev);
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -32,7 +34,8 @@ export const OffCanvasProvider = ({ children }) => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  return <OffCanvasContext.Provider value={{ showOffCanvas, backdrop, handleToggleOffCanvas, handleClose }}>{children}</OffCanvasContext.Provider>;
+
+  return <OffCanvasContext.Provider value={{ showOffCanvas, backdrop, handleToggleOffCanvas, handleClose, setShowOffCanvas }}>{children}</OffCanvasContext.Provider>;
 };
 
 export const useOffCanvasContext = () => {
@@ -40,9 +43,20 @@ export const useOffCanvasContext = () => {
 };
 
 const Sidebar = () => {
-  const { showOffCanvas, handleToggleOffCanvas, handleClose, backdrop } = useOffCanvasContext();
+  const { showOffCanvas, handleToggleOffCanvas, handleClose, backdrop, setShowOffCanvas } = useOffCanvasContext();
+  console.log("main :" + showOffCanvas);
+
   const [showProfileCard, setShowProfileCard] = useState(false);
   const profileCardRef = useRef(null);
+
+  useEffect(() => {
+    if (window.innerWidth < 780) {
+      setShowOffCanvas(false);
+    }
+    return () => {
+      setShowOffCanvas(true);
+    };
+  }, [setShowOffCanvas]);
 
   const toggleProfileCard = () => {
     setShowProfileCard(!showProfileCard);
@@ -59,6 +73,7 @@ const Sidebar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
   const nav = useNavigate();
   return (
     <>

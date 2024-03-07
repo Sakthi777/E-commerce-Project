@@ -1,7 +1,5 @@
 import "../../styles/user/orderList.css";
-import { useEffect } from "react";
-import AuthenticFooter from "../../components/user/AuthenticFooter";
-import products from "../../pages/user/productList";
+// import products from "../../pages/user/productList";
 import { completedOrders, pendingOrders, canceledOrders } from "../../pages/user/productList";
 import AdminHomePage from "../../components/admin/adminHeader";
 import { useOffCanvasContext } from "../../components/admin/adminHeader";
@@ -32,22 +30,7 @@ const getStatusColor = (status) => {
   };
 };
 const CompletedOrders = () => {
-  const { showOffCanvas, handleToggleOffCanvas } = useOffCanvasContext();
-
-  const closeOffCanvas = () => {
-    if (showOffCanvas) {
-      if (showOffCanvas && window.innerWidth < 780) {
-        handleToggleOffCanvas();
-      }
-    }
-  };
-
-  useEffect(() => {
-    closeOffCanvas();
-    return () => {
-      closeOffCanvas();
-    };
-  }, []);
+  const { showOffCanvas } = useOffCanvasContext();
 
   return (
     <>
@@ -98,13 +81,12 @@ const CompletedOrders = () => {
           </tbody>
         </table>
       </div>
-      <AuthenticFooter />
     </>
   );
 };
 
 const PendingOrders = () => {
-  const { showOffCanvas, backdrop, handleToggleOffCanvas, handleClose } = useOffCanvasContext();
+  const { showOffCanvas } = useOffCanvasContext();
 
   return (
     <>
@@ -155,13 +137,12 @@ const PendingOrders = () => {
           </tbody>
         </table>
       </div>
-      <AuthenticFooter />
     </>
   );
 };
 
 const CanceledOrders = () => {
-  const { showOffCanvas, backdrop, handleToggleOffCanvas, handleClose } = useOffCanvasContext();
+  const { showOffCanvas } = useOffCanvasContext();
 
   return (
     <>
@@ -212,7 +193,6 @@ const CanceledOrders = () => {
           </tbody>
         </table>
       </div>
-      <AuthenticFooter />
     </>
   );
 };
