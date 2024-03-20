@@ -1,36 +1,28 @@
-  import Cookies from "js-cookie";
-  import { createContext, useEffect, useState } from "react";
-  import { Navigate, useNavigate } from "react-router-dom";
 
-  export const authProvider = createContext();
+import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
 
-  const ProtectedRoute = ({ children }) => {
-    const [token, setToken] = useState(undefined);
+export const ProtectedLoginRoute = () => {
 
-    useEffect(() => {
-      const cookieToken = Cookies.get("LoginToken");
-      if (cookieToken) {
-        setToken(cookieToken);
-        console.log(cookieToken);
-      }
-      else{
-        setToken(null);
-      }
-    }, []);
 
-      if (token === undefined) {
-        return null;
-      }
+  const [token, setToken] = useState(undefined);
 
-      else if(!token){
-        return <Navigate to="/login"></Navigate>
-      }
+  useEffect(() => {
+    const cookieToken = Cookies.get("LoginToken");
+    if (cookieToken) {
+      setToken(cookieToken);
+      console.log(cookieToken);
+    } else {
+      setToken(null);
+    }
+  }, []);
 
-    return (
-      <authProvider.Provider value={{ token }}>
-        {children}
-      </authProvider.Provider>
-    );
-  };
+  console.log(token);
 
-  export default ProtectedRoute;
+
+  return (
+    <div>
+
+    </div>
+  );
+};

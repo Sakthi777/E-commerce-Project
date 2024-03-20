@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import RegisterPage from "./pages/user/registerPage";
 import Login from "./pages/user/loginPage";
 import ResetPassword from "./pages/user/resetPasswordPage";
@@ -32,39 +32,42 @@ import { OffCanvasProvider } from "../../client/src/components/admin/adminHeader
 import OrderHistory from "./pages/user/OrderHistory";
 import RegisterData from "./components/admin/RegisterData";
 import AllCategory from "./pages/user/AllCategory";
-import ProtectedRoute from "./pages/protectRoute/protectedRoute";
+import { ProtectedLoginRoute } from "./pages/protectRoute/protectedRoute";
+
+
 function App() {
+
+
   return (
     <div className="App">
       <Router>
         <Routes>
+          <Route path="/demo" element={<Demo></Demo>}></Route>
           <Route path="/" element={<Home products={products} />} />
-          <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/wishlist" element={<Wishlist />}/>
+            <Route path="/notfound" element={<NotFound />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/us" element={<UserContact />} />
+            <Route path="/orderhitory" element={<OrderHistory />} />
+            <Route path="/checkout" element={<CheckOut />} />
+            <Route path="/offers" element={<Offers />} />
+
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/resetPassword" element={<ResetPassword />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/changePassword/:token" element={<ChangePassword />} />
-          <Route path="/offers" element={<Offers />} />
-          <Route path="/notfound" element={<NotFound />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/footer" element={<Footer />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/us" element={<UserContact />} />
-          <Route path="/orderhitory" element={<OrderHistory />} />
-          <Route path="/aboutUs" element={<AboutUs />} />
-          <Route path="/comingSoon" element={<ComingSoon />} />
-          <Route path="/myProfile" element={<MyProfile />} />
-          <Route path="/checkout" element={<CheckOut />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/shop" element={<ShopPage products={products} />}></Route>
 
-          {/* Use ProtectRoute to protect routes */}
-          <Route element={<ProtectedRoute />}>
-            <Route path="/myWallet" element={<MyWallet />} />
-          </Route>
+
+          <Route path="/comingSoon" element={<ComingSoon />} />
+          <Route path="/footer" element={<Footer />} />
+          <Route path="/shop" element={<ShopPage products={products} />}></Route>
+          <Route path="/myProfile" element={<MyProfile />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/myWallet" element={<MyWallet />} />
           <Route path="/transactionDetails" element={<TransactionDetails />} />
 
-					{/* admin panel */}
+          {/* admin panel */}
 
           <Route
             path="/admin/*"
@@ -82,6 +85,8 @@ function App() {
               </OffCanvasProvider>
             }
           />
+
+          <Route path="*" element={<NotFound></NotFound>}></Route>
         </Routes>
       </Router>
     </div>
