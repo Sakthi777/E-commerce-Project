@@ -1,28 +1,30 @@
-
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Home from "../user/home";
+import Shop from "../user/shop";
+import products from "../user/productList";
 
-export const ProtectedLoginRoute = () => {
-
-
-  const [token, setToken] = useState(undefined);
+export const ProtectedLoginRoute = (props) => {
+  const [token, setToken] = useState(null);
+  const navigate = useNavigate();
+  const { Component } = props;
 
   useEffect(() => {
     const cookieToken = Cookies.get("LoginToken");
-    if (cookieToken) {
-      setToken(cookieToken);
-      console.log(cookieToken);
-    } else {
-      setToken(null);
+    console.log(cookieToken);
+    // if (cookieToken) {
+    //   setToken(cookieToken);
+    // } else {
+    //   setToken(null);
+    // }
+    if (!cookieToken) {
+      navigate("/login");
     }
   }, []);
+  let isHomeComponent = Component === Home || Component === Shop;
 
-  console.log(token);
+  console.log("home ...." + isHomeComponent);
 
-
-  return (
-    <div>
-
-    </div>
-  );
+  return <div>{isHomeComponent ? <Component products={products} /> : <Component />}</div>;
 };

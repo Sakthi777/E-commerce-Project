@@ -34,37 +34,32 @@ import RegisterData from "./components/admin/RegisterData";
 import AllCategory from "./pages/user/AllCategory";
 import { ProtectedLoginRoute } from "./pages/protectRoute/protectedRoute";
 
-
 function App() {
-
-
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/demo" element={<Demo></Demo>}></Route>
           <Route path="/" element={<Home products={products} />} />
-            <Route path="/wishlist" element={<Wishlist />}/>
-            <Route path="/notfound" element={<NotFound />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/us" element={<UserContact />} />
-            <Route path="/orderhitory" element={<OrderHistory />} />
-            <Route path="/checkout" element={<CheckOut />} />
-            <Route path="/offers" element={<Offers />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/notfound" element={<NotFound />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/us" element={<UserContact />} />
+          <Route path="/orderhitory" element={<OrderHistory />} />
+          <Route path="/checkout" element={<CheckOut />} />
+          <Route path="/offers" element={<ProtectedLoginRoute Component={Offers} />} />
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/resetPassword" element={<ResetPassword />} />
           <Route path="/changePassword/:token" element={<ChangePassword />} />
 
-
-          <Route path="/comingSoon" element={<ComingSoon />} />
+          <Route path="/comingSoon" element={<ProtectedLoginRoute Component={ComingSoon} />} />
           <Route path="/footer" element={<Footer />} />
-          <Route path="/shop" element={<ShopPage products={products} />}></Route>
-          <Route path="/myProfile" element={<MyProfile />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/myWallet" element={<MyWallet />} />
+          <Route path="/shop" element={<ProtectedLoginRoute Component={ShopPage} />}></Route>
+          <Route path="/myProfile" element={<ProtectedLoginRoute Component={MyProfile} />} />
+          <Route path="/about" element={<ProtectedLoginRoute Component={AboutUs} />} />
+          <Route path="/myWallet" element={<ProtectedLoginRoute Component={MyWallet} />} />
           <Route path="/transactionDetails" element={<TransactionDetails />} />
 
           {/* admin panel */}
