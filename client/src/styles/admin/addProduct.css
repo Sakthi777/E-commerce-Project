@@ -67,9 +67,10 @@ body {
 
 .image-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 10px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 50px;
   margin-top: 20px;
+  width: 50%;
 }
 
 .image-item {
@@ -100,7 +101,7 @@ body {
   height: 3rem;
 }
 
-.pu-attribute .kilo input {
+.pu-attribute .rating input {
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -306,5 +307,11 @@ body {
   .payments input {
     position: absolute;
     width: 20px;
+  }
+  .image-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 10px;
+    margin-top: 20px;
   }
 }

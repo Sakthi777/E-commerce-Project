@@ -4,10 +4,9 @@ const dotenv = require("dotenv");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const multer = require("multer");
+// const multer = require("multer");
 
 // backend configuration
-
 dotenv.config({ path: path.join(__dirname, "config/config.env") });
 
 const mongoose = require("mongoose");
@@ -36,6 +35,8 @@ app.use("/forgetPassword", userDatas);
 
 app.use("/changePassword", userDatas);
 
+app.use(userDatas);
+
 // mongodb connection
 
 const db = process.env.MONGODB_URL;
@@ -56,36 +57,40 @@ mongoose
 
 const port = process.env.port;
 
+app.use("/uploads/productImage", express.static(path.join(__dirname, "uploads", "productImage")));
+
 app.listen(port, () => {
   console.log(`Server connected in port ${port} in ${process.env.NODE_ENV}`);
 });
 
 ////////////////////////////////////////////////////  MULTER    //////////////////////////////////////////////
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
-  },
-  filename: function (req, file, cb) {
-    const uniqSuffix = Date.now();
-    cb(null, uniqSuffix + file.originalname);
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "uploads/");
+//   },
+//   filename: function (req, file, cb) {
+//     const uniqSuffix = Date.now();
+//     cb(null, uniqSuffix + file.originalname);
+//   },
+// });
 
-const upload = multer({ storage: storage });
+// const upload = multer({ storage: storage });
 
-app.post("/post-image", upload.any(), async (req, res) => {
-  try {
-    let images = [];
-    if (req.file) {
-      const image = req.file.filename;
-      console.log("Image received:", image);
-    } else if (req.files) {
-      images = req.files.map((file) => file.filename);
-    }
-    console.log("Images received:", images);
-    res.json({ status: "ok", message: "Images uploaded successfully", images });
-  } catch (error) {
-    console.error("Error uploading images:", error);
-    res.status(500).json({ status: "error", message: "Failed to upload images", error: error.message });
-  }
+app.post("/post-imag", async (req, res) => {
+  console.log("hello");
+
+  //   try {
+  //     let images = [];
+  //     if (req.file) {
+  //       const image = req.file.filename;
+  //       console.log("Image received:", image);
+  //     } else if (req.files) {
+  //       images = req.files.map((file) => file.filename);
+  //     }
+  //     console.log("Images received:", images);
+  //     res.json({ status: "ok", message: "Images uploaded successfully", images });
+  //   } catch (error) {
+  //     console.error("Error uploading images:", error);
+  //     res.status(500).json({ status: "error", message: "Failed to upload images", error: error.message });
+  //   }
 });

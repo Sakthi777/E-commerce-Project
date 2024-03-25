@@ -9,55 +9,55 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ResetPassword = () => {
-
-	const url = "http://localhost:8000";
+  const url = "http://localhost:8000";
 
   const nav = useNavigate();
-
 
   const [email, setEmail] = useState("");
 
   const [error, setError] = useState({
-    email: { status: false, message: "" }
-  })
+    email: { status: false, message: "" },
+  });
 
-  const [loader, setLoader] = useState(false)
+  const [loader, setLoader] = useState(false);
 
-	const [disable, setDisable] = useState(false);
+  const [disable, setDisable] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(email);
     if (email === "") {
       setError({ ...error, email: { status: true, message: "Email is required !" } });
-    }
-    else{
+    } else {
       setLoader(true);
-      axios.post(`${url}/forgetPassword/forgetUser`, {email}).then((res)=>{
-        setLoader(false);
-        console.log(res);
-        let resetLink = res.data.message;
-        if(resetLink === "Link sent successfully"){
-						setDisable(true);
-          toast.success("Check your Registered Email !", {
-            autoClose: 2000,
-            onClose: () => {
-              setTimeout(() => {
-                nav("/login")
-              }, 200);
-            },
-          });
-        }
-      }).catch((error)=>{
-        console.log(error);
-      })
+      axios
+        .post(`${url}/forgetPassword/forgetUser`, { email })
+        .then((res) => {
+          setLoader(false);
+          console.log(res);
+          let resetLink = res.data.message;
+          if (resetLink === "Link sent successfully") {
+            setDisable(true);
+            toast.success("Check your Registered Email !", {
+              autoClose: 2000,
+              onClose: () => {
+                setTimeout(() => {
+                  nav("/login");
+                }, 200);
+              },
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-  }
+  };
 
   return (
     <div className="Authentic-container">
       <Header />
-				<ToastContainer />
+      <ToastContainer />
       <div className="card-resetPassword">
         <div className="Register-content">
           <div className="Register-content-heading">
@@ -75,7 +75,7 @@ const ResetPassword = () => {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                setError({ ...error, email: { status: false, message: "" } })
+                setError({ ...error, email: { status: false, message: "" } });
               }}
             />
 
@@ -93,7 +93,7 @@ const ResetPassword = () => {
             )}
 
             {loader === true ? (
-              <div className="spinner_overview" style={{marginBottom:"8px"}}>
+              <div className="spinner_overview" style={{ marginBottom: "8px" }}>
                 <div className="spinner">
                   <div className="spinner-border text-primary" id="spinner_d_flex" role="status">
                     <span className="sr-only">Loading...</span>
@@ -104,7 +104,9 @@ const ResetPassword = () => {
               ""
             )}
 
-            <button type="submit"  id={disable ? "register_form_btn" : ""} disabled={disable}>GET RESET LINK</button>
+            <button type="submit" id={disable ? "register_form_btn" : ""} disabled={disable}>
+              GET RESET LINK
+            </button>
           </form>
         </div>
       </div>

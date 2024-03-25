@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../../styles/admin/addProduct.css";
 import upload from "../../../src/assets/images/AddProduct/upload.png";
 import ipay from "../../../src/assets/images/AddProduct/applepay.svg";
@@ -14,10 +14,36 @@ import AdminHeader, { useOffCanvasContext } from "../../components/admin/adminHe
 export default function AddProductdata() {
   const { showOffCanvas } = useOffCanvasContext();
   const [preImage, setPreImage] = useState(null);
+  const [ArrayOfimages, setArrayOfImages] = useState([upload, upload, upload, upload]);
+  const [fileName, setFileName] = useState("");
+
   const [image, setImage] = useState(null);
   const [imageSlider, setImageSlider] = useState([]);
-  const [fileName, setFileName] = useState("");
-  const [ArrayOfimages, setArrayOfImages] = useState([upload, upload, upload, upload]);
+  const [rating, setRating] = useState("");
+  const [productName, setProductName] = useState("");
+  const [productDescription, setProductDescription] = useState("");
+  const [oldPrice, setOldPrice] = useState("");
+  const [newPrice, setNewPrice] = useState("");
+  const [sale, setSale] = useState(false);
+  const [newProduct, setNewProduct] = useState(false);
+  const [featuredItems, setFeaturedItems] = useState(false);
+  const [discountPercentage, setDiscountPercentage] = useState("");
+  const [productDetails, setProductDetails] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/get-productDetails`)
+      .then((response) => {
+        setProductDetails(response.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching product data:", error);
+      });
+  }, []);
+  productDetails.map((product) => {
+    // Process each product here
+    console.log(product);
+  });
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
@@ -46,14 +72,27 @@ export default function AddProductdata() {
   const handleSubmit = () => {
     const formData = new FormData();
     formData.append("image", image);
+    formData.append("rating", rating);
+    formData.append("productName", productName);
+    formData.append("productDescription", productDescription);
+    formData.append("oldPrice", oldPrice);
+    formData.append("newPrice", newPrice);
+    formData.append("discountPercentage", discountPercentage);
+    formData.append("sale", sale);
+    formData.append("newProduct", newProduct);
+    formData.append("featuredItems", featuredItems);
+
     imageSlider.forEach((image) => {
-      formData.append("images", image);
+      formData.append("imageSlider", image);
     });
     console.log(Object.fromEntries(formData));
 
     try {
-      const response = axios.post("http://localhost:8000/post-image", formData);
-      console.log("Upload success:", response);
+      axios.post("http://localhost:8000/post-productDetails", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
     } catch (error) {
       console.error("Upload error:", error);
     }
@@ -89,7 +128,7 @@ export default function AddProductdata() {
                   {ArrayOfimages.map((image, index) => (
                     <div className="image-upload-box">
                       <div className="image-box">
-                        <img key={index} src={image ? image : upload} alt={`Image ${index + 1}`} className="center-image" />
+                        <img key={index} src={image ? image : upload} alt={`product ${index + 1}`} className="center-image" />
                       </div>
                     </div>
                   ))}
@@ -100,17 +139,7 @@ export default function AddProductdata() {
                 </div>
               </div>
             </div>
-
             <br />
-            <div className="hovering">
-              <a href="..." className="text-a">
-                More Gallery Options
-              </a>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci quo itaque rem pariatur, eius tenetur architecto minus magnam repellendus, quis optio mollitia quaerat sequi sunt tempora quos cupiditate! Reiciendis, suscipit!</p>
-              <a href="..." className="text-a">
-                Attachment File
-              </a>
-            </div>
             <div className="cont-attribute">
               <div className="pu-attribute">
                 <div className="pu-attribute-input">
@@ -122,23 +151,22 @@ export default function AddProductdata() {
                     <option value="audi">Services product</option>
                   </select>
                 </div>
-
-                <div className="kilo">
-                  <p>Weight</p>
-                  <input type="text" />
+                <div className="rating">
+                  <p>Rating*</p>
+                  <input type="text" onChange={(e) => setRating(e.target.value)} />
                 </div>
               </div>
               <div class="description-box">
-                <p>Description</p>
-                <input type="text" />
+                <p>Product Name*</p>
+                <input type="text" placeholder="Enter Product Name" onChange={(e) => setProductName(e.target.value)} />
               </div>
             </div>
           </div>
           <br />
           <div className="user-product">
             <div className="user-product-input pro-in">
-              <label className="user-product-label">Product Name</label>
-              <input type="text" placeholder="Enter Product Name"></input>
+              <label className="user-product-label">Description*</label>
+              <input type="text" placeholder="Enter Description" onChange={(e) => setProductDescription(e.target.value)}></input>
             </div>
             <div className="label-id">
               <div className="user-product-input label-id-input">
@@ -157,12 +185,12 @@ export default function AddProductdata() {
             </div>
             <div className="label-id">
               <div className="user-product-input">
-                <label>Regular Price</label>
-                <input type="text" placeholder="Enter Regular Price"></input>
+                <label>Old Price*</label>
+                <input type="text" placeholder="Enter Old Price" onChange={(e) => setOldPrice(e.target.value)}></input>
               </div>
               <div className="user-product-input">
-                <label>Sale Price</label>
-                <input type="text" placeholder="Enter Sale Price"></input>
+                <label>New Price*</label>
+                <input type="text" placeholder="Enter New Price" onChange={(e) => setNewPrice(e.target.value)}></input>
               </div>
             </div>
             <div className="label-id">
@@ -172,47 +200,40 @@ export default function AddProductdata() {
               </div>
 
               <div className="user-product-input">
-                <label>Promotion</label>
-                <select className="select-wid" name="car" id="car">
-                  <option value="volvo">Category1</option>
-                  <option value="saab">Category2</option>
-                  <option value="opel">Category3</option>
-                  <option value="audi">Category4</option>
+                <label>setSale*</label>
+                <select className="select-wid" name="car" id="car" onChange={(e) => setSale(e.target.value === "true")}>
+                  <option value="false">False</option>
+                  <option value="true">True</option>
                 </select>
               </div>
             </div>
             <div className="label-id">
               <div className="user-product-input">
-                <label>Product Type</label>
-                <select className="select-wid" name="cas" id="cas">
-                  <option value="volvo">Simple Product</option>
-                  <option value="saab">Grouped Product</option>
-                  <option value="opel">Variable Product</option>
-                  <option value="audi">Services product</option>
+                <label>setNew*</label>
+                <select className="select-wid" name="cas" id="cas" onChange={(e) => setNewProduct(e.target.value === "true")}>
+                  <option value="false">False</option>
+                  <option value="true">True</option>
                 </select>
               </div>
               <div className="user-product-input">
-                <label>Stock Status</label>
-                <select className="select-wid" name="car" id="car">
-                  <option value="volvo">Low Inventory</option>
-                  <option value="saab">On Demand</option>
-                  <option value="opel">Out of Stock</option>
-                  <option value="audi">In Stock</option>
+                <label>FeaturedItems*</label>
+                <select className="select-wid" name="car" id="car" onChange={(e) => setFeaturedItems(e.target.value === "true")}>
+                  <option value="false">False</option>
+                  <option value="true">True</option>
                 </select>
               </div>
             </div>
             <div className="label-id">
               <div className="user-product-input label-id-input">
-                <label>Quantity in Stock</label>
-                <input type="text"></input>
+                <label>Discount Percentage*</label>
+                <input type="text" onChange={(e) => setDiscountPercentage(e.target.value)}></input>
               </div>
               <div className="user-product-input">
-                <label>Unit</label>
+                <label>Status</label>
                 <select className="select-wid" name="car" id="car">
-                  <option value="volvo">Peices</option>
-                  <option value="saab">Kilogram</option>
-                  <option value="opel">Boxes</option>
-                  <option value="audi">Bundle</option>
+                  <option value="volvo">Completed</option>
+                  <option value="saab">Pending</option>
+                  <option value="opel">OnProcess</option>
                 </select>
               </div>
             </div>
