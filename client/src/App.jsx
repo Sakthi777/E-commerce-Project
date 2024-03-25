@@ -42,7 +42,7 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/demo" element={<Demo></Demo>}></Route>
+          {/* <Route path="/demo" element={<Demo></Demo>}></Route> */}
           <Route path="/" element={<Home products={products} />} />
             <Route path="/wishlist" element={<Wishlist />}/>
             <Route path="/notfound" element={<NotFound />} />
