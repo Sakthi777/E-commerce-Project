@@ -44,7 +44,7 @@ export const useOffCanvasContext = () => {
 
 const Sidebar = () => {
   const { showOffCanvas, handleToggleOffCanvas, handleClose, backdrop, setShowOffCanvas } = useOffCanvasContext();
-  console.log("main :" + showOffCanvas);
+  // console.log("main :" + showOffCanvas);
 
   const [showProfileCard, setShowProfileCard] = useState(false);
   const profileCardRef = useRef(null);
@@ -97,7 +97,7 @@ const Sidebar = () => {
         </div>
       </div>
       {showProfileCard && <ProfileCard />}
-      <Offcanvas show={showOffCanvas} onHide={handleClose} placement="start" className="admin-sidebar" style={{ width: "350px", top: "80px" }} backdrop={backdrop}>
+      <Offcanvas show={showOffCanvas} onHide={handleClose} placement="start" className="admin-sidebar" style={{ width: "350px", top: "80px" }} backdrop={backdrop} scroll={true}>
         <Offcanvas.Header className="admin-offcanvas-header" onClick={handleClose}>
           <img src={logo} alt="Logo" />
           <i className="fas fa-times" style={{ color: "#119744", fontSize: "24px" }}></i>

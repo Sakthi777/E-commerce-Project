@@ -1,4 +1,6 @@
 import React from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 import "../../styles/admin/addProduct.css";
 import upload from "../../../src/assets/images/AddProduct/upload.png";
 import ipay from "../../../src/assets/images/AddProduct/applepay.svg";
@@ -7,240 +9,276 @@ import gpay from "../../../src/assets/images/AddProduct/googlepay.svg";
 // import mcpay from "../../../src/assets/images/AddProduct/mc.svg";
 // import paypalpay from "../../../src/assets/images/AddProduct/paypal.svg";
 import vpay from "../../../src/assets/images/AddProduct/visa.svg";
+import AdminHeader, { useOffCanvasContext } from "../../components/admin/adminHeader";
 
 export default function AddProductdata() {
+  const { showOffCanvas } = useOffCanvasContext();
+  const [preImage, setPreImage] = useState(null);
+  const [ArrayOfimages, setArrayOfImages] = useState([upload, upload, upload, upload]);
+  const [fileName, setFileName] = useState("");
+
+  const [image, setImage] = useState(null);
+  const [imageSlider, setImageSlider] = useState([]);
+  const [rating, setRating] = useState("");
+  const [productName, setProductName] = useState("");
+  const [productDescription, setProductDescription] = useState("");
+  const [oldPrice, setOldPrice] = useState("");
+  const [newPrice, setNewPrice] = useState("");
+  const [sale, setSale] = useState(false);
+  const [newProduct, setNewProduct] = useState(false);
+  const [featuredItems, setFeaturedItems] = useState(false);
+  const [discountPercentage, setDiscountPercentage] = useState("");
+  const [productDetails, setProductDetails] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/get-productDetails`)
+      .then((response) => {
+        setProductDetails(response.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching product data:", error);
+      });
+  }, []);
+  productDetails.map((product) => {
+    // Process each product here
+    console.log(product);
+  });
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+    console.log(file);
+
+    if (file) {
+      const reader = new FileReader();
+      console.log(reader);
+
+      reader.onload = () => {
+        setPreImage(reader.result);
+      };
+      // console.log(image);
+      reader.readAsDataURL(file);
+      setFileName(file.name);
+    }
+  };
+  const handleImageSliderChange = (e) => {
+    const fileList = e.target.files;
+    const ArrayoffilleList = Array.from(fileList);
+    console.log(ArrayoffilleList);
+    setImageSlider(ArrayoffilleList);
+    const newImages = ArrayoffilleList.map((file) => URL.createObjectURL(file));
+    setArrayOfImages(newImages);
+  };
+  const handleSubmit = () => {
+    const formData = new FormData();
+    formData.append("image", image);
+    formData.append("rating", rating);
+    formData.append("productName", productName);
+    formData.append("productDescription", productDescription);
+    formData.append("oldPrice", oldPrice);
+    formData.append("newPrice", newPrice);
+    formData.append("discountPercentage", discountPercentage);
+    formData.append("sale", sale);
+    formData.append("newProduct", newProduct);
+    formData.append("featuredItems", featuredItems);
+
+    imageSlider.forEach((image) => {
+      formData.append("imageSlider", image);
+    });
+    console.log(Object.fromEntries(formData));
+
+    try {
+      axios.post("http://localhost:8000/post-productDetails", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+    } catch (error) {
+      console.error("Upload error:", error);
+    }
+  };
   return (
-    <div className="adddata" style={{padding: "20px"}}>
-      <div>
-        <div className="head1">
-          <h6>Product Settings</h6>
-        </div>
-        <div className="add-image-title">
-          <p>Product Images</p>
-          <div className="panel">
-            <div className="image-input-img">
-              <img src={upload} alt="" width={"30px"} />
-              <div>
-                <label htmlFor="category-image">
-                  <span style={{ color: "#009f7f" }}>Upload image</span>
-                </label>
+    <>
+      <AdminHeader />
+      <div className={`adddata ${showOffCanvas ? "content-shifted" : ""} `} style={{ padding: "20px" }}>
+        <div>
+          <div className="head1">
+            <h6>Product Settings</h6>
+          </div>
+          <div className="add-image-title">
+            <p>Product Images</p>
+            <div className="panel">
+              <div className="image-upload-box">
+                <div className="image-box">
+                  <img src={preImage ? preImage : upload} alt="" className="center-image" />
+                </div>
+              </div>
+              <div className="ImageFileName">
+                <p>{fileName}</p>
+              </div>
+              <div className="imageInputFiled">
+                <label htmlFor="file-upload">Select Image</label>
+                <input type="file" id="file-upload" style={{ display: "none" }} onChange={handleImageChange} accept="image/*" />
               </div>
 
-              <input
-                type="file"
-                name="category-image"
-                id="category-image"
-                style={{ display: "none" }}
-              />
+              <div className="ImageSliderUpload">
+                <p>Product Image Slider</p>
+
+                <div className="image-grid">
+                  {ArrayOfimages.map((image, index) => (
+                    <div className="image-upload-box">
+                      <div className="image-box">
+                        <img key={index} src={image ? image : upload} alt={`product ${index + 1}`} className="center-image" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="imageInputFiled">
+                  <label htmlFor="multi-file-upload">Select Images</label>
+                  <input type="file" id="multi-file-upload" style={{ display: "none" }} onChange={handleImageSliderChange} accept="image/*" multiple />
+                </div>
+              </div>
             </div>
-            <div className="image-input-img">
-              <img src={upload} alt="" width={"30px"} />
-              <div>
-                <label htmlFor="category-image">
-                  <span style={{ color: "#009f7f" }}>Upload image</span>
-                </label>
+            <br />
+            <div className="cont-attribute">
+              <div className="pu-attribute">
+                <div className="pu-attribute-input">
+                  <p>Attributes</p>
+                  <select className="select-wid" name="cars" id="cars">
+                    <option value="volvo">Simple Product</option>
+                    <option value="saab">Grouped Product</option>
+                    <option value="opel">Variable Product</option>
+                    <option value="audi">Services product</option>
+                  </select>
+                </div>
+                <div className="rating">
+                  <p>Rating*</p>
+                  <input type="text" onChange={(e) => setRating(e.target.value)} />
+                </div>
               </div>
-
-              <input
-                type="file"
-                name="category-image"
-                id="category-image"
-                style={{ display: "none" }}
-              />
-            </div>
-            <div className="image-input-img">
-              <img src={upload} alt="" width={"30px"} />
-              <div>
-                <label htmlFor="category-image">
-                  <span style={{ color: "#009f7f" }}>Upload image</span>
-                </label>
+              <div class="description-box">
+                <p>Product Name*</p>
+                <input type="text" placeholder="Enter Product Name" onChange={(e) => setProductName(e.target.value)} />
               </div>
-
-              <input
-                type="file"
-                name="category-image"
-                id="category-image"
-                style={{ display: "none" }}
-              />
-            </div>
-            <div className="image-input-img">
-              <img src={upload} alt="" width={"30px"} />
-              <div>
-                <label htmlFor="category-image">
-                  <span style={{ color: "#009f7f" }}>Upload image</span>
-                </label>
-              </div>
-
-              <input
-                type="file"
-                name="category-image"
-                id="category-image"
-                style={{ display: "none" }}
-              />
             </div>
           </div>
           <br />
-          <div className="hovering">
-            <a href="..." className="text-a">
-              More Gallery Options
-            </a>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci
-              quo itaque rem pariatur, eius tenetur architecto minus magnam
-              repellendus, quis optio mollitia quaerat sequi sunt tempora quos
-              cupiditate! Reiciendis, suscipit!
-            </p>
-            <a href="..." className="text-a">
-              Attachment File
-            </a>
-          </div>
-          <div className="cont-attribute">
-            <div className="pu-attribute">
-              <div className="pu-attribute-input">
-                <p>Attributes</p>
-                <select className="select-wid" name="cars" id="cars">
-                  <option value="volvo">Simple Product</option>
-                  <option value="saab">Grouped Product</option>
-                  <option value="opel">Variable Product</option>
-                  <option value="audi">Services product</option>
+          <div className="user-product">
+            <div className="user-product-input pro-in">
+              <label className="user-product-label">Description*</label>
+              <input type="text" placeholder="Enter Description" onChange={(e) => setProductDescription(e.target.value)}></input>
+            </div>
+            <div className="label-id">
+              <div className="user-product-input label-id-input">
+                <label>Brand Name</label>
+                <input type="text" placeholder="Enter Brand Name"></input>
+              </div>
+              <div className="user-product-input">
+                <label>Category</label>
+                <select className="select-wid" name="car" id="car">
+                  <option value="volvo">Electric</option>
+                  <option value="saab">Grocery</option>
+                  <option value="opel">Steel</option>
+                  <option value="audi">Services</option>
                 </select>
               </div>
-              
-              <div className="kilo">
-                <p>Weight</p>
-                <input type="text" />
+            </div>
+            <div className="label-id">
+              <div className="user-product-input">
+                <label>Old Price*</label>
+                <input type="text" placeholder="Enter Old Price" onChange={(e) => setOldPrice(e.target.value)}></input>
+              </div>
+              <div className="user-product-input">
+                <label>New Price*</label>
+                <input type="text" placeholder="Enter New Price" onChange={(e) => setNewPrice(e.target.value)}></input>
               </div>
             </div>
-            <div class="description-box">
-              <p>Description</p>
-              <input type="text" />
-            </div>
-          </div>
-        </div>
-        <br />
-        <div className="user-product">
-          <div className="user-product-input pro-in">
-            <label className="user-product-label">Product Name</label>
-            <input type="text" placeholder="Enter Product Name"></input>
-          </div>
-          <div className="label-id">
-            <div className="user-product-input label-id-input">
-              <label>Brand Name</label>
-              <input type="text" placeholder="Enter Brand Name"></input>
-            </div>
-            <div className="user-product-input">
-              <label>Category</label>
-              <select className="select-wid" name="car" id="car">
-                <option value="volvo">Electric</option>
-                <option value="saab">Grocery</option>
-                <option value="opel">Steel</option>
-                <option value="audi">Services</option>
-              </select>
-            </div>
-          </div>
-          <div className="label-id">
-            <div className="user-product-input">
-              <label>Regular Price</label>
-              <input type="text" placeholder="Enter Regular Price"></input>
-            </div>
-            <div className="user-product-input">
-              <label>Sale Price</label>
-              <input type="text" placeholder="Enter Sale Price"></input>
-            </div>
-          </div>
-          <div className="label-id">
-            <div className="user-product-input label-id-input">
-              <label>Schedule</label>
-              <input type="date"></input>
-            </div>
+            <div className="label-id">
+              <div className="user-product-input label-id-input">
+                <label>Schedule</label>
+                <input type="date"></input>
+              </div>
 
-            <div className="user-product-input">
-              <label>Promotion</label>
-              <select className="select-wid" name="car" id="car">
-                <option value="volvo">Category1</option>
-                <option value="saab">Category2</option>
-                <option value="opel">Category3</option>
-                <option value="audi">Category4</option>
-              </select>
+              <div className="user-product-input">
+                <label>setSale*</label>
+                <select className="select-wid" name="car" id="car" onChange={(e) => setSale(e.target.value === "true")}>
+                  <option value="false">False</option>
+                  <option value="true">True</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <div className="label-id">
-            <div className="user-product-input">
-              <label>Product Type</label>
-              <select className="select-wid" name="cas" id="cas">
-                <option value="volvo">Simple Product</option>
-                <option value="saab">Grouped Product</option>
-                <option value="opel">Variable Product</option>
-                <option value="audi">Services product</option>
-              </select>
+            <div className="label-id">
+              <div className="user-product-input">
+                <label>setNew*</label>
+                <select className="select-wid" name="cas" id="cas" onChange={(e) => setNewProduct(e.target.value === "true")}>
+                  <option value="false">False</option>
+                  <option value="true">True</option>
+                </select>
+              </div>
+              <div className="user-product-input">
+                <label>FeaturedItems*</label>
+                <select className="select-wid" name="car" id="car" onChange={(e) => setFeaturedItems(e.target.value === "true")}>
+                  <option value="false">False</option>
+                  <option value="true">True</option>
+                </select>
+              </div>
             </div>
-            <div className="user-product-input">
-              <label>Stock Status</label>
-              <select className="select-wid" name="car" id="car">
-                <option value="volvo">Low Inventory</option>
-                <option value="saab">On Demand</option>
-                <option value="opel">Out of Stock</option>
-                <option value="audi">In Stock</option>
-              </select>
+            <div className="label-id">
+              <div className="user-product-input label-id-input">
+                <label>Discount Percentage*</label>
+                <input type="text" onChange={(e) => setDiscountPercentage(e.target.value)}></input>
+              </div>
+              <div className="user-product-input">
+                <label>Status</label>
+                <select className="select-wid" name="car" id="car">
+                  <option value="volvo">Completed</option>
+                  <option value="saab">Pending</option>
+                  <option value="opel">OnProcess</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <div className="label-id">
-            <div className="user-product-input label-id-input">
-              <label>Quantity in Stock</label>
-              <input type="text"></input>
-            </div>
-            <div className="user-product-input">
-              <label>Unit</label>
-              <select className="select-wid" name="car" id="car">
-                <option value="volvo">Peices</option>
-                <option value="saab">Kilogram</option>
-                <option value="opel">Boxes</option>
-                <option value="audi">Bundle</option>
-              </select>
-            </div>
-          </div>
-          <div className="label-id payment-images">
-            <div className="user-product-input label-id-input">
-              <label>Payment Methods</label>
-              <div className="payment-option">
-                <div className="payments">
-                  <input class="hidden" type="radio" id="" value={""}></input>
-                  <img src={ipay} alt="" width={"40px"} />
-                </div>
-                <div className="payments">
-                  <input class="hidden" type="radio" id="" value={""}></input>
-                  <img src={gpay} alt="" width={"40px"} />
-                </div>
-                {/* <div className="payments">
+            <div className="label-id payment-images">
+              <div className="user-product-input label-id-input">
+                <label>Payment Methods</label>
+                <div className="payment-option">
+                  <div className="payments">
+                    <input class="hidden" type="radio" id="" value={""}></input>
+                    <img src={ipay} alt="" width={"40px"} />
+                  </div>
+                  <div className="payments">
+                    <input class="hidden" type="radio" id="" value={""}></input>
+                    <img src={gpay} alt="" width={"40px"} />
+                  </div>
+                  {/* <div className="payments">
                   <input class="hidden" type="radio" id="" value={""}></input>
                   <img src={bpay} alt="" width={"40px"} />
                 </div> */}
-                {/* <div className="payments">
+                  {/* <div className="payments">
                   <input class="hidden" type="radio" id="" value={""}></input>
                   <img src={paypalpay} alt="" width={"40px"} />
                 </div> */}
-                <div className="payments">
-                  <input class="hidden" type="radio" id="" value={""}></input>
-                  <img src={vpay} alt="" width={"40px"} />
-                
-                </div>
-                {/* <div className="payments">
+                  <div className="payments">
+                    <input class="hidden" type="radio" id="" value={""}></input>
+                    <img src={vpay} alt="" width={"40px"} />
+                  </div>
+                  {/* <div className="payments">
                   <input class="hidden" type="radio" id="" value={""}></input>
                   <img src={mcpay} alt="" width={"40px"} />
                 </div> */}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="products-button">
-            <div className="pro-btn">
-              <button>Save to Drafts</button>
-            </div>
-            <div className="pro-btn">
-              <button>Publish Product</button>
+            <div className="products-button">
+              <div className="pro-btn">
+                <button>Save to Drafts</button>
+              </div>
+              <div className="pro-btn">
+                <button onClick={handleSubmit}>Publish Product</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -12,7 +12,7 @@ import "../../styles/user/featuredItem.css";
 import { useState } from "react";
 import { Highlight } from "../../components/user/homePageCarousels";
 import Cookies from "js-cookie";
-
+//import products from "./productList";
 
 const ProductGrid = ({ products }) => {
   const [selectedOption, setSelectedOption] = useState("Top Order");
@@ -22,7 +22,7 @@ const ProductGrid = ({ products }) => {
   };
 
   const cookie = Cookies.get("LoginToken");
-  console.log(cookie)
+  console.log(cookie);
 
   return (
     <>

@@ -67,6 +67,7 @@ body[data-sidebar="false"] {
   width: 270px !important;
   top: 80px;
   position: fixed;
+  z-index: 1500;
 }
 .admin-offcanvas-header {
   display: none !important;
