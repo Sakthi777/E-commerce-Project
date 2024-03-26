@@ -37,7 +37,7 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
       <div className="product-img-container">
         <span className={`sale-label ${setSale ? "visible" : "hidden"}`}>Sale</span>
         <span className={`new-label ${setNew ? "visible" : "hidden"}`}>New</span>
-        <img src={imgSrc} alt={productName} className="product-img" />
+        <img src={`http://localhost:8000/uploads/productImage/${imgSrc}`} alt={productName} className="product-img" />
         <div className="viewIcon" onClick={toggleDescription}>
           <FontAwesomeIcon icon={faEye} />
         </div>

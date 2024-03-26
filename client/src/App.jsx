@@ -48,7 +48,6 @@ function App() {
           <Route path="/orderhitory" element={<OrderHistory />} />
           <Route path="/checkout" element={<CheckOut />} />
           <Route path="/offers" element={<ProtectedLoginRoute Component={Offers} />} />
-
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/resetPassword" element={<ResetPassword />} />

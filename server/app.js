@@ -13,6 +13,10 @@ const mongoose = require("mongoose");
 // const {userDatas, login, logOut} = require("./routes/usersDataRoute");
 const userDatas = require("./routes/usersDataRoute");
 
+// const{ getProductcard , postProductCard } = require("./routes/productCardRoute");
+
+const productCardDatas = require("./routes/productCardRoute");
+
 mongoose.set("strictQuery", true);
 
 // middlewares
@@ -36,6 +40,8 @@ app.use("/forgetPassword", userDatas);
 app.use("/changePassword", userDatas);
 
 app.use(userDatas);
+
+app.use(productCardDatas);
 
 // mongodb connection
 
@@ -75,22 +81,3 @@ app.listen(port, () => {
 // });
 
 // const upload = multer({ storage: storage });
-
-app.post("/post-imag", async (req, res) => {
-  console.log("hello");
-
-  //   try {
-  //     let images = [];
-  //     if (req.file) {
-  //       const image = req.file.filename;
-  //       console.log("Image received:", image);
-  //     } else if (req.files) {
-  //       images = req.files.map((file) => file.filename);
-  //     }
-  //     console.log("Images received:", images);
-  //     res.json({ status: "ok", message: "Images uploaded successfully", images });
-  //   } catch (error) {
-  //     console.error("Error uploading images:", error);
-  //     res.status(500).json({ status: "error", message: "Failed to upload images", error: error.message });
-  //   }
-});
