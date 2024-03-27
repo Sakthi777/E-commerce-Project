@@ -32,6 +32,7 @@ import { OffCanvasProvider } from "../../client/src/components/admin/adminHeader
 import OrderHistory from "./pages/user/OrderHistory";
 import RegisterData from "./components/admin/RegisterData";
 import AllCategory from "./pages/user/AllCategory";
+import AllProducts from "./components/admin/allProducts";
 import { ProtectedLoginRoute } from "./pages/protectRoute/protectedRoute";
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
         <Routes>
           {/* <Route path="/demo" element={<Demo></Demo>}></Route> */}
           <Route path="/" element={<Home products={products} />} />
+          <Route path="/allCategory" element={<AllCategory />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/notfound" element={<NotFound />} />
           <Route path="/privacy" element={<Privacy />} />
@@ -53,7 +55,6 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/resetPassword" element={<ResetPassword />} />
           <Route path="/changePassword/:token" element={<ChangePassword />} />
-
           <Route path="/comingSoon" element={<ProtectedLoginRoute Component={ComingSoon} />} />
           <Route path="/footer" element={<Footer />} />
           <Route path="/shop" element={<ProtectedLoginRoute Component={ShopPage} />}></Route>
@@ -71,6 +72,7 @@ function App() {
                 <Routes>
                   {/* <Route path="admin" element={<AdminHeader />} /> */}
                   <Route path="addcategory" element={<AddCategory />} />
+                  <Route path="allProducts" element={<AllProducts />} />
                   <Route path="dashboard" element={<Dashboard />} />
                   <Route path="addProduct" element={<AddProductdata />} />
                   <Route path="completedOrders" element={<CompletedOrders />} />
@@ -80,7 +82,6 @@ function App() {
               </OffCanvasProvider>
             }
           />
-
           <Route path="*" element={<NotFound></NotFound>}></Route>
         </Routes>
       </Router>

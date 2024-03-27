@@ -1,4 +1,5 @@
 const userProductDetails = require("../models/userProductCardDetails");
+const fs = require("fs");
 //const upload = require("../middlewares/multerMiddleWare");
 exports.postProductCardDetailsControllers = async (req, res, next) => {
   const rating = req.body.rating;
@@ -48,5 +49,28 @@ exports.getProductCardDetailsControllers = async (req, res) => {
   } catch (error) {
     console.error("Error fetching products:", error);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+exports.deleteProductCardDetailsControllers = async (req, res) => {
+  try {
+    const productDetails = await userProductDetails.findById(req.params.id);
+    if (productDetails.image) {
+      fs.unlinkSync("./uploads/productImage/" + productDetails.image);
+    }
+    if (productDetails.imageSlider && productDetails.imageSlider.length > 0) {
+      productDetails.imageSlider.forEach((img) => {
+        fs.unlinkSync("./uploads/productImage/" + img);
+        console.log("Deleted Image: " + img);
+      });
+    }
+    const deletedProduct = await userProductDetails.findByIdAndDelete(req.params.id);
+    console.log("deleted product " + deletedProduct);
+    if (!deletedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    return res.status(200).json({ message: "Product deleted successfully" });
+  } catch (err) {
+    console.log(err);
   }
 };

@@ -51,8 +51,8 @@ export const SidebarData = [
         icon: <IoIcons.IoIosPaper className="icon" />,
       },
       {
-        title: "Inactive/New shops",
-        path: "/shops/new-shops",
+        title: "All Products",
+        path: "/admin/allProducts",
         icon: <IoIcons.IoIosPaper className="icon" />,
       },
     ],
