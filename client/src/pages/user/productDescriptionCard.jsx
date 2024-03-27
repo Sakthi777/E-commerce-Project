@@ -1,26 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faShoppingBag,
-  faStar,
-  faHeart,
-} from "@fortawesome/free-solid-svg-icons";
+import { faShoppingBag, faStar, faHeart } from "@fortawesome/free-solid-svg-icons";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const ProductDescriptionCard = ({ product, onClose }) => {
-  const {
-    imgSrc,
-    imageSlider,
-    rating,
-    productName,
-    oldPrice,
-    newPrice,
-    setNew,
-    discountPercentage,
-    productDetails,
-  } = product;
+  const { imgSrc, imageSlider, rating, productName, oldPrice, newPrice, setNew, discountPercentage, productDetails } = product;
   const [mainImage, setMainImage] = useState(imgSrc);
   const [slidesToShow, setSlidesToShow] = useState(4);
 
@@ -60,17 +46,15 @@ const ProductDescriptionCard = ({ product, onClose }) => {
       <div className="product-description-card">
         <div className="description-left">
           <div className="description-image">
-            <img src={mainImage} alt={productName} />
+            <img src={`http://localhost:8000/uploads/productImage/${mainImage}`} alt={productName} />
             <span className="discount-label">-{discountPercentage}%</span>
-            <span className={`new-label-des ${setNew ? "visible" : "hidden"}`}>
-              New
-            </span>
+            <span className={`new-label-des ${setNew ? "visible" : "hidden"}`}>New</span>
           </div>
           <div className="description-thumbnails">
             <Slider {...sliderSettings} ref={slickSliderRef}>
               {[...imageSlider].map((image, index) => (
                 <div key={index} onClick={() => handleThumbnailClick(image)}>
-                  <img src={image} alt={"product"} />
+                  <img src={`http://localhost:8000/uploads/productImage/${image}`} alt={"product"} />
                 </div>
               ))}
             </Slider>
@@ -85,11 +69,7 @@ const ProductDescriptionCard = ({ product, onClose }) => {
           </div>
           <div className="des-product-rating">
             {Array.from({ length: rating }, (_, index) => (
-              <FontAwesomeIcon
-                icon={faStar}
-                className="star-icon"
-                key={index}
-              />
+              <FontAwesomeIcon icon={faStar} className="star-icon" key={index} />
             ))}
             <p>({rating} Reviews)</p>
           </div>

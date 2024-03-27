@@ -1,6 +1,4 @@
 const userDataSchema = require("../models/userDataSchema");
-const userProductDetails = require("../models/userProductDetails");
-
 const bcrypt = require("bcryptjs");
 const { generateLoginToken, generateRegisterToken, forgetPasswordTokenVerify } = require("../utlis/createToken");
 const asyncHandler = require("../middlewares/catchAsyncError");

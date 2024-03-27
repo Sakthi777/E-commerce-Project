@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const userProductDetails = mongoose.Schema({
+const userProductCardDetails = mongoose.Schema({
   image: {
     type: String,
     // required: true,
@@ -48,4 +48,4 @@ const userProductDetails = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("productDetails", userProductDetails);
+module.exports = mongoose.model("productCardDetails", userProductCardDetails);

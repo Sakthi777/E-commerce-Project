@@ -39,25 +39,18 @@ export default function AddProductdata() {
       .catch((error) => {
         console.error("Error fetching product data:", error);
       });
-  }, []);
+  }, [setProductDetails]);
+
   productDetails.map((product) => {
     // Process each product here
-    console.log(product);
+    console.log(product.image);
   });
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
     console.log(file);
-
     if (file) {
-      const reader = new FileReader();
-      console.log(reader);
-
-      reader.onload = () => {
-        setPreImage(reader.result);
-      };
-      // console.log(image);
-      reader.readAsDataURL(file);
+      setPreImage(URL.createObjectURL(file));
       setFileName(file.name);
     }
   };
@@ -198,7 +191,6 @@ export default function AddProductdata() {
                 <label>Schedule</label>
                 <input type="date"></input>
               </div>
-
               <div className="user-product-input">
                 <label>setSale*</label>
                 <select className="select-wid" name="car" id="car" onChange={(e) => setSale(e.target.value === "true")}>
