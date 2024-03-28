@@ -1,13 +1,17 @@
 import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminHeader, { useOffCanvasContext } from "../../components/admin/adminHeader";
 import "../../styles/admin/allProducts.css";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 const AllProducts = () => {
+  const navigate = useNavigate();
   const { showOffCanvas } = useOffCanvasContext();
   const [productDetails, setProductDetails] = useState([]);
+
+  const [productName, setProductName] = useState("");
 
   useEffect(() => {
     axios
@@ -30,6 +34,16 @@ const AllProducts = () => {
       const res = await axios.delete(`http://localhost:8000/delete-productDetails/${id}`);
       console.log(res.data);
       window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleProductEdit = async (product) => {
+    try {
+      console.log(product);
+      // setProductName(product.productName);
+      navigate("/admin/editProduct", { state: { product } });
     } catch (err) {
       console.log(err);
     }
@@ -66,7 +80,7 @@ const AllProducts = () => {
                   <td>{product.rating}</td>
                   <td>{product.discountPercentage}</td>
                   <td>
-                    <FontAwesomeIcon icon={faEdit} className="product-edit" />
+                    <FontAwesomeIcon icon={faEdit} className="product-edit" onClick={() => handleProductEdit(product)} />
                     <FontAwesomeIcon icon={faTrash} className="product-delete" onClick={() => handleProductDelete(product._id)} />
                   </td>
                 </tr>

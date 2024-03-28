@@ -1,7 +1,7 @@
 const userProductDetails = require("../models/userProductCardDetails");
 const fs = require("fs");
 //const upload = require("../middlewares/multerMiddleWare");
-exports.postProductCardDetailsControllers = async (req, res, next) => {
+exports.postProductCardDetailsControllers = async (req, res) => {
   const rating = req.body.rating;
   const productName = req.body.productName;
   const productDescription = req.body.productDescription;
@@ -73,4 +73,18 @@ exports.deleteProductCardDetailsControllers = async (req, res) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+exports.updateProductCardDetailsControllers = async (req, res) => {
+  const rating = req.body.rating;
+  const productName = req.body.productName;
+  const productDescription = req.body.productDescription;
+  const oldPrice = req.body.oldPrice;
+  const newPrice = req.body.newPrice;
+  const sale = req.body.sale;
+  const newProduct = req.body.newProduct;
+  const featuredItems = req.body.featuredItems;
+  const discountPercentage = req.body.discountPercentage;
+  console.log(req.params.productID);
+  console.log(productName);
 };
