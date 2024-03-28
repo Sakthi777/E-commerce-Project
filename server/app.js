@@ -81,3 +81,15 @@ app.listen(port, () => {
 // });
 
 // const upload = multer({ storage: storage });
+
+app.post("/update-productDetails/:productID", (req, res) => {
+  const productID = req.params.productID;
+  const formData = req.body.productName; // Form data is available in req.body
+
+  // Process the form data as needed
+  console.log(formData);
+  console.log(productID);
+
+  // Respond to the client
+  res.send("Form data received successfully");
+});

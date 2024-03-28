@@ -33,6 +33,7 @@ import OrderHistory from "./pages/user/OrderHistory";
 import RegisterData from "./components/admin/RegisterData";
 import AllCategory from "./pages/user/AllCategory";
 import AllProducts from "./components/admin/allProducts";
+import EditProduct from "./components/admin/editProduct";
 import { ProtectedLoginRoute } from "./pages/protectRoute/protectedRoute";
 
 function App() {
@@ -73,6 +74,7 @@ function App() {
                   {/* <Route path="admin" element={<AdminHeader />} /> */}
                   <Route path="addcategory" element={<AddCategory />} />
                   <Route path="allProducts" element={<AllProducts />} />
+                  <Route path="editProduct" element={<EditProduct />} />
                   <Route path="dashboard" element={<Dashboard />} />
                   <Route path="addProduct" element={<AddProductdata />} />
                   <Route path="completedOrders" element={<CompletedOrders />} />
