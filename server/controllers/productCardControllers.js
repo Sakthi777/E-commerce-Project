@@ -85,6 +85,10 @@ exports.updateProductCardDetailsControllers = async (req, res) => {
   const newProduct = req.body.newProduct;
   const featuredItems = req.body.featuredItems;
   const discountPercentage = req.body.discountPercentage;
-  console.log(req.params.productID);
-  console.log(productName);
+  console.log(req.params.id);
+  console.log(rating, productName, productDescription, oldPrice, newPrice, sale, newProduct, featuredItems, discountPercentage);
+  
+
 };
+
+

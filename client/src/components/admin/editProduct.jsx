@@ -76,17 +76,25 @@ const EditProduct = () => {
     formData.append("newProduct", newProduct);
     formData.append("featuredItems", featuredItems);
 
-    try {
-      const response = await axios.post(`http://localhost:8000/update-productDetails/${productID}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      console.log(response.data); // Log response data if needed
-      console.log("Updated");
-    } catch (err) {
-      console.error("Error:", err);
-    }
+console.log([...formData]);
+
+    // const formData = {
+    //  rating,
+    //  productName,
+    //  productDescription,
+    //  oldPrice,
+    //  newPrice,
+    //  discountPercentage,
+    //  sale,
+    //  newProduct,
+    //  featuredItems
+    // }
+     axios.put(`http://localhost:8000/update-productDetails/${productID}`, formData).then((res)=>{
+        console.log(res.data)
+      }).catch((err)=>{
+        console.log(err);
+      })
+   
   };
 
   const ImageDelete = (deleteImage) => {

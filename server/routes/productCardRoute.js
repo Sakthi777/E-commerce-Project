@@ -9,6 +9,7 @@ productCardDatas.get("/get-productDetails", getProductCardDetailsControllers);
 
 productCardDatas.delete("/delete-productDetails/:id", deleteProductCardDetailsControllers);
 
-// productCardDatas.put("/update-productDetails/:productID", updateProductCardDetailsControllers);
+productCardDatas.put("/update-productDetails/:id",upload.none(), updateProductCardDetailsControllers);
+
 
 module.exports = productCardDatas;
