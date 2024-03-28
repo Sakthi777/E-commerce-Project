@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FaEye } from "react-icons/fa";
+// import { FaEye } from "react-icons/fa";
 import { AiFillHeart } from "react-icons/ai";
 import "../../styles/user/productCard.css";
 import "../../styles/user/productDescriptionCard.css";

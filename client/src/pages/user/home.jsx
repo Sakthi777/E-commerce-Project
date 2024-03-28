@@ -12,7 +12,7 @@ import "../../styles/user/featuredItem.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Highlight } from "../../components/user/homePageCarousels";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 //import products from "./productList";
 
 const ProductGrid = ({ products }) => {
@@ -37,9 +37,9 @@ const ProductGrid = ({ products }) => {
       });
   }, [setProductDetails]);
 
-  productDetails.map((product) => {
-    console.log(product);
-  });
+  // productDetails.map((product) => {
+  //   console.log(product);
+  // });
   return (
     <>
       <HeaderPage />

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminHeader, { useOffCanvasContext } from "../../components/admin/adminHeader";
 import "../../styles/admin/allProducts.css";
-import { faEye, faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 const AllProducts = () => {
   const { showOffCanvas } = useOffCanvasContext();
   const [productDetails, setProductDetails] = useState([]);
@@ -20,9 +20,9 @@ const AllProducts = () => {
       });
   }, []);
 
-  productDetails.map((product) => {
-    console.log(product);
-  });
+  // productDetails.map((product) => {
+  //   console.log(product);
+  // });
 
   const handleProductDelete = async (id) => {
     try {

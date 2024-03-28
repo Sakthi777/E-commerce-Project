@@ -41,10 +41,10 @@ export default function AddProductdata() {
       });
   }, [setProductDetails]);
 
-  productDetails.map((product) => {
-    // Process each product here
-    console.log(product.image);
-  });
+  // productDetails.map((product) => {
+  //   console.log(product.image);
+  // });
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
