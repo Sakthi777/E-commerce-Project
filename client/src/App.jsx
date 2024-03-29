@@ -33,64 +33,74 @@ import OrderHistory from "./pages/user/OrderHistory";
 import RegisterData from "./components/admin/RegisterData";
 import AllCategory from "./pages/user/AllCategory";
 import { ProtectedLoginRoute } from "./pages/protectRoute/protectedRoute";
-
+import Cookies from "js-cookie";
+import { useEffect } from "react";
+import ProtectRoute from "./components/user/context/protectRoute";
+import { AuthProvider } from "./components/user/context/AuthContext";
 
 function App() {
+	useEffect(() => {
+		const cookieValue = Cookies.get("LoginToken");
 
+		console.log("Cookie value:", cookieValue);
+	}, []);
+	return (
+		<div className="App">
+			<AuthProvider>
+				<Router>
+					<Routes>
+						{/* <Route path="/demo" element={<Demo></Demo>}></Route> */}
+						<Route path="/wishlist" element={<Wishlist />} />
+						<Route path="/notfound" element={<NotFound />} />
+						<Route path="/privacy" element={<Privacy />} />
+						<Route path="/faq" element={<FAQ />} />
+						<Route path="/us" element={<UserContact />} />
+						<Route path="/orderhitory" element={<OrderHistory />} />
+						<Route path="/checkout" element={<CheckOut />} />
+						<Route path="/offers" element={<Offers />} />
 
-  return (
-    <div className="App">
-      <Router>
-        <Routes>
-          <Route path="/demo" element={<Demo></Demo>}></Route>
-          <Route path="/" element={<Home products={products} />} />
-            <Route path="/wishlist" element={<Wishlist />}/>
-            <Route path="/notfound" element={<NotFound />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/us" element={<UserContact />} />
-            <Route path="/orderhitory" element={<OrderHistory />} />
-            <Route path="/checkout" element={<CheckOut />} />
-            <Route path="/offers" element={<Offers />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/register" element={<RegisterPage />} />
+						<Route path="/resetPassword" element={<ResetPassword />} />
+						<Route path="/changePassword/:token" element={<ChangePassword />} />
 
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/resetPassword" element={<ResetPassword />} />
-          <Route path="/changePassword/:token" element={<ChangePassword />} />
+						<Route path="/comingSoon" element={<ComingSoon />} />
+						<Route path="/footer" element={<Footer />} />
+						<Route path="/shop" element={<ShopPage products={products} />}></Route>
+						<Route path="/about" element={<AboutUs />} />
+						<Route path="/myWallet" element={<MyWallet />} />
+						<Route path="/transactionDetails" element={<TransactionDetails />} />
 
+						<Route path="/*" element={<ProtectRoute path="/myProfile" element={MyProfile} />} />
 
-          <Route path="/comingSoon" element={<ComingSoon />} />
-          <Route path="/footer" element={<Footer />} />
-          <Route path="/shop" element={<ShopPage products={products} />}></Route>
-          <Route path="/myProfile" element={<MyProfile />} />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/myWallet" element={<MyWallet />} />
-          <Route path="/transactionDetails" element={<TransactionDetails />} />
+						{/* <ProtectRoute path="/" element={Home} products={products} /> */}
+						<Route path="/" element={<Home products={products} />} />
 
-          {/* admin panel */}
+						{/* admin panel */}
 
-          <Route
-            path="/admin/*"
-            element={
-              <OffCanvasProvider>
-                <Routes>
-                  {/* <Route path="admin" element={<AdminHeader />} /> */}
-                  <Route path="addcategory" element={<AddCategory />} />
-                  <Route path="dashboard" element={<Dashboard />} />
-                  <Route path="addProduct" element={<AddProductdata />} />
-                  <Route path="completedOrders" element={<CompletedOrders />} />
-                  <Route path="pendingOrders" element={<PendingOrders />} />
-                  <Route path="canceledOrders" element={<CanceledOrders />} />
-                </Routes>
-              </OffCanvasProvider>
-            }
-          />
+						<Route
+							path="/admin/*"
+							element={
+								<OffCanvasProvider>
+									<Routes>
+										{/* <Route path="admin" element={<AdminHeader />} /> */}
+										<Route path="addcategory" element={<AddCategory />} />
+										<Route path="dashboard" element={<Dashboard />} />
+										<Route path="addProduct" element={<AddProductdata />} />
+										<Route path="completedOrders" element={<CompletedOrders />} />
+										<Route path="pendingOrders" element={<PendingOrders />} />
+										<Route path="canceledOrders" element={<CanceledOrders />} />
+									</Routes>
+								</OffCanvasProvider>
+							}
+						/>
 
-          <Route path="*" element={<NotFound></NotFound>}></Route>
-        </Routes>
-      </Router>
-    </div>
-  );
+						<Route path="*" element={<NotFound></NotFound>}></Route>
+					</Routes>
+				</Router>
+			</AuthProvider>
+		</div>
+	);
 }
 
 export default App;
