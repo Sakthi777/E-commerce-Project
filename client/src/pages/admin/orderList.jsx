@@ -1,4 +1,4 @@
-import "../../styles/user/orderList.css";
+import "../../styles/admin/orderList.css";
 // import products from "../../pages/user/productList";
 import { completedOrders, pendingOrders, canceledOrders } from "../../pages/user/productList";
 import AdminHomePage from "../../components/admin/adminHeader";

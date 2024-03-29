@@ -1,6 +1,6 @@
 const express = require("express");
 const userDatas = express.Router();
-const {userDatasControllers, loginUserControllers, logOutUserControllers, forgetUserControllers, changePasswordControllers} = require("../controllers/usersDataControllers");
+const { userDatasControllers, loginUserControllers, logOutUserControllers, forgetUserControllers, changePasswordControllers } = require("../controllers/usersDataControllers");
 
 userDatas.route("/users").post(userDatasControllers);
 

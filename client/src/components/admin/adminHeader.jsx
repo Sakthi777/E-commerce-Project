@@ -43,8 +43,8 @@ export const useOffCanvasContext = () => {
 };
 
 const Sidebar = () => {
-	const { showOffCanvas, handleToggleOffCanvas, handleClose, backdrop, setShowOffCanvas } = useOffCanvasContext();
-	console.log("main :" + showOffCanvas);
+  const { showOffCanvas, handleToggleOffCanvas, handleClose, backdrop, setShowOffCanvas } = useOffCanvasContext();
+  // console.log("main :" + showOffCanvas);
 
 	const [showProfileCard, setShowProfileCard] = useState(false);
 	const profileCardRef = useRef(null);
@@ -74,46 +74,46 @@ const Sidebar = () => {
 		};
 	}, []);
 
-	const nav = useNavigate();
-	return (
-		<>
-			<div className="nav" ref={profileCardRef}>
-				<div className="logo-container">
-					<img src={logo} alt="Logo" className="nav-logo" onClick={() => nav("/admin")} />
-				</div>
-				<Link to="#">
-					<FaIcon.FaBars onClick={handleToggleOffCanvas} className="menu-bar" />
-				</Link>
-				<div className="right-section">
-					<button className="nav-button">Create Shop</button>
-					<button className="nav-button">Visit Site</button>
-					<div className="profile-container" onClick={toggleProfileCard}>
-						<CgProfile className="profile-icon" />
-						<div className="profile-info">
-							<span className="profile-name">Sakthi</span>
-							<span className="profile-role">Super Admin</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			{showProfileCard && <ProfileCard />}
-			<Offcanvas show={showOffCanvas} onHide={handleClose} placement="start" className="admin-sidebar" style={{ width: "350px", top: "80px" }} backdrop={backdrop}>
-				<Offcanvas.Header className="admin-offcanvas-header" onClick={handleClose}>
-					<img src={logo} alt="Logo" />
-					<i className="fas fa-times" style={{ color: "#119744", fontSize: "24px" }}></i>
-				</Offcanvas.Header>
-				<Offcanvas.Body style={{ overflow: "visible" }} className="sidebar">
-					<div>
-						<div className="sidebar-wrap">
-							{SidebarData.map((item, index) => (
-								<SubMenu item={item} key={index} />
-							))}
-						</div>
-					</div>
-				</Offcanvas.Body>
-			</Offcanvas>
-		</>
-	);
+  const nav = useNavigate();
+  return (
+    <>
+      <div className="nav" ref={profileCardRef}>
+        <div className="logo-container">
+          <img src={logo} alt="Logo" className="nav-logo" onClick={() => nav("/admin")} />
+        </div>
+        <Link to="#">
+          <FaIcon.FaBars onClick={handleToggleOffCanvas} className="menu-bar" />
+        </Link>
+        <div className="right-section">
+          <button className="nav-button">Create Shop</button>
+          <button className="nav-button">Visit Site</button>
+          <div className="profile-container" onClick={toggleProfileCard}>
+            <CgProfile className="profile-icon" />
+            <div className="profile-info">
+              <span className="profile-name">Sakthi</span>
+              <span className="profile-role">Super Admin</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      {showProfileCard && <ProfileCard />}
+      <Offcanvas show={showOffCanvas} onHide={handleClose} placement="start" className="admin-sidebar" style={{ width: "350px", top: "80px" }} backdrop={backdrop}>
+        <Offcanvas.Header className="admin-offcanvas-header" onClick={handleClose}>
+          <img src={logo} alt="Logo" />
+          <i className="fas fa-times" style={{ color: "#119744", fontSize: "24px" }}></i>
+        </Offcanvas.Header>
+        <Offcanvas.Body style={{ overflow: "visible" }} className="sidebar">
+          <div>
+            <div className="sidebar-wrap">
+              {SidebarData.map((item, index) => (
+                <SubMenu item={item} key={index} />
+              ))}
+            </div>
+          </div>
+        </Offcanvas.Body>
+      </Offcanvas>
+    </>
+  );
 };
 
 export default Sidebar;

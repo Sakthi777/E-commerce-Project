@@ -2,21 +2,15 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import "../../styles/admin/addProduct.css";
-import upload from "../../../src/assets/images/AddProduct/upload.png";
-import ipay from "../../../src/assets/images/AddProduct/applepay.svg";
-// import bpay from "../../../src/assets/images/AddProduct/bitpay.svg";
-import gpay from "../../../src/assets/images/AddProduct/googlepay.svg";
-// import mcpay from "../../../src/assets/images/AddProduct/mc.svg";
-// import paypalpay from "../../../src/assets/images/AddProduct/paypal.svg";
-import vpay from "../../../src/assets/images/AddProduct/visa.svg";
+import uploadImage from "../../../src/assets/images/AddProduct/upload.png";
 import AdminHeader, { useOffCanvasContext } from "../../components/admin/adminHeader";
-
-export default function AddProductdata() {
+import { useLocation } from "react-router-dom";
+const EditProduct = () => {
   const { showOffCanvas } = useOffCanvasContext();
+  const [upload, setUpload] = useState(uploadImage);
   const [preImage, setPreImage] = useState(null);
-  const [ArrayOfimages, setArrayOfImages] = useState([upload, upload, upload, upload]);
+  const [ArrayOfimages, setArrayOfImages] = useState([uploadImage, uploadImage, uploadImage, uploadImage]);
   const [fileName, setFileName] = useState("");
-
   const [image, setImage] = useState(null);
   const [imageSlider, setImageSlider] = useState([]);
   const [rating, setRating] = useState("");
@@ -29,21 +23,28 @@ export default function AddProductdata() {
   const [featuredItems, setFeaturedItems] = useState(false);
   const [discountPercentage, setDiscountPercentage] = useState("");
   const [productDetails, setProductDetails] = useState([]);
+  const [productID, setProductID] = useState("");
+  const location = useLocation();
+  const { product } = location.state || {};
+  //   console.log(product);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/get-productDetails`)
-      .then((response) => {
-        setProductDetails(response.data.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching product data:", error);
-      });
-  }, [setProductDetails]);
-
-  // productDetails.map((product) => {
-  //   console.log(product.image);
-  // });
+    if (product) {
+      setRating(product.rating);
+      setProductName(product.productName);
+      setProductDescription(product.productDescription);
+      setOldPrice(product.oldPrice);
+      setNewPrice(product.newPrice);
+      setDiscountPercentage(product.discountPercentage);
+      setUpload(`http://localhost:8000/uploads/productImage/${product.image}`);
+      const SliderImages = product.imageSlider.map((image) => `http://localhost:8000/uploads/productImage/${image}`);
+      setArrayOfImages(SliderImages);
+      setSale(product.sale);
+      setNewProduct(product.newProduct);
+      setFeaturedItems(product.featuredItems);
+      setProductID(product._id);
+    }
+  }, [product]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -62,9 +63,9 @@ export default function AddProductdata() {
     const newImages = ArrayoffilleList.map((file) => URL.createObjectURL(file));
     setArrayOfImages(newImages);
   };
-  const handleSubmit = () => {
+
+  const handleSubmit = async () => {
     const formData = new FormData();
-    formData.append("image", image);
     formData.append("rating", rating);
     formData.append("productName", productName);
     formData.append("productDescription", productDescription);
@@ -75,21 +76,31 @@ export default function AddProductdata() {
     formData.append("newProduct", newProduct);
     formData.append("featuredItems", featuredItems);
 
-    imageSlider.forEach((image) => {
-      formData.append("imageSlider", image);
-    });
-    console.log(Object.fromEntries(formData));
+console.log([...formData]);
 
-    try {
-      axios.post("http://localhost:8000/post-productDetails", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-    } catch (error) {
-      console.error("Upload error:", error);
-    }
+    // const formData = {
+    //  rating,
+    //  productName,
+    //  productDescription,
+    //  oldPrice,
+    //  newPrice,
+    //  discountPercentage,
+    //  sale,
+    //  newProduct,
+    //  featuredItems
+    // }
+     axios.put(`http://localhost:8000/update-productDetails/${productID}`, formData).then((res)=>{
+        console.log(res.data)
+      }).catch((err)=>{
+        console.log(err);
+      })
+   
   };
+
+  const ImageDelete = (deleteImage) => {
+    setArrayOfImages((ArrayOfimage) => ArrayOfimage.filter((image) => image !== deleteImage));
+  };
+
   return (
     <>
       <AdminHeader />
@@ -106,9 +117,7 @@ export default function AddProductdata() {
                   <img src={preImage ? preImage : upload} alt="" className="center-image" />
                 </div>
               </div>
-              <div className="ImageFileName">
-                <p>{fileName}</p>
-              </div>
+              <div className="ImageFileName">{/* <p>{fileName}</p> */}</div>
               <div className="imageInputFiled">
                 <label htmlFor="file-upload">Select Image</label>
                 <input type="file" id="file-upload" style={{ display: "none" }} onChange={handleImageChange} accept="image/*" />
@@ -122,6 +131,9 @@ export default function AddProductdata() {
                     <div className="image-upload-box">
                       <div className="image-box">
                         <img key={index} src={image ? image : upload} alt={`product ${index + 1}`} className="center-image" />
+                        <button className="imageDeleteButton" onClick={() => ImageDelete(image)}>
+                          Delete
+                        </button>
                       </div>
                     </div>
                   ))}
@@ -146,12 +158,12 @@ export default function AddProductdata() {
                 </div>
                 <div className="rating">
                   <p>Rating*</p>
-                  <input type="text" onChange={(e) => setRating(e.target.value)} />
+                  <input type="text" value={rating} onChange={(e) => setRating(e.target.value)} />
                 </div>
               </div>
               <div class="description-box">
                 <p>Product Name*</p>
-                <input type="text" placeholder="Enter Product Name" onChange={(e) => setProductName(e.target.value)} />
+                <input type="text" placeholder="Enter Product Name" value={productName} onChange={(e) => setProductName(e.target.value)} />
               </div>
             </div>
           </div>
@@ -159,7 +171,7 @@ export default function AddProductdata() {
           <div className="user-product">
             <div className="user-product-input pro-in">
               <label className="user-product-label">Description*</label>
-              <input type="text" placeholder="Enter Description" onChange={(e) => setProductDescription(e.target.value)}></input>
+              <input type="text" placeholder="Enter Description" value={productDescription} onChange={(e) => setProductDescription(e.target.value)}></input>
             </div>
             <div className="label-id">
               <div className="user-product-input label-id-input">
@@ -179,11 +191,11 @@ export default function AddProductdata() {
             <div className="label-id">
               <div className="user-product-input">
                 <label>Old Price*</label>
-                <input type="text" placeholder="Enter Old Price" onChange={(e) => setOldPrice(e.target.value)}></input>
+                <input type="text" placeholder="Enter Old Price" value={oldPrice} onChange={(e) => setOldPrice(e.target.value)}></input>
               </div>
               <div className="user-product-input">
                 <label>New Price*</label>
-                <input type="text" placeholder="Enter New Price" onChange={(e) => setNewPrice(e.target.value)}></input>
+                <input type="text" placeholder="Enter New Price" value={newPrice} onChange={(e) => setNewPrice(e.target.value)}></input>
               </div>
             </div>
             <div className="label-id">
@@ -193,7 +205,7 @@ export default function AddProductdata() {
               </div>
               <div className="user-product-input">
                 <label>setSale*</label>
-                <select className="select-wid" name="car" id="car" onChange={(e) => setSale(e.target.value === "true")}>
+                <select className="select-wid" name="car" id="car" value={sale} onChange={(e) => setSale(e.target.value === "true")}>
                   <option value="false">False</option>
                   <option value="true">True</option>
                 </select>
@@ -202,14 +214,14 @@ export default function AddProductdata() {
             <div className="label-id">
               <div className="user-product-input">
                 <label>setNew*</label>
-                <select className="select-wid" name="cas" id="cas" onChange={(e) => setNewProduct(e.target.value === "true")}>
+                <select className="select-wid" name="cas" id="cas" value={newProduct} onChange={(e) => setNewProduct(e.target.value === "true")}>
                   <option value="false">False</option>
                   <option value="true">True</option>
                 </select>
               </div>
               <div className="user-product-input">
                 <label>FeaturedItems*</label>
-                <select className="select-wid" name="car" id="car" onChange={(e) => setFeaturedItems(e.target.value === "true")}>
+                <select className="select-wid" name="car" id="car" value={featuredItems} onChange={(e) => setFeaturedItems(e.target.value === "true")}>
                   <option value="false">False</option>
                   <option value="true">True</option>
                 </select>
@@ -218,7 +230,7 @@ export default function AddProductdata() {
             <div className="label-id">
               <div className="user-product-input label-id-input">
                 <label>Discount Percentage*</label>
-                <input type="text" onChange={(e) => setDiscountPercentage(e.target.value)}></input>
+                <input type="text" value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value)}></input>
               </div>
               <div className="user-product-input">
                 <label>Status</label>
@@ -229,43 +241,13 @@ export default function AddProductdata() {
                 </select>
               </div>
             </div>
-            <div className="label-id payment-images">
-              <div className="user-product-input label-id-input">
-                <label>Payment Methods</label>
-                <div className="payment-option">
-                  <div className="payments">
-                    <input class="hidden" type="radio" id="" value={""}></input>
-                    <img src={ipay} alt="" width={"40px"} />
-                  </div>
-                  <div className="payments">
-                    <input class="hidden" type="radio" id="" value={""}></input>
-                    <img src={gpay} alt="" width={"40px"} />
-                  </div>
-                  {/* <div className="payments">
-                  <input class="hidden" type="radio" id="" value={""}></input>
-                  <img src={bpay} alt="" width={"40px"} />
-                </div> */}
-                  {/* <div className="payments">
-                  <input class="hidden" type="radio" id="" value={""}></input>
-                  <img src={paypalpay} alt="" width={"40px"} />
-                </div> */}
-                  <div className="payments">
-                    <input class="hidden" type="radio" id="" value={""}></input>
-                    <img src={vpay} alt="" width={"40px"} />
-                  </div>
-                  {/* <div className="payments">
-                  <input class="hidden" type="radio" id="" value={""}></input>
-                  <img src={mcpay} alt="" width={"40px"} />
-                </div> */}
-                </div>
-              </div>
-            </div>
+
             <div className="products-button">
               <div className="pro-btn">
                 <button>Save to Drafts</button>
               </div>
               <div className="pro-btn">
-                <button onClick={handleSubmit}>Publish Product</button>
+                <button onClick={handleSubmit}>Edit Product</button>
               </div>
             </div>
           </div>
@@ -273,4 +255,6 @@ export default function AddProductdata() {
       </div>
     </>
   );
-}
+};
+
+export default EditProduct;

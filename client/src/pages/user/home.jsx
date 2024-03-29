@@ -9,10 +9,11 @@ import Footer from "../../pages/user/Footer";
 import { faShoppingBag, faStar, faPercent } from "@fortawesome/free-solid-svg-icons";
 import FeaturedItems from "./featuredItems";
 import "../../styles/user/featuredItem.css";
-import { useState } from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 import { Highlight } from "../../components/user/homePageCarousels";
-import Cookies from "js-cookie";
-
+// import Cookies from "js-cookie";
+//import products from "./productList";
 
 const ProductGrid = ({ products }) => {
   const [selectedOption, setSelectedOption] = useState("Top Order");
@@ -21,9 +22,24 @@ const ProductGrid = ({ products }) => {
     setSelectedOption(option);
   };
 
-  const cookie = Cookies.get("LoginToken");
-  console.log(cookie)
+  // const cookie = Cookies.get("LoginToken");
+  // console.log(cookie);
+  const [productDetails, setProductDetails] = useState([]);
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/get-productDetails`)
+      .then((response) => {
+        setProductDetails(response.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching product data:", error);
+      });
+  }, [setProductDetails]);
+
+  // productDetails.map((product) => {
+  //   console.log(product);
+  // });
   return (
     <>
       <HeaderPage />
@@ -32,19 +48,19 @@ const ProductGrid = ({ products }) => {
       <div className="product-container">
         <div className="productTitle">Recently Sold Items</div>
         <div className="product-grid">
-          {products.map((product) => (
+          {productDetails.map((product) => (
             <ProductCard
-              key={product.id}
-              imgSrc={product.imgSrc}
+              key={product._id}
+              imgSrc={product.image}
               imageSlider={product.imageSlider}
               rating={product.rating}
               productName={product.productName}
               oldPrice={product.oldPrice}
               newPrice={product.newPrice}
-              setNew={product.setNew}
-              setSale={product.setSale}
+              setNew={product.newProduct}
+              setSale={product.sale}
               discountPercentage={product.discountPercentage}
-              productDetails={product.productDetails}
+              productDetails={product.productDescription}
             />
           ))}
         </div>
