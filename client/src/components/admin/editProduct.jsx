@@ -36,8 +36,8 @@ const EditProduct = () => {
       setOldPrice(product.oldPrice);
       setNewPrice(product.newPrice);
       setDiscountPercentage(product.discountPercentage);
-      setUpload(`http://localhost:8000/uploads/productImage/${product.image}`);
-      const SliderImages = product.imageSlider.map((image) => `http://localhost:8000/uploads/productImage/${image}`);
+      setUpload(product.image);
+      const SliderImages = product.imageSlider.map((image) => image);
       setArrayOfImages(SliderImages);
       setSale(product.sale);
       setNewProduct(product.newProduct);
@@ -61,11 +61,35 @@ const EditProduct = () => {
     console.log(ArrayoffilleList);
     setImageSlider(ArrayoffilleList);
     const newImages = ArrayoffilleList.map((file) => URL.createObjectURL(file));
-    setArrayOfImages(newImages);
+    console.log(newImages);
+
+    // setArrayOfImages(newImages);
+  };
+  const handleAddImages = (e) => {
+    const fileList = e.target.files;
+    const ArrayoffilleList = Array.from(fileList);
+    console.log(ArrayoffilleList);
+    const formData = new FormData();
+    ArrayoffilleList.forEach((image) => {
+      formData.append("imageSlider", image);
+    });
+    console.log(Object.fromEntries(formData));
+
+    // try {
+    //   axios.post("http://localhost:8000/post-productDetails", formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   });
+    // } catch (error) {
+    //   console.error("Upload error:", error);
+    // }
   };
 
   const handleSubmit = async () => {
     const formData = new FormData();
+    formData.append("image", image);
+    formData.append("upload", upload);
     formData.append("rating", rating);
     formData.append("productName", productName);
     formData.append("productDescription", productDescription);
@@ -76,7 +100,11 @@ const EditProduct = () => {
     formData.append("newProduct", newProduct);
     formData.append("featuredItems", featuredItems);
 
-console.log([...formData]);
+    const formDataObject = {};
+    for (const [key, value] of formData.entries()) {
+      formDataObject[key] = value;
+    }
+    console.log(formDataObject);
 
     // const formData = {
     //  rating,
@@ -89,16 +117,26 @@ console.log([...formData]);
     //  newProduct,
     //  featuredItems
     // }
-     axios.put(`http://localhost:8000/update-productDetails/${productID}`, formData).then((res)=>{
-        console.log(res.data)
-      }).catch((err)=>{
-        console.log(err);
+    axios
+      .put(`http://localhost:8000/update-productDetails/${productID}`, formData)
+      .then((res) => {
+        console.log(res.data);
       })
-   
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  const ImageDelete = (deleteImage) => {
+  const ImageDelete = async (deleteImage, id, index) => {
     setArrayOfImages((ArrayOfimage) => ArrayOfimage.filter((image) => image !== deleteImage));
+    console.log(deleteImage);
+    console.log(id);
+    console.log(index);
+    try {
+      await axios.delete(`http://localhost:8000/delete-productSliderImage/${id}/${index}`);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -113,13 +151,11 @@ console.log([...formData]);
             <p>Product Images</p>
             <div className="panel">
               <div className="image-upload-box">
-                <div className="image-box">
-                  <img src={preImage ? preImage : upload} alt="" className="center-image" />
-                </div>
+                <div className="image-box">{preImage ? <img src={preImage} alt={`product 1`} className="center-image" /> : <img src={`http://localhost:8000/uploads/productImage/${upload}`} alt={`product 2`} className="center-image" />}</div>
               </div>
               <div className="ImageFileName">{/* <p>{fileName}</p> */}</div>
               <div className="imageInputFiled">
-                <label htmlFor="file-upload">Select Image</label>
+                <label htmlFor="file-upload">Add New Image</label>
                 <input type="file" id="file-upload" style={{ display: "none" }} onChange={handleImageChange} accept="image/*" />
               </div>
 
@@ -130,8 +166,14 @@ console.log([...formData]);
                   {ArrayOfimages.map((image, index) => (
                     <div className="image-upload-box">
                       <div className="image-box">
-                        <img key={index} src={image ? image : upload} alt={`product ${index + 1}`} className="center-image" />
-                        <button className="imageDeleteButton" onClick={() => ImageDelete(image)}>
+                        <div className="image-box">
+                          {image ? (
+                            <img src={`http://localhost:8000/uploads/productImage/${image}`} alt={`product 1`} className="center-image" />
+                          ) : (
+                            <img src={`http://localhost:8000/uploads/productImage/${upload}`} alt={`product 2`} className="center-image" />
+                          )}
+                        </div>
+                        <button className="imageDeleteButton" onClick={() => ImageDelete(image, productID, index)}>
                           Delete
                         </button>
                       </div>
@@ -141,6 +183,8 @@ console.log([...formData]);
                 <div className="imageInputFiled">
                   <label htmlFor="multi-file-upload">Select Images</label>
                   <input type="file" id="multi-file-upload" style={{ display: "none" }} onChange={handleImageSliderChange} accept="image/*" multiple />
+                  <label htmlFor="add-multi-file-upload">Add Images</label>
+                  <input type="file" id="add-multi-file-upload" style={{ display: "none" }} onChange={handleAddImages} accept="image/*" multiple />
                 </div>
               </div>
             </div>
