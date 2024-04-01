@@ -13,11 +13,6 @@ export const ProtectedLoginRoute = (props) => {
   useEffect(() => {
     const cookieToken = Cookies.get("LoginToken");
     console.log(cookieToken);
-    // if (cookieToken) {
-    //   setToken(cookieToken);
-    // } else {
-    //   setToken(null);
-    // }
     if (!cookieToken) {
       navigate("/login");
     }
