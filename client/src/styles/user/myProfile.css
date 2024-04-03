@@ -62,6 +62,7 @@
 
 .myprofile-details {
 	display: grid;
+	width: 100%;
 	grid-template-columns: 100%;
 	gap: 30px;
 	padding: 50px 75px;
@@ -70,6 +71,8 @@
 }
 
 .profile-element {
+	min-height: 200px;
+	width: 100%;
 	height: auto;
 	display: grid;
 	grid-template-columns: 1fr;
@@ -291,4 +294,20 @@
 	.myprofile-details {
 		padding: 50px 25px;
 	}
+}
+
+.edit-profile-modal label,
+.edit-profile-modal div,
+.edit-contact-modal label,
+.edit-address-modal label {
+	padding: 5px;
+	justify-content: center;
+	align-items: center;
+}
+
+.edit-profile-modal input,
+.edit-contact-modal input {
+	width: 240px;
+	border-radius: 5px;
+	border: 1px solid #39404a;
 }

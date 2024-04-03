@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const Router = express.Router();
 const upload = require("../../E-commerce/server/middlewares/multerMiddleWare");
 const fs = require("fs");
 const model = require("../../E-commerce/server/models/userProductCardDetails");
@@ -19,6 +20,7 @@ const userDatas = require("./routes/usersDataRoute");
 // const{ getProductcard , postProductCard } = require("./routes/productCardRoute");
 
 const productCardDatas = require("./routes/productCardRoute");
+const profileDataRouter = require("./routes/profileDataRoute");
 
 mongoose.set("strictQuery", true);
 
@@ -29,6 +31,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors());
+
+app.use(Router);
 
 // Routes
 
@@ -46,21 +50,27 @@ app.use(userDatas);
 
 app.use(productCardDatas);
 
+app.use("/profileData", profileDataRouter);
+
+// app.post("/profileData", async (req, res) => {
+// 	console.log(req.body);
+// });
+
 // mongodb connection
 
 const db = process.env.MONGODB_URL;
 
 mongoose
-  .connect(db, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("DB connected Successfully !");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+	.connect(db, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	})
+	.then(() => {
+		console.log("DB connected Successfully !");
+	})
+	.catch((err) => {
+		console.log(err);
+	});
 
 // server
 
@@ -69,7 +79,7 @@ const port = process.env.port;
 app.use("/uploads/productImage", express.static(path.join(__dirname, "uploads", "productImage")));
 
 app.listen(port, () => {
-  console.log(`Server connected in port ${port} in ${process.env.NODE_ENV}`);
+	console.log(`Server connected in port ${port} in ${process.env.NODE_ENV}`);
 });
 
 ////////////////////////////////////////////////////  MULTER    //////////////////////////////////////////////
@@ -84,3 +94,15 @@ app.listen(port, () => {
 // });
 
 // const upload = multer({ storage: storage });
+
+// app.post("/update-productDetails/:productID", (req, res) => {
+// 	const productID = req.params.productID;
+// 	const formData = req.body.productName; // Form data is available in req.body
+
+// 	// Process the form data as needed
+// 	console.log(formData);
+// 	console.log(productID);
+
+// 	// Respond to the client
+// 	res.send("Form data received successfully");
+// });

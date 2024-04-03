@@ -8,48 +8,61 @@ const upload = require("../middlewares/multerMiddleWare");
 
 // userData - /userDatas/users
 exports.userDatasControllers = asyncHandler(async (req, res, next) => {
-  const { userName, email, password, confirmPassword } = req.body;
+	const { userName, email, password, confirmPassword } = req.body;
 
-  const userExists = await userDataSchema.findOne({ email });
-  if (userExists) {
-    throw new Error("User already exist");
-  } else {
-    const salt = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(password, salt);
-    const hashConfirmPassword = await bcrypt.hash(confirmPassword, salt);
-    const data = new userDataSchema({
-      userName: userName,
-      email: email,
-      password: hashPassword,
-      confirmPassword: hashConfirmPassword,
-    });
+	const userExists = await userDataSchema.findOne({ email });
+	if (userExists) {
+		throw new Error("User already exist");
+	} else {
+		const salt = await bcrypt.genSalt(10);
+		const hashPassword = await bcrypt.hash(password, salt);
+		const hashConfirmPassword = await bcrypt.hash(confirmPassword, salt);
+		const data = new userDataSchema({
+			userName: userName,
+			email: email,
+			password: hashPassword,
+			confirmPassword: hashConfirmPassword,
+		});
 
-    await data.save();
-    generateRegisterToken(res, data._id);
-    res.json(data);
-  }
+		await data.save();
+		const token = generateRegisterToken(res, data._id);
+		res.json(data);
+	}
 });
 
 
 // user-Login - login/loginUser
 exports.loginUserControllers = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
-  const existingUser = await userDataSchema.findOne({ email });
+	const { email, password } = req.body;
+	const existingUser = await userDataSchema.findOne({ email });
 
-  if (existingUser) {
-    const verifyPassword = await bcrypt.compare(password, existingUser.password);
+	if (existingUser) {
+		const verifyPassword = await bcrypt.compare(password, existingUser.password);
 
-    if (verifyPassword) {
-      const loginToken = generateLoginToken(res, existingUser._id);
-      res.status(200).json(loginToken.token);
-      // return;
-    } else {
-      throw new Error("Email or password does not exist");
-    }
-  } else {
-    // res.status(401)
-    throw new Error("Email or password does not exist");
-  }
+		if (verifyPassword) {
+			const loginToken = generateLoginToken(res, existingUser._id);
+			res.status(200).json(loginToken.token);
+			// return;
+		} else {
+			throw new Error("Email or password does not exist");
+		}
+	} else {
+		// res.status(401)
+		throw new Error("Email or password does not exist");
+	}
+});
+
+exports.getUserDataController = asyncHandler((req, res, next) => {
+	// console.log("hello");
+	const email = req.params.email;
+	userDataSchema
+		.findOne({ email })
+		.then((userData) => {
+			res.send(userData);
+		})
+		.catch((err) => {
+			console.log(err);
+		});
 });
 
 // userdata get
@@ -65,137 +78,137 @@ exports.getUserDataControllers = asyncHandler(async(req,res,next) => {
 
 // user-Logout - /logOut/logOutUser
 exports.logOutUserControllers = asyncHandler((req, res) => {
-  res.cookie("jwt", "", {
-    httpOnly: true,
-    expires: new Date(0),
-  });
+	res.cookie("jwt", "", {
+		httpOnly: true,
+		expires: new Date(0),
+	});
 
-  res.json({ message: "logout sucessfully" });
+	res.json({ message: "logout sucessfully" });
 });
 
 // forgetUser password - /forgetPassword/forgetUser
 exports.forgetUserControllers = asyncHandler(async (req, res, next) => {
-  const { email } = req.body;
+	const { email } = req.body;
 
-  const emailExist = await userDataSchema.findOne({ email });
+	const emailExist = await userDataSchema.findOne({ email });
 
-  if (!emailExist) {
-    throw new Error("Enter your Registered Email");
-  } else {
-    const token = forgetPasswordTokenVerify(res, emailExist._id);
+	if (!emailExist) {
+		throw new Error("Enter your Registered Email");
+	} else {
+		const token = forgetPasswordTokenVerify(res, emailExist._id);
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: "vigneshvignesh4727@gmail.com",
-        pass: "ahcj ldau xrmj wxia",
-      },
-    });
+		const transporter = nodemailer.createTransport({
+			service: "gmail",
+			auth: {
+				user: "vigneshvignesh4727@gmail.com",
+				pass: "ahcj ldau xrmj wxia",
+			},
+		});
 
-    // async..await is not allowed in global scope, must use a wrapper
-    async function main() {
-      // send mail with defined transport object
-      const info = await transporter.sendMail({
-        from: "vigneshvignesh4727@gmail.com",
-        to: email,
-        subject: "Reset Password Link",
-        text: `http://localhost:3000/changePassword/${token}`,
-      });
+		// async..await is not allowed in global scope, must use a wrapper
+		async function main() {
+			// send mail with defined transport object
+			const info = await transporter.sendMail({
+				from: "vigneshvignesh4727@gmail.com",
+				to: email,
+				subject: "Reset Password Link",
+				text: `http://localhost:3000/changePassword/${token}`,
+			});
 
-      console.log("Message sent: %s", info.messageId);
-      res.status(200).json({ message: "Link sent successfully" });
-      // Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
-    }
+			console.log("Message sent: %s", info.messageId);
+			res.status(200).json({ message: "Link sent successfully" });
+			// Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
+		}
 
-    main().catch(console.error);
-  }
+		main().catch(console.error);
+	}
 });
 
 // Change password - /changePassword/changeUserPassword
 
 exports.changePasswordControllers = asyncHandler(async (req, res, next) => {
-  const { token } = req.params; // Extract token from request parameters
+	const { token } = req.params; // Extract token from request parameters
 
-  // Check if token is present
-  if (!token) {
-    return res.status(400).json({ message: "Token is required" });
-  }
+	// Check if token is present
+	if (!token) {
+		return res.status(400).json({ message: "Token is required" });
+	}
 
-  const { newPassword, confirmPassword } = req.body;
-  try {
-    const decoded = await jwt.verify(token, process.env.JWT_SECRET_KEY);
+	const { newPassword, confirmPassword } = req.body;
+	try {
+		const decoded = await jwt.verify(token, process.env.JWT_SECRET_KEY);
 
-    // res.json(decoded.userId);
-    const id = decoded.userId;
+		// res.json(decoded.userId);
+		const id = decoded.userId;
 
-    const salt = await bcrypt.genSalt(10);
+		const salt = await bcrypt.genSalt(10);
 
-    const hashPassword = await bcrypt.hash(newPassword, salt);
-    const hashConfirmPassword = await bcrypt.hash(confirmPassword, salt);
+		const hashPassword = await bcrypt.hash(newPassword, salt);
+		const hashConfirmPassword = await bcrypt.hash(confirmPassword, salt);
 
-    await userDataSchema.findByIdAndUpdate({ _id: id }, { password: hashPassword, confirmPassword: hashConfirmPassword });
-    res.status(200).json({ message: "Password Changed Successfully" });
-  } catch (error) {
-    // Handle different error scenarios with appropriate status codes and messages
-    if (error.name === "TokenExpiredError") {
-      return res.status(400).json({ message: "Token expired" });
-    }
-    if (error.name === "JsonWebTokenError") {
-      return res.status(401).json({ message: "Invalid token" });
-    }
+		await userDataSchema.findByIdAndUpdate({ _id: id }, { password: hashPassword, confirmPassword: hashConfirmPassword });
+		res.status(200).json({ message: "Password Changed Successfully" });
+	} catch (error) {
+		// Handle different error scenarios with appropriate status codes and messages
+		if (error.name === "TokenExpiredError") {
+			return res.status(400).json({ message: "Token expired" });
+		}
+		if (error.name === "JsonWebTokenError") {
+			return res.status(401).json({ message: "Invalid token" });
+		}
 
-    // If it's not TokenExpiredError or JsonWebTokenError, it might be another internal error
-    res.status(500).json({ message: "Internal server error" });
-  }
+		// If it's not TokenExpiredError or JsonWebTokenError, it might be another internal error
+		res.status(500).json({ message: "Internal server error" });
+	}
 });
 
 exports.productDetailsControllers = async (req, res, next) => {
-  const rating = req.body.rating;
-  const productName = req.body.productName;
-  const productDescription = req.body.productDescription;
-  const oldPrice = req.body.oldPrice;
-  const newPrice = req.body.newPrice;
-  const sale = req.body.sale;
-  const newProduct = req.body.newProduct;
-  const featuredItems = req.body.featuredItems;
-  const discountPercentage = req.body.discountPercentage;
-  console.log(sale, newProduct, featuredItems);
+	const rating = req.body.rating;
+	const productName = req.body.productName;
+	const productDescription = req.body.productDescription;
+	const oldPrice = req.body.oldPrice;
+	const newPrice = req.body.newPrice;
+	const sale = req.body.sale;
+	const newProduct = req.body.newProduct;
+	const featuredItems = req.body.featuredItems;
+	const discountPercentage = req.body.discountPercentage;
+	console.log(sale, newProduct, featuredItems);
 
-  let images = [];
+	let images = [];
 
-  try {
-    if (req.file) {
-      const image = req.file.filename;
-      console.log("Image received:", image);
-    } else if (req.files) {
-      images = req.files.map((file) => file.filename);
-    }
-    console.log("Images received:", images);
+	try {
+		if (req.file) {
+			const image = req.file.filename;
+			console.log("Image received:", image);
+		} else if (req.files) {
+			images = req.files.map((file) => file.filename);
+		}
+		console.log("Images received:", images);
 
-    userProductDetails.create({
-      image: images.shift(),
-      imageSlider: images,
-      rating: rating,
-      productName: productName,
-      productDescription: productDescription,
-      oldPrice: oldPrice,
-      newPrice: newPrice,
-      sale: sale,
-      newProduct: newProduct,
-      featuredItems: featuredItems,
-      discountPercentage: discountPercentage,
-    });
-  } catch (error) {
-    console.error("Error uploading images:", error);
-  }
+		userProductDetails.create({
+			image: images.shift(),
+			imageSlider: images,
+			rating: rating,
+			productName: productName,
+			productDescription: productDescription,
+			oldPrice: oldPrice,
+			newPrice: newPrice,
+			sale: sale,
+			newProduct: newProduct,
+			featuredItems: featuredItems,
+			discountPercentage: discountPercentage,
+		});
+	} catch (error) {
+		console.error("Error uploading images:", error);
+	}
 };
 
 exports.getProductDetailsControllers = async (req, res) => {
-  try {
-    const products = await userProductDetails.find();
-    res.json({ status: "ok", data: products });
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
+	try {
+		const products = await userProductDetails.find();
+		res.json({ status: "ok", data: products });
+	} catch (error) {
+		console.error("Error fetching products:", error);
+		res.status(500).json({ error: "Internal Server Error" });
+	}
 };

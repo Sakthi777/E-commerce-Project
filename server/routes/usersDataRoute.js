@@ -1,10 +1,12 @@
 const express = require("express");
 const userDatas = express.Router();
-const { userDatasControllers, loginUserControllers, logOutUserControllers, forgetUserControllers, changePasswordControllers, getUserDataControllers } = require("../controllers/usersDataControllers");
+const { userDatasControllers, loginUserControllers, logOutUserControllers, forgetUserControllers, changePasswordControllers, getUserDataController, getUserDataControllers } = require("../controllers/usersDataControllers");
 
 userDatas.route("/users").post(userDatasControllers);
 
 userDatas.route("/loginUser").post(loginUserControllers);
+
+userDatas.route("/userData/:email").get(getUserDataController);
 
 userDatas.route("/getuser").get(getUserDataControllers);
 
