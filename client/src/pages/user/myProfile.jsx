@@ -7,15 +7,25 @@ import visa from "../../assets/images/payment-options/02.png";
 import maestro from "../../assets/images/payment-options/03.png";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Modal } from "react-bootstrap";
 import Footer from "./Footer";
 
+import { useSelector } from "react-redux";
+import { jwtDecode } from "jwt-decode";
+
+import axios from "axios";
+
 function MyProfile() {
+	const url = "http://localhost:8000";
+
 	const profiles = document.querySelectorAll(".profiles-content");
+
+	// const profileData = useSelector((state) => state.userProfileDetails.profileData);
+	const token = useSelector((state) => state.tokenDetails.token);
 
 	profiles.forEach((profile) => {
 		profile.addEventListener("click", () => {
@@ -24,49 +34,264 @@ function MyProfile() {
 		});
 	});
 
-	const [show, setShow] = useState(false);
+	const [showProfile, setShowProfile] = useState(false);
+	const [showContact, setShowContact] = useState(false);
+	const [showAddress, setShowAddress] = useState(false);
+	const [showCard, setShowCard] = useState(false);
 
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
+	const handleProfileClose = () => {
+		setShowProfile(false);
+	};
+	const handleProfileShow = () => {
+		setShowProfile(true);
+		//profile update
+		// const resposne = axios.post(`${baseUrl}/`);
+	};
+	const handleContactClose = () => {
+		setShowContact(false);
+		const contactType = document.getElementById("contactType").value;
+		const contactNumber = document.getElementById("contact-number").value;
+		const postData = {
+			token: token,
+			contactNumbers: [
+				{
+					contactType: contactType,
+					contactNumber: contactNumber,
+				},
+			],
+		};
+		console.log(postData);
+		axios
+			.post(`${url}/profileData/contact`, postData)
+			.then((response) => {
+				console.log("Data posted successfully:", response.data);
+			})
+			.catch((error) => {
+				console.error("Error posting data:", error);
+			});
+	};
+	const handleContactShow = () => setShowContact(true);
 
-	const popup = () => {
-		return (
-			<Modal show={show} onHide={handleClose} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-				<Modal.Header closeButton>
-					<Modal.Title>Edit info</Modal.Title>
-				</Modal.Header>
-				<Modal.Body className="modal-popup">
-					<select name="type" id="type">
-						<option value="1">Primary</option>
-						<option value="2">Secondary</option>
-						<option value="3">Others</option>
-					</select>
-					<label htmlFor="update-profile-info">Enter the new information</label>
-					<input type="text" id="update-profile-info" />
-					<Button variant="secondary">Update</Button>
-				</Modal.Body>
-				<Modal.Footer></Modal.Footer>
-			</Modal>
-		);
+	const handleAddressClose = () => {
+		setShowAddress(false);
+		const address = document.getElementById("contact-number").value;
+		const addressType = document.getElementById("addressType").value;
+		const postData = {
+			token: token,
+			addresses: [
+				{
+					address: address,
+					addressType: addressType,
+				},
+			],
+		};
+
+		axios
+			.post(`${url}/profileData/address`, postData)
+			.then((response) => {
+				console.log("Address data posted successfully:", response.data);
+			})
+			.catch((error) => {
+				console.error("Error posting address data:", error);
+			});
 	};
 
-	const actionButtons = () => {
-		return (
-			<div className="profile-action-buttons">
-				<button className="profile-action-edit-btn" variant="primary" onClick={handleShow}>
-					<FontAwesomeIcon icon={faPen} />
-				</button>
+	const handleAddressShow = () => setShowAddress(true);
+
+	const handleCardShow = () => setShowCard(true);
+	const handleCardClose = () => {
+		setShowCard(false);
+		const cardType = document.getElementById("card-type").value;
+		const cardNumber = document.getElementById("card-number").value;
+		const cardOwnerName = document.getElementById("card-owner-name").value;
+		const postData = {
+			token: token,
+			cardType: cardType,
+			cardNumber: cardNumber,
+			ownerName: cardOwnerName,
+		};
+
+		axios
+			.post(`${url}/profileData/card`, postData)
+			.then((response) => {
+				console.log("Data posted successfully:", response.data);
+			})
+			.catch((error) => {
+				console.error("Error posting data:", error);
+			});
+	};
+
+	const [contactDetails, setContactDetails] = useState([]);
+	const [addressDetails, setAddressDetails] = useState([]);
+	const [cardDetails, setCardDetails] = useState([]);
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const profileDataRes = await axios.get(`${url}/profileData/${token}`);
+				// console.log(profileDataRes.data);
+				setContactDetails(profileDataRes.data.contactNumbers);
+				setAddressDetails(profileDataRes.data.addresses);
+				setCardDetails(profileDataRes.data.cards);
+			} catch (error) {
+				console.error("Error fetching profile data:", error);
+			}
+		};
+
+		fetchData();
+	}, []);
+
+	const renderContactDetails = () => {
+		return contactDetails.map((contact, index) => (
+			<div className="primary-number profiles-content" key={index}>
+				<h5>{contact.contactType}</h5>
+				<p>{contact.contactNumber}</p>
 				<button className="profile-action-del-btn">
 					<FontAwesomeIcon icon={faTrash} />
 				</button>
 			</div>
-		);
+		));
+	};
+
+	const renderAddressDetails = () => {
+		return addressDetails.map((address, index) => (
+			<div className="delivery-primary-address profiles-content" key={index}>
+				<h5>{address.addressType}</h5>
+				<p>{address.address}</p>
+				<button className="profile-action-del-btn">
+					<FontAwesomeIcon icon={faTrash} />
+				</button>
+			</div>
+		));
+	};
+
+	const renderCardDetails = () => {
+		return cardDetails.map((card, index) => {
+			let cardImage;
+			if (card.cardType === "paypal") {
+				cardImage = payPal;
+			} else if (card.cardType === "maestro") {
+				cardImage = maestro;
+			} else {
+				cardImage = visa;
+			}
+
+			return (
+				<div className="payment-card profiles-content" key={index}>
+					<img src={cardImage} alt="" />
+					<h5>
+						Card Number <br />
+						************{card.cardNumber.slice(-4)}
+					</h5>
+					<p>{card.ownerName}</p>
+					<button className="profile-action-del-btn">
+						<FontAwesomeIcon icon={faTrash} />
+					</button>
+				</div>
+			);
+		});
 	};
 
 	return (
 		<>
 			<HeaderPage />
-			<div className="profile-popup-message">{popup()}</div>
+
+			<div className="edit-profile-popup">
+				<Modal show={showProfile} onHide={handleProfileClose}>
+					<Modal.Header closeButton>
+						<Modal.Title>Edit Prfofile</Modal.Title>
+					</Modal.Header>
+					<Modal.Body className="edit-profile-modal">
+						<div>
+							<label htmlFor="profile-picture">Select Image</label>
+							<input type="file" id="profile-picutre" style={{ border: "none" }} />
+						</div>
+					</Modal.Body>
+					<Modal.Footer>
+						<Button variant="secondary" onClick={handleProfileClose}>
+							Submit
+						</Button>
+					</Modal.Footer>
+				</Modal>
+			</div>
+
+			<div className="edit-contact-popup">
+				<Modal show={showContact} onHide={handleContactClose}>
+					<Modal.Header closeButton>
+						<Modal.Title>Edit Contact</Modal.Title>
+					</Modal.Header>
+					<Modal.Body className="edit-contact-modal">
+						<div>
+							<select name="contactType" id="contactType">
+								<option value="Primary">Primary</option>
+								<option value="Secondary">Secondary</option>
+							</select>
+							<label htmlFor="profile-contact">Enter Number</label>
+							<input type="number" id="contact-number" />
+						</div>
+					</Modal.Body>
+					<Modal.Footer>
+						<Button variant="secondary" onClick={handleContactClose}>
+							Submit
+						</Button>
+					</Modal.Footer>
+				</Modal>
+			</div>
+
+			<div className="edit-address-popup">
+				<Modal show={showAddress} onHide={handleAddressClose}>
+					<Modal.Header closeButton>
+						<Modal.Title>Edit Address</Modal.Title>
+					</Modal.Header>
+					<Modal.Body className="edit-address-modal">
+						<div>
+							<label htmlFor="profile-contact">Enter Address</label>
+							<textarea style={{ width: "90%" }} type="number" id="contact-number" />
+						</div>
+						<div>
+							<label htmlFor="adress-type">Adress Type</label>
+							<select name="addressType" id="addressType">
+								<option value="Primary">Primary</option>
+								<option value="Secondary">Secondary</option>
+							</select>
+						</div>
+					</Modal.Body>
+					<Modal.Footer>
+						<Button variant="secondary" onClick={handleAddressClose}>
+							Submit
+						</Button>
+					</Modal.Footer>
+				</Modal>
+			</div>
+
+			<div className="edit-card-popup">
+				<Modal show={showCard} onHide={handleCardClose}>
+					<Modal.Header closeButton>
+						<Modal.Title>Edit Prfofile</Modal.Title>
+					</Modal.Header>
+					<Modal.Body className="edit-address-modal">
+						<div>
+							<select name="card-type" id="card-type">
+								<option value="visa">Visa</option>
+								<option value="maestro">Mastero</option>
+								<option value="paypal">PayPal</option>
+							</select>
+						</div>
+						<div>
+							<label htmlFor="profile-contact">Enter Card Number</label>
+							<input type="text" id="card-number" />
+						</div>
+						<div>
+							<label htmlFor="card-owner-name">Name</label>
+							<input type="text" id="card-owner-name" />
+						</div>
+					</Modal.Body>
+					<Modal.Footer>
+						<Button variant="secondary" onClick={handleCardClose}>
+							Submit
+						</Button>
+					</Modal.Footer>
+				</Modal>
+			</div>
 
 			<div className="myprofile-section">
 				<div className="myprofile-banner">
@@ -85,7 +310,9 @@ function MyProfile() {
 					<div className="yourprofile profile-element">
 						<div className="yourprofile-head myprofile-headers">
 							<h2>Your Profile</h2>
-							<button className="profile-head-btn edit-profile">Edit Profile</button>
+							<button className="profile-head-btn edit-profile" onClick={handleProfileShow}>
+								Edit Profile
+							</button>
 						</div>
 						<div className="yourprofile-content profiles-content-containers">
 							<div className="profile-img">
@@ -93,11 +320,11 @@ function MyProfile() {
 							</div>
 							<div className="name-input">
 								<label htmlFor="profile-username">Name</label>
-								<input type="text" id="profile-username" placeholder="Your Name" />
+								<input type="text" id="profile-username" value="Name" readOnly style={{ outline: "none" }} />
 							</div>
 							<div className="email-input">
 								<label htmlFor="profile-email">E-Mail</label>
-								<input type="email" id="profile-email" placeholder="Your Email" />
+								<input type="email" id="profile-email" value="Email" readOnly style={{ outline: "none" }} />
 							</div>
 						</div>
 
@@ -109,90 +336,31 @@ function MyProfile() {
 					<div className="contact-details profile-element">
 						<div className="contact-head myprofile-headers">
 							<h2>Contact Number</h2>
-							<button className="profile-head-btn add-contact">Add Contact</button>
+							<button className="profile-head-btn add-contact" onClick={handleContactShow}>
+								Add Contact
+							</button>
 						</div>
-						<div className="contact-content profiles-content-containers">
-							<div className="primary-number profiles-content">
-								<h5>Primary Number</h5>
-								<p>+91 81845 12648</p>
-								{actionButtons()}
-							</div>
-							<div className="secondary-number profiles-content">
-								<h5>Secondary Number</h5>
-								<p>+91 81845 12648</p>
-								{actionButtons()}
-							</div>
-							<div className="secondary-number profiles-content">
-								<h5>Secondary Number</h5>
-								<p>+91 81845 12648</p>
-								{actionButtons()}
-							</div>{" "}
-							<div className="secondary-number profiles-content">
-								<h5>Secondary Number</h5>
-								<p>+91 81845 12648</p>
-								{actionButtons()}
-							</div>
-						</div>
+						<div className="contact-content profiles-content-containers">{renderContactDetails()}</div>
 					</div>
 
 					<div className="delivery-address profile-element">
 						<div className="delivery-address-head myprofile-headers">
 							<h2>Delivery Address</h2>
-							<button className="profile-head-btn add-address">Add Address</button>
+							<button className="profile-head-btn add-address" onClick={handleAddressShow}>
+								Add Address
+							</button>
 						</div>
-						<div className="delivery-address-content profiles-content-containers">
-							<div className="delivery-primary-address profiles-content">
-								<h5>Home</h5>
-								<p>Jalkuri, Fatullah, Narayanganj-1420. Word No-09, Road No-17/A</p>
-								{actionButtons()}
-							</div>
-							<div className="delivery-secondary-adress profiles-content">
-								<h5>Office</h5>
-								<p>East Tejturi Bazar, Dhaka-1200. Word No-04, Road No-13/C, House No-4/B</p>
-								{actionButtons()}
-							</div>
-							<div className="delivery-secondary-address profiles-content">
-								<h5>Business</h5>
-								<p>Kawran Bazar, Dhaka-1100. Word No-02, Road No-13/D, House No-7/M</p>
-								{actionButtons()}
-							</div>
-						</div>
+						<div className="delivery-address-content profiles-content-containers">{renderAddressDetails()}</div>
 					</div>
 
 					<div className="payment-option-profile profile-element">
 						<div className="payment-option-head myprofile-headers">
 							<h2>Payment Option</h2>
-							<button className="profile-head-btn add-card">Add Card</button>
+							<button className="profile-head-btn add-card" onClick={handleCardShow}>
+								Add Card
+							</button>
 						</div>
-						<div className="payment-option-content profiles-content-containers">
-							<div className="payment-card profiles-content">
-								<img src={visa} alt="" />
-								<h5>
-									Card Number <br />
-									************1876
-								</h5>
-								<p>Name</p>
-								{actionButtons()}
-							</div>
-							<div className="profiles-content">
-								<img src={payPal} alt="" />
-								<h5>
-									Card Number <br />
-									************1876
-								</h5>
-								<p>Name</p>
-								{actionButtons()}
-							</div>
-							<div className="profiles-content">
-								<img src={maestro} alt="" />
-								<h5>
-									Card Number <br />
-									************1876
-								</h5>
-								<p>Name</p>
-								{actionButtons()}
-							</div>
-						</div>
+						<div className="payment-option-content profiles-content-containers">{renderCardDetails()}</div>
 					</div>
 				</div>
 			</div>

@@ -7,6 +7,8 @@ import { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
+
 const RegisterPage = () => {
 	const url = "http://localhost:8000";
 
@@ -68,6 +70,7 @@ const RegisterPage = () => {
 			axios
 				.post(`${url}/userDatas/users`, handlePost)
 				.then((res) => {
+					console.log(res.data);
 					if (res.data) {
 						setUserData({
 							userName: "",
@@ -264,8 +267,8 @@ const RegisterPage = () => {
 							{userData.loader === true ? (
 								<div className="spinner_overview">
 									<div className="spinner">
-										<div class="spinner-border text-primary" id="spinner_d_flex" role="status">
-											<span class="sr-only">Loading...</span>
+										<div className="spinner-border text-primary" id="spinner_d_flex" role="status">
+											<span className="sr-only">Loading...</span>
 										</div>
 									</div>
 								</div>
