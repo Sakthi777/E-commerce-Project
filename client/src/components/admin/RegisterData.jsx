@@ -3,8 +3,22 @@ import HeaderPage from "../user/HeaderPage";
 import Footer from "../../pages/user/Footer";
 import "../../styles/admin/RegisterData.css";
 import banner from "../../assets/images/banner/single-banner.jpg";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function RegisterData() {
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/login/getuser")
+      .then((users) => {
+        setUsers(users.data);
+        console.log(users);
+      }
+      )
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <div>
       <HeaderPage />
@@ -22,134 +36,20 @@ export default function RegisterData() {
               <thead className="tablehead">
                 <tr>
                   <th>S.No</th>
-                  <th>Firstname</th>
-                  <th>Lastname</th>
-                  <th>Phone Number</th>
+                  <th>Name</th>
                   <th>Email ID</th>
-                  <th>Password</th>
                 </tr>
               </thead>
               <tbody className="tablebody">
-                <tr>
-                  <td>
-                    <h6>1</h6>
-                  </td>
-                  <td className="tablename">
-                    <h6>IDM</h6>
-                  </td>
-                  <td>
-                    <h6>Techpark</h6>
-                  </td>
-                  <td>
-                    <h6>1234567892</h6>
-                  </td>
-                  <td>
-                    <h6>idm@gmail.com</h6>
-                  </td>
-                  <td>
-                    <h6>idm@123</h6>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <h6>2</h6>
-                  </td>
-                  <td className="tablename">
-                    <h6>IDM</h6>
-                  </td>
-                  <td>
-                    <h6>Techpark</h6>
-                  </td>
-                  <td>
-                    <h6>1234567892</h6>
-                  </td>
-                  <td>
-                    <h6>idm@gmail.com</h6>
-                  </td>
-                  <td>
-                    <h6>idm@123</h6>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <h6>3</h6>
-                  </td>
-                  <td className="tablename">
-                    <h6>IDM</h6>
-                  </td>
-                  <td>
-                    <h6>Techpark</h6>
-                  </td>
-                  <td>
-                    <h6>1234567892</h6>
-                  </td>
-                  <td>
-                    <h6>idm@gmail.com</h6>
-                  </td>
-                  <td>
-                    <h6>idm@123</h6>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <h6>4</h6>
-                  </td>
-                  <td className="tablename">
-                    <h6>IDM</h6>
-                  </td>
-                  <td>
-                    <h6>Techpark</h6>
-                  </td>
-                  <td>
-                    <h6>1234567892</h6>
-                  </td>
-                  <td>
-                    <h6>idm@gmail.com</h6>
-                  </td>
-                  <td>
-                    <h6>idm@123</h6>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <h6>5</h6>
-                  </td>
-                  <td className="tablename">
-                    <h6>IDM</h6>
-                  </td>
-                  <td>
-                    <h6>Techpark</h6>
-                  </td>
-                  <td>
-                    <h6>1234567892</h6>
-                  </td>
-                  <td>
-                    <h6>idm@gmail.com</h6>
-                  </td>
-                  <td>
-                    <h6>idm@123</h6>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <h6>6</h6>
-                  </td>
-                  <td className="tablename">
-                    <h6>IDM</h6>
-                  </td>
-                  <td>
-                    <h6>Techpark</h6>
-                  </td>
-                  <td>
-                    <h6>1234567892</h6>
-                  </td>
-                  <td>
-                    <h6>idm@gmail.com</h6>
-                  </td>
-                  <td>
-                    <h6>idm@123</h6>
-                  </td>
-                </tr>
+                {users.map((user, index) => {
+                  return (
+                    <tr>
+                      <tr>{index + 1}</tr>
+                      <td>{user.userName}</td>
+                      <td>{user.email}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

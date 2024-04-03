@@ -78,6 +78,8 @@ function App() {
 									<Route path="completedOrders" element={<CompletedOrders />} />
 									<Route path="pendingOrders" element={<PendingOrders />} />
 									<Route path="canceledOrders" element={<CanceledOrders />} />
+									<Route path="/registerdata" element={<RegisterData />} />
+
 								</Routes>
 							</OffCanvasProvider>
 						}

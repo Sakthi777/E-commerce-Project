@@ -30,6 +30,7 @@ exports.userDatasControllers = asyncHandler(async (req, res, next) => {
   }
 });
 
+
 // user-Login - login/loginUser
 exports.loginUserControllers = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
@@ -50,6 +51,17 @@ exports.loginUserControllers = asyncHandler(async (req, res, next) => {
     throw new Error("Email or password does not exist");
   }
 });
+
+// userdata get
+exports.getUserDataControllers = asyncHandler(async(req,res,next) => {
+
+  const registeredUsersData = await userDataSchema.find();
+  if(registeredUsersData){
+    res.send(registeredUsersData)
+  }else{
+    res.send('users not found')
+  }
+})
 
 // user-Logout - /logOut/logOutUser
 exports.logOutUserControllers = asyncHandler((req, res) => {
