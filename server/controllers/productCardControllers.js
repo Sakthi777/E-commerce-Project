@@ -86,9 +86,33 @@ exports.updateProductCardDetailsControllers = async (req, res) => {
   const featuredItems = req.body.featuredItems;
   const discountPercentage = req.body.discountPercentage;
   console.log(req.params.id);
-  console.log(rating, productName, productDescription, oldPrice, newPrice, sale, newProduct, featuredItems, discountPercentage);
-  
-
+  const imageName = req.files.map((img) => img.filename);
+  console.log(imageName);
+  console.log(req.body.upload);
+  if (imageName.length) {
+    fs.unlinkSync("./uploads/productImage/" + req.body.upload);
+  }
+  await userProductDetails.findByIdAndUpdate(req.params.id, {
+    image: imageName.shift(),
+    rating: rating,
+    productName: productName,
+    productDescription: productDescription,
+    oldPrice: oldPrice,
+    newPrice: newPrice,
+    sale: sale,
+    newProduct: newProduct,
+    featuredItems: featuredItems,
+    discountPercentage: discountPercentage,
+  });
+  const doc1 = await userProductDetails.findById(req.params.id);
+  // console.log(doc1);
 };
 
-
+exports.deleteProductSliderImageControllers = async (req, res) => {
+  const { id, index } = req.params;
+  const doc = await userProductDetails.findById(id);
+  fs.unlinkSync("./uploads/productImage/" + doc.imageSlider[index]);
+  doc.imageSlider.splice(index, 1);
+  await doc.save();
+  console.log(doc.imageSlider);
+};
