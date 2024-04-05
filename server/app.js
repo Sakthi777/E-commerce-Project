@@ -77,6 +77,7 @@ mongoose
 const port = process.env.port;
 
 app.use("/uploads/productImage", express.static(path.join(__dirname, "uploads", "productImage")));
+app.use("/uploads/profilePicture", express.static(path.join(__dirname, "uploads", "profilePicture")));
 
 app.listen(port, () => {
 	console.log(`Server connected in port ${port} in ${process.env.NODE_ENV}`);

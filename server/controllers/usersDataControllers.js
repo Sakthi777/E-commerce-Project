@@ -30,7 +30,6 @@ exports.userDatasControllers = asyncHandler(async (req, res, next) => {
 	}
 });
 
-
 // user-Login - login/loginUser
 exports.loginUserControllers = asyncHandler(async (req, res, next) => {
 	const { email, password } = req.body;
@@ -66,15 +65,29 @@ exports.getUserDataController = asyncHandler((req, res, next) => {
 });
 
 // userdata get
-exports.getUserDataControllers = asyncHandler(async(req,res,next) => {
+exports.getUserDataControllers = asyncHandler(async (req, res, next) => {
+	const registeredUsersData = await userDataSchema.find();
+	if (registeredUsersData) {
+		res.send(registeredUsersData);
+	} else {
+		res.send("users not found");
+	}
+});
 
-  const registeredUsersData = await userDataSchema.find();
-  if(registeredUsersData){
-    res.send(registeredUsersData)
-  }else{
-    res.send('users not found')
-  }
-})
+// get single user data with id
+exports.getSingleUserDataControllers = asyncHandler(async (req, res, next) => {
+	try {
+		const { id } = req.params;
+		const userDetails = await userDataSchema.findById(id);
+		const userData = {
+			email: userDetails.email,
+			name: userDetails.userName,
+		};
+		res.send(userData);
+	} catch (err) {
+		res.send(err);
+	}
+});
 
 // user-Logout - /logOut/logOutUser
 exports.logOutUserControllers = asyncHandler((req, res) => {

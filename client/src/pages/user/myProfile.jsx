@@ -39,13 +39,38 @@ function MyProfile() {
 	const [showAddress, setShowAddress] = useState(false);
 	const [showCard, setShowCard] = useState(false);
 
-	const handleProfileClose = () => {
+	const [selectedImages, setSelectedImages] = useState([]);
+
+	const handleImageChange = (event) => {
+		const files = event.target.files;
+		const imagesArray = Array.from(files);
+		setSelectedImages(imagesArray);
+	};
+	const handleProfileClose = async () => {
 		setShowProfile(false);
+		if (selectedImages.length > 0) {
+			const formData = new FormData();
+			selectedImages.forEach((image) => {
+				formData.append("profileImage", image);
+			});
+			formData.append("token", token);
+			console.log(Object.fromEntries(formData));
+			try {
+				const response = await axios.post(`${url}/profileData/postImage`, formData, {
+					headers: {
+						"Content-Type": "multipart/form-data",
+					},
+				});
+				console.log("Upload successful:", response.data);
+			} catch (error) {
+				console.error("Error uploading images:", error);
+			}
+		} else {
+			console.log("No images selected.");
+		}
 	};
 	const handleProfileShow = () => {
 		setShowProfile(true);
-		//profile update
-		// const resposne = axios.post(`${baseUrl}/`);
 	};
 	const handleContactClose = () => {
 		setShowContact(false);
@@ -121,9 +146,11 @@ function MyProfile() {
 			});
 	};
 
+	const [userDetails, setUserDetails] = useState(null);
 	const [contactDetails, setContactDetails] = useState([]);
 	const [addressDetails, setAddressDetails] = useState([]);
 	const [cardDetails, setCardDetails] = useState([]);
+	const [profilePic, setProfilePic] = useState(profileImage);
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -132,11 +159,23 @@ function MyProfile() {
 				setContactDetails(profileDataRes.data.contactNumbers);
 				setAddressDetails(profileDataRes.data.addresses);
 				setCardDetails(profileDataRes.data.cards);
+				setProfilePic(profileDataRes.data.profilePicture);
+				console.log(profileDataRes.data.profilePicture);
 			} catch (error) {
 				console.error("Error fetching profile data:", error);
 			}
 		};
 
+		const findUser = async () => {
+			try {
+				const id = jwtDecode(token).userId;
+				const userData = await axios.get(`${url}/login/getuser/${id}`);
+				setUserDetails(userData.data);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		findUser();
 		fetchData();
 	}, []);
 
@@ -195,15 +234,15 @@ function MyProfile() {
 		<>
 			<HeaderPage />
 
-			<div className="edit-profile-popup">
+			<div className="edit-Profile-popup">
 				<Modal show={showProfile} onHide={handleProfileClose}>
 					<Modal.Header closeButton>
-						<Modal.Title>Edit Prfofile</Modal.Title>
+						<Modal.Title>Edit Profile Picture</Modal.Title>
 					</Modal.Header>
 					<Modal.Body className="edit-profile-modal">
 						<div>
-							<label htmlFor="profile-picture">Select Image</label>
-							<input type="file" id="profile-picutre" style={{ border: "none" }} />
+							<label htmlFor="profilePicture">Select Image</label>
+							<input id="profilePicture" type="file" accept="image/*" style={{ border: "none" }} onChange={handleImageChange} />
 						</div>
 					</Modal.Body>
 					<Modal.Footer>
@@ -310,24 +349,45 @@ function MyProfile() {
 					<div className="yourprofile profile-element">
 						<div className="yourprofile-head myprofile-headers">
 							<h2>Your Profile</h2>
-							<button className="profile-head-btn edit-profile" onClick={handleProfileShow}>
+							<button className="profile-head-btn add-contact" onClick={handleProfileShow}>
 								Edit Profile
 							</button>
 						</div>
 						<div className="yourprofile-content profiles-content-containers">
-							<div className="profile-img">
-								<img src={profileImage} alt="" />
-							</div>
-							<div className="name-input">
-								<label htmlFor="profile-username">Name</label>
-								<input type="text" id="profile-username" value="Name" readOnly style={{ outline: "none" }} />
-							</div>
-							<div className="email-input">
-								<label htmlFor="profile-email">E-Mail</label>
-								<input type="email" id="profile-email" value="Email" readOnly style={{ outline: "none" }} />
-							</div>
-						</div>
+							{profilePic ? (
+								<div className="profile-img">
+									<img src={`${url}/uploads/profilePicture/${profilePic}`} alt="" />
+								</div>
+							) : (
+								<div className="profile-img">
+									<img src={profileImage} alt="" />
+								</div>
+							)}
 
+							{userDetails ? (
+								<>
+									<div className="name-input">
+										<label htmlFor="profile-username">Name</label>
+										<input type="text" id="profile-username" value={userDetails.name} readOnly style={{ outline: "none" }} />
+									</div>
+									<div className="email-input">
+										<label htmlFor="profile-email">E-Mail</label>
+										<input type="email" id="profile-email" value={userDetails.email} readOnly style={{ outline: "none" }} />
+									</div>
+								</>
+							) : (
+								<>
+									<div className="name-input">
+										<label htmlFor="profile-username">Name</label>
+										<input type="text" id="profile-username" value="Name" readOnly style={{ outline: "none" }} />
+									</div>
+									<div className="email-input">
+										<label htmlFor="profile-email">E-Mail</label>
+										<input type="email" id="profile-email" value="Email" readOnly style={{ outline: "none" }} />
+									</div>
+								</>
+							)}
+						</div>
 						<div className="change-pass-btn">
 							<button>Change Password</button>
 						</div>
@@ -335,7 +395,7 @@ function MyProfile() {
 
 					<div className="contact-details profile-element">
 						<div className="contact-head myprofile-headers">
-							<h2>Contact Number</h2>
+							<h2>Contact Details</h2>
 							<button className="profile-head-btn add-contact" onClick={handleContactShow}>
 								Add Contact
 							</button>

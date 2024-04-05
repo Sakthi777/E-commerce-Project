@@ -1,6 +1,6 @@
-const { LEGAL_TLS_SOCKET_OPTIONS } = require("mongodb");
 const MainModel = require("../models/profileDataSchema");
 const asyncHandler = require("../middlewares/catchAsyncError");
+const fs = require("fs");
 
 // exports.postProfileDetailsController = async (req, res) => {
 // 	const profile = {};
@@ -95,5 +95,30 @@ exports.postProfileDataCardControllers = asyncHandler(async (req, res) => {
 	} catch (error) {
 		console.error("Error processing card data:", error);
 		res.status(400).send("Error processing card data");
+	}
+});
+
+exports.postProfileImageControllers = asyncHandler(async (req, res, next) => {
+	try {
+		const token = req.body.token;
+		const imageName = req.file.filename;
+		const existingDocument = await MainModel.findOne({ token });
+		const existingImage = existingDocument.profilePicture;
+		console.log(existingImage);
+		if (existingDocument) {
+			existingDocument.profilePicture = imageName;
+			existingDocument.save();
+			res.send(existingDocument);
+			// console.log(imageName);
+		} else {
+			await MainModel.create({ token: token, profilePicture: imageName }).then((response) => {
+				res.send(response);
+			});
+		}
+		if (existingImage) {
+			fs.unlinkSync("./uploads/profilePicture/" + existingImage);
+		}
+	} catch (error) {
+		console.log(error);
 	}
 });

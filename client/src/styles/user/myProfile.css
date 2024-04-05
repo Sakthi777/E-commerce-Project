@@ -148,7 +148,7 @@
 }
 
 .yourprofile-content.profiles-content-containers {
-	grid-template-columns: 2fr 3fr 3fr;
+	grid-template-columns: 1fr 3fr 3fr;
 }
 
 .profile-img {
@@ -163,6 +163,7 @@
 	border: 1px solid #119744;
 	border-radius: 50%;
 	padding: 2px;
+	object-fit: cover;
 }
 
 .name-input,
@@ -192,18 +193,20 @@
 
 .change-pass-btn {
 	justify-self: end;
+	align-self: last baseline;
 	padding-right: 2%;
 }
 
 .change-pass-btn button {
 	width: 150px;
 	text-overflow: ellipsis;
-	height: 40px;
+	height: 36px;
 	border-radius: 10px;
 	border: 1px solid #199744;
 	background-color: #119744;
 	color: #ffffff;
 	font-size: 14px;
+	margin-bottom: 1%;
 }
 
 .profiles-content {
