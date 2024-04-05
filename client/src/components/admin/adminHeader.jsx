@@ -12,67 +12,67 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 const OffCanvasContext = createContext();
 
 export const OffCanvasProvider = ({ children }) => {
-	const [showOffCanvas, setShowOffCanvas] = useState(true);
-	const [backdrop, setBackdrop] = useState(true);
+  const [showOffCanvas, setShowOffCanvas] = useState(true);
+  const [backdrop, setBackdrop] = useState(true);
 
-	const handleClose = () => setShowOffCanvas(false);
-	const handleToggleOffCanvas = () => {
-		setShowOffCanvas((prev) => !prev);
-	};
+  const handleClose = () => setShowOffCanvas(false);
+  const handleToggleOffCanvas = () => {
+    setShowOffCanvas((prev) => !prev);
+  };
 
-	useEffect(() => {
-		const handleResize = () => {
-			if (window.innerWidth < 780) {
-				setBackdrop(true);
-				setShowOffCanvas(false);
-			} else {
-				setBackdrop(false);
-			}
-		};
-		handleResize();
-		window.addEventListener("resize", handleResize);
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 780) {
+        setBackdrop(true);
+        setShowOffCanvas(false);
+      } else {
+        setBackdrop(false);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
 
-		return () => window.removeEventListener("resize", handleResize);
-	}, []);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-	return <OffCanvasContext.Provider value={{ showOffCanvas, backdrop, handleToggleOffCanvas, handleClose, setShowOffCanvas }}>{children}</OffCanvasContext.Provider>;
+  return <OffCanvasContext.Provider value={{ showOffCanvas, backdrop, handleToggleOffCanvas, handleClose, setShowOffCanvas }}>{children}</OffCanvasContext.Provider>;
 };
 
 export const useOffCanvasContext = () => {
-	return useContext(OffCanvasContext);
+  return useContext(OffCanvasContext);
 };
 
 const Sidebar = () => {
   const { showOffCanvas, handleToggleOffCanvas, handleClose, backdrop, setShowOffCanvas } = useOffCanvasContext();
   // console.log("main :" + showOffCanvas);
 
-	const [showProfileCard, setShowProfileCard] = useState(false);
-	const profileCardRef = useRef(null);
+  const [showProfileCard, setShowProfileCard] = useState(false);
+  const profileCardRef = useRef(null);
 
-	useEffect(() => {
-		if (window.innerWidth < 780) {
-			setShowOffCanvas(false);
-		}
-		return () => {
-			setShowOffCanvas(true);
-		};
-	}, [setShowOffCanvas]);
+  useEffect(() => {
+    if (window.innerWidth < 780) {
+      setShowOffCanvas(false);
+    }
+    return () => {
+      setShowOffCanvas(true);
+    };
+  }, [setShowOffCanvas]);
 
-	const toggleProfileCard = () => {
-		setShowProfileCard(!showProfileCard);
-	};
-	const handleClickOutside = (event) => {
-		if (profileCardRef.current && !profileCardRef.current.contains(event.target)) {
-			setShowProfileCard(false);
-		}
-	};
-	useEffect(() => {
-		document.addEventListener("mousedown", handleClickOutside);
+  const toggleProfileCard = () => {
+    setShowProfileCard(!showProfileCard);
+  };
+  const handleClickOutside = (event) => {
+    if (profileCardRef.current && !profileCardRef.current.contains(event.target)) {
+      setShowProfileCard(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
 
-		return () => {
-			document.removeEventListener("mousedown", handleClickOutside);
-		};
-	}, []);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const nav = useNavigate();
   return (
@@ -97,7 +97,7 @@ const Sidebar = () => {
         </div>
       </div>
       {showProfileCard && <ProfileCard />}
-      <Offcanvas show={showOffCanvas} onHide={handleClose} placement="start" className="admin-sidebar" style={{ width: "350px", top: "80px" }} backdrop={backdrop}>
+      <Offcanvas show={showOffCanvas} onHide={handleClose} placement="start" className="admin-sidebar" style={{ width: "350px", top: "80px" }} backdrop={backdrop} scroll={true}>
         <Offcanvas.Header className="admin-offcanvas-header" onClick={handleClose}>
           <img src={logo} alt="Logo" />
           <i className="fas fa-times" style={{ color: "#119744", fontSize: "24px" }}></i>

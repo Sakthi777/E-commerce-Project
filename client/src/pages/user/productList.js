@@ -232,5 +232,6 @@ const canceledOrders = [
     status: "Canceled",
   },
 ];
-export default products;
+
 export { completedOrders, pendingOrders, canceledOrders };
+export default products;

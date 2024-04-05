@@ -116,3 +116,27 @@ exports.deleteProductSliderImageControllers = async (req, res) => {
   await doc.save();
   console.log(doc.imageSlider);
 };
+exports.updateProductSliderImageControllers = async (req, res) => {
+  console.log(req.params.id);
+  let images = [];
+  try {
+    if (req.files) {
+      images = req.files.map((file) => file.filename);
+      const updatedImage = await userProductDetails.findByIdAndUpdate(req.params.id, { $push: { imageSlider: images } }, { new: true });
+      res.json(updatedImage);
+    }
+    console.log("Updated Images:", images);
+  } catch (error) {
+    console.error("Error uploading images:", error);
+  }
+};
+exports.deleteAllSliderImageControllers = async (req, res) => {
+  const { id } = req.params;
+  const doc = await userProductDetails.findById(id);
+  doc.imageSlider.forEach((image) => {
+    console.log(image);
+    fs.unlinkSync("./uploads/productImage/" + image);
+  });
+  const result = await userProductDetails.findByIdAndUpdate(id, { imageSlider: [] }, { new: true });
+  console.log(result);
+};

@@ -5,7 +5,32 @@ import "../../styles/admin/addProduct.css";
 import uploadImage from "../../../src/assets/images/AddProduct/upload.png";
 import AdminHeader, { useOffCanvasContext } from "../../components/admin/adminHeader";
 import { useLocation } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+
 const EditProduct = () => {
+  const imageDiv = {
+    width: "150px",
+    height: "170px",
+    border: "2px solid black",
+    borderRadius: "10px",
+    marginTop: "10px",
+  };
+
+  const imageDivModal = {
+    width: "130px",
+    height: "150px",
+    border: "1px solid green",
+    padding: "5px",
+    borderRadius: "10px",
+    marginTop: "10px",
+    cursor: "pointer",
+  };
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const handleCloseDeleteModal = () => setShowDeleteModal(false);
+  const handleShowDeleteModal = () => setShowDeleteModal(true);
+
   const { showOffCanvas } = useOffCanvasContext();
   const [upload, setUpload] = useState(uploadImage);
   const [preImage, setPreImage] = useState(null);
@@ -55,35 +80,32 @@ const EditProduct = () => {
       setFileName(file.name);
     }
   };
-  const handleImageSliderChange = (e) => {
-    const fileList = e.target.files;
-    const ArrayoffilleList = Array.from(fileList);
-    console.log(ArrayoffilleList);
-    setImageSlider(ArrayoffilleList);
-    const newImages = ArrayoffilleList.map((file) => URL.createObjectURL(file));
-    console.log(newImages);
 
-    // setArrayOfImages(newImages);
-  };
-  const handleAddImages = (e) => {
+  const handleAddImages = (e, id) => {
     const fileList = e.target.files;
     const ArrayoffilleList = Array.from(fileList);
     console.log(ArrayoffilleList);
+    console.log(id);
+
     const formData = new FormData();
     ArrayoffilleList.forEach((image) => {
       formData.append("imageSlider", image);
     });
     console.log(Object.fromEntries(formData));
-
-    // try {
-    //   axios.post("http://localhost:8000/post-productDetails", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   });
-    // } catch (error) {
-    //   console.error("Upload error:", error);
-    // }
+    try {
+      axios
+        .put(`http://localhost:8000/update-ProductSliderImage/${productID}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+        });
+      window.location.reload();
+    } catch (error) {
+      console.error("Upload error:", error);
+    }
   };
 
   const handleSubmit = async () => {
@@ -127,7 +149,7 @@ const EditProduct = () => {
       });
   };
 
-  const ImageDelete = async (deleteImage, id, index) => {
+  const handleImageDelete = async (deleteImage, id, index) => {
     setArrayOfImages((ArrayOfimage) => ArrayOfimage.filter((image) => image !== deleteImage));
     console.log(deleteImage);
     console.log(id);
@@ -138,7 +160,14 @@ const EditProduct = () => {
       console.log(err);
     }
   };
-
+  const handleDeleteAll = (id) => {
+    try {
+      axios.delete(`http://localhost:8000/delete-allSliderImage/${id}`);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <>
       <AdminHeader />
@@ -173,18 +202,16 @@ const EditProduct = () => {
                             <img src={`http://localhost:8000/uploads/productImage/${upload}`} alt={`product 2`} className="center-image" />
                           )}
                         </div>
-                        <button className="imageDeleteButton" onClick={() => ImageDelete(image, productID, index)}>
-                          Delete
-                        </button>
                       </div>
                     </div>
                   ))}
                 </div>
                 <div className="imageInputFiled">
-                  <label htmlFor="multi-file-upload">Select Images</label>
-                  <input type="file" id="multi-file-upload" style={{ display: "none" }} onChange={handleImageSliderChange} accept="image/*" multiple />
+                  <button className="Delete-button" onClick={handleShowDeleteModal}>
+                    Delete
+                  </button>
                   <label htmlFor="add-multi-file-upload">Add Images</label>
-                  <input type="file" id="add-multi-file-upload" style={{ display: "none" }} onChange={handleAddImages} accept="image/*" multiple />
+                  <input type="file" id="add-multi-file-upload" style={{ display: "none" }} onChange={(e) => handleAddImages(e, productID)} accept="image/*" multiple />
                 </div>
               </div>
             </div>
@@ -297,6 +324,31 @@ const EditProduct = () => {
           </div>
         </div>
       </div>
+
+      <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Images</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "10px" }}>
+            <div style={{ display: "flex", overflowX: "scroll", width: "90%" }}>
+              {ArrayOfimages.map((image, index) => (
+                <div style={{ padding: "10px" }}>
+                  <img src={`http://localhost:8000/uploads/productImage/${image}`} alt={`product 1`} style={imageDivModal} />
+                  <button className="imageDeleteButton" onClick={() => handleImageDelete(image, productID, index)}>
+                    Delete
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button style={{ backgroundColor: "red" }} onClick={() => handleDeleteAll(productID)}>
+            Delete All
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
