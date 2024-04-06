@@ -25,7 +25,7 @@ exports.postProductCardDetailsControllers = async (req, res) => {
     console.log("Images received:", images);
 
     userProductDetails.create({
-      image: images.shift(),
+      image: images.shift(), // it will give first element and remove the first element
       imageSlider: images,
       rating: rating,
       productName: productName,
@@ -86,14 +86,14 @@ exports.updateProductCardDetailsControllers = async (req, res) => {
   const featuredItems = req.body.featuredItems;
   const discountPercentage = req.body.discountPercentage;
   console.log(req.params.id);
-  const imageName = req.files.map((img) => img.filename);
-  console.log(imageName);
-  console.log(req.body.upload);
-  if (imageName.length) {
-    fs.unlinkSync("./uploads/productImage/" + req.body.upload);
-  }
+  // const imageName = req.files.map((img) => img.filename);
+  // console.log(imageName);
+  // console.log(req.body.upload);
+  // if (imageName.length) {
+  //   fs.unlinkSync("./uploads/productImage/" + req.body.upload);
+  // }
   await userProductDetails.findByIdAndUpdate(req.params.id, {
-    image: imageName.shift(),
+    //image: imageName.shift(),
     rating: rating,
     productName: productName,
     productDescription: productDescription,
@@ -105,14 +105,14 @@ exports.updateProductCardDetailsControllers = async (req, res) => {
     discountPercentage: discountPercentage,
   });
   const doc1 = await userProductDetails.findById(req.params.id);
-  // console.log(doc1);
+  console.log(doc1);
 };
 
 exports.deleteProductSliderImageControllers = async (req, res) => {
   const { id, index } = req.params;
   const doc = await userProductDetails.findById(id);
   fs.unlinkSync("./uploads/productImage/" + doc.imageSlider[index]);
-  doc.imageSlider.splice(index, 1);
+  doc.imageSlider.splice(index, 1); // delete one elements starting from the mentioned index.
   await doc.save();
   console.log(doc.imageSlider);
 };
@@ -139,4 +139,54 @@ exports.deleteAllSliderImageControllers = async (req, res) => {
   });
   const result = await userProductDetails.findByIdAndUpdate(id, { imageSlider: [] }, { new: true });
   console.log(result);
+};
+exports.editSliderImageControllers = async (req, res) => {
+  const { id, editId } = req.params;
+  console.log(id);
+  console.log(editId);
+
+  try {
+    let images;
+    if (req.files) {
+      images = req.files.map((file) => file.filename);
+      console.log(images[0]);
+    }
+
+    const doc = await userProductDetails.findById(id);
+    if (!doc) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+    const oldImage = doc.imageSlider[editId];
+    fs.unlinkSync("./uploads/productImage/" + oldImage);
+    doc.imageSlider[editId] = images[0];
+    const result = await doc.save();
+    console.log("Document updated:", result);
+    res.status(200).json({ message: doc.imageSlider });
+  } catch (error) {
+    console.error("Error editing slider image:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+exports.updateProductMainImageControllers = async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+
+  try {
+    let images;
+    if (req.files) {
+      images = req.files.map((file) => file.filename);
+      console.log(images[0]);
+    }
+    const doc = await userProductDetails.findById(id);
+    fs.unlinkSync("./uploads/productImage/" + doc.image);
+    doc.image = images[0];
+    const result = await doc.save();
+    console.log(result);
+
+    return res.status(200).json({ image: result.image });
+  } catch (error) {
+    console.error("Error updating product main image:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 };

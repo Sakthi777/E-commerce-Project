@@ -27,16 +27,23 @@ const EditProduct = () => {
     cursor: "pointer",
   };
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [displayImage, setDisplayImage] = useState(false);
+  const [onChangeImage2, setOnChangeImage2] = useState(null);
+  const [onChangeImage, setOnChangeImage] = useState(null);
+  const [editIndex, setEditIndex] = useState(null);
 
   const handleCloseDeleteModal = () => setShowDeleteModal(false);
   const handleShowDeleteModal = () => setShowDeleteModal(true);
+  const handleCloseEditModal = () => setShowEditModal(false);
+  const handleShowEditModal = () => setShowEditModal(true);
 
   const { showOffCanvas } = useOffCanvasContext();
-  const [upload, setUpload] = useState(uploadImage);
+  const [upload, setUpload] = useState("");
   const [preImage, setPreImage] = useState(null);
   const [ArrayOfimages, setArrayOfImages] = useState([uploadImage, uploadImage, uploadImage, uploadImage]);
-  const [fileName, setFileName] = useState("");
   const [image, setImage] = useState(null);
+  const [fileName, setFileName] = useState("");
   const [imageSlider, setImageSlider] = useState([]);
   const [rating, setRating] = useState("");
   const [productName, setProductName] = useState("");
@@ -68,16 +75,28 @@ const EditProduct = () => {
       setNewProduct(product.newProduct);
       setFeaturedItems(product.featuredItems);
       setProductID(product._id);
+      setFileName(product.image);
     }
-  }, [product]);
+  }, [imageSlider]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
     console.log(file);
+    console.log(productID);
     if (file) {
       setPreImage(URL.createObjectURL(file));
       setFileName(file.name);
+    }
+    const formData = new FormData();
+    formData.append("mainImage", file);
+    try {
+      axios.put(`http://localhost:8000/edit-productMainImage/${productID}`, formData).then((res) => {
+        console.log(res.data.image);
+        setFileName(res.data.image);
+      });
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -100,9 +119,9 @@ const EditProduct = () => {
           },
         })
         .then((response) => {
-          console.log(response.data);
+          console.log(response.data.imageSlider);
+          setArrayOfImages(response.data.imageSlider);
         });
-      window.location.reload();
     } catch (error) {
       console.error("Upload error:", error);
     }
@@ -110,8 +129,8 @@ const EditProduct = () => {
 
   const handleSubmit = async () => {
     const formData = new FormData();
-    formData.append("image", image);
-    formData.append("upload", upload);
+    // formData.append("image", image);
+    // formData.append("upload", upload);
     formData.append("rating", rating);
     formData.append("productName", productName);
     formData.append("productDescription", productDescription);
@@ -127,18 +146,6 @@ const EditProduct = () => {
       formDataObject[key] = value;
     }
     console.log(formDataObject);
-
-    // const formData = {
-    //  rating,
-    //  productName,
-    //  productDescription,
-    //  oldPrice,
-    //  newPrice,
-    //  discountPercentage,
-    //  sale,
-    //  newProduct,
-    //  featuredItems
-    // }
     axios
       .put(`http://localhost:8000/update-productDetails/${productID}`, formData)
       .then((res) => {
@@ -168,6 +175,32 @@ const EditProduct = () => {
       console.log(err);
     }
   };
+
+  const handleEditButton = (img, ind) => {
+    console.log(img);
+    console.log(ind);
+    setDisplayImage(true);
+    setEditIndex(ind);
+    setOnChangeImage(img);
+  };
+
+  const handleEditSubmit = (id) => {
+    const formData = new FormData();
+    formData.append("multipleFileEdit", onChangeImage2);
+    console.log(id);
+
+    axios
+      .put(`http://localhost:8000/edit-SliderImage/${id}/${editIndex}`, formData)
+      .then((res) => {
+        console.log(res.data.message);
+        setArrayOfImages(res.data.message);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setDisplayImage(false);
+  };
+
   return (
     <>
       <AdminHeader />
@@ -180,28 +213,26 @@ const EditProduct = () => {
             <p>Product Images</p>
             <div className="panel">
               <div className="image-upload-box">
-                <div className="image-box">{preImage ? <img src={preImage} alt={`product 1`} className="center-image" /> : <img src={`http://localhost:8000/uploads/productImage/${upload}`} alt={`product 2`} className="center-image" />}</div>
+                <div className="image-box">{image ? <img src={preImage} alt={`product 2`} className="center-image" /> : <img src={`http://localhost:8000/uploads/productImage/${upload}`} alt={`product 2`} className="center-image" />}</div>
               </div>
-              <div className="ImageFileName">{/* <p>{fileName}</p> */}</div>
+              <div className="ImageFileName">{<p>{fileName}</p>}</div>
               <div className="imageInputFiled">
                 <label htmlFor="file-upload">Add New Image</label>
                 <input type="file" id="file-upload" style={{ display: "none" }} onChange={handleImageChange} accept="image/*" />
               </div>
-
               <div className="ImageSliderUpload">
                 <p>Product Image Slider</p>
 
                 <div className="image-grid">
                   {ArrayOfimages.map((image, index) => (
-                    <div className="image-upload-box">
-                      <div className="image-box">
+                    <div>
+                      <div className="image-upload-box">
                         <div className="image-box">
-                          {image ? (
-                            <img src={`http://localhost:8000/uploads/productImage/${image}`} alt={`product 1`} className="center-image" />
-                          ) : (
-                            <img src={`http://localhost:8000/uploads/productImage/${upload}`} alt={`product 2`} className="center-image" />
-                          )}
+                          <div className="image-box">{image && <img src={`http://localhost:8000/uploads/productImage/${image}`} alt={`product 1`} className="center-image" />}</div>
                         </div>
+                      </div>
+                      <div className="ImageFileName">
+                        <p>{image}</p>
                       </div>
                     </div>
                   ))}
@@ -209,6 +240,9 @@ const EditProduct = () => {
                 <div className="imageInputFiled">
                   <button className="Delete-button" onClick={handleShowDeleteModal}>
                     Delete
+                  </button>
+                  <button className="Delete-button edit" onClick={handleShowEditModal}>
+                    Edit
                   </button>
                   <label htmlFor="add-multi-file-upload">Add Images</label>
                   <input type="file" id="add-multi-file-upload" style={{ display: "none" }} onChange={(e) => handleAddImages(e, productID)} accept="image/*" multiple />
@@ -347,6 +381,62 @@ const EditProduct = () => {
           <Button style={{ backgroundColor: "red" }} onClick={() => handleDeleteAll(productID)}>
             Delete All
           </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showEditModal} onHide={handleCloseEditModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Images</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "10px" }}>
+            <div style={{ display: "flex", overflowX: "scroll", width: "90%" }}>
+              {ArrayOfimages.map((image, index) => (
+                <div style={{ padding: "10px" }}>
+                  <img src={`http://localhost:8000/uploads/productImage/${image}`} alt={`product 1`} style={imageDivModal} />
+                  <button
+                    className="imageDeleteButton"
+                    onClick={() => {
+                      handleEditButton(image, index);
+                      setDisplayImage(true);
+                    }}
+                  >
+                    Edit
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+          {displayImage === true ? (
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "20px", padding: "20px", border: "1px solid black" }}>
+              <div>
+                <div>
+                  <input
+                    type="file"
+                    onChange={(e) => {
+                      setOnChangeImage2(e.target.files[0]);
+                      console.log(e.target.files[0]);
+                    }}
+                  ></input>
+                </div>
+                <div style={{ textAlign: "center" }}>
+                  <button type="button" onClick={() => handleEditSubmit(productID)} style={{ marginTop: "20px", width: "100px", backgroundColor: "green", color: "#fff" }}>
+                    Upload
+                  </button>
+                </div>
+              </div>
+              <div>
+                <img src={onChangeImage2 === null ? `http://localhost:8000/uploads/productImage/${onChangeImage}` : URL.createObjectURL(onChangeImage2)} style={{ width: "100px", height: "100px", border: "2px solid black" }} alt="updateImage"></img>
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          {/* <Button style={{ backgroundColor: "red" }} onClick={() => handleDeleteAll(productID)}>
+            Delete All
+          </Button> */}
         </Modal.Footer>
       </Modal>
     </>
