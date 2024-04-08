@@ -55,7 +55,7 @@
     border-radius: 8px;
     transition: background-color 0.3s, color 0.3s;
     list-style: none;
-    gap: ;
+
   
     &:hover {
       background-color: green;
