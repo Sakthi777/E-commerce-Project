@@ -8,6 +8,8 @@ const {
   deleteProductSliderImageControllers,
   updateProductSliderImageControllers,
   deleteAllSliderImageControllers,
+  editSliderImageControllers,
+  updateProductMainImageControllers,
 } = require("../controllers/productCardControllers");
 const upload = require("../middlewares/multerMiddleWare");
 
@@ -21,8 +23,12 @@ productCardDatas.delete("/delete-productSliderImage/:id/:index", deleteProductSl
 
 productCardDatas.delete("/delete-allSliderImage/:id", deleteAllSliderImageControllers);
 
+productCardDatas.put("/edit-productMainImage/:id", upload.any(), updateProductMainImageControllers);
+
 productCardDatas.put("/update-productDetails/:id", upload.any(), updateProductCardDetailsControllers);
 
 productCardDatas.put("/update-ProductSliderImage/:id", upload.any(), updateProductSliderImageControllers);
 
-module.exports = productCardDatas;
+productCardDatas.put("/edit-SliderImage/:id/:editId", upload.any(), editSliderImageControllers);
+
+http: module.exports = productCardDatas;
