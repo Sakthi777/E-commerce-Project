@@ -170,7 +170,7 @@ const EditProduct = () => {
   const handleDeleteAll = (id) => {
     try {
       axios.delete(`http://localhost:8000/delete-allSliderImage/${id}`);
-      window.location.reload();
+      setArrayOfImages([]);
     } catch (err) {
       console.log(err);
     }
@@ -199,6 +199,7 @@ const EditProduct = () => {
         console.log(err);
       });
     setDisplayImage(false);
+    setOnChangeImage("");
   };
 
   return (
