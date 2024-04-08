@@ -116,6 +116,7 @@ exports.deleteProductSliderImageControllers = async (req, res) => {
   await doc.save();
   console.log(doc.imageSlider);
 };
+
 exports.updateProductSliderImageControllers = async (req, res) => {
   console.log(req.params.id);
   let images = [];
@@ -130,6 +131,7 @@ exports.updateProductSliderImageControllers = async (req, res) => {
     console.error("Error uploading images:", error);
   }
 };
+
 exports.deleteAllSliderImageControllers = async (req, res) => {
   const { id } = req.params;
   const doc = await userProductDetails.findById(id);
