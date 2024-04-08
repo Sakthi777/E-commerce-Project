@@ -7,7 +7,7 @@ import visa from "../../assets/images/payment-options/02.png";
 import maestro from "../../assets/images/payment-options/03.png";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -36,8 +36,12 @@ function MyProfile() {
 
 	const [showProfile, setShowProfile] = useState(false);
 	const [showContact, setShowContact] = useState(false);
+	const [showEditContact, setShowEditContact] = useState(false);
 	const [showAddress, setShowAddress] = useState(false);
+	const [showEditAddress, setShowEditAdress] = useState(false);
 	const [showCard, setShowCard] = useState(false);
+
+	const [editIndex, setEditIndex] = useState(null);
 
 	const [selectedImages, setSelectedImages] = useState([]);
 
@@ -97,9 +101,38 @@ function MyProfile() {
 	};
 	const handleContactShow = () => setShowContact(true);
 
+	const handleEditContactShow = (index) => {
+		setShowEditContact(true);
+		setEditIndex(index);
+	};
+
+	const handleContactEditClose = async () => {
+		setShowEditContact(false);
+		const contactType = document.getElementById("contactType").value;
+		const contactNumber = document.getElementById("contact-number").value;
+		const postData = {
+			token: token,
+			contactNumbers: [
+				{
+					contactType: contactType,
+					contactNumber: contactNumber,
+				},
+			],
+		};
+		await axios
+			.put(`${url}/profileData/editContact/${editIndex}`, postData)
+			.then((res) => {
+				console.log(res.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+		setEditIndex(null);
+	};
+
 	const handleAddressClose = () => {
 		setShowAddress(false);
-		const address = document.getElementById("contact-number").value;
+		const address = document.getElementById("adress-profile").value;
 		const addressType = document.getElementById("addressType").value;
 		const postData = {
 			token: token,
@@ -122,6 +155,37 @@ function MyProfile() {
 	};
 
 	const handleAddressShow = () => setShowAddress(true);
+
+	const handleEditAdressShow = (index) => {
+		setShowEditAdress(true);
+		setEditIndex(index);
+	};
+
+	const handleEditAddressClose = async () => {
+		setShowEditAdress(false);
+		const address = document.getElementById("adress-profile").value;
+		const addressType = document.getElementById("addressType").value;
+		const postData = {
+			token: token,
+			addresses: [
+				{
+					address: address,
+					addressType: addressType,
+				},
+			],
+		};
+
+		axios
+			.put(`${url}/profileData/address/${editIndex}`, postData)
+			.then((response) => {
+				console.log("Address data posted successfully:", response.data);
+			})
+			.catch((error) => {
+				console.error("Error posting address data:", error);
+			});
+
+		setEditIndex(null);
+	};
 
 	const handleCardShow = () => setShowCard(true);
 	const handleCardClose = () => {
@@ -160,7 +224,6 @@ function MyProfile() {
 				setAddressDetails(profileDataRes.data.addresses);
 				setCardDetails(profileDataRes.data.cards);
 				setProfilePic(profileDataRes.data.profilePicture);
-				console.log(profileDataRes.data.profilePicture);
 			} catch (error) {
 				console.error("Error fetching profile data:", error);
 			}
@@ -179,16 +242,43 @@ function MyProfile() {
 		fetchData();
 	}, []);
 
+	const handelDeleteContact = async (index) => {
+		await axios
+			.delete(`${url}/profileData/delContact/${token}/${index}`)
+			.then((res) => {
+				console.log(res.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
 	const renderContactDetails = () => {
 		return contactDetails.map((contact, index) => (
 			<div className="primary-number profiles-content" key={index}>
 				<h5>{contact.contactType}</h5>
 				<p>{contact.contactNumber}</p>
-				<button className="profile-action-del-btn">
-					<FontAwesomeIcon icon={faTrash} />
-				</button>
+				<div className="profile-action-buttons">
+					<button className="profile-action-edit-btn" onClick={() => handleEditContactShow(index)}>
+						<FontAwesomeIcon icon={faPen} />
+					</button>
+					<button className="profile-action-del-btn" onClick={() => handelDeleteContact(index)}>
+						<FontAwesomeIcon icon={faTrash} />
+					</button>
+				</div>
 			</div>
 		));
+	};
+
+	const handelDeleteAddress = async (index) => {
+		await axios
+			.delete(`${url}/profileData/delAddress/${token}/${index}`)
+			.then((res) => {
+				console.log(res.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
 	const renderAddressDetails = () => {
@@ -196,11 +286,28 @@ function MyProfile() {
 			<div className="delivery-primary-address profiles-content" key={index}>
 				<h5>{address.addressType}</h5>
 				<p>{address.address}</p>
-				<button className="profile-action-del-btn">
-					<FontAwesomeIcon icon={faTrash} />
-				</button>
+				<div className="profile-action-buttons">
+					<button className="profile-action-edit-btn" onClick={() => handleEditAdressShow(index)}>
+						<FontAwesomeIcon icon={faPen} />
+					</button>
+					<button className="profile-action-del-btn">
+						<FontAwesomeIcon icon={faTrash} onClick={() => handelDeleteAddress(index)} />
+					</button>
+				</div>
 			</div>
 		));
+	};
+
+	const handleDeleteCard = async (index) => {
+		// console.log(index);
+		await axios
+			.delete(`${url}/profileData/delCard/${token}/${index}`)
+			.then((res) => {
+				console.log(res.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
 	const renderCardDetails = () => {
@@ -223,23 +330,48 @@ function MyProfile() {
 					</h5>
 					<p>{card.ownerName}</p>
 					<button className="profile-action-del-btn">
-						<FontAwesomeIcon icon={faTrash} />
+						<FontAwesomeIcon icon={faTrash} onClick={() => handleDeleteCard(index)} />
 					</button>
 				</div>
 			);
 		});
 	};
 
+	const handleDeleteProfilePic = async () => {
+		await axios
+			.delete(`${url}/profileData/delProfilePic/${token}`)
+			.then((res) => {
+				console.log(res.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
 	return (
 		<>
 			<HeaderPage />
 
-			<div className="edit-Profile-popup">
-				<Modal show={showProfile} onHide={handleProfileClose}>
+			<div className="add-Profile-popup">
+				<Modal show={showProfile} onHide={() => setShowProfile(false)}>
 					<Modal.Header closeButton>
 						<Modal.Title>Edit Profile Picture</Modal.Title>
 					</Modal.Header>
 					<Modal.Body className="edit-profile-modal">
+						<div>
+							{profilePic ? (
+								<div className="profile-img">
+									<img src={`${url}/uploads/profilePicture/${profilePic}`} alt="" />
+								</div>
+							) : (
+								<div className="profile-img">
+									<img src={profileImage} alt="" />
+								</div>
+							)}
+							<div className="profile-action-del-btn">
+								<FontAwesomeIcon icon={faTrash} onClick={() => handleDeleteProfilePic()} />
+							</div>
+						</div>
 						<div>
 							<label htmlFor="profilePicture">Select Image</label>
 							<input id="profilePicture" type="file" accept="image/*" style={{ border: "none" }} onChange={handleImageChange} />
@@ -253,10 +385,10 @@ function MyProfile() {
 				</Modal>
 			</div>
 
-			<div className="edit-contact-popup">
-				<Modal show={showContact} onHide={handleContactClose}>
+			<div className="add-contact-popup">
+				<Modal show={showContact} onHide={() => setShowCard(false)}>
 					<Modal.Header closeButton>
-						<Modal.Title>Edit Contact</Modal.Title>
+						<Modal.Title>Add Contact</Modal.Title>
 					</Modal.Header>
 					<Modal.Body className="edit-contact-modal">
 						<div>
@@ -276,15 +408,38 @@ function MyProfile() {
 				</Modal>
 			</div>
 
-			<div className="edit-address-popup">
-				<Modal show={showAddress} onHide={handleAddressClose}>
+			<div className="edit-contact-popup">
+				<Modal show={showEditContact} onHide={() => setShowEditContact(false)}>
+					<Modal.Header closeButton>
+						<Modal.Title>Edit Contact</Modal.Title>
+					</Modal.Header>
+					<Modal.Body className="edit-contact-modal">
+						<div>
+							<select name="contactType" id="contactType">
+								<option value="Primary">Primary</option>
+								<option value="Secondary">Secondary</option>
+							</select>
+							<label htmlFor="profile-contact">Enter Number</label>
+							<input type="number" id="contact-number" />
+						</div>
+					</Modal.Body>
+					<Modal.Footer>
+						<Button variant="secondary" onClick={handleContactEditClose}>
+							Submit
+						</Button>
+					</Modal.Footer>
+				</Modal>
+			</div>
+
+			<div className="add-address-popup">
+				<Modal show={showAddress} onHide={() => setShowAddress(false)}>
 					<Modal.Header closeButton>
 						<Modal.Title>Edit Address</Modal.Title>
 					</Modal.Header>
 					<Modal.Body className="edit-address-modal">
 						<div>
 							<label htmlFor="profile-contact">Enter Address</label>
-							<textarea style={{ width: "90%" }} type="number" id="contact-number" />
+							<textarea style={{ width: "90%" }} type="number" id="adress-profile" />
 						</div>
 						<div>
 							<label htmlFor="adress-type">Adress Type</label>
@@ -302,8 +457,34 @@ function MyProfile() {
 				</Modal>
 			</div>
 
-			<div className="edit-card-popup">
-				<Modal show={showCard} onHide={handleCardClose}>
+			<div className="edit-address-popup">
+				<Modal show={showEditAddress} onHide={() => setShowEditAdress(false)}>
+					<Modal.Header closeButton>
+						<Modal.Title>Edit Address</Modal.Title>
+					</Modal.Header>
+					<Modal.Body className="edit-address-modal">
+						<div>
+							<label htmlFor="profile-contact">Enter Address</label>
+							<textarea style={{ width: "90%" }} type="number" id="adress-profile" />
+						</div>
+						<div>
+							<label htmlFor="adress-type">Adress Type</label>
+							<select name="addressType" id="addressType">
+								<option value="Primary">Primary</option>
+								<option value="Secondary">Secondary</option>
+							</select>
+						</div>
+					</Modal.Body>
+					<Modal.Footer>
+						<Button variant="secondary" onClick={handleEditAddressClose}>
+							Submit
+						</Button>
+					</Modal.Footer>
+				</Modal>
+			</div>
+
+			<div className="add-card-popup">
+				<Modal show={showCard} onHide={() => setShowCard(false)}>
 					<Modal.Header closeButton>
 						<Modal.Title>Edit Prfofile</Modal.Title>
 					</Modal.Header>

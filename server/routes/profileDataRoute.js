@@ -1,5 +1,17 @@
 const express = require("express");
-const { getProfileDataControllers, postProfileDataContactControllers, postProfileDataAddressControllers, postProfileDataCardControllers, postProfileImageControllers } = require("../controllers/prfoileDataController");
+const {
+	getProfileDataControllers,
+	postProfileDataContactControllers,
+	postProfileDataAddressControllers,
+	postProfileDataCardControllers,
+	postProfileImageControllers,
+	delContactControllers,
+	delAddressControllers,
+	delCardControllers,
+	delProfilePicControllers,
+	editContactController,
+	editProfileDataAddressControllers,
+} = require("../controllers/prfoileDataController");
 const profileImageUpload = require("../middlewares/profileImageMulter");
 const profileDataRouter = express.Router();
 
@@ -16,5 +28,17 @@ profileDataRouter.post("/address", postProfileDataAddressControllers);
 profileDataRouter.post("/card", postProfileDataCardControllers);
 
 profileDataRouter.post("/postImage", profileImageUpload.single("profileImage"), postProfileImageControllers);
+
+profileDataRouter.put("/editContact/:index", editContactController);
+
+profileDataRouter.put("/address/:index", editProfileDataAddressControllers);
+
+profileDataRouter.delete("/delProfilePic/:token", delProfilePicControllers);
+
+profileDataRouter.delete("/delContact/:token/:index", delContactControllers);
+
+profileDataRouter.delete("/delAddress/:token/:index", delAddressControllers);
+
+profileDataRouter.delete("/delCard/:token/:index", delCardControllers);
 
 module.exports = profileDataRouter;
