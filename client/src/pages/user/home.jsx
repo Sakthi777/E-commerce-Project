@@ -27,14 +27,15 @@ const ProductGrid = ({ products }) => {
 
   // const cookie = Cookies.get("LoginToken");
   // console.log(cookie);
-  const [productDetails, setProductDetails] = useState([]);
+
 
   const token = useSelector((state) => state.tokenDetails.token);
 
   function timeout(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
-
+  
+  const [productDetails, setProductDetails] = useState([]);
   useEffect(() => {
     axios
       .get(`http://localhost:8000/get-productDetails`)
@@ -95,8 +96,8 @@ const ProductGrid = ({ products }) => {
                   productName={product.productName}
                   oldPrice={product.oldPrice}
                   newPrice={product.newPrice}
-                  setNew={product.setNew}
-                  setSale={product.setSale}
+                  setNew={product.newProduct}
+                  setSale={product.sale}
                   discountPercentage={product.discountPercentage}
                   productDetails={product.productDescription}
                 />
@@ -159,22 +160,23 @@ const ProductGrid = ({ products }) => {
           </div>
         </div>
         <div className="productTitle">Collected New Items</div>
+        {/* {console.log(productDetails)} */}
         <div className="product-grid">
           {productDetails.map(
             (product) =>
-              product.setNew && (
+              product.newProduct && (
                 <ProductCard
-                  key={product.id}
+                  key={product._id}
                   imgSrc={product.image}
                   imageSlider={product.imageSlider}
                   rating={product.rating}
                   productName={product.productName}
                   oldPrice={product.oldPrice}
                   newPrice={product.newPrice}
-                  setNew={product.setNew}
-                  setSale={product.setSale}
+                  setNew={product.newProduct}
+                  setSale={product.sale}
                   discountPercentage={product.discountPercentage}
-                  productDetails={product.productDetails}
+                  productDetails={product.productDescription}
                 />
               )
           )}
@@ -210,19 +212,19 @@ const ProductGrid = ({ products }) => {
             <div className="product-grid">
               {productDetails.map(
                 (product) =>
-                  product.setNew && (
+                  product.sale && (
                     <ProductCard
-                      key={product.id}
+                      key={product._id}
                       imgSrc={product.image}
                       imageSlider={product.imageSlider}
                       rating={product.rating}
                       productName={product.productName}
                       oldPrice={product.oldPrice}
                       newPrice={product.newPrice}
-                      setNew={product.setNew}
-                      setSale={product.setSale}
+                      setNew={product.newProduct}
+                      setSale={product.sale}
                       discountPercentage={product.discountPercentage}
-                      productDetails={product.productDetails}
+                      productDetails={product.productDescription}
                     />
                   )
               )}
@@ -235,17 +237,17 @@ const ProductGrid = ({ products }) => {
                 (product) =>
                   product.featuredItems && (
                     <FeaturedItems
-                      key={product.id}
-                      imgSrc={product.imgSrc}
+                      key={product._id}
+                      imgSrc={product.image}
                       imageSlider={product.imageSlider}
                       rating={product.rating}
                       productName={product.productName}
                       oldPrice={product.oldPrice}
                       newPrice={product.newPrice}
-                      setNew={product.setNew}
-                      setSale={product.setSale}
+                      setNew={product.newProduct}
+                      setSale={product.sale}
                       discountPercentage={product.discountPercentage}
-                      productDetails={product.productDetails}
+                      productDetails={product.productDescription}
                     />
                   )
               )}
@@ -253,21 +255,21 @@ const ProductGrid = ({ products }) => {
           )}
           {selectedOption === "Top Discount" && (
             <div className="product-grid">
-              {products.map(
+              {productDetails.map(
                 (product) =>
-                  product.setNew && (
+                  product.newProduct && (
                     <ProductCard
-                      key={product.id}
-                      imgSrc={product.imgSrc}
+                      key={product._id}
+                      imgSrc={product.image}
                       imageSlider={product.imageSlider}
                       rating={product.rating}
                       productName={product.productName}
                       oldPrice={product.oldPrice}
                       newPrice={product.newPrice}
-                      setNew={product.setNew}
-                      setSale={product.setSale}
+                      setNew={product.newProduct}
+                      setSale={product.sale}
                       discountPercentage={product.discountPercentage}
-                      productDetails={product.productDetails}
+                      productDetails={product.productDescription}
                     />
                   )
               )}

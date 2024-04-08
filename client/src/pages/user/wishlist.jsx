@@ -1,4 +1,5 @@
 import "../../styles/user/wishlist.css";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HeaderPage from "../../components/user/HeaderPage";
 import Footer from "./Footer";
@@ -7,7 +8,7 @@ import products from "../../pages/user/productList";
 import "../../styles/user/productCard.css";
 import "../../styles/user/productDescriptionCard.css";
 import { Modal, Button } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { faShoppingBag, faStar } from "@fortawesome/free-solid-svg-icons";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -15,19 +16,24 @@ import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ProductDescriptionCard from "../../pages/user/productDescriptionCard";
 const Wishlist = () => {
   const [liked, setLiked] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-
   const toggleLike = () => {
     setLiked(!liked);
   };
+  const [showModal, setShowModal] = useState(false);
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
 
-  const toggleDescription = () => {
-    setShowModal(true);
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-  };
+  const [productDetails, setProductDetails] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/get-productDetails`)
+      .then((response) => {
+        setProductDetails(response.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching product data:", error);
+      });
+  }, [setProductDetails]);
   return (
     <div className="wishlist-container">
       <HeaderPage />
@@ -53,11 +59,11 @@ const Wishlist = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
+            {productDetails.map((product, index) => (
               <tr>
-                <td>{product.id}</td>
+                <td>{index + 1}</td>
                 <td>
-                  <img src={product.imgSrc} alt="" />
+                  <img src={`http://localhost:8000/uploads/productImage/${product.image}`} alt="" />
                 </td>
                 <td>{product.productName}</td>
                 <td>{product.newPrice}</td>
@@ -69,32 +75,33 @@ const Wishlist = () => {
                   </div>
                 </td>
                 <td>
-                  <FontAwesomeIcon icon={faEye} className="wishlist-view" onClick={toggleDescription} />
-                  <Modal show={showModal} className="model-container" onHide={closeModal} centered size="lg">
-                    <Modal.Header closeButton></Modal.Header>
+                  <FontAwesomeIcon icon={faEye} className="wishlist-view" onClick={handleShowModal} />
+
+                  <Modal show={showModal} onHide={handleCloseModal}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Wishlist Product</Modal.Title>
+                    </Modal.Header>
                     <Modal.Body>
                       <ProductDescriptionCard
                         product={{
-                          imgSrc: product.imgSrc,
+                          imgSrc: product.image,
                           imageSlider: product.imageSlider,
                           rating: product.rating,
                           productName: product.productName,
                           oldPrice: product.oldPrice,
                           newPrice: product.newPrice,
-                          setSale: product.setSale,
-                          setNew: product.setNew,
+                          setSale: product.sale,
+                          setNew: product.newProduct,
                           discountPercentage: product.discountPercentage,
-                          productDetails: product.productDetails,
+                          productDetails: product.productDescription,
                         }}
-                        onClose={closeModal}
                       />
                     </Modal.Body>
                     <Modal.Footer>
-                      <Button variant="secondary" className="green-background-button" onClick={closeModal}>
-                        Close
-                      </Button>
+                      <Button>Close</Button>
                     </Modal.Footer>
                   </Modal>
+
                   <FontAwesomeIcon icon={faTrash} className="wishlist-delete" />
                 </td>
               </tr>
@@ -105,6 +112,7 @@ const Wishlist = () => {
       <div className="showMoreButton">
         <button className="show-more-button">LOAD MORE ITEMS</button>
       </div>
+
       <Footer />
     </div>
   );
