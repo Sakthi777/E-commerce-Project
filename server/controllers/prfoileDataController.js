@@ -122,3 +122,84 @@ exports.postProfileImageControllers = asyncHandler(async (req, res, next) => {
 		console.log(error);
 	}
 });
+
+exports.editContactController = asyncHandler(async (req, res, next) => {
+	const { index } = req.params;
+	const { token, contactNumbers } = req.body;
+
+	try {
+		const doc = await MainModel.findOne({ token });
+		doc.contactNumbers[index] = contactNumbers[0];
+		await doc.save();
+		res.send(doc);
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ success: false, message: "Internal server error" });
+	}
+});
+
+exports.editProfileDataAddressControllers = asyncHandler(async (req, res, next) => {
+	const { index } = req.params;
+	const { token, addresses } = req.body;
+	try {
+		const doc = await MainModel.findOne({ token });
+		doc.addresses[index] = addresses[0];
+		await doc.save();
+		res.send(doc);
+	} catch (err) {
+		res.send("Something went wrong");
+	}
+});
+
+exports.delProfilePicControllers = asyncHandler(async (req, res, next) => {
+	const { token } = req.params;
+	try {
+		const doc = await MainModel.findOne({ token });
+		if (doc.profilePicture) {
+			fs.unlinkSync("./uploads/profilePicture/" + doc.profilePicture);
+			doc.profilePicture = "";
+			await doc.save();
+			res.send(doc);
+		} else {
+			res.send("No profile picture found");
+		}
+	} catch (error) {
+		res.send("Something went wrong");
+	}
+});
+
+exports.delContactControllers = asyncHandler(async (req, res, next) => {
+	const { token, index } = req.params;
+	try {
+		const doc = await MainModel.findOne({ token });
+		doc.contactNumbers.splice(index, 1);
+		await doc.save();
+		res.send(doc);
+	} catch (error) {
+		res.send("Something went wrong");
+	}
+});
+
+exports.delAddressControllers = asyncHandler(async (req, res, next) => {
+	const { token, index } = req.params;
+	try {
+		const doc = await MainModel.findOne({ token });
+		doc.addresses.splice(index, 1);
+		await doc.save();
+		res.send(doc);
+	} catch (error) {
+		res.send("Something went wrong");
+	}
+});
+
+exports.delCardControllers = asyncHandler(async (req, res, next) => {
+	const { token, index } = req.params;
+	try {
+		const doc = await MainModel.findOne({ token });
+		doc.cards.splice(index, 1);
+		await doc.save();
+		res.send(doc);
+	} catch (error) {
+		res.send("Something went wrong");
+	}
+});
