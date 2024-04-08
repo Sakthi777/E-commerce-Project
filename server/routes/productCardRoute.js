@@ -1,6 +1,16 @@
 const express = require("express");
 const productCardDatas = express.Router();
-const { postProductCardDetailsControllers, getProductCardDetailsControllers, deleteProductCardDetailsControllers, updateProductCardDetailsControllers, deleteProductSliderImageControllers } = require("../controllers/productCardControllers");
+const {
+  postProductCardDetailsControllers,
+  getProductCardDetailsControllers,
+  deleteProductCardDetailsControllers,
+  updateProductCardDetailsControllers,
+  deleteProductSliderImageControllers,
+  updateProductSliderImageControllers,
+  deleteAllSliderImageControllers,
+  editSliderImageControllers,
+  updateProductMainImageControllers,
+} = require("../controllers/productCardControllers");
 const upload = require("../middlewares/multerMiddleWare");
 
 productCardDatas.post("/post-productDetails", upload.any(), postProductCardDetailsControllers);
@@ -11,6 +21,14 @@ productCardDatas.delete("/delete-productDetails/:id", deleteProductCardDetailsCo
 
 productCardDatas.delete("/delete-productSliderImage/:id/:index", deleteProductSliderImageControllers);
 
+productCardDatas.delete("/delete-allSliderImage/:id", deleteAllSliderImageControllers);
+
+productCardDatas.put("/edit-productMainImage/:id", upload.any(), updateProductMainImageControllers);
+
 productCardDatas.put("/update-productDetails/:id", upload.any(), updateProductCardDetailsControllers);
 
-module.exports = productCardDatas;
+productCardDatas.put("/update-ProductSliderImage/:id", upload.any(), updateProductSliderImageControllers);
+
+productCardDatas.put("/edit-SliderImage/:id/:editId", upload.any(), editSliderImageControllers);
+
+http: module.exports = productCardDatas;

@@ -4,20 +4,20 @@ import { tokenReducer } from "../slice/tokenSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 const persistConfig = {
-	key: "root",
-	storage,
+  key: "root",
+  storage,
 };
 
 const persistedReducer = persistReducer(
-	persistConfig,
-	combineReducers({
-		userProfileDetails: userProfileReducer,
-		tokenDetails: tokenReducer,
-	}),
+  persistConfig,
+  combineReducers({
+    userProfileDetails: userProfileReducer,
+    tokenDetails: tokenReducer,
+  })
 );
 
 export const store = configureStore({
-	reducer: persistedReducer,
+  reducer: persistedReducer,
 });
 
 export const persistor = persistStore(store);

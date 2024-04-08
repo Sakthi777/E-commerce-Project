@@ -10,7 +10,6 @@ const AllProducts = () => {
   const navigate = useNavigate();
   const { showOffCanvas } = useOffCanvasContext();
   const [productDetails, setProductDetails] = useState([]);
-
   const [productName, setProductName] = useState("");
 
   useEffect(() => {

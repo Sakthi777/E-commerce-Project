@@ -5,12 +5,7 @@ body {
   padding-top: 30px;
   padding-bottom: 10px;
 }
-.imageDeleteButton {
-  padding: 3px 10px;
-  background-color: #119744;
-  color: #fff;
-  border: 1px solid #333;
-}
+
 .head1 {
   margin-top: 70px;
   padding-top: 20px;
@@ -53,7 +48,6 @@ body {
 }
 .imageInputFiled {
   margin-top: 10px;
-  display: flex;
   align-items: center;
 }
 
@@ -233,6 +227,31 @@ body {
   width: 15rem;
 }
 
+/* edit product */
+
+.imageDeleteButton {
+  padding: 3px 10px;
+  background-color: #119744;
+  color: #fff;
+  border: 1px solid #333;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.Delete-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.Delete-button.edit {
+  background-color: rgba(0, 128, 0, 0.775);
+  margin-left: 10px;
+}
 @media screen and (max-width: 840px) {
   .pu-attribute {
     display: flex;
