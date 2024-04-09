@@ -106,6 +106,7 @@ export default function RegisterData() {
                 <span className="page-link break-label marginPagesDisplayed={3}">...</span>
               </li>
             )}
+            
             <li className="page-item">
               <a href="##" className="page-link" onClick={nextpage}>
                 next
