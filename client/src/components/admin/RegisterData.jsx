@@ -6,9 +6,8 @@ import banner from "../../assets/images/banner/single-banner.jpg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import Pagination from "react-paginate";
+// import Reactpaginate from 'react-paginate'
+// import Pagination from "react-paginate";
 
 export default function RegisterData() {
   const [users, setUsers] = useState([]);
@@ -21,27 +20,18 @@ export default function RegisterData() {
       })
       .catch((err) => console.log(err));
   }, []);
-
-  const pageClick = (data) =>{
-    console.log(data.selected);
-  } 
-  
-  // const [data, setData] = useState([]);
-  // const [currentPage, setCurrentPage] = useState(0);
-  // const [totalPages, setTotalPages] = useState(0);
-  // const itemsPerPage = 10;
-  // setTotalPages(Math.ceil(users.data.length / itemsPerPage));
-  // setData(users.data)
-
- 
-
-  // const startIndex = currentPage * itemsPerPage;
-  // const endIndex = startIndex + itemsPerPage;
-  // const subset = data.slice(startIndex, endIndex);
-
-  // const handlePageChange = (selectedPage) => {
-  //   setCurrentPage(selectedPage.selected);
-  // };
+  // console.log(users.length);
+  // console.log(users);
+  // const pageClick = (data) =>{
+  //   console.log(data.selected);
+  // }
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordperpage = 1;
+  const lastIndex = currentPage * recordperpage;
+  const firstIndex = lastIndex - recordperpage;
+  const records = users.slice(firstIndex, lastIndex);
+  const npage = Math.ceil(users.length / recordperpage);
+  const number = [...Array(npage + 1).keys()].slice(1);
 
   return (
     <div>
@@ -55,7 +45,8 @@ export default function RegisterData() {
       </div>
       <div className="registerAdmindata">
         <div className="table-row">
-          <div className="table-listdata"> 
+          <div className="table-listdata">
+            <></>
             <table>
               <thead className="tablehead">
                 <tr>
@@ -66,14 +57,17 @@ export default function RegisterData() {
                 </tr>
               </thead>
               <tbody className="tablebodydata">
-                {users.map((user, index) => {
+                {records.map((d, i) => {
+                  const serialNumber =
+                    i + 1 + (currentPage - 1) * recordperpage;
+
                   return (
-                    <tr>
+                    <tr key={i}>
                       <td>
-                        <span>{index + 1}</span>
+                        <span>{serialNumber}</span>
                       </td>
-                      <td>{user.userName}</td>
-                      <td>{user.email}</td>
+                      <td>{d.userName}</td>
+                      <td>{d.email}</td>
                       <td>
                         <button className="viewicons">view</button>
                       </td>
@@ -83,31 +77,58 @@ export default function RegisterData() {
               </tbody>
             </table>
           </div>
-          <div className="registerData-page-buttons">           
-            <Pagination 
-              previousLabel={'<<'}
-              nextLabel={'>>'}
-              breakLabel={'...'}
-              pageCount={'200'}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={3}
-              onPageChange={pageClick}
-              containerClassName={'pagination justify-content-center'}
-              pageClassName={'page-item'}
-              pageLinkClassName={'page-link'}
-              previousClassName={'page-item'}
-              previousLinkClassName={'page-link'}
-              nextClassName={'page-item'}
-              nextLinkClassName={'page-link'}
-              breakClassName={'page-item'}
-              breakLinkClassName={'page-link'}
-              activeClassName={'active'}
-              // forcePage={currentPage}
-            />
-          </div>
         </div>
       </div>
+      <div className="registerData-page-buttons">
+        <nav>
+          <ul className="pagination">
+            <li className="page-item">
+              <a href="##" className="page-link" onClick={prevpage}>
+                prev
+              </a>
+            </li>
+            {number.map((n, i) => (
+              <li
+                key={i}
+                className={`page-item ${currentPage === n ? "active" : ""}`}
+              >
+                <a
+                  href="##"
+                  className="page-link"
+                  onClick={() => changepage(n)}
+                >
+                  {n}
+                </a>
+              </li>
+            ))}
+            {currentPage < npage && (
+              <li className="page-item">
+                <span className="page-link break-label marginPagesDisplayed={3}">...</span>
+              </li>
+            )}
+            <li className="page-item">
+              <a href="##" className="page-link" onClick={nextpage}>
+                next
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
       <Footer />
     </div>
   );
+  function changepage(id) {
+    setCurrentPage(id);
+  }
+  function prevpage() {
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  }
+  function nextpage() {
+    if (currentPage !== npage) {
+      setCurrentPage(currentPage + 1);
+    }
+  }
 }
