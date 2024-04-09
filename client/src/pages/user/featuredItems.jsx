@@ -13,19 +13,7 @@ import { faShoppingBag, faStar } from "@fortawesome/free-solid-svg-icons";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const FeaturedItems = ({
-  imgSrc,
-  imageSlider,
-  rating,
-  productName,
-  oldPrice,
-  newPrice,
-  setSale,
-  setNew,
-  discountPercentage,
-  featuredItem,
-  productDetails,
-}) => {
+const FeaturedItems = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPrice, setSale, setNew, discountPercentage, featuredItem, productDetails }) => {
   const [liked, setLiked] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
@@ -45,27 +33,18 @@ const FeaturedItems = ({
   return (
     <div className="featuredItem-card">
       <div className="featureItem-card-left">
-        <div
-          className={`featureLike ${liked ? "liked" : ""}`}
-          onClick={toggleLike}
-        >
+        <div className={`featureLike ${liked ? "liked" : ""}`} onClick={toggleLike}>
           <AiFillHeart className="icon" />
         </div>
         <div className="label">
           <span className="feature-label">Feature</span>
         </div>
 
-        <img src={imgSrc} alt={productName} className="feature-img" />
+        <img src={`http://localhost:8000/uploads/productImage/${imgSrc}`} alt={productName} className="feature-img" />
         <div className="viewIcon" onClick={toggleDescription}>
           <FaEye />
         </div>
-        <Modal
-          show={showModal}
-          onHide={closeModal}
-          className="model-container"
-          centered
-          size="lg"
-        >
+        <Modal show={showModal} onHide={closeModal} className="model-container" centered size="lg">
           <Modal.Header closeButton></Modal.Header>
           <Modal.Body>
             <ProductDescriptionCard
@@ -85,11 +64,7 @@ const FeaturedItems = ({
             />
           </Modal.Body>
           <Modal.Footer>
-            <Button
-              variant="secondary"
-              className="green-background-button"
-              onClick={closeModal}
-            >
+            <Button variant="secondary" className="green-background-button" onClick={closeModal}>
               Close
             </Button>
           </Modal.Footer>

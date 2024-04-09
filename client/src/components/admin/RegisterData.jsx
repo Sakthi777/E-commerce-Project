@@ -21,11 +21,27 @@ export default function RegisterData() {
       })
       .catch((err) => console.log(err));
   }, []);
-const [item,setItems] = useState([])
+
   const pageClick = (data) =>{
     console.log(data.selected);
-  }
+  } 
+  
+  // const [data, setData] = useState([]);
+  // const [currentPage, setCurrentPage] = useState(0);
+  // const [totalPages, setTotalPages] = useState(0);
+  // const itemsPerPage = 10;
+  // setTotalPages(Math.ceil(users.data.length / itemsPerPage));
+  // setData(users.data)
 
+ 
+
+  // const startIndex = currentPage * itemsPerPage;
+  // const endIndex = startIndex + itemsPerPage;
+  // const subset = data.slice(startIndex, endIndex);
+
+  // const handlePageChange = (selectedPage) => {
+  //   setCurrentPage(selectedPage.selected);
+  // };
 
   return (
     <div>
@@ -39,7 +55,7 @@ const [item,setItems] = useState([])
       </div>
       <div className="registerAdmindata">
         <div className="table-row">
-          <div className="table-listdata">
+          <div className="table-listdata"> 
             <table>
               <thead className="tablehead">
                 <tr>
@@ -67,24 +83,12 @@ const [item,setItems] = useState([])
               </tbody>
             </table>
           </div>
-          <div className="registerData-page-buttons">
-            {/* <button>
-								<FontAwesomeIcon icon={faArrowLeft} />
-							</button>
-							<button>1</button>
-							<button>2</button>
-							<button>3</button>
-							<button>4</button>
-							<p>......</p>
-							<button>20</button>
-							<button>
-								<FontAwesomeIcon icon={faArrowRight} />
-							</button> */}
+          <div className="registerData-page-buttons">           
             <Pagination 
               previousLabel={'<<'}
               nextLabel={'>>'}
               breakLabel={'...'}
-              pageCount={'20'}
+              pageCount={'200'}
               marginPagesDisplayed={2}
               pageRangeDisplayed={3}
               onPageChange={pageClick}
@@ -98,6 +102,7 @@ const [item,setItems] = useState([])
               breakClassName={'page-item'}
               breakLinkClassName={'page-link'}
               activeClassName={'active'}
+              // forcePage={currentPage}
             />
           </div>
         </div>

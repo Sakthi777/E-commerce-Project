@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import "../../styles/user/headerPage.css";
 import image from "../../assets/images/logo.png";
 import profile from "../../assets/images/homePageImage/profile.png";
@@ -64,6 +65,18 @@ const HeaderPage = () => {
     Cookies.remove("LoginToken");
     window.location.reload();
   };
+
+  const [productDetails, setProductDetails] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/get-productDetails`)
+      .then((response) => {
+        setProductDetails(response.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching product data:", error);
+      });
+  }, [setProductDetails]);
 
   return (
     <>
@@ -148,10 +161,10 @@ const HeaderPage = () => {
           </div>
           <div className="offcanvas-body">
             <div className="offcanvas-grid">
-              {products.map((product) => (
+              {productDetails.map((product) => (
                 <div className="offcanvas-card">
                   <div className="offcanvas-img">
-                    <img src={product.imgSrc} alt="product" className="offcanvas-prod-img" />
+                    <img src={`http://localhost:8000/uploads/productImage/${product.image}`} alt="product" className="offcanvas-prod-img" />
                     <div className="overlay">
                       <FontAwesomeIcon icon={faTrash} className="delete-icon" />
                     </div>

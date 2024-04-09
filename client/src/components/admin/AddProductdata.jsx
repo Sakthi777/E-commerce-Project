@@ -10,13 +10,14 @@ import gpay from "../../../src/assets/images/AddProduct/googlepay.svg";
 // import paypalpay from "../../../src/assets/images/AddProduct/paypal.svg";
 import vpay from "../../../src/assets/images/AddProduct/visa.svg";
 import AdminHeader, { useOffCanvasContext } from "../../components/admin/adminHeader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AddProductdata() {
   const { showOffCanvas } = useOffCanvasContext();
   const [preImage, setPreImage] = useState(null);
   const [ArrayOfimages, setArrayOfImages] = useState([upload, upload, upload, upload]);
   const [fileName, setFileName] = useState("");
-
   const [image, setImage] = useState(null);
   const [imageSlider, setImageSlider] = useState([]);
   const [rating, setRating] = useState("");
@@ -28,7 +29,7 @@ export default function AddProductdata() {
   const [newProduct, setNewProduct] = useState(false);
   const [featuredItems, setFeaturedItems] = useState(false);
   const [discountPercentage, setDiscountPercentage] = useState("");
-  const [productDetails, setProductDetails] = useState([]);
+  const [productDetails, setProductDetails] = useState(null);
 
   useEffect(() => {
     axios
@@ -61,6 +62,40 @@ export default function AddProductdata() {
     setImageSlider(ArrayoffilleList);
     const newImages = ArrayoffilleList.map((file) => URL.createObjectURL(file));
     setArrayOfImages(newImages);
+  };
+  const handlePublish = () => {
+    handleSubmit();
+    successNotify();
+  };
+
+  const successNotify = () => {
+    toast.success("Product successfully Published ", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+    setPreImage(null);
+    setArrayOfImages([upload, upload, upload, upload]);
+    setFileName("");
+    setImage(null);
+    setImageSlider([]);
+    setRating("");
+    setProductName("");
+    setProductDescription("");
+    setOldPrice("");
+    setNewPrice("");
+    setSale(false);
+    setNewProduct(false);
+    setFeaturedItems(false);
+    setDiscountPercentage("");
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 3000);
   };
   const handleSubmit = () => {
     const formData = new FormData();
@@ -146,12 +181,12 @@ export default function AddProductdata() {
                 </div>
                 <div className="rating">
                   <p>Rating*</p>
-                  <input type="text" onChange={(e) => setRating(e.target.value)} />
+                  <input type="text" value={rating} onChange={(e) => setRating(e.target.value)} />
                 </div>
               </div>
               <div class="description-box">
                 <p>Product Name*</p>
-                <input type="text" placeholder="Enter Product Name" onChange={(e) => setProductName(e.target.value)} />
+                <input type="text" placeholder="Enter Product Name" value={productName} onChange={(e) => setProductName(e.target.value)} />
               </div>
             </div>
           </div>
@@ -159,7 +194,7 @@ export default function AddProductdata() {
           <div className="user-product">
             <div className="user-product-input pro-in">
               <label className="user-product-label">Description*</label>
-              <input type="text" placeholder="Enter Description" onChange={(e) => setProductDescription(e.target.value)}></input>
+              <input type="text" placeholder="Enter Description" value={productDescription} onChange={(e) => setProductDescription(e.target.value)}></input>
             </div>
             <div className="label-id">
               <div className="user-product-input label-id-input">
@@ -179,11 +214,11 @@ export default function AddProductdata() {
             <div className="label-id">
               <div className="user-product-input">
                 <label>Old Price*</label>
-                <input type="text" placeholder="Enter Old Price" onChange={(e) => setOldPrice(e.target.value)}></input>
+                <input type="text" placeholder="Enter Old Price" value={oldPrice} onChange={(e) => setOldPrice(e.target.value)}></input>
               </div>
               <div className="user-product-input">
                 <label>New Price*</label>
-                <input type="text" placeholder="Enter New Price" onChange={(e) => setNewPrice(e.target.value)}></input>
+                <input type="text" placeholder="Enter New Price" value={newPrice} onChange={(e) => setNewPrice(e.target.value)}></input>
               </div>
             </div>
             <div className="label-id">
@@ -218,7 +253,7 @@ export default function AddProductdata() {
             <div className="label-id">
               <div className="user-product-input label-id-input">
                 <label>Discount Percentage*</label>
-                <input type="text" onChange={(e) => setDiscountPercentage(e.target.value)}></input>
+                <input type="text" value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value)}></input>
               </div>
               <div className="user-product-input">
                 <label>Status</label>
@@ -265,12 +300,13 @@ export default function AddProductdata() {
                 <button>Save to Drafts</button>
               </div>
               <div className="pro-btn">
-                <button onClick={handleSubmit}>Publish Product</button>
+                <button onClick={handlePublish}>Publish Product</button>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }
