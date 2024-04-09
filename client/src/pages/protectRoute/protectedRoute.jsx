@@ -14,9 +14,9 @@ export const ProtectedLoginRoute = (props) => {
     const cookieToken = Cookies.get("LoginToken");
     console.log(cookieToken);
     if (!cookieToken) {
-      navigate("/login");
+      navigate("/login", { replace: true });
     }
-  }, []);
+  }, [navigate]);
   let isHomeComponent = Component === Home || Component === Shop;
 
   console.log("home ...." + isHomeComponent);
