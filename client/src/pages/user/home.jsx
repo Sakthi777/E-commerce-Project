@@ -28,13 +28,12 @@ const ProductGrid = ({ products }) => {
   // const cookie = Cookies.get("LoginToken");
   // console.log(cookie);
 
-
   const token = useSelector((state) => state.tokenDetails.token);
 
   function timeout(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
-  
+
   const [productDetails, setProductDetails] = useState([]);
   useEffect(() => {
     axios
@@ -71,6 +70,7 @@ const ProductGrid = ({ products }) => {
               setSale={product.sale}
               discountPercentage={product.discountPercentage}
               productDetails={product.productDescription}
+              product={product}
             />
           ))}
         </div>
