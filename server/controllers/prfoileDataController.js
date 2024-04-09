@@ -15,7 +15,7 @@ exports.getProfileDataControllers = async (req, res) => {
 		}
 		res.json(profileData);
 	} catch (error) {
-		console.error("Error fetching profile data:", error);
+		// console.error("Error fetching profile data:", error);
 		res.status(500).send("Error fetching profile data");
 	}
 };
@@ -29,11 +29,11 @@ exports.postProfileDataContactControllers = asyncHandler(async (req, res) => {
 			if (existingDocument.contactNumbers && existingDocument.contactNumbers.length > 0) {
 				existingDocument.contactNumbers.push(...contactNumbers);
 				existingDocument = await existingDocument.save();
-				res.send("Contact numbers added to existing document");
+				res.send(existingDocument);
 			} else {
 				existingDocument.contactNumbers = contactNumbers;
 				existingDocument = await existingDocument.save();
-				res.send("Contact numbers added to existing document");
+				res.send(existingDocument);
 			}
 		} else {
 			const newDocument = await MainModel.create({ token, contactNumbers });
@@ -54,11 +54,11 @@ exports.postProfileDataAddressControllers = asyncHandler(async (req, res) => {
 			if (existingDocument.addresses && existingDocument.addresses.length > 0) {
 				existingDocument.addresses.push(...addresses);
 				existingDocument = await existingDocument.save();
-				res.send("Addresses added to existing document");
+				res.send(existingDocument);
 			} else {
 				existingDocument.addresses = addresses;
 				existingDocument = await existingDocument.save();
-				res.send("Addresses added to existing document");
+				res.send(existingDocument);
 			}
 		} else {
 			const newDocument = await MainModel.create({ token, addresses });
@@ -79,11 +79,11 @@ exports.postProfileDataCardControllers = asyncHandler(async (req, res) => {
 			if (existingDocument.cards && existingDocument.cards.length > 0) {
 				existingDocument.cards.push({ cardType, cardNumber, ownerName });
 				existingDocument = await existingDocument.save();
-				res.send("Card added to existing document");
+				res.send(existingDocument);
 			} else {
 				existingDocument.cards = [{ cardType, cardNumber, ownerName }];
 				existingDocument = await existingDocument.save();
-				res.send("Card added to existing document");
+				res.send(existingDocument);
 			}
 		} else {
 			const newDocument = await MainModel.create({
