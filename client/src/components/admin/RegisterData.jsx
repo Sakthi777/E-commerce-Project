@@ -26,22 +26,22 @@ export default function RegisterData() {
     console.log(data.selected);
   } 
   
-  // const [data, setData] = useState([]);
-  // const [currentPage, setCurrentPage] = useState(0);
-  // const [totalPages, setTotalPages] = useState(0);
-  // const itemsPerPage = 10;
-  // setTotalPages(Math.ceil(users.data.length / itemsPerPage));
-  // setData(users.data)
+  const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const itemsPerPage = 10;
+  setTotalPages(Math.ceil(users.data.length / itemsPerPage));
+  setData(users.data)
 
  
 
-  // const startIndex = currentPage * itemsPerPage;
-  // const endIndex = startIndex + itemsPerPage;
-  // const subset = data.slice(startIndex, endIndex);
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const subset = data.slice(startIndex, endIndex);
 
-  // const handlePageChange = (selectedPage) => {
-  //   setCurrentPage(selectedPage.selected);
-  // };
+  const handlePageChange = (selectedPage) => {
+    setCurrentPage(selectedPage.selected);
+  };
 
   return (
     <div>
@@ -88,7 +88,7 @@ export default function RegisterData() {
               previousLabel={'<<'}
               nextLabel={'>>'}
               breakLabel={'...'}
-              pageCount={'200'}
+              pageCount={totalPages}
               marginPagesDisplayed={2}
               pageRangeDisplayed={3}
               onPageChange={pageClick}
