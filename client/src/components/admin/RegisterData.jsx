@@ -78,7 +78,7 @@ export default function RegisterData() {
             </table>
           </div>
           <div className="registerData-page-buttons">           
-            <Pagination 
+            {/* <Pagination 
               previousLabel={'<<'}
               nextLabel={'>>'}
               breakLabel={'...'}
@@ -95,9 +95,9 @@ export default function RegisterData() {
               nextLinkClassName={'page-link'}
               breakClassName={'page-item'}
               breakLinkClassName={'page-link'}
-              activeClassName={'active'}
+              activeClassName={'active'} */}
               // forcePage={currentPage}
-            />
+            {/* /> */}
           </div>
         </div>
       </div>
