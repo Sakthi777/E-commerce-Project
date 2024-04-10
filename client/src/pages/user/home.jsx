@@ -19,6 +19,7 @@ import { useSelector } from "react-redux";
 const url = "http:localhost:8000";
 
 const ProductGrid = ({ products }) => {
+  const token = useSelector((state) => state.tokenDetails.token);
   const [selectedOption, setSelectedOption] = useState("Top Order");
 
   const handleOptionClick = (option) => {
@@ -27,8 +28,6 @@ const ProductGrid = ({ products }) => {
 
   // const cookie = Cookies.get("LoginToken");
   // console.log(cookie);
-
-  const token = useSelector((state) => state.tokenDetails.token);
 
   function timeout(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -46,9 +45,6 @@ const ProductGrid = ({ products }) => {
       });
   }, [setProductDetails]);
 
-  // productDetails.map((product) => {
-  //   console.log(product);
-  // });
   return (
     <>
       <HeaderPage />

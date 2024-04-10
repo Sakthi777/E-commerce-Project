@@ -17,13 +17,50 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import products from "../../pages/user/productList";
 import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
 
 const HeaderPage = () => {
   const [isFixed, setIsFixed] = useState(false);
   const [prevScrollY, setPrevScrollY] = useState(0);
   const cardRef = useRef(null);
   const navigate = useNavigate();
-
+  const [userDetails, setUserDetails] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/get-userDetails`)
+      .then((response) => {
+        setUserDetails(response.data.data);
+        console.log(response.data.data);
+        //UserDetails();
+      })
+      .catch((error) => {
+        console.error("Error fetching product data:", error);
+      });
+  }, [userDetails]);
+  const token = useSelector((state) => state.tokenDetails.token);
+  let responseUserArray = [];
+  const UserDetails = () => {
+    if (userDetails) {
+      userDetails.map((user) => {
+        if (user.userID === token) {
+          user.AddtoCardItems.map((items) => {
+            const productID = items.productID;
+            console.log(productID);
+            axios
+              .get(`http://localhost:8000/get-userDetails/${productID}`)
+              .then((response) => {
+                console.log(response.data.data);
+                responseUserArray.push(response.data.data);
+              })
+              .catch((error) => {
+                console.error("Error fetching product data:", error);
+              });
+          });
+        }
+      });
+    }
+  };
+  console.log(responseUserArray);
   const naviagteWhislist = () => {
     navigate("/wishlist");
   };
@@ -77,7 +114,7 @@ const HeaderPage = () => {
         console.error("Error fetching product data:", error);
       });
   }, [setProductDetails]);
-
+  console.log(responseUserArray);
   return (
     <>
       <div className="header-container">
@@ -294,6 +331,8 @@ const HeaderPage = () => {
           </div>
         </div>
       </div>
+
+      <button onClick={UserDetails}>addcard</button>
     </>
   );
 };

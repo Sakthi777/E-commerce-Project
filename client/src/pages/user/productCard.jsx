@@ -11,22 +11,13 @@ import { faShoppingBag, faStar } from "@fortawesome/free-solid-svg-icons";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProductDescriptionCard from "../../pages/user/productDescriptionCard";
-const AddToCardContext = createContext();
-
-export const AddToCardProvider = ({ children }) => {
-  const [productList, setProductList] = useState("");
-
-  return <AddToCardContext.Provider value={{ productList, setProductList }}>{children}</AddToCardContext.Provider>;
-};
-
-export const useAddToCardContext = () => {
-  return useContext(AddToCardContext);
-};
+import { useSelector } from "react-redux";
+import axios from "axios";
 const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPrice, setSale, setNew, discountPercentage, productDetails, product }) => {
   const [liked, setLiked] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const { productList, setProductList } = useAddToCardContext();
-
+  const [productList, setProductList] = useState("");
+  const token = useSelector((state) => state.tokenDetails.token);
   const toggleLike = () => {
     setLiked(!liked);
   };
@@ -39,9 +30,18 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
     setShowModal(false);
   };
   const handleAddToCard = (prod) => {
-    setProductList(prod);
+    console.log(prod._id);
+    console.log(token);
+    const productID = prod._id;
+    axios
+      .post("http://localhost:8000/post-AddToCardDetails", { productID, token })
+      .then((response) => {
+        console.log("Product added to cart:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error adding product to cart:", error);
+      });
   };
-  // console.log(productList);
   return (
     <div className="product-card">
       <div className={`productLike ${liked ? "liked" : ""}`} onClick={toggleLike}>
