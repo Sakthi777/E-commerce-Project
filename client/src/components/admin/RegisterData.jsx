@@ -77,28 +77,6 @@ export default function RegisterData() {
               </tbody>
             </table>
           </div>
-          <div className="registerData-page-buttons">           
-            {/* <Pagination 
-              previousLabel={'<<'}
-              nextLabel={'>>'}
-              breakLabel={'...'}
-              pageCount={'200'}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={3}
-              onPageChange={pageClick}
-              containerClassName={'pagination justify-content-center'}
-              pageClassName={'page-item'}
-              pageLinkClassName={'page-link'}
-              previousClassName={'page-item'}
-              previousLinkClassName={'page-link'}
-              nextClassName={'page-item'}
-              nextLinkClassName={'page-link'}
-              breakClassName={'page-item'}
-              breakLinkClassName={'page-link'}
-              activeClassName={'active'} */}
-              // forcePage={currentPage}
-            {/* /> */}
-          </div>
         </div>
       </div>
       <div className="registerData-page-buttons">
