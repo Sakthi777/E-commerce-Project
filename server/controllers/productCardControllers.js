@@ -192,3 +192,15 @@ exports.updateProductMainImageControllers = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
+exports.getUserDetails = async (req, res) => {
+  const { productID } = req.params;
+  console.log(productID);
+  try {
+    const productDetails = await userProductDetails.findById(productID);
+    res.json({ status: "ok", data: productDetails });
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.json({ error: "Internal Server Error" });
+  }
+};
