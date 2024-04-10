@@ -73,7 +73,7 @@ function MyProfile() {
 				formData.append("profileImage", image);
 			});
 			formData.append("token", token);
-			console.log(Object.fromEntries(formData));
+			// console.log(Object.fromEntries(formData));
 			try {
 				const response = await axios
 					.post(`${url}/profileData/postImage`, formData, {
@@ -269,8 +269,10 @@ function MyProfile() {
 				setContactDetails(profileDataRes.data.contactNumbers);
 				setAddressDetails(profileDataRes.data.addresses);
 				setCardDetails(profileDataRes.data.cards);
+				console.log(profileDataRes.data.profilePicture);
 				if (profileDataRes.data.profilePicture) {
 					setProfilePic(`${url}/uploads/profilePicture/${profileDataRes.data.profilePicture}`);
+					console.log(profileDataRes.data.profilePicture + "hi");
 				} else {
 					setProfilePic(profileImage);
 				}

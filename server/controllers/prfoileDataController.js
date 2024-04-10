@@ -104,10 +104,10 @@ exports.postProfileImageControllers = asyncHandler(async (req, res, next) => {
 		const imageName = req.file.filename;
 		const existingDocument = await MainModel.findOne({ token });
 		const existingImage = existingDocument.profilePicture;
-		console.log(existingImage);
+		// console.log(existingImage);
 		if (existingDocument) {
 			existingDocument.profilePicture = imageName;
-			existingDocument.save();
+			await existingDocument.save();
 			res.send(existingDocument);
 			// console.log(imageName);
 		} else {
