@@ -72,8 +72,8 @@ function MyWallet() {
 	let credits = 0;
 	const totalCredit = () => {
 		if (transactionList) {
-			transactionList.forEach((amt) => {
-				if (amt > 0) credits += amt;
+			transactionList.forEach((transaction) => {
+				if (transaction.amount > 0) credits += transaction.amount;
 			});
 			return credits;
 		}
@@ -82,8 +82,8 @@ function MyWallet() {
 	let debits = 0;
 	const totalDebit = () => {
 		if (transactionList) {
-			transactionList.forEach((amt) => {
-				if (amt < 0) debits += amt;
+			transactionList.forEach((transaction) => {
+				if (transaction.amount < 0) debits += transaction.amount;
 			});
 			return -debits;
 		}
@@ -93,15 +93,15 @@ function MyWallet() {
 		if (transactionList) {
 			const reversedList = [];
 			for (let i = transactionList.length - 1; i >= 0; i--) {
-				const amt = transactionList[i];
+				const amt = transactionList[i].amount;
 				reversedList.push(
 					<tr key={i}>
 						<td>{transactionList.length - i}</td>
-						<td>02 February 2021</td>
+						<td>{transactionList[i].transactionDate}</td>
 						<td>Order Altered</td>
 						<td>Order (26881)</td>
-						<td>${amt}</td>
-						<td>${amt}</td>
+						<td>${amt > 0 ? amt : -amt}</td>
+						<td>${amt > 0 ? amt : -amt}</td>
 						<td className="transaction-paid">Paid</td>
 					</tr>,
 				);

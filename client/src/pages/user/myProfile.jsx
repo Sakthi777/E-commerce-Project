@@ -66,7 +66,6 @@ function MyProfile() {
 		setSelectedImages(imagesArray);
 	};
 	const handleProfileClose = async () => {
-		setShowProfile(false);
 		if (selectedImages.length > 0) {
 			const formData = new FormData();
 			selectedImages.forEach((image) => {
@@ -82,7 +81,7 @@ function MyProfile() {
 						},
 					})
 					.then((res) => {
-						setProfilePic(res.data.profilePicture);
+						setProfilePic(`${url}/uploads/profilePicture/${res.data.profilePicture}`);
 					});
 				console.log("Upload successful:", response.data);
 			} catch (error) {
@@ -91,6 +90,8 @@ function MyProfile() {
 		} else {
 			console.log("No images selected.");
 		}
+
+		setShowProfile(false);
 	};
 	const handleProfileShow = () => {
 		setShowProfile(true);
@@ -405,7 +406,7 @@ function MyProfile() {
 			.delete(`${url}/profileData/delProfilePic/${token}`)
 			.then((res) => {
 				console.log(res.data);
-				setProfilePic(res.data.profilePicture);
+				setProfilePic(profileImage);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -414,7 +415,9 @@ function MyProfile() {
 	};
 
 	useEffect(() => {
-		if (profilePic) renderProfilePic();
+		if (profilePic == "") {
+			renderProfilePic();
+		}
 	}, [profilePic]);
 
 	useEffect(() => {

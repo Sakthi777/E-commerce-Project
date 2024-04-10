@@ -7,11 +7,20 @@ exports.postWalletData = asyncHandler(async (req, res, next) => {
 		let existingDoc = await walletModel.findOne({ token });
 		if (existingDoc) {
 			existingDoc.currentBalance += parseInt(amountToAdd);
-			existingDoc.transactionList.push(amountToAdd);
+			existingDoc.transactionList.push({ amount: amountToAdd, transactionDate: Date.now() });
 			await existingDoc.save();
 			res.send(existingDoc);
 		} else {
-			await walletModel.create({ token: token, currentBalance: amountToAdd, transactionList: [amountToAdd] }).then((response) => res.send(response));
+			await walletModel
+				.create({
+					token: token,
+					currentBalance: amountToAdd,
+					transactionList: {
+						amount: amountToAdd,
+						transactionDate: Date.now(),
+					},
+				})
+				.then((response) => res.send(response));
 		}
 	} catch (error) {
 		res.send(error);

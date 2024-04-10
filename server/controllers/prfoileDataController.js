@@ -6,7 +6,7 @@ const fs = require("fs");
 // 	const profile = {};
 // };
 
-exports.getProfileDataControllers = async (req, res) => {
+exports.getProfileDataControllers = asyncHandler(async (req, res) => {
 	try {
 		const { token } = req.params;
 		const profileData = await MainModel.findOne({ token });
@@ -18,7 +18,7 @@ exports.getProfileDataControllers = async (req, res) => {
 		// console.error("Error fetching profile data:", error);
 		res.status(500).send("Error fetching profile data");
 	}
-};
+});
 
 exports.postProfileDataContactControllers = asyncHandler(async (req, res) => {
 	try {

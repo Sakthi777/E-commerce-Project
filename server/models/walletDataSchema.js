@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const walletSchema = new mongoose.Schema({
 	token: { type: String },
 	currentBalance: { type: Number },
-	transactionList: [{ type: Number }],
+	transactionList: [{ amount: { type: Number }, transactionDate: { type: Date, default: Date.now() } }],
 });
 
 const walletModel = mongoose.model("WalletData", walletSchema);
