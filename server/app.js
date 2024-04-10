@@ -21,7 +21,7 @@ const userDatas = require("./routes/usersDataRoute");
 
 const productCardDatas = require("./routes/productCardRoute");
 const profileDataRouter = require("./routes/profileDataRoute");
-
+const walletRouter = require("./routes/walletRoute");
 mongoose.set("strictQuery", true);
 
 // middlewares
@@ -51,6 +51,8 @@ app.use(userDatas);
 app.use(productCardDatas);
 
 app.use("/profileData", profileDataRouter);
+
+app.use("/walletData", walletRouter);
 
 // app.post("/profileData", async (req, res) => {
 // 	console.log(req.body);

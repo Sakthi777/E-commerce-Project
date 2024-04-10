@@ -17,6 +17,8 @@ import Footer from "./Footer";
 import { useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 
+import { ToastContainer, toast } from "react-toastify";
+
 import axios from "axios";
 
 function MyProfile() {
@@ -45,26 +47,42 @@ function MyProfile() {
 
 	const [selectedImages, setSelectedImages] = useState([]);
 
+	const toastWarn = (message) => {
+		toast.warn(message, {
+			position: "top-center",
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: "light",
+		});
+	};
+
 	const handleImageChange = (event) => {
 		const files = event.target.files;
 		const imagesArray = Array.from(files);
 		setSelectedImages(imagesArray);
 	};
 	const handleProfileClose = async () => {
-		setShowProfile(false);
 		if (selectedImages.length > 0) {
 			const formData = new FormData();
 			selectedImages.forEach((image) => {
 				formData.append("profileImage", image);
 			});
 			formData.append("token", token);
-			console.log(Object.fromEntries(formData));
+			// console.log(Object.fromEntries(formData));
 			try {
-				const response = await axios.post(`${url}/profileData/postImage`, formData, {
-					headers: {
-						"Content-Type": "multipart/form-data",
-					},
-				});
+				const response = await axios
+					.post(`${url}/profileData/postImage`, formData, {
+						headers: {
+							"Content-Type": "multipart/form-data",
+						},
+					})
+					.then((res) => {
+						setProfilePic(`${url}/uploads/profilePicture/${res.data.profilePicture}`);
+					});
 				console.log("Upload successful:", response.data);
 			} catch (error) {
 				console.error("Error uploading images:", error);
@@ -72,14 +90,19 @@ function MyProfile() {
 		} else {
 			console.log("No images selected.");
 		}
+
+		setShowProfile(false);
 	};
 	const handleProfileShow = () => {
 		setShowProfile(true);
 	};
 	const handleContactClose = () => {
-		setShowContact(false);
 		const contactType = document.getElementById("contactType").value;
 		const contactNumber = document.getElementById("contact-number").value;
+		if (contactNumber.length != 10) {
+			toastWarn("Phone Must Contains 10 digit");
+			return;
+		}
 		const postData = {
 			token: token,
 			contactNumbers: [
@@ -94,10 +117,13 @@ function MyProfile() {
 			.post(`${url}/profileData/contact`, postData)
 			.then((response) => {
 				console.log("Data posted successfully:", response.data);
+				setContactDetails(response.data.contactNumbers);
 			})
 			.catch((error) => {
 				console.error("Error posting data:", error);
 			});
+
+		setShowContact(false);
 	};
 	const handleContactShow = () => setShowContact(true);
 
@@ -107,9 +133,12 @@ function MyProfile() {
 	};
 
 	const handleContactEditClose = async () => {
-		setShowEditContact(false);
 		const contactType = document.getElementById("contactType").value;
 		const contactNumber = document.getElementById("contact-number").value;
+		if (contactNumber.length != 10) {
+			toastWarn("Phone Must Contains 10 digit");
+			return;
+		}
 		const postData = {
 			token: token,
 			contactNumbers: [
@@ -123,10 +152,13 @@ function MyProfile() {
 			.put(`${url}/profileData/editContact/${editIndex}`, postData)
 			.then((res) => {
 				console.log(res.data);
+				setContactDetails(res.data.contactNumbers);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
+
+		setShowEditContact(false);
 		setEditIndex(null);
 	};
 
@@ -143,11 +175,11 @@ function MyProfile() {
 				},
 			],
 		};
-
 		axios
 			.post(`${url}/profileData/address`, postData)
 			.then((response) => {
 				console.log("Address data posted successfully:", response.data);
+				setAddressDetails(response.data.addresses);
 			})
 			.catch((error) => {
 				console.error("Error posting address data:", error);
@@ -174,11 +206,11 @@ function MyProfile() {
 				},
 			],
 		};
-
 		axios
 			.put(`${url}/profileData/address/${editIndex}`, postData)
 			.then((response) => {
 				console.log("Address data posted successfully:", response.data);
+				setAddressDetails(response.data.addresses);
 			})
 			.catch((error) => {
 				console.error("Error posting address data:", error);
@@ -193,17 +225,29 @@ function MyProfile() {
 		const cardType = document.getElementById("card-type").value;
 		const cardNumber = document.getElementById("card-number").value;
 		const cardOwnerName = document.getElementById("card-owner-name").value;
+		let validationError = false;
+		if (cardNumber.length !== 16) {
+			toastWarn("Card Number Must Contain 16 Digits");
+			validationError = true;
+			return;
+		}
+		if (!/^\d+$/.test(cardNumber)) {
+			validationError = true;
+			toastWarn("Card Must Not Contain any Special Character");
+			return;
+		}
+		if (validationError) return;
 		const postData = {
 			token: token,
 			cardType: cardType,
 			cardNumber: cardNumber,
 			ownerName: cardOwnerName,
 		};
-
 		axios
 			.post(`${url}/profileData/card`, postData)
 			.then((response) => {
 				console.log("Data posted successfully:", response.data);
+				setCardDetails(response.data.cards);
 			})
 			.catch((error) => {
 				console.error("Error posting data:", error);
@@ -219,11 +263,20 @@ function MyProfile() {
 		const fetchData = async () => {
 			try {
 				const profileDataRes = await axios.get(`${url}/profileData/${token}`);
-				// console.log(profileDataRes.data);
+				// console.log(token);
+				if (profileDataRes.status === 404) {
+					return;
+				}
 				setContactDetails(profileDataRes.data.contactNumbers);
 				setAddressDetails(profileDataRes.data.addresses);
 				setCardDetails(profileDataRes.data.cards);
-				setProfilePic(profileDataRes.data.profilePicture);
+				console.log(profileDataRes.data.profilePicture);
+				if (profileDataRes.data.profilePicture) {
+					setProfilePic(`${url}/uploads/profilePicture/${profileDataRes.data.profilePicture}`);
+					console.log(profileDataRes.data.profilePicture + "hi");
+				} else {
+					setProfilePic(profileImage);
+				}
 			} catch (error) {
 				console.error("Error fetching profile data:", error);
 			}
@@ -247,10 +300,19 @@ function MyProfile() {
 			.delete(`${url}/profileData/delContact/${token}/${index}`)
 			.then((res) => {
 				console.log(res.data);
+				setContactDetails(res.data.contactNumbers);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
+	};
+
+	const renderProfilePic = () => {
+		return (
+			<div className="profile-img">
+				<img src={profilePic} alt="" />
+			</div>
+		);
 	};
 
 	const renderContactDetails = () => {
@@ -275,6 +337,7 @@ function MyProfile() {
 			.delete(`${url}/profileData/delAddress/${token}/${index}`)
 			.then((res) => {
 				console.log(res.data);
+				setAddressDetails(res.data.addresses);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -304,6 +367,7 @@ function MyProfile() {
 			.delete(`${url}/profileData/delCard/${token}/${index}`)
 			.then((res) => {
 				console.log(res.data);
+				setCardDetails(res.data.cards);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -342,11 +406,32 @@ function MyProfile() {
 			.delete(`${url}/profileData/delProfilePic/${token}`)
 			.then((res) => {
 				console.log(res.data);
+				setProfilePic(profileImage);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
+		setShowProfile(false);
 	};
+
+	useEffect(() => {
+		if (profilePic == "") {
+			renderProfilePic();
+		}
+	}, [profilePic]);
+
+	useEffect(() => {
+		if (contactDetails) renderContactDetails();
+	}, [contactDetails]);
+
+	useEffect(() => {
+		if (addressDetails);
+		renderAddressDetails();
+	}, [addressDetails]);
+
+	useEffect(() => {
+		if (cardDetails) renderCardDetails();
+	}, [cardDetails]);
 
 	return (
 		<>
@@ -359,15 +444,7 @@ function MyProfile() {
 					</Modal.Header>
 					<Modal.Body className="edit-profile-modal">
 						<div>
-							{profilePic ? (
-								<div className="profile-img">
-									<img src={`${url}/uploads/profilePicture/${profilePic}`} alt="" />
-								</div>
-							) : (
-								<div className="profile-img">
-									<img src={profileImage} alt="" />
-								</div>
-							)}
+							{renderProfilePic()}
 							<div className="profile-action-del-btn">
 								<FontAwesomeIcon icon={faTrash} onClick={() => handleDeleteProfilePic()} />
 							</div>
@@ -386,7 +463,7 @@ function MyProfile() {
 			</div>
 
 			<div className="add-contact-popup">
-				<Modal show={showContact} onHide={() => setShowCard(false)}>
+				<Modal show={showContact} onHide={() => setShowContact(false)}>
 					<Modal.Header closeButton>
 						<Modal.Title>Add Contact</Modal.Title>
 					</Modal.Header>
@@ -535,16 +612,7 @@ function MyProfile() {
 							</button>
 						</div>
 						<div className="yourprofile-content profiles-content-containers">
-							{profilePic ? (
-								<div className="profile-img">
-									<img src={`${url}/uploads/profilePicture/${profilePic}`} alt="" />
-								</div>
-							) : (
-								<div className="profile-img">
-									<img src={profileImage} alt="" />
-								</div>
-							)}
-
+							{renderProfilePic()}
 							{userDetails ? (
 								<>
 									<div className="name-input">
@@ -605,6 +673,19 @@ function MyProfile() {
 					</div>
 				</div>
 			</div>
+			<ToastContainer
+				//container
+				position="top-center"
+				autoClose={5000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+				theme="light"
+			/>
 			<Footer />
 		</>
 	);

@@ -7,7 +7,8 @@ import AdminHeader, { useOffCanvasContext } from "../../components/admin/adminHe
 import { useLocation } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const EditProduct = () => {
   const imageDiv = {
     width: "150px",
@@ -77,7 +78,7 @@ const EditProduct = () => {
       setProductID(product._id);
       setFileName(product.image);
     }
-  }, [imageSlider]);
+  }, []);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -154,6 +155,41 @@ const EditProduct = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handleEditProduct = () => {
+    handleSubmit();
+    successNotify();
+  };
+
+  const successNotify = () => {
+    toast.success("Product Edited Successfully ", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+    setPreImage(null);
+    setArrayOfImages([upload, upload, upload, upload]);
+    setFileName("");
+    setImage(null);
+    setImageSlider([]);
+    setRating("");
+    setProductName("");
+    setProductDescription("");
+    setOldPrice("");
+    setNewPrice("");
+    setSale(false);
+    setNewProduct(false);
+    setFeaturedItems(false);
+    setDiscountPercentage("");
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 3000);
   };
 
   const handleImageDelete = async (deleteImage, id, index) => {
@@ -353,7 +389,7 @@ const EditProduct = () => {
                 <button>Save to Drafts</button>
               </div>
               <div className="pro-btn">
-                <button onClick={handleSubmit}>Edit Product</button>
+                <button onClick={handleEditProduct}>Edit Product</button>
               </div>
             </div>
           </div>
@@ -440,6 +476,7 @@ const EditProduct = () => {
           </Button> */}
         </Modal.Footer>
       </Modal>
+      <ToastContainer />
     </>
   );
 };

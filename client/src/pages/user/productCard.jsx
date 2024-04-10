@@ -5,17 +5,27 @@ import { AiFillHeart } from "react-icons/ai";
 import "../../styles/user/productCard.css";
 import "../../styles/user/productDescriptionCard.css";
 import { Modal, Button } from "react-bootstrap";
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faShoppingBag, faStar } from "@fortawesome/free-solid-svg-icons";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProductDescriptionCard from "../../pages/user/productDescriptionCard";
+const AddToCardContext = createContext();
 
-const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPrice, setSale, setNew, discountPercentage, productDetails }) => {
+export const AddToCardProvider = ({ children }) => {
+  const [productList, setProductList] = useState("");
+
+  return <AddToCardContext.Provider value={{ productList, setProductList }}>{children}</AddToCardContext.Provider>;
+};
+
+export const useAddToCardContext = () => {
+  return useContext(AddToCardContext);
+};
+const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPrice, setSale, setNew, discountPercentage, productDetails, product }) => {
   const [liked, setLiked] = useState(false);
-
   const [showModal, setShowModal] = useState(false);
+  const { productList, setProductList } = useAddToCardContext();
 
   const toggleLike = () => {
     setLiked(!liked);
@@ -28,7 +38,10 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
   const closeModal = () => {
     setShowModal(false);
   };
-
+  const handleAddToCard = (prod) => {
+    setProductList(prod);
+  };
+  // console.log(productList);
   return (
     <div className="product-card">
       <div className={`productLike ${liked ? "liked" : ""}`} onClick={toggleLike}>
@@ -79,7 +92,12 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
         <span className="oldPrice">{oldPrice}</span>
         <span className="newPrice">{newPrice}/piece</span>
       </div>
-      <div className="add-to-cart-icon">
+      <div
+        className="add-to-cart-icon"
+        onClick={() => {
+          handleAddToCard(product);
+        }}
+      >
         <FontAwesomeIcon icon={faShoppingBag} className="card-icon" />
         <span>Add</span>
       </div>

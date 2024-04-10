@@ -6,7 +6,7 @@ const fs = require("fs");
 // 	const profile = {};
 // };
 
-exports.getProfileDataControllers = async (req, res) => {
+exports.getProfileDataControllers = asyncHandler(async (req, res) => {
 	try {
 		const { token } = req.params;
 		const profileData = await MainModel.findOne({ token });
@@ -15,10 +15,10 @@ exports.getProfileDataControllers = async (req, res) => {
 		}
 		res.json(profileData);
 	} catch (error) {
-		console.error("Error fetching profile data:", error);
+		// console.error("Error fetching profile data:", error);
 		res.status(500).send("Error fetching profile data");
 	}
-};
+});
 
 exports.postProfileDataContactControllers = asyncHandler(async (req, res) => {
 	try {
@@ -29,11 +29,11 @@ exports.postProfileDataContactControllers = asyncHandler(async (req, res) => {
 			if (existingDocument.contactNumbers && existingDocument.contactNumbers.length > 0) {
 				existingDocument.contactNumbers.push(...contactNumbers);
 				existingDocument = await existingDocument.save();
-				res.send("Contact numbers added to existing document");
+				res.send(existingDocument);
 			} else {
 				existingDocument.contactNumbers = contactNumbers;
 				existingDocument = await existingDocument.save();
-				res.send("Contact numbers added to existing document");
+				res.send(existingDocument);
 			}
 		} else {
 			const newDocument = await MainModel.create({ token, contactNumbers });
@@ -54,11 +54,11 @@ exports.postProfileDataAddressControllers = asyncHandler(async (req, res) => {
 			if (existingDocument.addresses && existingDocument.addresses.length > 0) {
 				existingDocument.addresses.push(...addresses);
 				existingDocument = await existingDocument.save();
-				res.send("Addresses added to existing document");
+				res.send(existingDocument);
 			} else {
 				existingDocument.addresses = addresses;
 				existingDocument = await existingDocument.save();
-				res.send("Addresses added to existing document");
+				res.send(existingDocument);
 			}
 		} else {
 			const newDocument = await MainModel.create({ token, addresses });
@@ -79,11 +79,11 @@ exports.postProfileDataCardControllers = asyncHandler(async (req, res) => {
 			if (existingDocument.cards && existingDocument.cards.length > 0) {
 				existingDocument.cards.push({ cardType, cardNumber, ownerName });
 				existingDocument = await existingDocument.save();
-				res.send("Card added to existing document");
+				res.send(existingDocument);
 			} else {
 				existingDocument.cards = [{ cardType, cardNumber, ownerName }];
 				existingDocument = await existingDocument.save();
-				res.send("Card added to existing document");
+				res.send(existingDocument);
 			}
 		} else {
 			const newDocument = await MainModel.create({
@@ -104,10 +104,10 @@ exports.postProfileImageControllers = asyncHandler(async (req, res, next) => {
 		const imageName = req.file.filename;
 		const existingDocument = await MainModel.findOne({ token });
 		const existingImage = existingDocument.profilePicture;
-		console.log(existingImage);
+		// console.log(existingImage);
 		if (existingDocument) {
 			existingDocument.profilePicture = imageName;
-			existingDocument.save();
+			await existingDocument.save();
 			res.send(existingDocument);
 			// console.log(imageName);
 		} else {
