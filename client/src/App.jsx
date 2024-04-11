@@ -27,7 +27,7 @@ import TransactionDetails from "./pages/admin/transactionDetails";
 
 import { CanceledOrders, CompletedOrders, PendingOrders } from "./pages/admin/orderList";
 import ShopPage from "./pages/user/shop";
-import AdminHeader from "./components/admin/adminHeader";
+// import AdminHeader from "./components/admin/adminHeader";
 import { OffCanvasProvider } from "../../client/src/components/admin/adminHeader";
 import OrderHistory from "./pages/user/OrderHistory";
 import RegisterData from "./components/admin/RegisterData";
@@ -35,6 +35,7 @@ import AllCategory from "./pages/user/AllCategory";
 import AllProducts from "./components/admin/allProducts";
 import EditProduct from "./components/admin/editProduct";
 import { ProtectedLoginRoute } from "./pages/protectRoute/protectedRoute";
+import OfferTime from "./components/admin/OfferTime";
 
 function App() {
   return (
@@ -81,6 +82,8 @@ function App() {
                   <Route path="pendingOrders" element={<PendingOrders />} />
                   <Route path="canceledOrders" element={<CanceledOrders />} />
                   <Route path="/registerdata" element={<RegisterData />} />
+                  <Route path="/offertime" element={<OfferTime />} />
+
                 </Routes>
               </OffCanvasProvider>
             }
