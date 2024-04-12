@@ -1,9 +1,54 @@
 import "../../styles/user/comingSoon.css";
+import { useEffect,useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faInstagram, faLinkedinIn, faPinterestP, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import comingSoonImage from "../../assets/images/coming-soon/coming-soon.png";
+// import {UserPanel} from '../../components/admin/OfferTime.jsx';
 function ComingSoon({ comingSoonData }) {
+
+  //CountDown Time start
+
+	const [seconds, setSeconds] = useState(24 * 60 * 60);
+	useEffect(() => {
+	  const interval = setInterval(() => {
+		setSeconds(prevSeconds => {
+		  if (prevSeconds === 0) {
+			clearInterval(interval);
+		  }
+		  return prevSeconds - 1;
+		});
+	  }, 1000);
+  
+	  return () => clearInterval(interval);
+	}, []);
+	const hours = Math.floor(seconds / 3600);
+	const minutes = Math.floor((seconds % 3600) / 60);
+	const remainingSeconds = seconds % 60;
+		// const calculateTimeLeft = (countdownEndDate) => {
+		//   const difference = new Date(countdownEndDate) - new Date();
+		//   if (difference > 0) {
+		// 	const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+		// 	const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+		// 	const minutes = Math.floor((difference / 1000 / 60) % 60);
+		// 	const seconds = Math.floor((difference / 1000) % 60);
+		// 	return { days, hours, minutes, seconds };
+		//   }
+		//   return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+		// };
+	  
+		// const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+	  
+		// useEffect(() => {
+		//   const timer = setTimeout(() => {
+		// 	setTimeLeft(calculateTimeLeft());
+		//   }, 1000);
+	  
+		//   return () => clearTimeout(timer);
+		// });
+
+  //CountDown Time end
+
 	return (
 		<>
 			<div className="coming-soon-section">
@@ -14,6 +59,7 @@ function ComingSoon({ comingSoonData }) {
 
 					<div className="countdown">
 						<div className="days">
+						
 							<span className="countdown-time">
 								00
 								<span>:</span>
@@ -23,7 +69,7 @@ function ComingSoon({ comingSoonData }) {
 
 						<div className="hours">
 							<span className="countdown-time">
-								00
+								{hours}
 								<span>:</span>
 							</span>
 							<p>hours</p>
@@ -31,14 +77,14 @@ function ComingSoon({ comingSoonData }) {
 
 						<div className="minutes">
 							<span className="countdown-time">
-								00
+								{minutes}
 								<span>:</span>
 							</span>
 							<p>minutes</p>
 						</div>
 
 						<div className="seconds">
-							<span className="countdown-time">00</span>
+							<span className="countdown-time">{remainingSeconds}</span>
 							<p>seconds</p>
 						</div>
 					</div>

@@ -24,43 +24,65 @@ const HeaderPage = () => {
   const [prevScrollY, setPrevScrollY] = useState(0);
   const cardRef = useRef(null);
   const navigate = useNavigate();
+  const [userCartItem, setUserCartItem] = useState([]);
   const [userDetails, setUserDetails] = useState([]);
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8000/get-userDetails`)
-      .then((response) => {
-        setUserDetails(response.data.data);
-        console.log(response.data.data);
-        //UserDetails();
-      })
-      .catch((error) => {
-        console.error("Error fetching product data:", error);
-      });
-  }, [userDetails]);
+  const [productDetails, setProductDetails] = useState([]);
+  const [totalCardPrice, setTotalCardPrice] = useState(0);
+  const [totalCartItem, setTotalCartItem] = useState(0);
   const token = useSelector((state) => state.tokenDetails.token);
-  let responseUserArray = [];
-  const UserDetails = () => {
-    if (userDetails) {
-      userDetails.map((user) => {
-        if (user.userID === token) {
-          user.AddtoCardItems.map((items) => {
-            const productID = items.productID;
-            console.log(productID);
-            axios
-              .get(`http://localhost:8000/get-userDetails/${productID}`)
-              .then((response) => {
-                console.log(response.data.data);
-                responseUserArray.push(response.data.data);
-              })
-              .catch((error) => {
-                console.error("Error fetching product data:", error);
-              });
-          });
-        }
-      });
-    }
+
+  const addcartDetails = () => {
+    let totalPrice = 0;
+    let count = 0;
+    productDetails.forEach((product) => {
+      totalPrice += product.productdetail.newPrice * product.quantity;
+      count = count + 1;
+    });
+    console.log("Price" + totalPrice);
+    setTotalCardPrice(totalPrice);
+    console.log("product count " + count);
+    setTotalCartItem(count);
   };
-  console.log(responseUserArray);
+
+  let responseUserArray = [];
+  //useEffect(async () => {}, []);
+  const AddCard = async () => {};
+
+  const UserDetails = async () => {
+    try {
+      await axios.get(`http://localhost:8000/get-userCartDetails/${token}`).then((response) => {
+        console.log(response.data);
+        setUserCartItem(response.data.AddtoCardItems);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    console.log(userCartItem);
+
+    userCartItem.map((items) => {
+      const productID = items.productID;
+      console.log(items);
+      axios
+        .get(`http://localhost:8000/get-userDetails/${productID}`)
+        .then((response) => {
+          console.log(response.data.data);
+          const productResponse = response.data.data;
+          const userItem = {
+            productdetail: productResponse,
+            quantity: items.quantity,
+          };
+          responseUserArray.push(userItem);
+          console.log(responseUserArray);
+        })
+        .catch((error) => {
+          console.error("Error fetching product data:", error);
+        });
+    });
+
+    setProductDetails(responseUserArray);
+    addcartDetails();
+  };
+
   const naviagteWhislist = () => {
     navigate("/wishlist");
   };
@@ -85,12 +107,22 @@ const HeaderPage = () => {
     };
   }, [prevScrollY]);
   const [quantity, setQuantity] = useState(1);
-  const handleIncrement = () => {
-    setQuantity(quantity + 1);
+  const handleIncrement = (id) => {
+    try {
+      axios.put(`http://localhost:8000/IncrementAddToCartProductQuantity/${id}/${token}`).then((res) => {
+        console.log(res.data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
+  const handleDecrement = (id) => {
+    try {
+      axios.put(`http://localhost:8000/DecrementAddToCartProductQuantity/${id}/${token}`).then((res) => {
+        console.log(res.data);
+      });
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -103,20 +135,19 @@ const HeaderPage = () => {
     window.location.reload();
   };
 
-  const [productDetails, setProductDetails] = useState([]);
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8000/get-productDetails`)
-      .then((response) => {
-        setProductDetails(response.data.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching product data:", error);
-      });
-  }, [setProductDetails]);
-  console.log(responseUserArray);
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://localhost:8000/get-productDetails`)
+  //     .then((response) => {
+  //       setProductDetails(response.data.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching product data:", error);
+  //     });
+  // }, [setProductDetails]);
   return (
     <>
+      {console.log(productDetails)}
       <div className="header-container">
         <div className="header-top">
           <p>Welcome to Ecomart in Your Dream Online Store!</p>
@@ -185,39 +216,43 @@ const HeaderPage = () => {
           </div>
           <div className="price">
             <p>TOTAL PRICE</p>
-            <h6>$345.00</h6>
+            <h6>{totalCardPrice}</h6>
           </div>
         </div>
 
         <div className={`offcanvas offcanvas-end ${isSidebarOpen ? "show" : ""}`} tabIndex="-1" id="shoppingCartOffcanvas" aria-labelledby="shoppingCartOffcanvasLabel">
           <div className="offcanvas-header">
             <h5 className="offcanvas-title" id="shoppingCartOffcanvasLabel">
-              <FontAwesomeIcon icon={faShoppingBag} className="card-svg" /> Total Item (5)
+              <FontAwesomeIcon icon={faShoppingBag} className="card-svg" /> Total Item ({totalCartItem})
             </h5>
             <button type="button" className="btn-close text-reset" onClick={toggleCardSidebar}></button>
           </div>
           <div className="offcanvas-body">
             <div className="offcanvas-grid">
-              {productDetails.map((product) => (
+              {productDetails.map((product, index) => (
+                // console.log(product)
+
+                // const { productdetail, quantity } = item;
+                //{productDetails.map((product) => (
                 <div className="offcanvas-card">
                   <div className="offcanvas-img">
-                    <img src={`http://localhost:8000/uploads/productImage/${product.image}`} alt="product" className="offcanvas-prod-img" />
+                    <img src={`http://localhost:8000/uploads/productImage/${product.productdetail.image}`} alt="product" className="offcanvas-prod-img" />
                     <div className="overlay">
                       <FontAwesomeIcon icon={faTrash} className="delete-icon" />
                     </div>
                   </div>
                   <div className="offcanvas-content">
-                    <h6>{product.productName}</h6>
-                    <p>Unit Price {product.newPrice}</p>
+                    <h6>{product.productdetail.productName}</h6>
+                    <p>Unit Price {product.productdetail.newPrice}</p>
                     <div className="card-item-selector">
-                      <button className="selector-button" onClick={handleDecrement}>
+                      <button className="selector-button" onClick={() => handleDecrement(product.productdetail._id)}>
                         -
                       </button>
-                      <span className="selector-value">{quantity}</span>
-                      <button className="selector-button" onClick={handleIncrement}>
+                      <span className="selector-value">{product.quantity}</span>
+                      <button className="selector-button" onClick={() => handleIncrement(product.productdetail._id)}>
                         +
                       </button>
-                      <p>${product.newPrice}</p>
+                      <p>${product.productdetail.newPrice * product.quantity}</p>
                     </div>
                   </div>
                 </div>
@@ -229,7 +264,7 @@ const HeaderPage = () => {
             <div className="offcanvas-border" onClick={navigateCheckout}>
               <p>Proceed To Checkout</p>
               <p className="hrLine"></p>
-              <p>456.90</p>
+              <p>{totalCardPrice}</p>
             </div>
           </div>
         </div>
