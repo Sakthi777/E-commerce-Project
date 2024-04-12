@@ -10,6 +10,7 @@ const {
   deleteAllSliderImageControllers,
   editSliderImageControllers,
   updateProductMainImageControllers,
+  getUserDetails,
 } = require("../controllers/productCardControllers");
 const upload = require("../middlewares/multerMiddleWare");
 
@@ -30,5 +31,7 @@ productCardDatas.put("/update-productDetails/:id", upload.any(), updateProductCa
 productCardDatas.put("/update-ProductSliderImage/:id", upload.any(), updateProductSliderImageControllers);
 
 productCardDatas.put("/edit-SliderImage/:id/:editId", upload.any(), editSliderImageControllers);
+
+productCardDatas.get("/get-userDetails/:productID", getUserDetails);
 
 http: module.exports = productCardDatas;
