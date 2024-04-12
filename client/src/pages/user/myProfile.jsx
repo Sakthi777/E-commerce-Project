@@ -21,6 +21,19 @@ import { ToastContainer, toast } from "react-toastify";
 
 import axios from "axios";
 
+export const toastWarn = (message) => {
+	toast.warn(message, {
+		position: "top-center",
+		autoClose: 5000,
+		hideProgressBar: false,
+		closeOnClick: true,
+		pauseOnHover: true,
+		draggable: true,
+		progress: undefined,
+		theme: "light",
+	});
+};
+
 function MyProfile() {
 	const url = "http://localhost:8000";
 
@@ -46,19 +59,6 @@ function MyProfile() {
 	const [editIndex, setEditIndex] = useState(null);
 
 	const [selectedImages, setSelectedImages] = useState([]);
-
-	const toastWarn = (message) => {
-		toast.warn(message, {
-			position: "top-center",
-			autoClose: 5000,
-			hideProgressBar: false,
-			closeOnClick: true,
-			pauseOnHover: true,
-			draggable: true,
-			progress: undefined,
-			theme: "light",
-		});
-	};
 
 	const handleImageChange = (event) => {
 		const files = event.target.files;
@@ -296,6 +296,7 @@ function MyProfile() {
 	}, []);
 
 	const handelDeleteContact = async (index) => {
+		
 		await axios
 			.delete(`${url}/profileData/delContact/${token}/${index}`)
 			.then((res) => {
@@ -384,7 +385,6 @@ function MyProfile() {
 			} else {
 				cardImage = visa;
 			}
-
 			return (
 				<div className="payment-card profiles-content" key={index}>
 					<img src={cardImage} alt="" />
@@ -421,7 +421,9 @@ function MyProfile() {
 	}, [profilePic]);
 
 	useEffect(() => {
-		if (contactDetails) renderContactDetails();
+		if (contactDetails) {
+			renderContactDetails();
+		}
 	}, [contactDetails]);
 
 	useEffect(() => {
