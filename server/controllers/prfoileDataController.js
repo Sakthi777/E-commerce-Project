@@ -103,20 +103,21 @@ exports.postProfileImageControllers = asyncHandler(async (req, res, next) => {
 		const token = req.body.token;
 		const imageName = req.file.filename;
 		const existingDocument = await MainModel.findOne({ token });
-		const existingImage = existingDocument.profilePicture;
+
 		// console.log(existingImage);
 		if (existingDocument) {
+			const existingImage = existingDocument.profilePicture;
 			existingDocument.profilePicture = imageName;
 			await existingDocument.save();
 			res.send(existingDocument);
+			if (existingImage) {
+				fs.unlinkSync("./uploads/profilePicture/" + existingImage);
+			}
 			// console.log(imageName);
 		} else {
 			await MainModel.create({ token: token, profilePicture: imageName }).then((response) => {
 				res.send(response);
 			});
-		}
-		if (existingImage) {
-			fs.unlinkSync("./uploads/profilePicture/" + existingImage);
 		}
 	} catch (error) {
 		console.log(error);
