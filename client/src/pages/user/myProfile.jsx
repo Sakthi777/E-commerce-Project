@@ -296,7 +296,7 @@ function MyProfile() {
 	}, []);
 
 	const handelDeleteContact = async (index) => {
-		
+
 		await axios
 			.delete(`${url}/profileData/delContact/${token}/${index}`)
 			.then((res) => {

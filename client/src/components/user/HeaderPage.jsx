@@ -180,6 +180,7 @@ const HeaderPage = () => {
   // }, [setProductDetails]);
   return (
     <>
+      {/* {console.log(productDetails)} */}
       <div className="header-container">
         <div className="header-top">
           <p>Welcome to Ecomart in Your Dream Online Store!</p>
