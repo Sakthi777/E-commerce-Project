@@ -15,10 +15,16 @@ exports.postAddToCardDetailsControllers = async (req, res) => {
         AddtoCardItems: [{ productID, quantity: 1 }],
       });
     } else {
-      user.AddtoCardItems.push({ productID });
-      await user.save();
-      res.json({ message: "Product ID added to user document successfully" });
+      const itemIndex = user.AddtoCardItems.findIndex((item) => item.productID === productID);
+      if (itemIndex !== -1) {
+        user.AddtoCardItems[itemIndex].quantity += 1;
+        console.log(user.AddtoCardItems[itemIndex]);
+      } else {
+        user.AddtoCardItems.push({ productID });
+      }
     }
+    await user.save();
+    res.send(user.AddtoCardItems);
   } catch (error) {
     console.error("Error uploading images:", error);
   }
@@ -40,7 +46,6 @@ exports.IncrementAddToCartProductQuantity = asyncHandler(async (req, res, next) 
     const { productID, userID } = req.params;
     console.log(productID + "    " + userID);
     const doc = await userDetails.findOne({ userID: userID });
-    console.log(doc);
     const updatedItems = doc.AddtoCardItems.map((product) => {
       if (product.productID === productID) {
         return { ...product, quantity: product.quantity + 1 };
@@ -49,7 +54,8 @@ exports.IncrementAddToCartProductQuantity = asyncHandler(async (req, res, next) 
     });
     doc.AddtoCardItems = updatedItems;
     await doc.save();
-    console.log(doc);
+    console.log(doc.AddtoCardItems);
+    res.send(doc.AddtoCardItems);
   } catch (error) {
     console.error("Error fetching products:", error);
     res.json({ error: "hello error" });
@@ -61,17 +67,39 @@ exports.DecrementAddToCartProductQuantity = asyncHandler(async (req, res, next) 
     console.log(productID + "    " + userID);
     const doc = await userDetails.findOne({ userID: userID });
     console.log(doc);
-    const updatedItems = doc.AddtoCardItems.map((product) => {
-      if (product.productID === productID) {
-        if (product.quantity >= 1) {
-          return { ...product, quantity: product.quantity - 1 };
+    for (let i = 0; i < doc.AddtoCardItems.length; i++) {
+      const product = doc.AddtoCardItems[i];
+      if (product.productID === productID && product.quantity >= 1) {
+        product.quantity -= 1;
+        if (product.quantity === 0) {
+          doc.AddtoCardItems.splice(i, 1);
+          i--;
         }
       }
-      return product;
-    });
-    doc.AddtoCardItems = updatedItems;
+    }
     await doc.save();
     console.log(doc);
+    res.send(doc.AddtoCardItems);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.json({ error: "hello error" });
+  }
+});
+
+exports.DeleteProductFromCartController = asyncHandler(async (req, res, next) => {
+  try {
+    const { productID, userID } = req.params;
+    console.log(productID + "    " + userID);
+    const doc = await userDetails.findOne({ userID: userID });
+    const index = doc.AddtoCardItems.findIndex((product) => product.productID === productID);
+
+    if (index !== -1) {
+      doc.AddtoCardItems.splice(index, 1);
+    }
+    await doc.save();
+
+    console.log(doc.AddtoCardItems);
+    res.send(doc.AddtoCardItems);
   } catch (error) {
     console.error("Error fetching products:", error);
     res.json({ error: "hello error" });
