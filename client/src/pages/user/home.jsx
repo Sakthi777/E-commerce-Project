@@ -1,4 +1,5 @@
 import React from "react";
+import { createContext, useContext } from "react";
 import ProductCard from "../../pages/user/productCard";
 import HeaderPage from "../../components/user/HeaderPage";
 import { FaArrowCircleDown } from "react-icons/fa";
@@ -15,8 +16,18 @@ import { Highlight } from "../../components/user/homePageCarousels";
 import { useSelector } from "react-redux";
 // import Cookies from "js-cookie";
 //import products from "./productList";
-
 const url = "http:localhost:8000";
+
+export const SliderContext = createContext();
+
+export const SliderProvider = ({ children }) => {
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [userCartItem, setUserCartItem] = useState([]);
+
+  return <SliderContext.Provider value={{ isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem }}>{children}</SliderContext.Provider>;
+};
+
+export const useSlider = () => useContext(SliderContext);
 
 const ProductGrid = ({ products }) => {
   const token = useSelector((state) => state.tokenDetails.token);

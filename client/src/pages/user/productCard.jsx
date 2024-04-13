@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 // import { FaEye } from "react-icons/fa";
 import { AiFillHeart } from "react-icons/ai";
 import "../../styles/user/productCard.css";
@@ -12,12 +13,14 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProductDescriptionCard from "../../pages/user/productDescriptionCard";
 import { useSelector } from "react-redux";
+import { useSlider } from "../../pages/user/home";
 import axios from "axios";
 const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPrice, setSale, setNew, discountPercentage, productDetails, product }) => {
   const [liked, setLiked] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [productList, setProductList] = useState("");
   const token = useSelector((state) => state.tokenDetails.token);
+  const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem } = useSlider();
   const toggleLike = () => {
     setLiked(!liked);
   };
@@ -37,10 +40,12 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
       .post("http://localhost:8000/post-AddToCardDetails", { productID, token })
       .then((response) => {
         console.log("Product added to cart:", response.data);
+        setUserCartItem(response.data);
       })
       .catch((error) => {
         console.error("Error adding product to cart:", error);
       });
+    setSidebarOpen(true);
   };
   return (
     <div className="product-card">
