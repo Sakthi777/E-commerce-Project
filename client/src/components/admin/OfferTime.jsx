@@ -107,7 +107,6 @@ function AdminPanel({ onSubmit }) {
       onSubmit(time);
     }
   };
-
   return (
     <div>
       <h2>Admin Panel</h2>
@@ -150,6 +149,26 @@ function UserPanel({ countdownEndDate }) {
     return () => clearTimeout(timer);
   });
 
+  const [countdownTime, setCountdownTime] = useState('');
+  useEffect(()=>{
+    fetchCountdownTime();
+
+    // Set up a timer to fetch countdown time every minute
+    const timer = setInterval(fetchCountdownTime, 60000); // 60000 milliseconds = 1 minute
+
+    // Clean up the timer on component unmount
+    return () => clearInterval(timer);
+  });
+  const fetchCountdownTime = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/datetime/getCountdown');
+      const { time } = response.data;
+      setCountdownTime(time);
+    } catch (error) {
+      console.error('Error fetching countdown time:', error);
+    }
+  };
+
   return (
     <div>
       <h2>User Panel</h2>
@@ -157,6 +176,7 @@ function UserPanel({ countdownEndDate }) {
       <p>Hours: {timeLeft.hours}</p>
       <p>Minutes: {timeLeft.minutes}</p>
       <p>Seconds: {timeLeft.seconds}</p>
+      <p>Countdown Time: {countdownTime}</p>
     </div>
   );
 }

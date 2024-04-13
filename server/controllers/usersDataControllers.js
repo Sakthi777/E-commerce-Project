@@ -67,6 +67,16 @@ exports.CountdownTimedate = asyncHandler(async (req ,res, next) => {
 	  }
 	});
 
+	exports.getCountdownDate = asyncHandler(async(req ,res ,next) => {
+		try {
+			const data = await DataModel.find();
+			res.json(data);
+			console.log(data);
+		} catch (error) {
+			res.status(500).json({ message: error.message });
+		}
+	  }); 
+
 exports.getUserDataController = asyncHandler((req, res, next) => {
 	// console.log("hello");
 	const email = req.params.email;
