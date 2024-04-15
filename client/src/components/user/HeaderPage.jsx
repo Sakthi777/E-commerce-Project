@@ -31,11 +31,19 @@ const HeaderPage = () => {
 	const [totalCardPrice, setTotalCardPrice] = useState(0);
 	const [totalCartItem, setTotalCartItem] = useState(0);
 	const token = useSelector((state) => state.tokenDetails.token);
+	const search = useSelector((state) => state.searchValue.search);
+
+	const [searchVal, setSearchVal] = useState("");
+	const dispatch = useDispatch();
 
 	let responseUserArray = [];
 	useEffect(() => {
 		fetchUserCartDetails();
 	}, [setSidebarOpen]);
+
+	useEffect(() => {
+		dispatch(setSearch(searchVal));
+	}, [searchVal]);
 
 	// useEffect(() => {
 	//   let totalPrice = 0;
