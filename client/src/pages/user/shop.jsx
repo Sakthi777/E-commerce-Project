@@ -7,8 +7,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Footer from "../../pages/user/Footer";
 const ShopPage = ({ products }) => {
+  const [productDetails, setProductDetails] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/get-productDetails`)
+      .then((response) => {
+        setProductDetails(response.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching product data:", error);
+      });
+  }, []);
   return (
     <>
       <HeaderPage />
@@ -228,24 +241,22 @@ const ShopPage = ({ products }) => {
             </div>
             <div className="shop-product">
               <div className="shop-product-grid">
-                {products.map(
-                  (product) =>
-                    product.setNew && (
-                      <ProductCard
-                        key={product.id}
-                        imgSrc={product.imgSrc}
-                        imageSlider={product.imageSlider}
-                        rating={product.rating}
-                        productName={product.productName}
-                        oldPrice={product.oldPrice}
-                        newPrice={product.newPrice}
-                        setNew={product.setNew}
-                        setSale={product.setSale}
-                        discountPercentage={product.discountPercentage}
-                        productDetails={product.productDetails}
-                      />
-                    )
-                )}
+                {productDetails.map((product) => (
+                  <ProductCard
+                    key={product._id}
+                    imgSrc={product.image}
+                    imageSlider={product.imageSlider}
+                    rating={product.rating}
+                    productName={product.productName}
+                    oldPrice={product.oldPrice}
+                    newPrice={product.newPrice}
+                    setNew={product.newProduct}
+                    setSale={product.sale}
+                    discountPercentage={product.discountPercentage}
+                    productDetails={product.productDescription}
+                    product={product}
+                  />
+                ))}
               </div>
             </div>
           </div>
