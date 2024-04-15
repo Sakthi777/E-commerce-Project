@@ -12,6 +12,11 @@ import upload from "../../../src/assets/images/AddProduct/upload.png";
 import AdminHeader, { useOffCanvasContext } from "../../components/admin/adminHeader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import footimg from "../../../src/assets/images/footer-img/back-faq.jpg";
+
+
 
 export default function AddProductdata() {
   const { showOffCanvas } = useOffCanvasContext();
@@ -136,20 +141,20 @@ export default function AddProductdata() {
           <div className="add-image-title">
             <p>Create Product</p>
             {/* <div className="panel">
-              <div className="image-upload-box">
+              {/* <div className="image-upload-box">
                 <div className="image-box">
                   <img src={preImage ? preImage : upload} alt="" className="center-image" />
                 </div>
-              </div>
-              <div className="ImageFileName">
+              </div> */}
+            {/* <div className="ImageFileName">
                 <p>{fileName}</p>
               </div>
               <div className="imageInputFiled">
                 <label htmlFor="file-upload">Select Image</label>
                 <input type="file" id="file-upload" style={{ display: "none" }} onChange={handleImageChange} accept="image/*" />
-              </div>
+              </div> */}
 
-              <div className="ImageSliderUpload">
+            {/* <div className="ImageSliderUpload">
                 <p>Product Image Slider</p>
 
                 <div className="image-grid">
@@ -165,9 +170,8 @@ export default function AddProductdata() {
                   <label htmlFor="multi-file-upload">Select Images</label>
                   <input type="file" id="multi-file-upload" style={{ display: "none" }} onChange={handleImageSliderChange} accept="image/*" multiple />
                 </div>
-              </div>
+              </div> 
             </div> */}
-            {/* <br /> */}
             <div className="cont-attribute">
               {/* <div className="pu-attribute">
                 <div className="pu-attribute-input">
@@ -184,16 +188,6 @@ export default function AddProductdata() {
                   <input type="text" value={rating} onChange={(e) => setRating(e.target.value)} />
                 </div>
               </div> */}
-              {/* <div class="description-box">
-                <p>Product Title*</p>
-                <input type="text" placeholder="Enter Product Name" value={productName} onChange={(e) => setProductName(e.target.value)} />
-                <p>Do not exceed 20 characters when entering the product name.</p>
-              </div> */}
-              {/* <div className="description-box">
-                <p>Product Code</p>
-                <input type="text" value='TWT145015' disabled required />
-                <p>Code will be generated automatically</p>
-              </div> */}
             </div>
             <br />
             <div className="user-product">
@@ -201,12 +195,12 @@ export default function AddProductdata() {
                 <label className="user-product-label">Description*</label>
                 <input type="text" placeholder="Enter Description" value={productDescription} onChange={(e) => setProductDescription(e.target.value)}></input>
               </div> */}
-              <div className="label-id">
-                {/* <div className="user-product-input label-id-input">
+              {/* <div className="label-id">
+                <div className="user-product-input label-id-input">
                 <label>Brand Name</label>
                 <input type="text" placeholder="Enter Brand Name"></input>
-              </div> */}
-                {/* <div className="user-product-input">
+              </div>
+                <div className="user-product-input">
                 <label>Category</label>
                 <select className="select-wid" name="car" id="car">
                   <option value="volvo">Electric</option>
@@ -214,9 +208,13 @@ export default function AddProductdata() {
                   <option value="opel">Steel</option>
                   <option value="audi">Services</option>
                 </select>
-              </div> */}
               </div>
-              {/* <div className="label-id">
+              </div> */}
+              <div className="label-id">
+                <div class="user-product-input">
+                  <label>Product Title*</label>
+                  <input type="text" placeholder="Enter Product Name" value={productName} onChange={(e) => setProductName(e.target.value)} />
+                </div>
                 <div className="user-product-input">
                   <label>Old Price*</label>
                   <input type="text" placeholder="Enter Old Price" value={oldPrice} onChange={(e) => setOldPrice(e.target.value)}></input>
@@ -225,12 +223,8 @@ export default function AddProductdata() {
                   <label>New Price*</label>
                   <input type="text" placeholder="Enter New Price" value={newPrice} onChange={(e) => setNewPrice(e.target.value)}></input>
                 </div>
-              </div> */}
-              {/* <div className="label-id">
-                <div className="user-product-input label-id-input">
-                <label>Schedule</label>
-                <input type="date"></input>
               </div>
+              <div className="label-id">
                 <div className="user-product-input">
                   <label>setSale*</label>
                   <select className="select-wid" name="car" id="car" onChange={(e) => setSale(e.target.value === "true")}>
@@ -238,8 +232,6 @@ export default function AddProductdata() {
                     <option value="true">True</option>
                   </select>
                 </div>
-              </div> */}
-              {/* <div className="label-id">
                 <div className="user-product-input">
                   <label>setNew*</label>
                   <select className="select-wid" name="cas" id="cas" onChange={(e) => setNewProduct(e.target.value === "true")}>
@@ -254,46 +246,11 @@ export default function AddProductdata() {
                     <option value="true">True</option>
                   </select>
                 </div>
-              </div> */}
-              <div className="label-id">
-              <div className="user-product-input">
-                  <label htmlFor="Quantity">Product Title</label>
-                  <input type="text" placeholder='Product title' required />
-                  <label>Do not exceed 20 characters when entering the product name.</label>
-                </div>
-                <div className="user-product-input">
-                  <label htmlFor="Quantity">Product Code</label>
-                  <input type="text" value='TWT145015' disabled required />
-                  <label>Code will be generated automatically</label>
-                </div>
               </div>
               <div className="label-id">
-                <div className="user-product-input">
-                  <label htmlFor="Quantity">Quantity</label>
-                  <input type="number" placeholder='Quantity' required />
-                </div>
-                <div className="user-product-input">
-                  <label htmlFor="SKU">SKU</label>
-                  <input type="text" value='TWT-LP-ALU-08' required disabled/>
-                </div>
-                <div className="user-product-input">
-                  <label htmlFor="">Brand</label>
-                  <input type="text" placeholder='Brand' required />
-                </div>
-              </div>
-              <div className="label-id">
-                {/* <div className="user-product-input label-id-input">
+                <div className="user-product-input label-id-input">
                   <label>Discount Percentage*</label>
                   <input type="text" value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value)}></input>
-                </div> */}
-
-                <div className="user-product-input">
-                  <label>Category</label>
-                  <select className="select-wid" name="car" id="car">
-                    <option value="volvo">Grocery</option>
-                    <option value="saab">Kitchen</option>
-                    <option value="opel">Home</option>
-                  </select>
                 </div>
                 <div className="user-product-input">
                   <label>Product Type</label>
@@ -303,39 +260,37 @@ export default function AddProductdata() {
                     <option value="opel">Unit</option>
                   </select>
                 </div>
-                <div className="user-product-input">
-                  <label>Gender</label>
-                  <select className="select-wid" name="car" id="car">
-                    <option value="volvo">Male</option>
-                    <option value="saab">Female</option>
-                    <option value="opel">Others</option>
-                  </select>
-                </div>
-              </div>
-              <div className="label-id ">
-              <div className="user-product-input checkboxmodel">
-                  <label htmlFor="Quantity">Color Varient</label>
-                  <input type="checkbox" required />
-                  <input type="checkbox" required />
-                  <input type="checkbox" required />
-                  <input type="checkbox" required />
-                  <input type="checkbox" required />
-                  <input type="checkbox" required />
-                  <input type="checkbox" required />
-                </div>
-                <div className="user-product-input checkboxsize ">
-                  <label htmlFor="Quantity">Size</label>
-                  <input type="checkbox" required />
-                  <input type="checkbox" required />
-                  <input type="checkbox" required />
-                  <input type="checkbox" required />
-                  <input type="checkbox" required />
-                  <input type="checkbox" required />
-                  <input type="checkbox" required />
-                </div>
               </div>
             </div>
+            <div className="label-id" style={{ marginTop: '30px', borderColor: '#F0F4F8' }}>
+              <div className="image-input">
+                <div>
+                  <label htmlFor="category-image">
+                    <span style={{ fontSize: "256%" }}>
+                      <br />
+                      <FontAwesomeIcon icon={faCloudArrowUp} />
+                    </span>
+                    <br />
+                    <br />
+                    <span>
+                      <span style={{ color: "#009f7f" }}>Drag and drop your product images or browse  your product images</span>
+                      <br />
+                      <br />
+                    </span>
+                    <br />
+                    <br />
+                  </label>
+                </div>
 
+                <input type="file" name="category-image" id="category-image" style={{ display: "none" }} />
+              </div>
+            </div>
+            <div className="label-id">
+              <div className="user-product-input">
+                <p htmlFor="">Description*</p>
+                <textarea name="details" id="details" style={{ paddingLeft: '10px' }} cols="10" rows="5" placeholder="Enter Description"></textarea>
+              </div>
+            </div>
             <div className="label-id payment-images">
               <div className="user-product-input label-id-input">
                 {/* <label>Payment Methods</label> */}
@@ -367,14 +322,38 @@ export default function AddProductdata() {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="products-button">
-            {/* <div className="pro-btn">
+            <div className="products-button">
+              {/* <div className="pro-btn">
                 <button>Save to Drafts</button>
               </div> */}
-            <div className="pro-btn">
-              <button onClick={handlePublish}>Publish Product</button>
+              <div className="pro-btn">
+                <button>Reset</button>
+              </div>
+              <div className="pro-btn">
+                <button>Create Product</button>
+              </div>
+              <div className="pro-btn">
+                <button onClick={handlePublish}>Publish Product</button>
+              </div>
             </div>
+
+          </div>
+          <div className="product-preview ">
+            <div className="user-product-input previewproduct">
+            <div>
+              <label htmlFor="">Product card Preview</label>
+            </div>
+            <div className="imgview">
+              <img src={footimg} alt="" style={{ width: '100%', height: '50%' }} />
+              <div>
+
+              <h5 className="newprice">$20.00 </h5><span className="oldprice">$25.00</span>
+              </div>
+              <div className="pro-btn">
+                <button onClick={handlePublish}>Publish Product</button>
+              </div>
+            </div>
+          </div>
           </div>
         </div>
       </div>
