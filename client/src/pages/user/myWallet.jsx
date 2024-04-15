@@ -71,16 +71,16 @@ function MyWallet() {
 				token: token,
 				amountToAdd: -addAmtVal,
 			};
-			// await axios
-			// 	.post(`${url}/walletData`, postData)
-			// 	.then((res) => {
-			// 		setCurrBal(res.data.currentBalance);
-			// 		setTransactionList(res.data.transactionList);
-			// 	})
-			// 	.catch((err) => {
-			// 		console.log(err);
-			// 	});
-			// setAddAmtVal(0);
+			await axios
+				.post(`${url}/walletData`, postData)
+				.then((res) => {
+					setCurrBal(res.data.currentBalance);
+					setTransactionList(res.data.transactionList);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+			setAddAmtVal(0);
 		} else if (addAmtVal > credits) {
 			toastWarn("You don't have that credits in wallet!!!");
 		}
