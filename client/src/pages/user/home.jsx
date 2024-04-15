@@ -23,14 +23,16 @@ export const SliderContext = createContext();
 export const SliderProvider = ({ children }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [userCartItem, setUserCartItem] = useState([]);
+  const [productDetails, setProductDetails] = useState([]);
 
-  return <SliderContext.Provider value={{ isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem }}>{children}</SliderContext.Provider>;
+  return <SliderContext.Provider value={{ isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails }}>{children}</SliderContext.Provider>;
 };
 
 export const useSlider = () => useContext(SliderContext);
 
 const ProductGrid = ({ products }) => {
   const token = useSelector((state) => state.tokenDetails.token);
+  const search = useSelector((state) => state.searchValue.search);
   const [selectedOption, setSelectedOption] = useState("Top Order");
 
   const handleOptionClick = (option) => {
@@ -39,6 +41,10 @@ const ProductGrid = ({ products }) => {
 
   // const cookie = Cookies.get("LoginToken");
   // console.log(cookie);
+
+  useEffect(() => {
+    console.log(search);
+  }, [search]);
 
   function timeout(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -54,15 +60,15 @@ const ProductGrid = ({ products }) => {
       .catch((error) => {
         console.error("Error fetching product data:", error);
       });
-  }, [setProductDetails]);
+  }, []);
 
   //CountDown Time start
-  
-  const [seconds, setSeconds] = useState(24 * 60 * 60); 
+
+  const [seconds, setSeconds] = useState(24 * 60 * 60);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setSeconds(prevSeconds => {
+      setSeconds((prevSeconds) => {
         if (prevSeconds === 0) {
           clearInterval(interval);
         }
@@ -78,12 +84,12 @@ const ProductGrid = ({ products }) => {
 
   //CountDown Time end
 
-
   return (
     <>
       <HeaderPage />
       <Highlight />
       {/* <Foods /> */}
+
       <div className="product-container">
         <div className="productTitle">Recently Sold Items</div>
         <div className="product-grid">
@@ -130,6 +136,7 @@ const ProductGrid = ({ products }) => {
                   setSale={product.sale}
                   discountPercentage={product.discountPercentage}
                   productDetails={product.productDescription}
+                  product={product}
                 />
               )
           )}
@@ -207,6 +214,7 @@ const ProductGrid = ({ products }) => {
                   setSale={product.sale}
                   discountPercentage={product.discountPercentage}
                   productDetails={product.productDescription}
+                  product={product}
                 />
               )
           )}
@@ -255,6 +263,7 @@ const ProductGrid = ({ products }) => {
                       setSale={product.sale}
                       discountPercentage={product.discountPercentage}
                       productDetails={product.productDescription}
+                      product={product}
                     />
                   )
               )}
@@ -278,6 +287,7 @@ const ProductGrid = ({ products }) => {
                       setSale={product.sale}
                       discountPercentage={product.discountPercentage}
                       productDetails={product.productDescription}
+                      product={product}
                     />
                   )
               )}
@@ -300,6 +310,7 @@ const ProductGrid = ({ products }) => {
                       setSale={product.sale}
                       discountPercentage={product.discountPercentage}
                       productDetails={product.productDescription}
+                      product={product}
                     />
                   )
               )}

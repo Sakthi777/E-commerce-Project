@@ -6,7 +6,7 @@ import { AiFillHeart } from "react-icons/ai";
 import "../../styles/user/productCard.css";
 import "../../styles/user/productDescriptionCard.css";
 import { Modal, Button } from "react-bootstrap";
-import { createContext, useContext, useState } from "react";
+import { useEffect, useState } from "react";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faShoppingBag, faStar } from "@fortawesome/free-solid-svg-icons";
 import "slick-carousel/slick/slick.css";
@@ -19,12 +19,43 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
   const [liked, setLiked] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [productList, setProductList] = useState("");
+  const [backToCart, setBacktoCart] = useState(false);
   const token = useSelector((state) => state.tokenDetails.token);
   const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem } = useSlider();
-  const toggleLike = () => {
+  useEffect(() => {
+    userCartItem.map((prod) => {
+      if (prod.productID === product._id) {
+        setBacktoCart(true);
+        console.log(prod);
+      }
+    });
+  }, [backToCart]);
+  const url = `http://localhost:8000`;
+  const toggleLike = async () => {
     setLiked(!liked);
+    const wishListPostData = {
+      token: token,
+      productId: product._id,
+    };
+    await axios
+      .post(`${url}/wishlist/`, wishListPostData)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-
+  const handleGoCartClick = () => {
+    setSidebarOpen(true);
+  };
+  const handleClick = (product) => {
+    if (backToCart) {
+      handleGoCartClick();
+    } else {
+      handleAddToCard(product);
+    }
+  };
   const toggleDescription = () => {
     setShowModal(true);
   };
@@ -45,7 +76,7 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
       .catch((error) => {
         console.error("Error adding product to cart:", error);
       });
-    setSidebarOpen(true);
+    setBacktoCart(true);
   };
   return (
     <div className="product-card">
@@ -100,11 +131,11 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
       <div
         className="add-to-cart-icon"
         onClick={() => {
-          handleAddToCard(product);
+          handleClick(product);
         }}
       >
         <FontAwesomeIcon icon={faShoppingBag} className="card-icon" />
-        <span>Add</span>
+        {backToCart ? <span>Go Cart</span> : <span>Add</span>}
       </div>
     </div>
   );

@@ -14,26 +14,114 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ProductDescriptionCard from "../../pages/user/productDescriptionCard";
+import { useSelector } from "react-redux";
 const Wishlist = () => {
   const [liked, setLiked] = useState(false);
+  const url = `http://localhost:8000`;
   const toggleLike = () => {
     setLiked(!liked);
   };
   const [showModal, setShowModal] = useState(false);
-  const handleShowModal = () => setShowModal(true);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const handleShowModal = (product) => {
+    setSelectedProduct(product);
+    setShowModal(true);
+  };
   const handleCloseModal = () => setShowModal(false);
 
   const [productDetails, setProductDetails] = useState([]);
+  const [wishlist, setWishList] = useState([]);
+  const token = useSelector((state) => state.tokenDetails.token);
+  // useEffect(() => {
+  // 	axios
+  // 		.get(`${url}/get-productDetails`)
+  // 		.then((response) => {
+  // 			setProductDetails(response.data.data);
+  // 		})
+  // 		.catch((error) => {
+  // 			console.error("Error fetching product data:", error);
+  // 		});
+  // }, [setProductDetails]);
+
+  function timeout(ms) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+  }
+
+  let isMounted = true;
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/get-productDetails`)
-      .then((response) => {
-        setProductDetails(response.data.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching product data:", error);
+    const fetchWishList = async () => {
+      await axios.get(`${url}/wishlist/${token}`).then((res) => {
+        setWishList(res.data.productID);
       });
-  }, [setProductDetails]);
+    };
+    fetchWishList();
+  }, [isMounted]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      await timeout(500);
+      if (isMounted) {
+        wishlist.map((id) => {
+          axios
+            .get(`http://localhost:8000/get-userDetails/${id}`)
+            .then((response) => {
+              setProductDetails((prevArray) => [...prevArray, response.data.data]);
+            })
+            .catch((error) => {
+              console.error("Error fetching product data:", error);
+            });
+        });
+      }
+    };
+
+    fetchProducts();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [wishlist]);
+
+  useEffect(() => {
+    if (productDetails) renderTable();
+    console.log(productDetails);
+  }, [productDetails]);
+
+  const deleteWishList = async (id) => {
+    await axios.delete(`http://localhost:8000/wishlist/${token}/${id}`).then((res) => {
+      setWishList(res.data.productID);
+      // console.log(res.data);
+    });
+  };
+
+  const renderTable = () => {
+    if (productDetails) {
+      isMounted = true;
+      return productDetails.map((product, index) => (
+        <tr>
+          <td>{index + 1}</td>
+          <td>
+            <img src={`http://localhost:8000/uploads/productImage/${product.image}`} alt="" />
+          </td>
+          <td>{product.productName}</td>
+          <td>{product.newPrice}</td>
+          <td>Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
+          <td>In Stock</td>
+          <td className="wishlist-card">
+            <div className="wishlist-add-to-cart">
+              <span>Add To Cart</span>
+            </div>
+          </td>
+          <td>
+            <FontAwesomeIcon icon={faEye} className="wishlist-view" onClick={() => handleShowModal(product)} />
+            <FontAwesomeIcon icon={faTrash} className="wishlist-delete" onClick={() => deleteWishList(product._id)} />
+          </td>
+        </tr>
+      ));
+    }
+  };
+
   return (
     <div className="wishlist-container">
       <HeaderPage />
@@ -58,60 +146,40 @@ const Wishlist = () => {
               <th>Action</th>
             </tr>
           </thead>
-          <tbody>
-            {productDetails.map((product, index) => (
-              <tr>
-                <td>{index + 1}</td>
-                <td>
-                  <img src={`http://localhost:8000/uploads/productImage/${product.image}`} alt="" />
-                </td>
-                <td>{product.productName}</td>
-                <td>{product.newPrice}</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
-                <td>In Stock</td>
-                <td className="wishlist-card">
-                  <div className="wishlist-add-to-cart">
-                    <span>Add To Card</span>
-                  </div>
-                </td>
-                <td>
-                  <FontAwesomeIcon icon={faEye} className="wishlist-view" onClick={handleShowModal} />
-
-                  <Modal show={showModal} onHide={handleCloseModal}>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Wishlist Product</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <ProductDescriptionCard
-                        product={{
-                          imgSrc: product.image,
-                          imageSlider: product.imageSlider,
-                          rating: product.rating,
-                          productName: product.productName,
-                          oldPrice: product.oldPrice,
-                          newPrice: product.newPrice,
-                          setSale: product.sale,
-                          setNew: product.newProduct,
-                          discountPercentage: product.discountPercentage,
-                          productDetails: product.productDescription,
-                        }}
-                      />
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button>Close</Button>
-                    </Modal.Footer>
-                  </Modal>
-
-                  <FontAwesomeIcon icon={faTrash} className="wishlist-delete" />
-                </td>
-              </tr>
-            ))}
-          </tbody>
+          <tbody>{renderTable()}</tbody>
         </table>
       </div>
       <div className="showMoreButton">
         <button className="show-more-button">LOAD MORE ITEMS</button>
       </div>
+      <Modal show={showModal} onHide={handleCloseModal} centered size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Wishlist Product</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedProduct && (
+            <ProductDescriptionCard
+              product={{
+                imgSrc: selectedProduct.image,
+                imageSlider: selectedProduct.imageSlider,
+                rating: selectedProduct.rating,
+                productName: selectedProduct.productName,
+                oldPrice: selectedProduct.oldPrice,
+                newPrice: selectedProduct.newPrice,
+                setSale: selectedProduct.sale,
+                setNew: selectedProduct.newProduct,
+                discountPercentage: selectedProduct.discountPercentage,
+                productDetails: selectedProduct.productDescription,
+              }}
+            />
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" className="green-background-button">
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       <Footer />
     </div>

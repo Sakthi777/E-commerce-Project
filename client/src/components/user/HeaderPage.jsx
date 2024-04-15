@@ -17,24 +17,32 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import products from "../../pages/user/productList";
 import Cookies from "js-cookie";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setSearch } from "../../features/slice/searchSlice";
 import { useSlider } from "../../pages/user/home";
 const HeaderPage = () => {
-  const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem } = useSlider();
+  const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails } = useSlider();
   const [isFixed, setIsFixed] = useState(false);
   const [prevScrollY, setPrevScrollY] = useState(0);
   const cardRef = useRef(null);
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState([]);
-  const [productDetails, setProductDetails] = useState([]);
   const [totalCardPrice, setTotalCardPrice] = useState(0);
   const [totalCartItem, setTotalCartItem] = useState(0);
   const token = useSelector((state) => state.tokenDetails.token);
+  const search = useSelector((state) => state.searchValue.search);
+
+  const [searchVal, setSearchVal] = useState("");
+  const dispatch = useDispatch();
 
   let responseUserArray = [];
   useEffect(() => {
     fetchUserCartDetails();
-  }, [setSidebarOpen]);
+  }, []);
+
+  useEffect(() => {
+    dispatch(setSearch(searchVal));
+  }, [searchVal]);
 
   // useEffect(() => {
   //   let totalPrice = 0;
@@ -83,9 +91,7 @@ const HeaderPage = () => {
           console.log(responseUserArray);
           let totalPrice = 0;
           let count = 0;
-          if (responseUserArray.length == 0) {
-            console.log("array is empty...");
-          }
+
           responseUserArray.forEach((product) => {
             totalPrice += product.productdetail.newPrice * product.quantity;
             count = count + 1;
@@ -109,6 +115,7 @@ const HeaderPage = () => {
 
   const navigateCheckout = () => {
     navigate("/checkout");
+    setSidebarOpen(false);
   };
 
   useEffect(() => {
@@ -226,7 +233,7 @@ const HeaderPage = () => {
             </div>
           </Link>
           <div className="search-container">
-            <input type="text" className="search-bar" placeholder="Search..." />
+            <input type="text" className="search-bar" value={search} placeholder="Search..." onChange={(e) => setSearchVal(e.target.value)} />
             <span className="search-icon">
               <IoIosSearch />
             </span>
@@ -290,7 +297,7 @@ const HeaderPage = () => {
           </div>
           <div className="card">
             <span>Do you have a coupon code?</span>
-            <div className="offcanvas-border" onClick={navigateCheckout}>
+            <div className="offcanvas-border" onClick={navigateCheckout} style={{ cursor: "pointer" }}>
               <p>Proceed To Checkout</p>
               <p className="hrLine"></p>
               <p>{totalCardPrice}</p>
