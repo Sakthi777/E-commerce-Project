@@ -3,12 +3,12 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import "../../styles/admin/addProduct.css";
 import upload from "../../../src/assets/images/AddProduct/upload.png";
-import ipay from "../../../src/assets/images/AddProduct/applepay.svg";
+// import ipay from "../../../src/assets/images/AddProduct/applepay.svg";
 // import bpay from "../../../src/assets/images/AddProduct/bitpay.svg";
-import gpay from "../../../src/assets/images/AddProduct/googlepay.svg";
+// import gpay from "../../../src/assets/images/AddProduct/googlepay.svg";
 // import mcpay from "../../../src/assets/images/AddProduct/mc.svg";
 // import paypalpay from "../../../src/assets/images/AddProduct/paypal.svg";
-import vpay from "../../../src/assets/images/AddProduct/visa.svg";
+// import vpay from "../../../src/assets/images/AddProduct/visa.svg";
 import AdminHeader, { useOffCanvasContext } from "../../components/admin/adminHeader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -131,11 +131,11 @@ export default function AddProductdata() {
       <div className={`adddata ${showOffCanvas ? "content-shifted" : ""} `} style={{ padding: "20px" }}>
         <div>
           <div className="head1">
-            <h6>Product Settings</h6>
+            <h6>Add New</h6>
           </div>
           <div className="add-image-title">
-            <p>Product Images</p>
-            <div className="panel">
+            <p>Create Product</p>
+            {/* <div className="panel">
               <div className="image-upload-box">
                 <div className="image-box">
                   <img src={preImage ? preImage : upload} alt="" className="center-image" />
@@ -166,10 +166,10 @@ export default function AddProductdata() {
                   <input type="file" id="multi-file-upload" style={{ display: "none" }} onChange={handleImageSliderChange} accept="image/*" multiple />
                 </div>
               </div>
-            </div>
-            <br />
+            </div> */}
+            {/* <br /> */}
             <div className="cont-attribute">
-              <div className="pu-attribute">
+              {/* <div className="pu-attribute">
                 <div className="pu-attribute-input">
                   <p>Attributes</p>
                   <select className="select-wid" name="cars" id="cars">
@@ -183,25 +183,30 @@ export default function AddProductdata() {
                   <p>Rating*</p>
                   <input type="text" value={rating} onChange={(e) => setRating(e.target.value)} />
                 </div>
-              </div>
-              <div class="description-box">
-                <p>Product Name*</p>
+              </div> */}
+              {/* <div class="description-box">
+                <p>Product Title*</p>
                 <input type="text" placeholder="Enter Product Name" value={productName} onChange={(e) => setProductName(e.target.value)} />
-              </div>
+                <p>Do not exceed 20 characters when entering the product name.</p>
+              </div> */}
+              {/* <div className="description-box">
+                <p>Product Code</p>
+                <input type="text" value='TWT145015' disabled required />
+                <p>Code will be generated automatically</p>
+              </div> */}
             </div>
-          </div>
-          <br />
-          <div className="user-product">
-            <div className="user-product-input pro-in">
-              <label className="user-product-label">Description*</label>
-              <input type="text" placeholder="Enter Description" value={productDescription} onChange={(e) => setProductDescription(e.target.value)}></input>
-            </div>
-            <div className="label-id">
-              <div className="user-product-input label-id-input">
+            <br />
+            <div className="user-product">
+              {/* <div className="user-product-input pro-in">
+                <label className="user-product-label">Description*</label>
+                <input type="text" placeholder="Enter Description" value={productDescription} onChange={(e) => setProductDescription(e.target.value)}></input>
+              </div> */}
+              <div className="label-id">
+                {/* <div className="user-product-input label-id-input">
                 <label>Brand Name</label>
                 <input type="text" placeholder="Enter Brand Name"></input>
-              </div>
-              <div className="user-product-input">
+              </div> */}
+                {/* <div className="user-product-input">
                 <label>Category</label>
                 <select className="select-wid" name="car" id="car">
                   <option value="volvo">Electric</option>
@@ -209,73 +214,140 @@ export default function AddProductdata() {
                   <option value="opel">Steel</option>
                   <option value="audi">Services</option>
                 </select>
+              </div> */}
               </div>
-            </div>
-            <div className="label-id">
-              <div className="user-product-input">
-                <label>Old Price*</label>
-                <input type="text" placeholder="Enter Old Price" value={oldPrice} onChange={(e) => setOldPrice(e.target.value)}></input>
-              </div>
-              <div className="user-product-input">
-                <label>New Price*</label>
-                <input type="text" placeholder="Enter New Price" value={newPrice} onChange={(e) => setNewPrice(e.target.value)}></input>
-              </div>
-            </div>
-            <div className="label-id">
-              <div className="user-product-input label-id-input">
+              {/* <div className="label-id">
+                <div className="user-product-input">
+                  <label>Old Price*</label>
+                  <input type="text" placeholder="Enter Old Price" value={oldPrice} onChange={(e) => setOldPrice(e.target.value)}></input>
+                </div>
+                <div className="user-product-input">
+                  <label>New Price*</label>
+                  <input type="text" placeholder="Enter New Price" value={newPrice} onChange={(e) => setNewPrice(e.target.value)}></input>
+                </div>
+              </div> */}
+              {/* <div className="label-id">
+                <div className="user-product-input label-id-input">
                 <label>Schedule</label>
                 <input type="date"></input>
               </div>
+                <div className="user-product-input">
+                  <label>setSale*</label>
+                  <select className="select-wid" name="car" id="car" onChange={(e) => setSale(e.target.value === "true")}>
+                    <option value="false">False</option>
+                    <option value="true">True</option>
+                  </select>
+                </div>
+              </div> */}
+              {/* <div className="label-id">
+                <div className="user-product-input">
+                  <label>setNew*</label>
+                  <select className="select-wid" name="cas" id="cas" onChange={(e) => setNewProduct(e.target.value === "true")}>
+                    <option value="false">False</option>
+                    <option value="true">True</option>
+                  </select>
+                </div>
+                <div className="user-product-input">
+                  <label>FeaturedItems*</label>
+                  <select className="select-wid" name="car" id="car" onChange={(e) => setFeaturedItems(e.target.value === "true")}>
+                    <option value="false">False</option>
+                    <option value="true">True</option>
+                  </select>
+                </div>
+              </div> */}
+              <div className="label-id">
               <div className="user-product-input">
-                <label>setSale*</label>
-                <select className="select-wid" name="car" id="car" onChange={(e) => setSale(e.target.value === "true")}>
-                  <option value="false">False</option>
-                  <option value="true">True</option>
-                </select>
+                  <label htmlFor="Quantity">Product Title</label>
+                  <input type="text" placeholder='Product title' required />
+                  <label>Do not exceed 20 characters when entering the product name.</label>
+                </div>
+                <div className="user-product-input">
+                  <label htmlFor="Quantity">Product Code</label>
+                  <input type="text" value='TWT145015' disabled required />
+                  <label>Code will be generated automatically</label>
+                </div>
+              </div>
+              <div className="label-id">
+                <div className="user-product-input">
+                  <label htmlFor="Quantity">Quantity</label>
+                  <input type="number" placeholder='Quantity' required />
+                </div>
+                <div className="user-product-input">
+                  <label htmlFor="SKU">SKU</label>
+                  <input type="text" value='TWT-LP-ALU-08' required disabled/>
+                </div>
+                <div className="user-product-input">
+                  <label htmlFor="">Brand</label>
+                  <input type="text" placeholder='Brand' required />
+                </div>
+              </div>
+              <div className="label-id">
+                {/* <div className="user-product-input label-id-input">
+                  <label>Discount Percentage*</label>
+                  <input type="text" value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value)}></input>
+                </div> */}
+
+                <div className="user-product-input">
+                  <label>Category</label>
+                  <select className="select-wid" name="car" id="car">
+                    <option value="volvo">Grocery</option>
+                    <option value="saab">Kitchen</option>
+                    <option value="opel">Home</option>
+                  </select>
+                </div>
+                <div className="user-product-input">
+                  <label>Product Type</label>
+                  <select className="select-wid" name="car" id="car">
+                    <option value="volvo">Boxed</option>
+                    <option value="saab">Single</option>
+                    <option value="opel">Unit</option>
+                  </select>
+                </div>
+                <div className="user-product-input">
+                  <label>Gender</label>
+                  <select className="select-wid" name="car" id="car">
+                    <option value="volvo">Male</option>
+                    <option value="saab">Female</option>
+                    <option value="opel">Others</option>
+                  </select>
+                </div>
+              </div>
+              <div className="label-id ">
+              <div className="user-product-input checkboxmodel">
+                  <label htmlFor="Quantity">Color Varient</label>
+                  <input type="checkbox" required />
+                  <input type="checkbox" required />
+                  <input type="checkbox" required />
+                  <input type="checkbox" required />
+                  <input type="checkbox" required />
+                  <input type="checkbox" required />
+                  <input type="checkbox" required />
+                </div>
+                <div className="user-product-input checkboxsize ">
+                  <label htmlFor="Quantity">Size</label>
+                  <input type="checkbox" required />
+                  <input type="checkbox" required />
+                  <input type="checkbox" required />
+                  <input type="checkbox" required />
+                  <input type="checkbox" required />
+                  <input type="checkbox" required />
+                  <input type="checkbox" required />
+                </div>
               </div>
             </div>
-            <div className="label-id">
-              <div className="user-product-input">
-                <label>setNew*</label>
-                <select className="select-wid" name="cas" id="cas" onChange={(e) => setNewProduct(e.target.value === "true")}>
-                  <option value="false">False</option>
-                  <option value="true">True</option>
-                </select>
-              </div>
-              <div className="user-product-input">
-                <label>FeaturedItems*</label>
-                <select className="select-wid" name="car" id="car" onChange={(e) => setFeaturedItems(e.target.value === "true")}>
-                  <option value="false">False</option>
-                  <option value="true">True</option>
-                </select>
-              </div>
-            </div>
-            <div className="label-id">
-              <div className="user-product-input label-id-input">
-                <label>Discount Percentage*</label>
-                <input type="text" value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value)}></input>
-              </div>
-              <div className="user-product-input">
-                <label>Status</label>
-                <select className="select-wid" name="car" id="car">
-                  <option value="volvo">Completed</option>
-                  <option value="saab">Pending</option>
-                  <option value="opel">OnProcess</option>
-                </select>
-              </div>
-            </div>
+
             <div className="label-id payment-images">
               <div className="user-product-input label-id-input">
-                <label>Payment Methods</label>
+                {/* <label>Payment Methods</label> */}
                 <div className="payment-option">
-                  <div className="payments">
+                  {/* <div className="payments">
                     <input class="hidden" type="radio" id="" value={""}></input>
                     <img src={ipay} alt="" width={"40px"} />
-                  </div>
-                  <div className="payments">
+                  </div> */}
+                  {/* <div className="payments">
                     <input class="hidden" type="radio" id="" value={""}></input>
                     <img src={gpay} alt="" width={"40px"} />
-                  </div>
+                  </div> */}
                   {/* <div className="payments">
                   <input class="hidden" type="radio" id="" value={""}></input>
                   <img src={bpay} alt="" width={"40px"} />
@@ -284,10 +356,10 @@ export default function AddProductdata() {
                   <input class="hidden" type="radio" id="" value={""}></input>
                   <img src={paypalpay} alt="" width={"40px"} />
                 </div> */}
-                  <div className="payments">
+                  {/* <div className="payments">
                     <input class="hidden" type="radio" id="" value={""}></input>
                     <img src={vpay} alt="" width={"40px"} />
-                  </div>
+                  </div> */}
                   {/* <div className="payments">
                   <input class="hidden" type="radio" id="" value={""}></input>
                   <img src={mcpay} alt="" width={"40px"} />
@@ -295,13 +367,13 @@ export default function AddProductdata() {
                 </div>
               </div>
             </div>
-            <div className="products-button">
-              <div className="pro-btn">
+          </div>
+          <div className="products-button">
+            {/* <div className="pro-btn">
                 <button>Save to Drafts</button>
-              </div>
-              <div className="pro-btn">
-                <button onClick={handlePublish}>Publish Product</button>
-              </div>
+              </div> */}
+            <div className="pro-btn">
+              <button onClick={handlePublish}>Publish Product</button>
             </div>
           </div>
         </div>

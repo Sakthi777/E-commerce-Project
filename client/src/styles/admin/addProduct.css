@@ -1,5 +1,11 @@
 body {
-  background-color: #f3f4f6;
+  background-color: #F0F4F8;
+}
+.add-image-title{
+  border: 1px solid #fff;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 3%;
 }
 .add-image-title p {
   padding-top: 30px;
@@ -135,6 +141,22 @@ body {
   display: grid;
   flex-direction: column;
   width: 100%;
+}
+.checkboxmodel{
+  display: flex;
+  flex-direction: row;
+
+}
+.checkboxmodel input[type='checkbox']{
+  accent-color: red;
+    transform: scale(0.5);
+}
+.checkboxsize{
+  display: flex;
+  flex-direction: row;
+}
+.checkboxsize input[type='checkbox']{
+    transform: scale(0.5);
 }
 
 /* .user-product select {
