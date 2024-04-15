@@ -1,4 +1,5 @@
 import React from "react";
+import { createContext, useContext } from "react";
 import ProductCard from "../../pages/user/productCard";
 import HeaderPage from "../../components/user/HeaderPage";
 import { FaArrowCircleDown } from "react-icons/fa";
@@ -15,8 +16,18 @@ import { Highlight } from "../../components/user/homePageCarousels";
 import { useSelector } from "react-redux";
 // import Cookies from "js-cookie";
 //import products from "./productList";
-
 const url = "http:localhost:8000";
+
+export const SliderContext = createContext();
+
+export const SliderProvider = ({ children }) => {
+	const [isSidebarOpen, setSidebarOpen] = useState(false);
+	const [userCartItem, setUserCartItem] = useState([]);
+
+	return <SliderContext.Provider value={{ isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem }}>{children}</SliderContext.Provider>;
+};
+
+export const useSlider = () => useContext(SliderContext);
 
 const ProductGrid = ({ products }) => {
 	const token = useSelector((state) => state.tokenDetails.token);
@@ -49,6 +60,28 @@ const ProductGrid = ({ products }) => {
 				console.error("Error fetching product data:", error);
 			});
 	}, []);
+
+	//CountDown Time start
+
+	const [seconds, setSeconds] = useState(24 * 60 * 60);
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setSeconds((prevSeconds) => {
+				if (prevSeconds === 0) {
+					clearInterval(interval);
+				}
+				return prevSeconds - 1;
+			});
+		}, 1000);
+
+		return () => clearInterval(interval);
+	}, []);
+	const hours = Math.floor(seconds / 3600);
+	const minutes = Math.floor((seconds % 3600) / 60);
+	const remainingSeconds = seconds % 60;
+
+	//CountDown Time end
 
 	return (
 		<>
@@ -127,7 +160,7 @@ const ProductGrid = ({ products }) => {
 
 							<div className="hours">
 								<span className="countdown-time">
-									00
+									{hours}
 									<span>:</span>
 								</span>
 								<p>hours</p>
@@ -135,14 +168,14 @@ const ProductGrid = ({ products }) => {
 
 							<div className="minutes">
 								<span className="countdown-time">
-									00
+									{minutes}
 									<span>:</span>
 								</span>
 								<p>minutes</p>
 							</div>
 
 							<div className="seconds">
-								<span className="countdown-time">00</span>
+								<span className="countdown-time">{remainingSeconds}</span>
 								<p>seconds</p>
 							</div>
 						</div>

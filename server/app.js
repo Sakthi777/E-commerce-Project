@@ -59,6 +59,8 @@ app.use("/profileData", profileDataRouter);
 
 app.use("/walletData", walletRouter);
 
+app.use("/datetime", userDatas);
+
 // app.post("/profileData", async (req, res) => {
 // 	console.log(req.body);
 // });

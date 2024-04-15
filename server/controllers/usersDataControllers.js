@@ -5,6 +5,7 @@ const asyncHandler = require("../middlewares/catchAsyncError");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 const upload = require("../middlewares/multerMiddleWare");
+const dateSchema = require('../models/DateTimeSchema');
 
 // userData - /userDatas/users
 exports.userDatasControllers = asyncHandler(async (req, res, next) => {
@@ -51,6 +52,31 @@ exports.loginUserControllers = asyncHandler(async (req, res, next) => {
 	}
 });
 
+exports.CountdownTimedate = asyncHandler(async (req ,res, next) => {
+	try {
+		const { time } = req.body;
+		if (!time) {
+		  return res.status(400).send('Time is required');
+		}
+		const countdownDate = new dateSchema({ countdownTime: time }); // Ensure the field name matches the schema
+		await countdownDate.save();
+		res.status(200).send('Countdown time set successfully!');
+	  } catch (error) {
+		console.error('Error setting countdown time:', error);
+		res.status(500).send('Internal server error');
+	  }
+	});
+
+	exports.getCountdownDate = asyncHandler(async(req ,res ,next) => {
+		try {
+			const data = await DataModel.find();
+			res.json(data);
+			console.log(data);
+		} catch (error) {
+			res.status(500).json({ message: error.message });
+		}
+	  }); 
+
 exports.getUserDataController = asyncHandler((req, res, next) => {
 	// console.log("hello");
 	const email = req.params.email;
@@ -73,6 +99,7 @@ exports.getUserDataControllers = asyncHandler(async (req, res, next) => {
 		res.send("users not found");
 	}
 });
+
 
 // get single user data with id
 exports.getSingleUserDataControllers = asyncHandler(async (req, res, next) => {

@@ -19,57 +19,91 @@ import products from "../../pages/user/productList";
 import Cookies from "js-cookie";
 import { useSelector, useDispatch } from "react-redux";
 import { setSearch } from "../../features/slice/searchSlice";
-
+import { useSlider } from "../../pages/user/home";
 const HeaderPage = () => {
+	const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem } = useSlider();
 	const [isFixed, setIsFixed] = useState(false);
 	const [prevScrollY, setPrevScrollY] = useState(0);
 	const cardRef = useRef(null);
 	const navigate = useNavigate();
 	const [userDetails, setUserDetails] = useState([]);
-
-	const dispatch = useDispatch();
-	const search = useSelector((state) => state.searchValue.search);
-	const [searchVal, setSearchVal] = useState("");
-	useEffect(() => {
-		dispatch(setSearch(searchVal));
-	}, [searchVal]);
-
-	useEffect(() => {
-		axios
-			.get(`http://localhost:8000/get-userDetails`)
-			.then((response) => {
-				setUserDetails(response.data.data);
-				console.log(response.data.data);
-				//UserDetails();
-			})
-			.catch((error) => {
-				console.error("Error fetching product data:", error);
-			});
-	}, []);
+	const [productDetails, setProductDetails] = useState([]);
+	const [totalCardPrice, setTotalCardPrice] = useState(0);
+	const [totalCartItem, setTotalCartItem] = useState(0);
 	const token = useSelector((state) => state.tokenDetails.token);
+
 	let responseUserArray = [];
-	const UserDetails = () => {
-		if (userDetails) {
-			userDetails.map((user) => {
-				if (user.userID === token) {
-					user.AddtoCardItems.map((items) => {
-						const productID = items.productID;
-						console.log(productID);
-						axios
-							.get(`http://localhost:8000/get-userDetails/${productID}`)
-							.then((response) => {
-								console.log(response.data.data);
-								responseUserArray.push(response.data.data);
-							})
-							.catch((error) => {
-								console.error("Error fetching product data:", error);
-							});
-					});
-				}
-			});
+	useEffect(() => {
+		fetchUserCartDetails();
+	}, [setSidebarOpen]);
+
+	// useEffect(() => {
+	//   let totalPrice = 0;
+	//   let count = 0;
+	//   productDetails.forEach((product) => {
+	//     totalPrice += product.productdetail.newPrice * product.quantity;
+	//     count = count + 1;
+	//   });
+	//   console.log("Price" + totalPrice);
+	//   setTotalCardPrice(totalPrice);
+	//   console.log("product count " + count);
+	//   setTotalCartItem(count);
+	// }, [setProductDetails]);
+
+	const fetchUserCartDetails = async () => {
+		try {
+			const response = await axios.get(`http://localhost:8000/get-userCartDetails/${token}`);
+			if (response.data.AddtoCardItems) {
+				setUserCartItem(response.data.AddtoCardItems);
+			}
+			// console.log(userCartItem);
+		} catch (error) {
+			console.log("Error fetching user cart details:", error);
 		}
 	};
-	console.log(responseUserArray);
+
+	useEffect(() => {
+		console.log(userCartItem);
+		if (userCartItem.length == 0) {
+			setTotalCardPrice(0);
+			setTotalCartItem(0);
+		}
+		userCartItem.map((items) => {
+			const productID = items.productID;
+			console.log(items);
+			axios
+				.get(`http://localhost:8000/get-userDetails/${productID}`)
+				.then((response) => {
+					console.log(response.data.data);
+					const productResponse = response.data.data;
+					const userItem = {
+						productdetail: productResponse,
+						quantity: items.quantity,
+					};
+					responseUserArray.push(userItem);
+					console.log(responseUserArray);
+					let totalPrice = 0;
+					let count = 0;
+					if (responseUserArray.length == 0) {
+						console.log("array is empty...");
+					}
+					responseUserArray.forEach((product) => {
+						totalPrice += product.productdetail.newPrice * product.quantity;
+						count = count + 1;
+					});
+					console.log("Price" + totalPrice);
+					setTotalCardPrice(totalPrice);
+					console.log("product count " + count);
+					setTotalCartItem(count);
+				})
+				.catch((error) => {
+					console.error("Error fetching product data:", error);
+				});
+		});
+
+		setProductDetails(responseUserArray);
+	}, [userCartItem]);
+
 	const naviagteWhislist = () => {
 		navigate("/wishlist");
 	};
@@ -94,16 +128,39 @@ const HeaderPage = () => {
 		};
 	}, [prevScrollY]);
 	const [quantity, setQuantity] = useState(1);
-	const handleIncrement = () => {
-		setQuantity(quantity + 1);
+	const handleIncrement = (id) => {
+		try {
+			axios.put(`http://localhost:8000/IncrementAddToCartProductQuantity/${id}/${token}`).then((res) => {
+				console.log(res.data);
+				setUserCartItem(res.data);
+			});
+		} catch (error) {
+			console.log(error);
+		}
 	};
-	const handleDecrement = () => {
-		if (quantity > 1) {
-			setQuantity(quantity - 1);
+	const handleDecrement = (id) => {
+		try {
+			axios.put(`http://localhost:8000/DecrementAddToCartProductQuantity/${id}/${token}`).then((res) => {
+				console.log(res.data);
+				setUserCartItem(res.data);
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
+	const DeleteCartProduct = (product) => {
+		console.log(product.productdetail._id);
+		const id = product.productdetail._id;
+		try {
+			axios.delete(`http://localhost:8000/DeleteProductFromCart/${id}/${token}`).then((res) => {
+				console.log(res.data);
+				setUserCartItem(res.data);
+			});
+		} catch (error) {
+			console.log(error);
 		}
 	};
 
-	const [isSidebarOpen, setSidebarOpen] = useState(false);
 	const toggleCardSidebar = () => {
 		setSidebarOpen(!isSidebarOpen);
 	};
@@ -112,20 +169,19 @@ const HeaderPage = () => {
 		window.location.reload();
 	};
 
-	const [productDetails, setProductDetails] = useState([]);
-	useEffect(() => {
-		axios
-			.get(`http://localhost:8000/get-productDetails`)
-			.then((response) => {
-				setProductDetails(response.data.data);
-			})
-			.catch((error) => {
-				console.error("Error fetching product data:", error);
-			});
-	}, [setProductDetails]);
-	console.log(responseUserArray);
+	// useEffect(() => {
+	//   axios
+	//     .get(`http://localhost:8000/get-productDetails`)
+	//     .then((response) => {
+	//       setProductDetails(response.data.data);
+	//     })
+	//     .catch((error) => {
+	//       console.error("Error fetching product data:", error);
+	//     });
+	// }, [setProductDetails]);
 	return (
 		<>
+			{/* {console.log(productDetails)} */}
 			<div className="header-container">
 				<div className="header-top">
 					<p>Welcome to Ecomart in Your Dream Online Store!</p>
@@ -189,44 +245,44 @@ const HeaderPage = () => {
 							<FontAwesomeIcon icon={faShoppingBag} className="card-svg" />
 						</div>
 						<div className="pop-up-item">
-							<p>9+</p>
+							<p>{totalCartItem}</p>
 						</div>
 					</div>
 					<div className="price">
 						<p>TOTAL PRICE</p>
-						<h6>$345.00</h6>
+						<h6>{totalCardPrice}</h6>
 					</div>
 				</div>
 
 				<div className={`offcanvas offcanvas-end ${isSidebarOpen ? "show" : ""}`} tabIndex="-1" id="shoppingCartOffcanvas" aria-labelledby="shoppingCartOffcanvasLabel">
 					<div className="offcanvas-header">
 						<h5 className="offcanvas-title" id="shoppingCartOffcanvasLabel">
-							<FontAwesomeIcon icon={faShoppingBag} className="card-svg" /> Total Item (5)
+							<FontAwesomeIcon icon={faShoppingBag} className="card-svg" /> Total Item ({totalCartItem})
 						</h5>
 						<button type="button" className="btn-close text-reset" onClick={toggleCardSidebar}></button>
 					</div>
 					<div className="offcanvas-body">
 						<div className="offcanvas-grid">
-							{productDetails.map((product) => (
+							{productDetails.map((product, index) => (
 								<div className="offcanvas-card">
 									<div className="offcanvas-img">
-										<img src={`http://localhost:8000/uploads/productImage/${product.image}`} alt="product" className="offcanvas-prod-img" />
-										<div className="overlay">
+										<img src={`http://localhost:8000/uploads/productImage/${product.productdetail.image}`} alt="product" className="offcanvas-prod-img" />
+										<div className="overlay" onClick={() => DeleteCartProduct(product)} style={{ cursor: "pointer" }}>
 											<FontAwesomeIcon icon={faTrash} className="delete-icon" />
 										</div>
 									</div>
 									<div className="offcanvas-content">
-										<h6>{product.productName}</h6>
-										<p>Unit Price {product.newPrice}</p>
+										<h6>{product.productdetail.productName}</h6>
+										<p>Unit Price {product.productdetail.newPrice}</p>
 										<div className="card-item-selector">
-											<button className="selector-button" onClick={handleDecrement}>
+											<button className="selector-button" onClick={() => handleDecrement(product.productdetail._id)}>
 												-
 											</button>
-											<span className="selector-value">{quantity}</span>
-											<button className="selector-button" onClick={handleIncrement}>
+											<span className="selector-value">{product.quantity}</span>
+											<button className="selector-button" onClick={() => handleIncrement(product.productdetail._id)}>
 												+
 											</button>
-											<p>${product.newPrice}</p>
+											<p>${product.productdetail.newPrice * product.quantity}</p>
 										</div>
 									</div>
 								</div>
@@ -238,7 +294,7 @@ const HeaderPage = () => {
 						<div className="offcanvas-border" onClick={navigateCheckout}>
 							<p>Proceed To Checkout</p>
 							<p className="hrLine"></p>
-							<p>456.90</p>
+							<p>{totalCardPrice}</p>
 						</div>
 					</div>
 				</div>
@@ -335,13 +391,13 @@ const HeaderPage = () => {
 						<FontAwesomeIcon icon={faShoppingBag} onClick={toggleCardSidebar} />
 						<span>Cart</span>
 						<div className="pop-up-cart">
-							<p>9+</p>
+							<p>{totalCartItem}</p>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<button onClick={UserDetails}>addcard</button>
+			<button>addcard</button>
 		</>
 	);
 };
