@@ -30,7 +30,8 @@ const HeaderPage = () => {
 	const [totalCardPrice, setTotalCardPrice] = useState(0);
 	const [totalCartItem, setTotalCartItem] = useState(0);
 	const token = useSelector((state) => state.tokenDetails.token);
-	const search = useSelector((state) => state.searchValue.search);
+	const searchedProducts = useSelector((state) => state.searchProductDetails.productDetails);
+	const nav = useNavigate();
 
 	const [searchVal, setSearchVal] = useState("");
 	const dispatch = useDispatch();
@@ -242,6 +243,7 @@ const HeaderPage = () => {
 					</Link>
 					<div className="search-container">
 						<input type="text" className="search-bar" value={searchVal} placeholder="Search..." onChange={(e) => setSearchVal(e.target.value)} />
+
 						<span className="search-icon">
 							<IoIosSearch />
 						</span>
