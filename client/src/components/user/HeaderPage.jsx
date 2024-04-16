@@ -24,7 +24,7 @@ import { useSlider } from "../../pages/user/home";
 import { removeWishLength } from "../../features/slice/wishlistLength";
 import { removeToken } from "../../features/slice/tokenSlice";
 const HeaderPage = () => {
-  const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails, backToCart, setBacktoCart } = useSlider();
+  const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails, wishlistCount } = useSlider();
   const [isFixed, setIsFixed] = useState(false);
   const [prevScrollY, setPrevScrollY] = useState(0);
   const cardRef = useRef(null);
@@ -180,10 +180,10 @@ const HeaderPage = () => {
         setUserCartItem(res.data);
         userCartItem.map((prod) => {
           // setBacktoCart(false);
-          if (prod.productID == product.productdetail._id) {
-            console.log("working" + prod.productID);
-            setBacktoCart(false);
-          }
+          //   if (prod.productID == product.productdetail._id) {
+          //     console.log("working" + prod.productID);
+          //     setBacktoCart(false);
+          //   }
         });
       });
     } catch (error) {
@@ -270,7 +270,7 @@ const HeaderPage = () => {
               <FontAwesomeIcon icon={faHeart} className="heart-icon" />
             </div>
             <div className="pop-up-item">
-              <p>{wishlistLength <= 9 ? wishlistLength : +9}</p>
+              <p>{wishlistCount}</p>
             </div>
           </div>
           <div className="card-container">
@@ -417,7 +417,7 @@ const HeaderPage = () => {
             <FontAwesomeIcon icon={faHeart} className="heart-icon" onClick={naviagteWhislist} />
             <span>Wishlist</span>
             <div className="pop-up-cart">
-              <p>9+</p>
+              <p>{wishlistCount}</p>
             </div>
           </div>
           <div className="icon-container cart">

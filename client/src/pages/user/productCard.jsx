@@ -19,9 +19,9 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
   const [liked, setLiked] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [productList, setProductList] = useState("");
-  // const [backToCart, setBacktoCart] = useState(false);
+  const [backToCart, setBacktoCart] = useState(false);
   const token = useSelector((state) => state.tokenDetails.token);
-  const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, backToCart, setBacktoCart } = useSlider();
+  const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem } = useSlider();
   // const [ref, setRef] = useState(false);
   useEffect(() => {
     fetchUserCartDetails();
@@ -39,7 +39,7 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
   useEffect(() => {
     userCartItem.map((prod) => {
       // setBacktoCart(false);
-      if (prod.productID == product._id) {
+      if (prod.productID === product._id) {
         setBacktoCart(true);
         console.log(prod.productID);
       }
