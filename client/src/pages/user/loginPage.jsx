@@ -70,14 +70,14 @@ const LoginCmp = () => {
 						dispatch(setToken(token));
 
 						setUserData({ ...userData, email: "", password: "" });
-						toast.success("Login Successfull !", {
-							autoClose: 2000,
-							onClose: () => {
-								setTimeout(() => {
-									nav("/");
-								}, 200);
-							},
-						});
+						// toast.success("Login Successfull !", {
+						// 	autoClose: 2000,
+						// 	onClose: () => {
+						// 		setTimeout(() => {
+						// 			nav("/");
+						// 		}, 200);
+						// 	},
+						// });
 					}
 				})
 				.catch((error) => {

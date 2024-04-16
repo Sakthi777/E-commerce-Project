@@ -17,6 +17,7 @@ exports.postProductCardDetailsControllers = async (req, res) => {
 
 	let images = [];
 
+
 	try {
 		if (req.file) {
 			const image = req.file.filename;
@@ -37,7 +38,7 @@ exports.postProductCardDetailsControllers = async (req, res) => {
 			sale: sale,
 			newProduct: newProduct,
 			featuredItems: featuredItems,
-			discountPercentage: discountPercentage,
+			discountPercentage: discountPercentage, 
 		});
 	} catch (error) {
 		console.error("Error uploading images:", error);

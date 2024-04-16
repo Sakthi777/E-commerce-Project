@@ -49,6 +49,7 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
   const handleGoCartClick = () => {
     setSidebarOpen(true);
   };
+  
   const handleClick = (product) => {
     if (backToCart) {
       handleGoCartClick();

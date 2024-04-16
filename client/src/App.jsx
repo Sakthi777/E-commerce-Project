@@ -62,7 +62,8 @@ function App() {
             <Route path="/comingSoon" element={<ProtectedLoginRoute Component={ComingSoon} />} />
             <Route path="/footer" element={<Footer />} />
             <Route path="/shop" element={<ProtectedLoginRoute Component={ShopPage} />}></Route>
-            <Route path="/myProfile" element={<ProtectedLoginRoute Component={MyProfile} />} />
+            {/* <Route path="/myProfile" element={<ProtectedLoginRoute Component={MyProfile} />} /> */}
+            <Route path="/myProfile" element={<MyProfile></MyProfile>}/>
             <Route path="/about" element={<ProtectedLoginRoute Component={AboutUs} />} />
             <Route path="/myWallet" element={<ProtectedLoginRoute Component={MyWallet} />} />
             <Route path="/transactionDetails" element={<TransactionDetails />} />

@@ -3,12 +3,11 @@ const jwt = require("jsonwebtoken");
 const userDataSchema = require("../models/userDataSchema");
 
 const authenticate = asyncHandler(async(req, res, next)=>{
-    let token = await req.cookies.jwt;
-
+    let token = await req.body.token;
     if(token){
         try{
             const decodeToken = await jwt.verify(token, process.env.JWT_SECRET_KEY);
-            req.user = await userDataSchema.findById(decodeToken.userId).select("-password");
+            req.user = await userDataSchema.findById(decodeToken.userId).select("-password -confirmPassword");
             next();
         }catch(error){
             res.status(400)
