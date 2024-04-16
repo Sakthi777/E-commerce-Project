@@ -21,7 +21,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSearch } from "../../features/slice/searchSlice";
 import { useSlider } from "../../pages/user/home";
 const HeaderPage = () => {
-  const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails } = useSlider();
+  const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails, backToCart, setBacktoCart } = useSlider();
   const [isFixed, setIsFixed] = useState(false);
   const [prevScrollY, setPrevScrollY] = useState(0);
   const cardRef = useRef(null);
@@ -43,19 +43,6 @@ const HeaderPage = () => {
   useEffect(() => {
     dispatch(setSearch(searchVal));
   }, [searchVal]);
-
-  // useEffect(() => {
-  //   let totalPrice = 0;
-  //   let count = 0;
-  //   productDetails.forEach((product) => {
-  //     totalPrice += product.productdetail.newPrice * product.quantity;
-  //     count = count + 1;
-  //   });
-  //   console.log("Price" + totalPrice);
-  //   setTotalCardPrice(totalPrice);
-  //   console.log("product count " + count);
-  //   setTotalCartItem(count);
-  // }, [setProductDetails]);
 
   const fetchUserCartDetails = async () => {
     try {
@@ -161,6 +148,13 @@ const HeaderPage = () => {
       axios.delete(`http://localhost:8000/DeleteProductFromCart/${id}/${token}`).then((res) => {
         console.log(res.data);
         setUserCartItem(res.data);
+        userCartItem.map((prod) => {
+          // setBacktoCart(false);
+          if (prod.productID == product.productdetail._id) {
+            console.log("working" + prod.productID);
+            setBacktoCart(false);
+          }
+        });
       });
     } catch (error) {
       console.log(error);
@@ -402,8 +396,6 @@ const HeaderPage = () => {
           </div>
         </div>
       </div>
-
-      <button>addcard</button>
     </>
   );
 };

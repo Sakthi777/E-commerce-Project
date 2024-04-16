@@ -24,8 +24,9 @@ export const SliderProvider = ({ children }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [userCartItem, setUserCartItem] = useState([]);
   const [productDetails, setProductDetails] = useState([]);
+  const [backToCart, setBacktoCart] = useState(false);
 
-  return <SliderContext.Provider value={{ isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails }}>{children}</SliderContext.Provider>;
+  return <SliderContext.Provider value={{ isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails, backToCart, setBacktoCart }}>{children}</SliderContext.Provider>;
 };
 
 export const useSlider = () => useContext(SliderContext);
