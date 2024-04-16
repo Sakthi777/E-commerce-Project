@@ -3,15 +3,20 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import "../../styles/admin/addProduct.css";
 import upload from "../../../src/assets/images/AddProduct/upload.png";
-import ipay from "../../../src/assets/images/AddProduct/applepay.svg";
+// import ipay from "../../../src/assets/images/AddProduct/applepay.svg";
 // import bpay from "../../../src/assets/images/AddProduct/bitpay.svg";
-import gpay from "../../../src/assets/images/AddProduct/googlepay.svg";
+// import gpay from "../../../src/assets/images/AddProduct/googlepay.svg";
 // import mcpay from "../../../src/assets/images/AddProduct/mc.svg";
 // import paypalpay from "../../../src/assets/images/AddProduct/paypal.svg";
-import vpay from "../../../src/assets/images/AddProduct/visa.svg";
+// import vpay from "../../../src/assets/images/AddProduct/visa.svg";
 import AdminHeader, { useOffCanvasContext } from "../../components/admin/adminHeader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import footimg from "../../../src/assets/images/footer-img/back-faq.jpg";
+
+
 
 export default function AddProductdata() {
   const { showOffCanvas } = useOffCanvasContext();
@@ -131,25 +136,25 @@ export default function AddProductdata() {
       <div className={`adddata ${showOffCanvas ? "content-shifted" : ""} `} style={{ padding: "20px" }}>
         <div>
           <div className="head1">
-            <h6>Product Settings</h6>
+            <h6>Add New</h6>
           </div>
           <div className="add-image-title">
-            <p>Product Images</p>
-            <div className="panel">
-              <div className="image-upload-box">
+            <p>Create Product</p>
+            {/* <div className="panel">
+              {/* <div className="image-upload-box">
                 <div className="image-box">
                   <img src={preImage ? preImage : upload} alt="" className="center-image" />
                 </div>
-              </div>
-              <div className="ImageFileName">
+              </div> */}
+            {/* <div className="ImageFileName">
                 <p>{fileName}</p>
               </div>
               <div className="imageInputFiled">
                 <label htmlFor="file-upload">Select Image</label>
                 <input type="file" id="file-upload" style={{ display: "none" }} onChange={handleImageChange} accept="image/*" />
-              </div>
+              </div> */}
 
-              <div className="ImageSliderUpload">
+            {/* <div className="ImageSliderUpload">
                 <p>Product Image Slider</p>
 
                 <div className="image-grid">
@@ -165,11 +170,10 @@ export default function AddProductdata() {
                   <label htmlFor="multi-file-upload">Select Images</label>
                   <input type="file" id="multi-file-upload" style={{ display: "none" }} onChange={handleImageSliderChange} accept="image/*" multiple />
                 </div>
-              </div>
-            </div>
-            <br />
+              </div> 
+            </div> */}
             <div className="cont-attribute">
-              <div className="pu-attribute">
+              {/* <div className="pu-attribute">
                 <div className="pu-attribute-input">
                   <p>Attributes</p>
                   <select className="select-wid" name="cars" id="cars">
@@ -183,25 +187,20 @@ export default function AddProductdata() {
                   <p>Rating*</p>
                   <input type="text" value={rating} onChange={(e) => setRating(e.target.value)} />
                 </div>
-              </div>
-              <div class="description-box">
-                <p>Product Name*</p>
-                <input type="text" placeholder="Enter Product Name" value={productName} onChange={(e) => setProductName(e.target.value)} />
-              </div>
+              </div> */}
             </div>
-          </div>
-          <br />
-          <div className="user-product">
-            <div className="user-product-input pro-in">
-              <label className="user-product-label">Description*</label>
-              <input type="text" placeholder="Enter Description" value={productDescription} onChange={(e) => setProductDescription(e.target.value)}></input>
-            </div>
-            <div className="label-id">
-              <div className="user-product-input label-id-input">
+            <br />
+            <div className="user-product">
+              {/* <div className="user-product-input pro-in">
+                <label className="user-product-label">Description*</label>
+                <input type="text" placeholder="Enter Description" value={productDescription} onChange={(e) => setProductDescription(e.target.value)}></input>
+              </div> */}
+              {/* <div className="label-id">
+                <div className="user-product-input label-id-input">
                 <label>Brand Name</label>
                 <input type="text" placeholder="Enter Brand Name"></input>
               </div>
-              <div className="user-product-input">
+                <div className="user-product-input">
                 <label>Category</label>
                 <select className="select-wid" name="car" id="car">
                   <option value="volvo">Electric</option>
@@ -210,72 +209,100 @@ export default function AddProductdata() {
                   <option value="audi">Services</option>
                 </select>
               </div>
+              </div> */}
+              <div className="label-id">
+                <div class="user-product-input">
+                  <label>Product Title*</label>
+                  <input type="text" placeholder="Enter Product Name" value={productName} onChange={(e) => setProductName(e.target.value)} />
+                </div>
+                <div className="user-product-input">
+                  <label>Old Price*</label>
+                  <input type="text" placeholder="Enter Old Price" value={oldPrice} onChange={(e) => setOldPrice(e.target.value)}></input>
+                </div>
+                <div className="user-product-input">
+                  <label>New Price*</label>
+                  <input type="text" placeholder="Enter New Price" value={newPrice} onChange={(e) => setNewPrice(e.target.value)}></input>
+                </div>
+              </div>
+              <div className="label-id">
+                <div className="user-product-input">
+                  <label>setSale*</label>
+                  <select className="select-wid" name="car" id="car" onChange={(e) => setSale(e.target.value === "true")}>
+                    <option value="false">False</option>
+                    <option value="true">True</option>
+                  </select>
+                </div>
+                <div className="user-product-input">
+                  <label>setNew*</label>
+                  <select className="select-wid" name="cas" id="cas" onChange={(e) => setNewProduct(e.target.value === "true")}>
+                    <option value="false">False</option>
+                    <option value="true">True</option>
+                  </select>
+                </div>
+                <div className="user-product-input">
+                  <label>FeaturedItems*</label>
+                  <select className="select-wid" name="car" id="car" onChange={(e) => setFeaturedItems(e.target.value === "true")}>
+                    <option value="false">False</option>
+                    <option value="true">True</option>
+                  </select>
+                </div>
+              </div>
+              <div className="label-id">
+                <div className="user-product-input label-id-input">
+                  <label>Discount Percentage*</label>
+                  <input type="text" value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value)}></input>
+                </div>
+                <div className="user-product-input">
+                  <label>Product Type</label>
+                  <select className="select-wid" name="car" id="car">
+                    <option value="volvo">Boxed</option>
+                    <option value="saab">Single</option>
+                    <option value="opel">Unit</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div className="label-id" style={{ marginTop: '30px', borderColor: '#F0F4F8' }}>
+              <div className="image-input">
+                <div>
+                  <label htmlFor="category-image">
+                    <span style={{ fontSize: "256%" }}>
+                      <br />
+                      <FontAwesomeIcon icon={faCloudArrowUp} />
+                    </span>
+                    <br />
+                    <br />
+                    <span>
+                      <span style={{ color: "#009f7f" }}>Drag and drop your product images or browse  your product images</span>
+                      <br />
+                      <br />
+                    </span>
+                    <br />
+                    <br />
+                  </label>
+                </div>
+
+                <input type="file" name="category-image" id="category-image" style={{ display: "none" }} />
+              </div>
             </div>
             <div className="label-id">
               <div className="user-product-input">
-                <label>Old Price*</label>
-                <input type="text" placeholder="Enter Old Price" value={oldPrice} onChange={(e) => setOldPrice(e.target.value)}></input>
-              </div>
-              <div className="user-product-input">
-                <label>New Price*</label>
-                <input type="text" placeholder="Enter New Price" value={newPrice} onChange={(e) => setNewPrice(e.target.value)}></input>
-              </div>
-            </div>
-            <div className="label-id">
-              <div className="user-product-input label-id-input">
-                <label>Schedule</label>
-                <input type="date"></input>
-              </div>
-              <div className="user-product-input">
-                <label>setSale*</label>
-                <select className="select-wid" name="car" id="car" onChange={(e) => setSale(e.target.value === "true")}>
-                  <option value="false">False</option>
-                  <option value="true">True</option>
-                </select>
-              </div>
-            </div>
-            <div className="label-id">
-              <div className="user-product-input">
-                <label>setNew*</label>
-                <select className="select-wid" name="cas" id="cas" onChange={(e) => setNewProduct(e.target.value === "true")}>
-                  <option value="false">False</option>
-                  <option value="true">True</option>
-                </select>
-              </div>
-              <div className="user-product-input">
-                <label>FeaturedItems*</label>
-                <select className="select-wid" name="car" id="car" onChange={(e) => setFeaturedItems(e.target.value === "true")}>
-                  <option value="false">False</option>
-                  <option value="true">True</option>
-                </select>
-              </div>
-            </div>
-            <div className="label-id">
-              <div className="user-product-input label-id-input">
-                <label>Discount Percentage*</label>
-                <input type="text" value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value)}></input>
-              </div>
-              <div className="user-product-input">
-                <label>Status</label>
-                <select className="select-wid" name="car" id="car">
-                  <option value="volvo">Completed</option>
-                  <option value="saab">Pending</option>
-                  <option value="opel">OnProcess</option>
-                </select>
+                <p htmlFor="">Description*</p>
+                <textarea name="details" id="details" style={{ paddingLeft: '10px' }} cols="10" rows="5" placeholder="Enter Description"></textarea>
               </div>
             </div>
             <div className="label-id payment-images">
               <div className="user-product-input label-id-input">
-                <label>Payment Methods</label>
+                {/* <label>Payment Methods</label> */}
                 <div className="payment-option">
-                  <div className="payments">
+                  {/* <div className="payments">
                     <input class="hidden" type="radio" id="" value={""}></input>
                     <img src={ipay} alt="" width={"40px"} />
-                  </div>
-                  <div className="payments">
+                  </div> */}
+                  {/* <div className="payments">
                     <input class="hidden" type="radio" id="" value={""}></input>
                     <img src={gpay} alt="" width={"40px"} />
-                  </div>
+                  </div> */}
                   {/* <div className="payments">
                   <input class="hidden" type="radio" id="" value={""}></input>
                   <img src={bpay} alt="" width={"40px"} />
@@ -284,10 +311,10 @@ export default function AddProductdata() {
                   <input class="hidden" type="radio" id="" value={""}></input>
                   <img src={paypalpay} alt="" width={"40px"} />
                 </div> */}
-                  <div className="payments">
+                  {/* <div className="payments">
                     <input class="hidden" type="radio" id="" value={""}></input>
                     <img src={vpay} alt="" width={"40px"} />
-                  </div>
+                  </div> */}
                   {/* <div className="payments">
                   <input class="hidden" type="radio" id="" value={""}></input>
                   <img src={mcpay} alt="" width={"40px"} />
@@ -296,13 +323,37 @@ export default function AddProductdata() {
               </div>
             </div>
             <div className="products-button">
-              <div className="pro-btn">
+              {/* <div className="pro-btn">
                 <button>Save to Drafts</button>
+              </div> */}
+              <div className="pro-btn">
+                <button>Reset</button>
+              </div>
+              <div className="pro-btn">
+                <button>Create Product</button>
               </div>
               <div className="pro-btn">
                 <button onClick={handlePublish}>Publish Product</button>
               </div>
             </div>
+
+          </div>
+          <div className="product-preview ">
+            <div className="user-product-input previewproduct">
+            <div>
+              <label htmlFor="">Product card Preview</label>
+            </div>
+            <div className="imgview">
+              <img src={footimg} alt="" style={{ width: '100%', height: '50%' }} />
+              <div>
+
+              <h5 className="newprice">$20.00 </h5><span className="oldprice">$25.00</span>
+              </div>
+              <div className="pro-btn">
+                <button onClick={handlePublish}>Publish Product</button>
+              </div>
+            </div>
+          </div>
           </div>
         </div>
       </div>

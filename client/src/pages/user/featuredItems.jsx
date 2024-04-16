@@ -9,15 +9,33 @@ import "../../styles/user/productDescriptionCard.css";
 import { Modal, Button } from "react-bootstrap";
 import { useState } from "react";
 import { faShoppingBag, faStar } from "@fortawesome/free-solid-svg-icons";
-
+import { useSelector } from "react-redux";
+import { useSlider } from "../../pages/user/home";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
-const FeaturedItems = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPrice, setSale, setNew, discountPercentage, featuredItem, productDetails }) => {
+import axios from "axios";
+const FeaturedItems = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPrice, setSale, setNew, discountPercentage, featuredItem, productDetails, product }) => {
   const [liked, setLiked] = useState(false);
 
+  const token = useSelector((state) => state.tokenDetails.token);
+  const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem } = useSlider();
   const [showModal, setShowModal] = useState(false);
 
+  const handleAddToCard = (prod) => {
+    console.log(prod._id);
+    console.log(token);
+    const productID = prod._id;
+    axios
+      .post("http://localhost:8000/post-AddToCardDetails", { productID, token })
+      .then((response) => {
+        console.log("Product added to cart:", response.data);
+        setUserCartItem(response.data);
+      })
+      .catch((error) => {
+        console.error("Error adding product to cart:", error);
+      });
+    setSidebarOpen(true);
+  };
   const toggleLike = () => {
     setLiked(!liked);
   };
@@ -84,7 +102,7 @@ const FeaturedItems = ({ imgSrc, imageSlider, rating, productName, oldPrice, new
           <span className="newPrice">{newPrice}/piece</span>
         </div>
         <div className="feature-des">{productDetails}</div>
-        <div className="add-to-cart-icon">
+        <div className="add-to-cart-icon" onClick={() => handleAddToCard(product)}>
           <FontAwesomeIcon icon={faShoppingBag} className="icon" />
           <span>Add</span>
         </div>

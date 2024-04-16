@@ -23,8 +23,9 @@ export const SliderContext = createContext();
 export const SliderProvider = ({ children }) => {
 	const [isSidebarOpen, setSidebarOpen] = useState(false);
 	const [userCartItem, setUserCartItem] = useState([]);
+	const [productDetails, setProductDetails] = useState([]);
 
-	return <SliderContext.Provider value={{ isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem }}>{children}</SliderContext.Provider>;
+	return <SliderContext.Provider value={{ isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails }}>{children}</SliderContext.Provider>;
 };
 
 export const useSlider = () => useContext(SliderContext);
@@ -129,6 +130,7 @@ const ProductGrid = ({ products }) => {
 									setSale={product.sale}
 									discountPercentage={product.discountPercentage}
 									productDetails={product.productDescription}
+									product={product}
 								/>
 							),
 					)}
@@ -206,6 +208,7 @@ const ProductGrid = ({ products }) => {
 									setSale={product.sale}
 									discountPercentage={product.discountPercentage}
 									productDetails={product.productDescription}
+									product={product}
 								/>
 							),
 					)}
@@ -254,6 +257,7 @@ const ProductGrid = ({ products }) => {
 											setSale={product.sale}
 											discountPercentage={product.discountPercentage}
 											productDetails={product.productDescription}
+											product={product}
 										/>
 									),
 							)}
@@ -277,6 +281,7 @@ const ProductGrid = ({ products }) => {
 											setSale={product.sale}
 											discountPercentage={product.discountPercentage}
 											productDetails={product.productDescription}
+											product={product}
 										/>
 									),
 							)}
@@ -299,6 +304,7 @@ const ProductGrid = ({ products }) => {
 											setSale={product.sale}
 											discountPercentage={product.discountPercentage}
 											productDetails={product.productDescription}
+											product={product}
 										/>
 									),
 							)}
