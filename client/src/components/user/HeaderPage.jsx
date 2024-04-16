@@ -19,7 +19,10 @@ import products from "../../pages/user/productList";
 import Cookies from "js-cookie";
 import { useSelector, useDispatch } from "react-redux";
 import { setSearchProductDetails } from "../../features/slice/searchProductSlice";
+import { setSearchValue } from "../../features/slice/searchSlice";
 import { useSlider } from "../../pages/user/home";
+import { removeWishLength } from "../../features/slice/wishlistLength";
+import { removeToken } from "../../features/slice/tokenSlice";
 const HeaderPage = () => {
 	const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails } = useSlider();
 	const [isFixed, setIsFixed] = useState(false);
@@ -30,11 +33,22 @@ const HeaderPage = () => {
 	const [totalCardPrice, setTotalCardPrice] = useState(0);
 	const [totalCartItem, setTotalCartItem] = useState(0);
 	const token = useSelector((state) => state.tokenDetails.token);
-	const searchedProducts = useSelector((state) => state.searchProductDetails.productDetails);
+	const search = useSelector((state) => state.searchVal.search);
+	const wishlistLength = useSelector((state) => state.wishLength.length);
+
 	const nav = useNavigate();
 
-	const [searchVal, setSearchVal] = useState("");
+	const [searchVal, setSearchVal] = useState(search);
 	const dispatch = useDispatch();
+
+	const fetchProduct = async () => {
+		await axios
+			.get(`http://localhost:8000/get-searchProductDetails/?q=${searchVal}`)
+			.then((res) => {
+				dispatch(setSearchProductDetails(res.data.data));
+			})
+			.catch((err) => console.log(err));
+	};
 
 	let responseUserArray = [];
 	useEffect(() => {
@@ -42,15 +56,9 @@ const HeaderPage = () => {
 	}, []);
 
 	useEffect(() => {
-		const fetchProduct = async () => {
-			await axios
-				.get(`http://localhost:8000/get-searchProductDetails/?q=${searchVal}`)
-				.then((res) => {
-					dispatch(setSearchProductDetails(res.data.data));
-				})
-				.catch((err) => console.log(err));
-		};
 		fetchProduct();
+		dispatch(setSearchValue(searchVal));
+		console.log(search);
 	}, [searchVal]);
 
 	// useEffect(() => {
@@ -181,6 +189,8 @@ const HeaderPage = () => {
 	};
 	const logout = () => {
 		Cookies.remove("LoginToken");
+		dispatch(removeToken());
+		dispatch(removeWishLength());
 		window.location.reload();
 	};
 
@@ -244,7 +254,7 @@ const HeaderPage = () => {
 					<div className="search-container">
 						<input type="text" className="search-bar" value={searchVal} placeholder="Search..." onChange={(e) => setSearchVal(e.target.value)} />
 
-						<span className="search-icon">
+						<span className="search-icon" onClick={() => nav("/shop")}>
 							<IoIosSearch />
 						</span>
 					</div>
@@ -253,7 +263,7 @@ const HeaderPage = () => {
 							<FontAwesomeIcon icon={faHeart} className="heart-icon" />
 						</div>
 						<div className="pop-up-item">
-							<p>9+</p>
+							<p>{wishlistLength <= 9 ? wishlistLength : +9}</p>
 						</div>
 					</div>
 					<div className="card-container">
