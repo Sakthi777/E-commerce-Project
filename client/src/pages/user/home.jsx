@@ -31,7 +31,6 @@ export const useSlider = () => useContext(SliderContext);
 
 const ProductGrid = ({ products }) => {
 	const token = useSelector((state) => state.tokenDetails.token);
-	const search = useSelector((state) => state.searchValue.search);
 	const [selectedOption, setSelectedOption] = useState("Top Order");
 
 	const handleOptionClick = (option) => {
@@ -39,11 +38,6 @@ const ProductGrid = ({ products }) => {
 	};
 
 	// const cookie = Cookies.get("LoginToken");
-	// console.log(cookie);
-
-	useEffect(() => {
-		console.log(search);
-	}, [search]);
 
 	function timeout(ms) {
 		return new Promise((resolve) => setTimeout(resolve, ms));

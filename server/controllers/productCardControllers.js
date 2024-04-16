@@ -1,5 +1,7 @@
 const userProductDetails = require("../models/userProductCardDetails");
+const asyncHandler = require("../middlewares/catchAsyncError");
 const fs = require("fs");
+const productCardDatas = require("../routes/productCardRoute");
 //const upload = require("../middlewares/multerMiddleWare");
 exports.postProductCardDetailsControllers = async (req, res) => {
 	const rating = req.body.rating;
@@ -51,6 +53,20 @@ exports.getProductCardDetailsControllers = async (req, res) => {
 		res.status(500).json({ error: "Internal Server Error" });
 	}
 };
+
+exports.getSearchDataControllers = asyncHandler(async (req, res, next) => {
+	try {
+		const products = await userProductDetails.find();
+		const { q } = req.query;
+
+		const filteredProducts = products.filter((product) => product.productName.toLowerCase().includes(q.toLowerCase()));
+
+		res.json({ status: "ok", data: filteredProducts });
+	} catch (error) {
+		console.error("Error fetching products:", error);
+		res.status(500).json({ error: "Internal Server Error" });
+	}
+});
 
 exports.deleteProductCardDetailsControllers = async (req, res) => {
 	try {

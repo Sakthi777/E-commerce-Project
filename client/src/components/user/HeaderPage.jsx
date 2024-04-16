@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 import products from "../../pages/user/productList";
 import Cookies from "js-cookie";
 import { useSelector, useDispatch } from "react-redux";
-import { setSearch } from "../../features/slice/searchSlice";
+import { setSearchProductDetails } from "../../features/slice/searchProductSlice";
 import { useSlider } from "../../pages/user/home";
 const HeaderPage = () => {
 	const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem } = useSlider();
@@ -31,7 +31,6 @@ const HeaderPage = () => {
 	const [totalCardPrice, setTotalCardPrice] = useState(0);
 	const [totalCartItem, setTotalCartItem] = useState(0);
 	const token = useSelector((state) => state.tokenDetails.token);
-	const search = useSelector((state) => state.searchValue.search);
 
 	const [searchVal, setSearchVal] = useState("");
 	const dispatch = useDispatch();
@@ -42,7 +41,15 @@ const HeaderPage = () => {
 	}, [setSidebarOpen]);
 
 	useEffect(() => {
-		dispatch(setSearch(searchVal));
+		const fetchProduct = async () => {
+			await axios
+				.get(`http://localhost:8000/get-searchProductDetails/?q=${searchVal}`)
+				.then((res) => {
+					dispatch(setSearchProductDetails(res.data.data));
+				})
+				.catch((err) => console.log(err));
+		};
+		fetchProduct();
 	}, [searchVal]);
 
 	// useEffect(() => {
@@ -235,7 +242,7 @@ const HeaderPage = () => {
 						</div>
 					</Link>
 					<div className="search-container">
-						<input type="text" className="search-bar" value={search} placeholder="Search..." onChange={(e) => setSearchVal(e.target.value)} />
+						<input type="text" className="search-bar" value={searchVal} placeholder="Search..." onChange={(e) => setSearchVal(e.target.value)} />
 						<span className="search-icon">
 							<IoIosSearch />
 						</span>

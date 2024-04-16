@@ -1,9 +1,9 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { userProfileReducer } from "../slice/profileSlice";
 import { tokenReducer } from "../slice/tokenSlice";
-import { searchReducer } from "../slice/searchSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { searchProductsReducer } from "../slice/searchProductSlice";
 const persistConfig = {
 	key: "root",
 	storage,
@@ -14,7 +14,7 @@ const persistedReducer = persistReducer(
 	combineReducers({
 		userProfileDetails: userProfileReducer,
 		tokenDetails: tokenReducer,
-		searchValue: searchReducer,
+		searchProductDetails: searchProductsReducer,
 	}),
 );
 
