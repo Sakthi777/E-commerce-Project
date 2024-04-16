@@ -14,8 +14,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ProductDescriptionCard from "../../pages/user/productDescriptionCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useSlider } from "../../pages/user/home";
+import { setWishLength } from "../../features/slice/wishlistLength";
 const Wishlist = () => {
+  const { wishlistCount, setwishlistCount } = useSlider();
   const [liked, setLiked] = useState(false);
   const url = `http://localhost:8000`;
   const toggleLike = () => {
@@ -29,9 +32,15 @@ const Wishlist = () => {
   };
   const handleCloseModal = () => setShowModal(false);
 
+  let delIndex = null;
+
   const [productDetails, setProductDetails] = useState([]);
   const [wishlist, setWishList] = useState([]);
+
+  let wishlistLength = 0;
   const token = useSelector((state) => state.tokenDetails.token);
+  const dispatch = useDispatch();
+
   // useEffect(() => {
   // 	axios
   // 		.get(`${url}/get-productDetails`)
@@ -50,49 +59,19 @@ const Wishlist = () => {
   }
 
   let isMounted = true;
-  useEffect(() => {
-    const fetchWishList = async () => {
-      await axios.get(`${url}/wishlist/${token}`).then((res) => {
+
+  const deleteWishList = async (id, index) => {
+    await axios
+      .delete(`http://localhost:8000/wishlist/${token}/${id}`)
+      .then((res) => {
         setWishList(res.data.productID);
+        delIndex = index;
+        // console.log(res.data.productID);
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    };
-    fetchWishList();
-  }, [isMounted]);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      await timeout(500);
-      if (isMounted) {
-        wishlist.map((id) => {
-          axios
-            .get(`http://localhost:8000/get-userDetails/${id}`)
-            .then((response) => {
-              setProductDetails((prevArray) => [...prevArray, response.data.data]);
-            })
-            .catch((error) => {
-              console.error("Error fetching product data:", error);
-            });
-        });
-      }
-    };
-
-    fetchProducts();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [wishlist]);
-
-  useEffect(() => {
-    if (productDetails) renderTable();
-    console.log(productDetails);
-  }, [productDetails]);
-
-  const deleteWishList = async (id) => {
-    await axios.delete(`http://localhost:8000/wishlist/${token}/${id}`).then((res) => {
-      setWishList(res.data.productID);
-      // console.log(res.data);
-    });
+    // console.log("Delete");
   };
 
   const renderTable = () => {
@@ -115,12 +94,46 @@ const Wishlist = () => {
           </td>
           <td>
             <FontAwesomeIcon icon={faEye} className="wishlist-view" onClick={() => handleShowModal(product)} />
-            <FontAwesomeIcon icon={faTrash} className="wishlist-delete" onClick={() => deleteWishList(product._id)} />
+            <FontAwesomeIcon icon={faTrash} className="wishlist-delete" onClick={() => deleteWishList(product._id, index)} />
           </td>
         </tr>
       ));
     }
   };
+
+  useEffect(() => {
+    const fetchWishList = async () => {
+      await axios.get(`${url}/wishlist/${token}`).then((res) => {
+        setWishList(res.data.productID);
+        console.log(wishlist);
+      });
+    };
+    fetchWishList();
+  }, []);
+
+  const fetchProducts = async () => {
+    const uniqueProductIds = Array.from(new Set(wishlist)); // Filter out duplicate ids
+    setwishlistCount(uniqueProductIds.length);
+    dispatch(setWishLength(wishlistLength));
+    const uniqueProductDetails = [];
+    for (const id of uniqueProductIds) {
+      try {
+        const response = await axios.get(`http://localhost:8000/get-userDetails/${id}`);
+        uniqueProductDetails.push(response.data.data);
+      } catch (error) {
+        console.error("Error fetching product data:", error);
+      }
+    }
+    setProductDetails(uniqueProductDetails);
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, [wishlist]);
+
+  useEffect(() => {
+    renderTable();
+  }, [productDetails]);
 
   return (
     <div className="wishlist-container">
@@ -132,23 +145,25 @@ const Wishlist = () => {
           <a href="/">Home</a>/<a href="...">Shop Grid</a>/<a href="...">Wishlist</a>
         </div>
       </div>
-      <div className="wishlist-table-container">
-        <table className="wishlist-table">
-          <thead>
-            <tr>
-              <th>Serial</th>
-              <th>Product</th>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Description</th>
-              <th>Status</th>
-              <th>Shopping </th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>{renderTable()}</tbody>
-        </table>
-      </div>
+      {productDetails && (
+        <div className="wishlist-table-container">
+          <table className="wishlist-table">
+            <thead>
+              <tr>
+                <th>Serial</th>
+                <th>Product</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Shopping </th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>{renderTable()}</tbody>
+          </table>
+        </div>
+      )}
       <div className="showMoreButton">
         <button className="show-more-button">LOAD MORE ITEMS</button>
       </div>

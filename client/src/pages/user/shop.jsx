@@ -25,7 +25,7 @@ const ShopPage = ({ products }) => {
 		//   });
 		setProductDetails(searchedProducts);
 		// console.log(searchedProducts);
-	}, []);
+	}, [searchedProducts]);
 	return (
 		<>
 			<HeaderPage />

@@ -284,7 +284,7 @@ function MyProfile() {
 
 		const findUser = async () => {
 			try {
-				const id = jwtDecode(token).userId;
+				const id = token;
 				const userData = await axios.get(`${url}/login/getuser/${id}`);
 				setUserDetails(userData.data);
 			} catch (error) {
@@ -293,10 +293,10 @@ function MyProfile() {
 		};
 		findUser();
 		fetchData();
+		console.log(token);
 	}, []);
 
 	const handelDeleteContact = async (index) => {
-
 		await axios
 			.delete(`${url}/profileData/delContact/${token}/${index}`)
 			.then((res) => {
