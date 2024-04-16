@@ -11,12 +11,15 @@ const {
 	editSliderImageControllers,
 	updateProductMainImageControllers,
 	getUserDetails,
+	getSearchDataControllers,
 } = require("../controllers/productCardControllers");
 const upload = require("../middlewares/multerMiddleWare");
 
 productCardDatas.post("/post-productDetails", upload.any(), postProductCardDetailsControllers);
 
 productCardDatas.get("/get-productDetails", getProductCardDetailsControllers);
+
+productCardDatas.get("/get-searchProductDetails", getSearchDataControllers);
 
 productCardDatas.delete("/delete-productDetails/:id", deleteProductCardDetailsControllers);
 

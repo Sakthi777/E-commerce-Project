@@ -37,6 +37,7 @@ import EditProduct from "./components/admin/editProduct";
 import { ProtectedLoginRoute } from "./pages/protectRoute/protectedRoute";
 import OfferTime from "./components/admin/OfferTime";
 import { SliderProvider } from "../src/pages/user/home";
+import AddNewProduct from "./components/admin/AddNewProduct";
 
 function App() {
   return (
@@ -82,6 +83,8 @@ function App() {
                     <Route path="canceledOrders" element={<CanceledOrders />} />
                     <Route path="/registerdata" element={<RegisterData />} />
                     <Route path="/offertime" element={<OfferTime />} />
+                    <Route path="/addnewproduct" element={<AddNewProduct />} />
+
                   </Routes>
                 </OffCanvasProvider>
               }

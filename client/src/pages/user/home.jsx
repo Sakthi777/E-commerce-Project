@@ -25,15 +25,17 @@ export const SliderProvider = ({ children }) => {
   const [userCartItem, setUserCartItem] = useState([]);
   const [productDetails, setProductDetails] = useState([]);
   const [backToCart, setBacktoCart] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [userCartItem, setUserCartItem] = useState([]);
+  const [productDetails, setProductDetails] = useState([]);
 
-  return <SliderContext.Provider value={{ isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails, backToCart, setBacktoCart }}>{children}</SliderContext.Provider>;
+  return <SliderContext.Provider value={{ isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails }}>{children}</SliderContext.Provider>;
 };
 
 export const useSlider = () => useContext(SliderContext);
 
 const ProductGrid = ({ products }) => {
   const token = useSelector((state) => state.tokenDetails.token);
-  const search = useSelector((state) => state.searchValue.search);
   const [selectedOption, setSelectedOption] = useState("Top Order");
 
   const handleOptionClick = (option) => {
@@ -41,11 +43,6 @@ const ProductGrid = ({ products }) => {
   };
 
   // const cookie = Cookies.get("LoginToken");
-  // console.log(cookie);
-
-  useEffect(() => {
-    console.log(search);
-  }, [search]);
 
   function timeout(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));

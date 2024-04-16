@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../features/slice/tokenSlice";
+import { jwtDecode } from "jwt-decode";
 const LoginCmp = () => {
 	const url = "http://localhost:8000";
 
@@ -67,7 +68,8 @@ const LoginCmp = () => {
 					setDisable(true);
 					if (token) {
 						//Redux State Global Token
-						dispatch(setToken(token));
+						const id = jwtDecode(token);
+						dispatch(setToken(id.userId));
 
 						setUserData({ ...userData, email: "", password: "" });
 						toast.success("Login Successfull !", {

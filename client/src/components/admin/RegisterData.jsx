@@ -155,7 +155,7 @@ export default function RegisterData() {
   }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const recordPerPage = 1;
+  const recordPerPage = 5;
   const lastIndex = currentPage * recordPerPage;
   const firstIndex = lastIndex - recordPerPage;
   const records = users.slice(firstIndex, lastIndex);

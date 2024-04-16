@@ -1,16 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const serachSlice = createSlice({
-	name: "search",
+const searchSlice = createSlice({
+	name: "SearchValue",
 	initialState: {
 		search: "",
 	},
 	reducers: {
-		setSearch: (state, action) => {
+		setSearchValue: (state, action) => {
 			state.search = action.payload;
 		},
 	},
 });
 
-export const { setSearch } = serachSlice.actions;
-export const searchReducer = serachSlice.reducer;
+export const { setSearchValue } = searchSlice.actions;
+export const searchValReducer = searchSlice.reducer;

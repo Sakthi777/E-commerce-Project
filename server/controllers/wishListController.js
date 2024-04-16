@@ -45,6 +45,7 @@ exports.deleteWishListController = asyncHandler(async (req, res, next) => {
 		let doc = await wishListModel.findOne({ token });
 		doc.productID = doc.productID.filter((item) => item !== id);
 		await doc.save();
+		res.send(doc);
 	} catch (err) {
 		console.log(err);
 	}

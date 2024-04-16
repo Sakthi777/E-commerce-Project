@@ -18,8 +18,11 @@ import { Link } from "react-router-dom";
 import products from "../../pages/user/productList";
 import Cookies from "js-cookie";
 import { useSelector, useDispatch } from "react-redux";
-import { setSearch } from "../../features/slice/searchSlice";
+import { setSearchProductDetails } from "../../features/slice/searchProductSlice";
+import { setSearchValue } from "../../features/slice/searchSlice";
 import { useSlider } from "../../pages/user/home";
+import { removeWishLength } from "../../features/slice/wishlistLength";
+import { removeToken } from "../../features/slice/tokenSlice";
 const HeaderPage = () => {
   const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails, backToCart, setBacktoCart } = useSlider();
   const [isFixed, setIsFixed] = useState(false);
@@ -30,10 +33,22 @@ const HeaderPage = () => {
   const [totalCardPrice, setTotalCardPrice] = useState(0);
   const [totalCartItem, setTotalCartItem] = useState(0);
   const token = useSelector((state) => state.tokenDetails.token);
-  const search = useSelector((state) => state.searchValue.search);
+  const search = useSelector((state) => state.searchVal.search);
+  const wishlistLength = useSelector((state) => state.wishLength.length);
 
-  const [searchVal, setSearchVal] = useState("");
+  const nav = useNavigate();
+
+  const [searchVal, setSearchVal] = useState(search);
   const dispatch = useDispatch();
+
+  const fetchProduct = async () => {
+    await axios
+      .get(`http://localhost:8000/get-searchProductDetails/?q=${searchVal}`)
+      .then((res) => {
+        dispatch(setSearchProductDetails(res.data.data));
+      })
+      .catch((err) => console.log(err));
+  };
 
   let responseUserArray = [];
   useEffect(() => {
@@ -41,8 +56,23 @@ const HeaderPage = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(setSearch(searchVal));
+    fetchProduct();
+    dispatch(setSearchValue(searchVal));
+    console.log(search);
   }, [searchVal]);
+
+  // useEffect(() => {
+  //   let totalPrice = 0;
+  //   let count = 0;
+  //   productDetails.forEach((product) => {
+  //     totalPrice += product.productdetail.newPrice * product.quantity;
+  //     count = count + 1;
+  //   });
+  //   console.log("Price" + totalPrice);
+  //   setTotalCardPrice(totalPrice);
+  //   console.log("product count " + count);
+  //   setTotalCartItem(count);
+  // }, [setProductDetails]);
 
   const fetchUserCartDetails = async () => {
     try {
@@ -166,6 +196,8 @@ const HeaderPage = () => {
   };
   const logout = () => {
     Cookies.remove("LoginToken");
+    dispatch(removeToken());
+    dispatch(removeWishLength());
     window.location.reload();
   };
 
@@ -227,8 +259,9 @@ const HeaderPage = () => {
             </div>
           </Link>
           <div className="search-container">
-            <input type="text" className="search-bar" value={search} placeholder="Search..." onChange={(e) => setSearchVal(e.target.value)} />
-            <span className="search-icon">
+            <input type="text" className="search-bar" value={searchVal} placeholder="Search..." onChange={(e) => setSearchVal(e.target.value)} />
+
+            <span className="search-icon" onClick={() => nav("/shop")}>
               <IoIosSearch />
             </span>
           </div>
@@ -237,7 +270,7 @@ const HeaderPage = () => {
               <FontAwesomeIcon icon={faHeart} className="heart-icon" />
             </div>
             <div className="pop-up-item">
-              <p>9+</p>
+              <p>{wishlistLength <= 9 ? wishlistLength : +9}</p>
             </div>
           </div>
           <div className="card-container">
@@ -396,6 +429,8 @@ const HeaderPage = () => {
           </div>
         </div>
       </div>
+
+      <button>addcard</button>
     </>
   );
 };
