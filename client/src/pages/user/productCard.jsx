@@ -17,7 +17,7 @@ import { setWishLength } from "../../features/slice/wishlistLength";
 import { useSlider } from "../../pages/user/home";
 import axios from "axios";
 const ProductCard = ({ liked, imgSrc, imageSlider, rating, productName, oldPrice, newPrice, setSale, setNew, discountPercentage, productDetails, product }) => {
-	// const [liked, setLiked] = useState(false);
+	const [isliked, setIsLiked] = useState(liked);
 	const [showModal, setShowModal] = useState(false);
 	const [productList, setProductList] = useState("");
 	const [backToCart, setBacktoCart] = useState(false);
@@ -50,8 +50,8 @@ const ProductCard = ({ liked, imgSrc, imageSlider, rating, productName, oldPrice
 	}, [userCartItem, isSidebarOpen]);
 	const url = `http://localhost:8000`;
 	const toggleLike = async () => {
-		// setLiked(!liked);
-		if (liked) {
+		setIsLiked(!isliked);
+		if (isliked) {
 			dispatch(setWishLength(wishLength - 1));
 		} else {
 			dispatch(setWishLength(wishLength + 1));
@@ -109,7 +109,7 @@ const ProductCard = ({ liked, imgSrc, imageSlider, rating, productName, oldPrice
 	};
 	return (
 		<div className="product-card">
-			<div className={`productLike ${liked ? "liked" : ""}`} onClick={toggleLike}>
+			<div className={`productLike ${isliked ? "liked" : ""}`} onClick={toggleLike}>
 				<AiFillHeart className="icon" style={{ verticalAlign: "unset" }} />
 			</div>
 			<div className="product-img-container">

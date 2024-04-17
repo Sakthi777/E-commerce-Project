@@ -13,7 +13,8 @@ import "../../styles/user/featuredItem.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Highlight } from "../../components/user/homePageCarousels";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setWishLength } from "../../features/slice/wishlistLength";
 // import Cookies from "js-cookie";
 //import products from "./productList";
 const url = "http:localhost:8000";
@@ -39,6 +40,8 @@ const ProductGrid = ({ products }) => {
 	const handleOptionClick = (option) => {
 		setSelectedOption(option);
 	};
+
+	const dispatch = useDispatch();
 
 	// const cookie = Cookies.get("LoginToken");
 
@@ -96,13 +99,12 @@ const ProductGrid = ({ products }) => {
 			{/* <Foods /> */}
 
 			<div className="product-container">
+				{/* <button onClick={() => console.log(wishList)}>Show list</button> */}
 				<div className="productTitle">Recently Sold Items</div>
 				<div className="product-grid">
 					{productDetails.map((product) => (
 						<ProductCard
-							liked={() => {
-								return wishList.includes(product._id) ? true : false;
-							}}
+							liked={wishList.includes(product._id)}
 							key={product._id}
 							imgSrc={product.image}
 							imageSlider={product.imageSlider}

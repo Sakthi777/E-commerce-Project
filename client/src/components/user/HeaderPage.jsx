@@ -87,14 +87,14 @@ const HeaderPage = () => {
 	};
 
 	useEffect(() => {
-		console.log(userCartItem);
+		// console.log(userCartItem);
 		if (userCartItem.length == 0) {
 			setTotalCardPrice(0);
 			setTotalCartItem(0);
 		}
 		userCartItem.map((items) => {
 			const productID = items.productID;
-			console.log(items);
+			// console.log(items);
 			axios
 				.get(`http://localhost:8000/get-userDetails/${productID}`)
 				.then((response) => {
@@ -270,7 +270,7 @@ const HeaderPage = () => {
 							<FontAwesomeIcon icon={faHeart} className="heart-icon" />
 						</div>
 						<div className="pop-up-item">
-							<p>{wishlistCount}</p>
+							<p>{wishlistLength}</p>
 						</div>
 					</div>
 					<div className="card-container">
