@@ -111,7 +111,7 @@ const Wishlist = () => {
 
   const fetchProducts = async () => {
     const uniqueProductIds = Array.from(new Set(wishlist)); // Filter out duplicate ids
-    dispatch(setWishLength(wishlistLength));
+    dispatch(setWishLength(uniqueProductIds.length));
     const uniqueProductDetails = [];
     for (const id of uniqueProductIds) {
       try {
@@ -121,7 +121,7 @@ const Wishlist = () => {
         console.error("Error fetching product data:", error);
       }
     }
-    setProductDetails(uniqueProductDetails);
+    setwishProduct(uniqueProductDetails);
   };
 
   useEffect(() => {
@@ -164,7 +164,7 @@ const Wishlist = () => {
       <div className="showMoreButton">
         <button className="show-more-button">LOAD MORE ITEMS</button>
       </div>
-      <Modal show={showModal} onHide={handleCloseModal} centered size="lg">
+      <Modal show={showModal} onHide={handleCloseModal} centered size="xl">
         <Modal.Header closeButton>
           <Modal.Title>Wishlist Product</Modal.Title>
         </Modal.Header>

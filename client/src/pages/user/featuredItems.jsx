@@ -33,9 +33,9 @@ const FeaturedItems = ({ imgSrc, imageSlider, rating, productName, oldPrice, new
   }, [userCartItem]);
 
   const handleAddToCard = (prod) => {
-    console.log(prod._id);
+    console.log(prod);
     console.log(token);
-    const productID = prod._id;
+    const productID = prod;
     axios
       .post("http://localhost:8000/post-AddToCardDetails", { productID, token })
       .then((response) => {
@@ -45,7 +45,7 @@ const FeaturedItems = ({ imgSrc, imageSlider, rating, productName, oldPrice, new
       .catch((error) => {
         console.error("Error adding product to cart:", error);
       });
-    setSidebarOpen(true);
+    // setSidebarOpen(true);
   };
 
   const handleGoCartClick = () => {
@@ -100,6 +100,7 @@ const FeaturedItems = ({ imgSrc, imageSlider, rating, productName, oldPrice, new
                 setNew: setNew,
                 discountPercentage: discountPercentage,
                 productDetails: productDetails,
+                productID: product._id,
               }}
               onClose={closeModal}
             />
@@ -125,7 +126,7 @@ const FeaturedItems = ({ imgSrc, imageSlider, rating, productName, oldPrice, new
           <span className="newPrice">{newPrice}/piece</span>
         </div>
         <div className="feature-des">{productDetails}</div>
-        <div className="add-to-cart-icon" onClick={() => handleAddToCard(product._id)}>
+        <div className="add-to-cart-icon" onClick={() => handleClick(product._id)}>
           <FontAwesomeIcon icon={faShoppingBag} className="icon" />
           {backToCart ? <span>Go Cart</span> : <span>Add</span>}
         </div>

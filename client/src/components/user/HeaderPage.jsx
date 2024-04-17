@@ -65,10 +65,10 @@ const HeaderPage = () => {
   };
   useEffect(() => {
     if (token) {
-      fetchWishList();
       fetchUserCartDetails();
+      fetchWishList();
     }
-  }, []);
+  }, [token]);
 
   // useEffect(() => {
   //   let totalPrice = 0;

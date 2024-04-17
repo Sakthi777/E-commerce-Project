@@ -25,49 +25,35 @@ const ProductCard = ({ liked, imgSrc, imageSlider, rating, productName, oldPrice
   const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem } = useSlider();
   const dispatch = useDispatch();
   const wishLength = useSelector((state) => state.wishLength.length);
-  // const [ref, setRef] = useState(false);
+
+  useEffect(() => {
+    let foundInCart = false;
+    userCartItem.map((prod) => {
+      if (prod.productID === product._id) {
+        foundInCart = true;
+        console.log(prod.productID);
+      }
+    });
+    setBacktoCart(foundInCart);
+  }, [userCartItem]);
 
   const fetchWishList = async () => {
     await axios.get(`http://localhost:8000/wishlist/${token}`).then((res) => {
       setWishList(res.data.productID);
     });
   };
-
   useEffect(() => {
     if (token) {
       fetchWishList();
     }
   }, [token]);
-
-  useEffect(() => {
-    fetchUserCartDetails();
-  }, []);
-
   useEffect(() => {
     if (wishList) {
       setIsLiked(wishList.includes(product._id));
       dispatch(setWishLength(wishList.length));
     }
   }, [wishList]);
-  const fetchUserCartDetails = async () => {
-    try {
-      const response = await axios.get(`http://localhost:8000/get-userCartDetails/${token}`);
-      if (response.data.AddtoCardItems) {
-        setUserCartItem(response.data.AddtoCardItems);
-      }
-    } catch (error) {
-      console.log("Error fetching user cart details:", error);
-    }
-  };
-  useEffect(() => {
-    userCartItem.map((prod) => {
-      // setBacktoCart(false);
-      if (prod.productID === product._id) {
-        setBacktoCart(true);
-        // console.log(prod.productID);
-      }
-    });
-  }, [userCartItem, isSidebarOpen]);
+
   const url = `http://localhost:8000`;
   const toggleLike = async () => {
     const wishListPostData = {
