@@ -21,8 +21,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSearchProductDetails } from "../../features/slice/searchProductSlice";
 import { setSearchValue } from "../../features/slice/searchSlice";
 import { useSlider } from "../../pages/user/home";
-import { removeWishLength } from "../../features/slice/wishlistLength";
-import { removeToken } from "../../features/slice/tokenSlice";
+import { setWishLength } from "../../features/slice/wishlistLength";
+import { setToken } from "../../features/slice/tokenSlice";
 const HeaderPage = () => {
   const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails, wishlistCount } = useSlider();
   const [isFixed, setIsFixed] = useState(false);
@@ -51,15 +51,24 @@ const HeaderPage = () => {
   };
 
   let responseUserArray = [];
-  useEffect(() => {
-    fetchUserCartDetails();
-  }, []);
 
   useEffect(() => {
     fetchProduct();
     dispatch(setSearchValue(searchVal));
-    console.log(search);
   }, [searchVal]);
+
+  const fetchWishList = async () => {
+    await axios.get(`http://localhost:8000/wishlist/${token}`).then((res) => {
+      const wishListData = res.data.productID;
+      dispatch(setWishLength(wishListData.length));
+    });
+  };
+  useEffect(() => {
+    if (token) {
+      fetchWishList();
+      fetchUserCartDetails();
+    }
+  }, []);
 
   // useEffect(() => {
   //   let totalPrice = 0;
@@ -87,25 +96,25 @@ const HeaderPage = () => {
   };
 
   useEffect(() => {
-    console.log(userCartItem);
+    // console.log(userCartItem);
     if (userCartItem.length == 0) {
       setTotalCardPrice(0);
       setTotalCartItem(0);
     }
     userCartItem.map((items) => {
       const productID = items.productID;
-      console.log(items);
+      // console.log(items);
       axios
         .get(`http://localhost:8000/get-userDetails/${productID}`)
         .then((response) => {
-          console.log(response.data.data);
+          // console.log(response.data.data);
           const productResponse = response.data.data;
           const userItem = {
             productdetail: productResponse,
             quantity: items.quantity,
           };
           responseUserArray.push(userItem);
-          console.log(responseUserArray);
+          // console.log(responseUserArray);
           let totalPrice = 0;
           let count = 0;
 
@@ -113,9 +122,9 @@ const HeaderPage = () => {
             totalPrice += product.productdetail.newPrice * product.quantity;
             count = count + 1;
           });
-          console.log("Price" + totalPrice);
+          // console.log("Price" + totalPrice);
           setTotalCardPrice(totalPrice);
-          console.log("product count " + count);
+          // console.log("product count " + count);
           setTotalCartItem(count);
         })
         .catch((error) => {
@@ -196,8 +205,8 @@ const HeaderPage = () => {
   };
   const logout = () => {
     Cookies.remove("LoginToken");
-    dispatch(removeToken());
-    dispatch(removeWishLength());
+    dispatch(setToken(""));
+    dispatch(setWishLength(0));
     window.location.reload();
   };
 
@@ -270,7 +279,7 @@ const HeaderPage = () => {
               <FontAwesomeIcon icon={faHeart} className="heart-icon" />
             </div>
             <div className="pop-up-item">
-              <p>{wishlistCount}</p>
+              <p>{wishlistLength}</p>
             </div>
           </div>
           <div className="card-container">
@@ -431,8 +440,6 @@ const HeaderPage = () => {
           </div>
         </div>
       </div>
-
-      <button>addcard</button>
     </>
   );
 };

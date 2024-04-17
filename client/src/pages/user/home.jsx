@@ -14,10 +14,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Highlight } from "../../components/user/homePageCarousels";
-import { useSelector } from "react-redux";
-// import Cookies from "js-cookie";
-//import products from "./productList";
-const url = "http:localhost:8000";
+import { useDispatch, useSelector } from "react-redux";
+import { setWishLength } from "../../features/slice/wishlistLength";
 
 export const SliderContext = createContext();
 
@@ -35,14 +33,11 @@ const ProductGrid = ({ products }) => {
   const navigate = useNavigate();
   const token = useSelector((state) => state.tokenDetails.token);
   const [selectedOption, setSelectedOption] = useState("Top Order");
+  const [wishList, setWishList] = useState([]);
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
   };
-  // const cookie = Cookies.get("LoginToken");
-  function timeout(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
 
   const [productDetails, setProductDetails] = useState([]);
   useEffect(() => {
@@ -89,6 +84,7 @@ const ProductGrid = ({ products }) => {
       {/* <Foods /> */}
 
       <div className="product-container">
+        {/* <button onClick={() => console.log(wishList)}>Show list</button> */}
         <div className="productTitle">Recently Sold Items</div>
         <div className="product-grid">
           {productDetails.slice(0, 5).map((product) => (
