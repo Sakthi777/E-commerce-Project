@@ -106,7 +106,7 @@
 //                 <span className="page-link">...</span>
 //               </li>
 //             )}
-                       
+
 //             <li className="page-item">
 //               <a href="##" className="page-link" onClick={nextpage}>
 //                 next
@@ -142,6 +142,8 @@ import banner from "../../assets/images/banner/single-banner.jpg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 export default function RegisterData() {
   const [users, setUsers] = useState([]);
@@ -176,6 +178,9 @@ export default function RegisterData() {
       setCurrentPage(currentPage + 1);
     }
   }
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <div>
@@ -212,11 +217,24 @@ export default function RegisterData() {
                       <td>{d.userName}</td>
                       <td>{d.email}</td>
                       <td>
-                        <button className="viewicons">view</button>
+                        <button className="viewicons" onClick={handleShow}>view</button>
                       </td>
                     </tr>
                   );
                 })}
+                <Modal show={show} onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>User Details</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>Name : Greeny</Modal.Body>
+                  <Modal.Body>Email: greeny@gmail.com</Modal.Body>
+
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Close
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
               </tbody>
             </table>
           </div>
