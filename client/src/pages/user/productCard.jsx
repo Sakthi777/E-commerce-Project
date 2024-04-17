@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setWishLength } from "../../features/slice/wishlistLength";
 import { useSlider } from "../../pages/user/home";
 import axios from "axios";
+
 const ProductCard = ({ liked, imgSrc, imageSlider, rating, productName, oldPrice, newPrice, setSale, setNew, discountPercentage, productDetails, product }) => {
 	const [isliked, setIsLiked] = useState(liked);
 	const [showModal, setShowModal] = useState(false);
