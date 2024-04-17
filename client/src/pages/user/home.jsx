@@ -15,9 +15,6 @@ import { useState, useEffect } from "react";
 import { Highlight } from "../../components/user/homePageCarousels";
 import { useDispatch, useSelector } from "react-redux";
 import { setWishLength } from "../../features/slice/wishlistLength";
-// import Cookies from "js-cookie";
-//import products from "./productList";
-const url = "http:localhost:8000";
 
 export const SliderContext = createContext();
 
@@ -41,14 +38,6 @@ const ProductGrid = ({ products }) => {
 		setSelectedOption(option);
 	};
 
-	const dispatch = useDispatch();
-
-	// const cookie = Cookies.get("LoginToken");
-
-	function timeout(ms) {
-		return new Promise((resolve) => setTimeout(resolve, ms));
-	}
-
 	const [productDetails, setProductDetails] = useState([]);
 	useEffect(() => {
 		axios
@@ -60,15 +49,6 @@ const ProductGrid = ({ products }) => {
 				console.error("Error fetching product data:", error);
 			});
 	}, []);
-
-	const fetchWishList = async () => {
-		await axios.get(`http://localhost:8000/wishlist/${token}`).then((res) => {
-			setWishList(res.data.productID);
-		});
-	};
-	useEffect(() => {
-		if (token) fetchWishList();
-	}, [wishList]);
 
 	//CountDown Time start
 
@@ -104,7 +84,6 @@ const ProductGrid = ({ products }) => {
 				<div className="product-grid">
 					{productDetails.map((product) => (
 						<ProductCard
-							liked={wishList.includes(product._id)}
 							key={product._id}
 							imgSrc={product.image}
 							imageSlider={product.imageSlider}

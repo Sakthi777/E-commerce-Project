@@ -17,18 +17,38 @@ import { setWishLength } from "../../features/slice/wishlistLength";
 import { useSlider } from "../../pages/user/home";
 import axios from "axios";
 const ProductCard = ({ liked, imgSrc, imageSlider, rating, productName, oldPrice, newPrice, setSale, setNew, discountPercentage, productDetails, product }) => {
-	const [isliked, setIsLiked] = useState(liked);
+	const [isliked, setIsLiked] = useState(false);
 	const [showModal, setShowModal] = useState(false);
-	const [productList, setProductList] = useState("");
+	const [wishList, setWishList] = useState([]);
 	const [backToCart, setBacktoCart] = useState(false);
 	const token = useSelector((state) => state.tokenDetails.token);
 	const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem } = useSlider();
 	const dispatch = useDispatch();
 	const wishLength = useSelector((state) => state.wishLength.length);
 	// const [ref, setRef] = useState(false);
+
+	const fetchWishList = async () => {
+		await axios.get(`http://localhost:8000/wishlist/${token}`).then((res) => {
+			setWishList(res.data.productID);
+		});
+	};
+
+	useEffect(() => {
+		if (token) {
+			fetchWishList();
+		}
+	}, [token]);
+
 	useEffect(() => {
 		fetchUserCartDetails();
 	}, []);
+
+	useEffect(() => {
+		if (wishList) {
+			setIsLiked(wishList.includes(product._id));
+			dispatch(setWishLength(wishList.length));
+		}
+	}, [wishList]);
 	const fetchUserCartDetails = async () => {
 		try {
 			const response = await axios.get(`http://localhost:8000/get-userCartDetails/${token}`);
@@ -50,12 +70,6 @@ const ProductCard = ({ liked, imgSrc, imageSlider, rating, productName, oldPrice
 	}, [userCartItem, isSidebarOpen]);
 	const url = `http://localhost:8000`;
 	const toggleLike = async () => {
-		setIsLiked(!isliked);
-		if (isliked) {
-			dispatch(setWishLength(wishLength - 1));
-		} else {
-			dispatch(setWishLength(wishLength + 1));
-		}
 		const wishListPostData = {
 			token: token,
 			productId: product._id,
@@ -63,7 +77,8 @@ const ProductCard = ({ liked, imgSrc, imageSlider, rating, productName, oldPrice
 		await axios
 			.post(`${url}/wishlist/`, wishListPostData)
 			.then((res) => {
-				console.log(res.data);
+				setWishList(res.data.productID);
+				console.log(res.data.productID);
 			})
 			.catch((err) => {
 				console.log(err);

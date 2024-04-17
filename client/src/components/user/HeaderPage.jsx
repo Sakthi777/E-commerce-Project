@@ -21,8 +21,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSearchProductDetails } from "../../features/slice/searchProductSlice";
 import { setSearchValue } from "../../features/slice/searchSlice";
 import { useSlider } from "../../pages/user/home";
-import { removeWishLength, setWishLength } from "../../features/slice/wishlistLength";
-import { removeToken } from "../../features/slice/tokenSlice";
+import { setWishLength } from "../../features/slice/wishlistLength";
+import { setToken } from "../../features/slice/tokenSlice";
 const HeaderPage = () => {
 	const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails, wishlistCount } = useSlider();
 	const [isFixed, setIsFixed] = useState(false);
@@ -51,9 +51,6 @@ const HeaderPage = () => {
 	};
 
 	let responseUserArray = [];
-	useEffect(() => {
-		fetchUserCartDetails();
-	}, []);
 
 	useEffect(() => {
 		fetchProduct();
@@ -62,12 +59,15 @@ const HeaderPage = () => {
 
 	const fetchWishList = async () => {
 		await axios.get(`http://localhost:8000/wishlist/${token}`).then((res) => {
-			const wishList = res.data.productID;
-			dispatch(setWishLength(wishList.length));
+			const wishListData = res.data.productID;
+			dispatch(setWishLength(wishListData.length));
 		});
 	};
 	useEffect(() => {
-		if (token) fetchWishList();
+		if (token) {
+			fetchWishList();
+			fetchUserCartDetails();
+		}
 	}, []);
 
 	// useEffect(() => {
@@ -205,7 +205,7 @@ const HeaderPage = () => {
 	};
 	const logout = () => {
 		Cookies.remove("LoginToken");
-		dispatch(removeToken());
+		dispatch(setToken(""));
 		dispatch(setWishLength(0));
 		window.location.reload();
 	};

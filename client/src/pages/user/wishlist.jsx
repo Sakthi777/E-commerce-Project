@@ -34,7 +34,7 @@ const Wishlist = () => {
 
 	let delIndex = null;
 
-	const [productDetails, setProductDetails] = useState([]);
+	const [wishProduct, setwishProduct] = useState([]);
 	const [wishlist, setWishList] = useState([]);
 
 	const token = useSelector((state) => state.tokenDetails.token);
@@ -44,12 +44,12 @@ const Wishlist = () => {
 	// 	axios
 	// 		.get(`${url}/get-productDetails`)
 	// 		.then((response) => {
-	// 			setProductDetails(response.data.data);
+	// 			setwishProduct(response.data.data);
 	// 		})
 	// 		.catch((error) => {
 	// 			console.error("Error fetching product data:", error);
 	// 		});
-	// }, [setProductDetails]);
+	// }, [setwishProduct]);
 
 	function timeout(ms) {
 		return new Promise((resolve) => {
@@ -75,9 +75,8 @@ const Wishlist = () => {
 	};
 
 	const renderTable = () => {
-		if (productDetails) {
-			isMounted = true;
-			return productDetails.map((product, index) => (
+		if (wishProduct) {
+			return wishProduct.map((product, index) => (
 				<tr>
 					<td>{index + 1}</td>
 					<td>
@@ -123,7 +122,7 @@ const Wishlist = () => {
 				console.error("Error fetching product data:", error);
 			}
 		}
-		setProductDetails(uniqueProductDetails);
+		setwishProduct(uniqueProductDetails);
 	};
 
 	useEffect(() => {
@@ -132,7 +131,7 @@ const Wishlist = () => {
 
 	useEffect(() => {
 		renderTable();
-	}, [productDetails]);
+	}, [wishProduct]);
 
 	return (
 		<div className="wishlist-container">
@@ -144,7 +143,7 @@ const Wishlist = () => {
 					<a href="/">Home</a>/<a href="...">Shop Grid</a>/<a href="...">Wishlist</a>
 				</div>
 			</div>
-			{productDetails && (
+			{wishProduct && (
 				<div className="wishlist-table-container">
 					<table className="wishlist-table">
 						<thead>
