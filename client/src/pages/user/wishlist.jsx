@@ -18,187 +18,186 @@ import { useDispatch, useSelector } from "react-redux";
 import { useSlider } from "../../pages/user/home";
 import { setWishLength } from "../../features/slice/wishlistLength";
 const Wishlist = () => {
-  const { wishlistCount, setwishlistCount } = useSlider();
-  const [liked, setLiked] = useState(false);
-  const url = `http://localhost:8000`;
-  const toggleLike = () => {
-    setLiked(!liked);
-  };
-  const [showModal, setShowModal] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const handleShowModal = (product) => {
-    setSelectedProduct(product);
-    setShowModal(true);
-  };
-  const handleCloseModal = () => setShowModal(false);
+	const { wishlistCount, setwishlistCount } = useSlider();
+	const [liked, setLiked] = useState(false);
+	const url = `http://localhost:8000`;
+	const toggleLike = () => {
+		setLiked(!liked);
+	};
+	const [showModal, setShowModal] = useState(false);
+	const [selectedProduct, setSelectedProduct] = useState(null);
+	const handleShowModal = (product) => {
+		setSelectedProduct(product);
+		setShowModal(true);
+	};
+	const handleCloseModal = () => setShowModal(false);
 
-  let delIndex = null;
+	let delIndex = null;
 
-  const [productDetails, setProductDetails] = useState([]);
-  const [wishlist, setWishList] = useState([]);
+	const [productDetails, setProductDetails] = useState([]);
+	const [wishlist, setWishList] = useState([]);
 
-  let wishlistLength = 0;
-  const token = useSelector((state) => state.tokenDetails.token);
-  const dispatch = useDispatch();
+	const token = useSelector((state) => state.tokenDetails.token);
+	const dispatch = useDispatch();
 
-  // useEffect(() => {
-  // 	axios
-  // 		.get(`${url}/get-productDetails`)
-  // 		.then((response) => {
-  // 			setProductDetails(response.data.data);
-  // 		})
-  // 		.catch((error) => {
-  // 			console.error("Error fetching product data:", error);
-  // 		});
-  // }, [setProductDetails]);
+	// useEffect(() => {
+	// 	axios
+	// 		.get(`${url}/get-productDetails`)
+	// 		.then((response) => {
+	// 			setProductDetails(response.data.data);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error("Error fetching product data:", error);
+	// 		});
+	// }, [setProductDetails]);
 
-  function timeout(ms) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, ms);
-    });
-  }
+	function timeout(ms) {
+		return new Promise((resolve) => {
+			setTimeout(resolve, ms);
+		});
+	}
 
-  let isMounted = true;
+	let isMounted = true;
 
-  const deleteWishList = async (id, index) => {
-    await axios
-      .delete(`http://localhost:8000/wishlist/${token}/${id}`)
-      .then((res) => {
-        setWishList(res.data.productID);
-        delIndex = index;
-        // console.log(res.data.productID);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    // console.log("Delete");
-  };
+	const deleteWishList = async (id, index) => {
+		await axios
+			.delete(`http://localhost:8000/wishlist/${token}/${id}`)
+			.then((res) => {
+				setWishList(res.data.productID);
+				delIndex = index;
+				// console.log(res.data.productID);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+		dispatch(setWishLength(wishlist.length - 1));
+		// console.log("Delete");
+	};
 
-  const renderTable = () => {
-    if (productDetails) {
-      isMounted = true;
-      return productDetails.map((product, index) => (
-        <tr>
-          <td>{index + 1}</td>
-          <td>
-            <img src={`http://localhost:8000/uploads/productImage/${product.image}`} alt="" />
-          </td>
-          <td>{product.productName}</td>
-          <td>{product.newPrice}</td>
-          <td>Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
-          <td>In Stock</td>
-          <td className="wishlist-card">
-            <div className="wishlist-add-to-cart">
-              <span>Add To Cart</span>
-            </div>
-          </td>
-          <td>
-            <FontAwesomeIcon icon={faEye} className="wishlist-view" onClick={() => handleShowModal(product)} />
-            <FontAwesomeIcon icon={faTrash} className="wishlist-delete" onClick={() => deleteWishList(product._id, index)} />
-          </td>
-        </tr>
-      ));
-    }
-  };
+	const renderTable = () => {
+		if (productDetails) {
+			isMounted = true;
+			return productDetails.map((product, index) => (
+				<tr>
+					<td>{index + 1}</td>
+					<td>
+						<img src={`http://localhost:8000/uploads/productImage/${product.image}`} alt="" />
+					</td>
+					<td>{product.productName}</td>
+					<td>{product.newPrice}</td>
+					<td>Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
+					<td>In Stock</td>
+					<td className="wishlist-card">
+						<div className="wishlist-add-to-cart">
+							<span>Add To Cart</span>
+						</div>
+					</td>
+					<td>
+						<FontAwesomeIcon icon={faEye} className="wishlist-view" onClick={() => handleShowModal(product)} />
+						<FontAwesomeIcon icon={faTrash} className="wishlist-delete" onClick={() => deleteWishList(product._id, index)} />
+					</td>
+				</tr>
+			));
+		}
+	};
 
-  useEffect(() => {
-    const fetchWishList = async () => {
-      await axios.get(`${url}/wishlist/${token}`).then((res) => {
-        setWishList(res.data.productID);
-        console.log(wishlist);
-      });
-    };
-    fetchWishList();
-  }, []);
+	useEffect(() => {
+		const fetchWishList = async () => {
+			await axios.get(`${url}/wishlist/${token}`).then((res) => {
+				setWishList(res.data.productID);
+				console.log(wishlist);
+			});
+		};
+		fetchWishList();
+	}, []);
 
-  const fetchProducts = async () => {
-    const uniqueProductIds = Array.from(new Set(wishlist)); // Filter out duplicate ids
-    setwishlistCount(uniqueProductIds.length);
-    dispatch(setWishLength(wishlistLength));
-    const uniqueProductDetails = [];
-    for (const id of uniqueProductIds) {
-      try {
-        const response = await axios.get(`http://localhost:8000/get-userDetails/${id}`);
-        uniqueProductDetails.push(response.data.data);
-      } catch (error) {
-        console.error("Error fetching product data:", error);
-      }
-    }
-    setProductDetails(uniqueProductDetails);
-  };
+	const fetchProducts = async () => {
+		const uniqueProductIds = Array.from(new Set(wishlist)); // Filter out duplicate ids
+		setwishlistCount(uniqueProductIds.length);
+		const uniqueProductDetails = [];
+		for (const id of uniqueProductIds) {
+			try {
+				const response = await axios.get(`http://localhost:8000/get-userDetails/${id}`);
+				uniqueProductDetails.push(response.data.data);
+			} catch (error) {
+				console.error("Error fetching product data:", error);
+			}
+		}
+		setProductDetails(uniqueProductDetails);
+	};
 
-  useEffect(() => {
-    fetchProducts();
-  }, [wishlist]);
+	useEffect(() => {
+		fetchProducts();
+	}, [wishlist]);
 
-  useEffect(() => {
-    renderTable();
-  }, [productDetails]);
+	useEffect(() => {
+		renderTable();
+	}, [productDetails]);
 
-  return (
-    <div className="wishlist-container">
-      <HeaderPage />
-      <div className="offers-banner">
-        <img src={banner} alt="Offer Banner" />
-        <div className="offer-banner-content">
-          <h1>WISHLIST</h1>
-          <a href="/">Home</a>/<a href="...">Shop Grid</a>/<a href="...">Wishlist</a>
-        </div>
-      </div>
-      {productDetails && (
-        <div className="wishlist-table-container">
-          <table className="wishlist-table">
-            <thead>
-              <tr>
-                <th>Serial</th>
-                <th>Product</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Shopping </th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>{renderTable()}</tbody>
-          </table>
-        </div>
-      )}
-      <div className="showMoreButton">
-        <button className="show-more-button">LOAD MORE ITEMS</button>
-      </div>
-      <Modal show={showModal} onHide={handleCloseModal} centered size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title>Wishlist Product</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {selectedProduct && (
-            <ProductDescriptionCard
-              product={{
-                imgSrc: selectedProduct.image,
-                imageSlider: selectedProduct.imageSlider,
-                rating: selectedProduct.rating,
-                productName: selectedProduct.productName,
-                oldPrice: selectedProduct.oldPrice,
-                newPrice: selectedProduct.newPrice,
-                setSale: selectedProduct.sale,
-                setNew: selectedProduct.newProduct,
-                discountPercentage: selectedProduct.discountPercentage,
-                productDetails: selectedProduct.productDescription,
-              }}
-            />
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" className="green-background-button">
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+	return (
+		<div className="wishlist-container">
+			<HeaderPage />
+			<div className="offers-banner">
+				<img src={banner} alt="Offer Banner" />
+				<div className="offer-banner-content">
+					<h1>WISHLIST</h1>
+					<a href="/">Home</a>/<a href="...">Shop Grid</a>/<a href="...">Wishlist</a>
+				</div>
+			</div>
+			{productDetails && (
+				<div className="wishlist-table-container">
+					<table className="wishlist-table">
+						<thead>
+							<tr>
+								<th>Serial</th>
+								<th>Product</th>
+								<th>Name</th>
+								<th>Price</th>
+								<th>Description</th>
+								<th>Status</th>
+								<th>Shopping </th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>{renderTable()}</tbody>
+					</table>
+				</div>
+			)}
+			<div className="showMoreButton">
+				<button className="show-more-button">LOAD MORE ITEMS</button>
+			</div>
+			<Modal show={showModal} onHide={handleCloseModal} centered size="lg">
+				<Modal.Header closeButton>
+					<Modal.Title>Wishlist Product</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					{selectedProduct && (
+						<ProductDescriptionCard
+							product={{
+								imgSrc: selectedProduct.image,
+								imageSlider: selectedProduct.imageSlider,
+								rating: selectedProduct.rating,
+								productName: selectedProduct.productName,
+								oldPrice: selectedProduct.oldPrice,
+								newPrice: selectedProduct.newPrice,
+								setSale: selectedProduct.sale,
+								setNew: selectedProduct.newProduct,
+								discountPercentage: selectedProduct.discountPercentage,
+								productDetails: selectedProduct.productDescription,
+							}}
+						/>
+					)}
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" className="green-background-button">
+						Close
+					</Button>
+				</Modal.Footer>
+			</Modal>
 
-      <Footer />
-    </div>
-  );
+			<Footer />
+		</div>
+	);
 };
 
 export default Wishlist;

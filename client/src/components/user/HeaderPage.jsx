@@ -21,7 +21,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSearchProductDetails } from "../../features/slice/searchProductSlice";
 import { setSearchValue } from "../../features/slice/searchSlice";
 import { useSlider } from "../../pages/user/home";
-import { removeWishLength } from "../../features/slice/wishlistLength";
+import { removeWishLength, setWishLength } from "../../features/slice/wishlistLength";
 import { removeToken } from "../../features/slice/tokenSlice";
 const HeaderPage = () => {
 	const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails, wishlistCount } = useSlider();
@@ -58,8 +58,17 @@ const HeaderPage = () => {
 	useEffect(() => {
 		fetchProduct();
 		dispatch(setSearchValue(searchVal));
-		console.log(search);
 	}, [searchVal]);
+
+	const fetchWishList = async () => {
+		await axios.get(`http://localhost:8000/wishlist/${token}`).then((res) => {
+			const wishList = res.data.productID;
+			dispatch(setWishLength(wishList.length));
+		});
+	};
+	useEffect(() => {
+		if (token) fetchWishList();
+	}, []);
 
 	// useEffect(() => {
 	//   let totalPrice = 0;
@@ -197,7 +206,7 @@ const HeaderPage = () => {
 	const logout = () => {
 		Cookies.remove("LoginToken");
 		dispatch(removeToken());
-		dispatch(removeWishLength());
+		dispatch(setWishLength(0));
 		window.location.reload();
 	};
 
