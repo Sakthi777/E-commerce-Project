@@ -67,8 +67,8 @@ const ProductGrid = ({ products }) => {
 		});
 	};
 	useEffect(() => {
-		fetchWishList();
-	}, []);
+		if (token) fetchWishList();
+	}, [wishList]);
 
 	//CountDown Time start
 
