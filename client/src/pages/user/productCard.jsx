@@ -18,169 +18,172 @@ import { useSlider } from "../../pages/user/home";
 import axios from "axios";
 
 const ProductCard = ({ liked, imgSrc, imageSlider, rating, productName, oldPrice, newPrice, setSale, setNew, discountPercentage, productDetails, product }) => {
-	const [isliked, setIsLiked] = useState(liked);
-	const [showModal, setShowModal] = useState(false);
-	const [productList, setProductList] = useState("");
-	const [backToCart, setBacktoCart] = useState(false);
-	const token = useSelector((state) => state.tokenDetails.token);
-	const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem } = useSlider();
-	const dispatch = useDispatch();
-	const wishLength = useSelector((state) => state.wishLength.length);
-	// const [ref, setRef] = useState(false);
-	useEffect(() => {
-		fetchUserCartDetails();
-	}, []);
-	const fetchUserCartDetails = async () => {
-		try {
-			const response = await axios.get(`http://localhost:8000/get-userCartDetails/${token}`);
-			if (response.data.AddtoCardItems) {
-				setUserCartItem(response.data.AddtoCardItems);
-			}
-		} catch (error) {
-			console.log("Error fetching user cart details:", error);
-		}
-	};
-	useEffect(() => {
-		userCartItem.map((prod) => {
-			// setBacktoCart(false);
-			if (prod.productID === product._id) {
-				setBacktoCart(true);
-				// console.log(prod.productID);
-			}
-		});
-	}, [userCartItem, isSidebarOpen]);
-	const url = `http://localhost:8000`;
-	const toggleLike = async () => {
-		setIsLiked(!isliked);
-		if (isliked) {
-			dispatch(setWishLength(wishLength - 1));
-		} else {
-			dispatch(setWishLength(wishLength + 1));
-		}
-		const wishListPostData = {
-			token: token,
-			productId: product._id,
-		};
-		await axios
-			.post(`${url}/wishlist/`, wishListPostData)
-			.then((res) => {
-				console.log(res.data);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
-	const handleGoCartClick = () => {
-		setSidebarOpen(true);
-	};
+  const [isliked, setIsLiked] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [wishList, setWishList] = useState([]);
+  const [backToCart, setBacktoCart] = useState(false);
+  const token = useSelector((state) => state.tokenDetails.token);
+  const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem } = useSlider();
+  const dispatch = useDispatch();
+  const wishLength = useSelector((state) => state.wishLength.length);
 
-	const handleClick = (product) => {
-		if (backToCart) {
-			handleGoCartClick();
-		} else {
-			handleAddToCard(product);
-		}
-	};
-	const toggleDescription = () => {
-		setShowModal(true);
-	};
+  useEffect(() => {
+    let foundInCart = false;
+    userCartItem.map((prod) => {
+      if (prod.productID === product._id) {
+        foundInCart = true;
+        console.log(prod.productID);
+      }
+    });
+    setBacktoCart(foundInCart);
+  }, [userCartItem]);
 
-	const closeModal = () => {
-		setShowModal(false);
-	};
-	const handleAddToCard = (prod) => {
-		console.log(prod._id);
-		console.log(token);
-		const productID = prod._id;
-		if (token !== "") {
-			axios
-				.post("http://localhost:8000/post-AddToCardDetails", { productID, token })
-				.then((response) => {
-					console.log("Product added to cart:", response.data);
-					setUserCartItem(response.data);
-				})
-				.catch((error) => {
-					console.error("Error adding product to cart:", error);
-				});
+  const fetchWishList = async () => {
+    await axios.get(`http://localhost:8000/wishlist/${token}`).then((res) => {
+      setWishList(res.data.productID);
+    });
+  };
+  useEffect(() => {
+    if (token) {
+      fetchWishList();
+    }
+  }, [token]);
+  useEffect(() => {
+    if (wishList) {
+      setIsLiked(wishList.includes(product._id));
+      dispatch(setWishLength(wishList.length));
+    }
+  }, [wishList]);
 
-			// setBacktoCart(true);
-		} else {
-			Navigate("/login");
-		}
-	};
-	return (
-		<div className="product-card">
-			<div className={`productLike ${isliked ? "liked" : ""}`} onClick={toggleLike}>
-				<AiFillHeart className="icon" style={{ verticalAlign: "unset" }} />
-			</div>
-			<div className="product-img-container">
-				<span className={`sale-label ${setSale ? "visible" : "hidden"}`}>Sale</span>
-				<span className={`new-label ${setNew ? "visible" : "hidden"}`}>New</span>
-				<img src={`http://localhost:8000/uploads/productImage/${imgSrc}`} alt={productName} className="product-img" />
-				<div className="viewIcon" onClick={toggleDescription}>
-					<FontAwesomeIcon icon={faEye} />
-				</div>
-			</div>
-			<Modal show={showModal} className="model-container" onHide={closeModal} centered size="lg">
-				<Modal.Header closeButton></Modal.Header>
-				<Modal.Body>
-					<ProductDescriptionCard
-						product={{
-							imgSrc: imgSrc,
-							imageSlider: imageSlider,
-							rating: rating,
-							productName: productName,
-							oldPrice: oldPrice,
-							newPrice: newPrice,
-							setSale: setSale,
-							setNew: setNew,
-							discountPercentage: discountPercentage,
-							productDetails: productDetails,
-						}}
-						onClose={closeModal}
-					/>
-				</Modal.Body>
-				<Modal.Footer>
-					<Button variant="secondary" className="green-background-button" onClick={closeModal}>
-						Close
-					</Button>
-				</Modal.Footer>
-			</Modal>
-			<div class="product-line"></div>
-			<div className="product-rating">
-				{Array.from({ length: rating }, (_, index) => (
-					<FontAwesomeIcon icon={faStar} className="icon" key={index} />
-				))}
-				<p>({rating})</p>
-			</div>
-			<div className="product-name">{productName}</div>
-			<div className="product-price">
-				<span className="oldPrice">{oldPrice}</span>
-				<span className="newPrice">{newPrice}/piece</span>
-			</div>
-			<div
-				className="add-to-cart-icon"
-				onClick={() => {
-					handleClick(product);
-				}}>
-				<FontAwesomeIcon icon={faShoppingBag} className="card-icon" />
-				{backToCart ? <span>Go Cart</span> : <span>Add</span>}
-			</div>
-		</div>
-	);
+  const url = `http://localhost:8000`;
+  const toggleLike = async () => {
+    const wishListPostData = {
+      token: token,
+      productId: product._id,
+    };
+    await axios
+      .post(`${url}/wishlist/`, wishListPostData)
+      .then((res) => {
+        setWishList(res.data.productID);
+        console.log(res.data.productID);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const handleGoCartClick = () => {
+    setSidebarOpen(true);
+  };
+
+  const handleClick = (product) => {
+    if (backToCart) {
+      handleGoCartClick();
+    } else {
+      handleAddToCard(product);
+    }
+  };
+  const toggleDescription = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+  const handleAddToCard = (prod) => {
+    console.log(prod._id);
+    console.log(token);
+    const productID = prod._id;
+    if (token !== "") {
+      axios
+        .post("http://localhost:8000/post-AddToCardDetails", { productID, token })
+        .then((response) => {
+          console.log("Product added to cart:", response.data);
+          setUserCartItem(response.data);
+        })
+        .catch((error) => {
+          console.error("Error adding product to cart:", error);
+        });
+
+      // setBacktoCart(true);
+    } else {
+      Navigate("/login");
+    }
+  };
+  return (
+    <div className="product-card">
+      <div className={`productLike ${isliked ? "liked" : ""}`} onClick={toggleLike}>
+        <AiFillHeart className="icon" style={{ verticalAlign: "unset" }} />
+      </div>
+      <div className="product-img-container">
+        <span className={`sale-label ${setSale ? "visible" : "hidden"}`}>Sale</span>
+        <span className={`new-label ${setNew ? "visible" : "hidden"}`}>New</span>
+        <img src={`http://localhost:8000/uploads/productImage/${imgSrc}`} alt={productName} className="product-img" />
+        <div className="viewIcon" onClick={toggleDescription}>
+          <FontAwesomeIcon icon={faEye} />
+        </div>
+      </div>
+      <Modal show={showModal} className="model-container" onHide={closeModal} centered size="xl">
+        <Modal.Header closeButton></Modal.Header>
+        <Modal.Body>
+          <ProductDescriptionCard
+            product={{
+              imgSrc: imgSrc,
+              imageSlider: imageSlider,
+              rating: rating,
+              productName: productName,
+              oldPrice: oldPrice,
+              newPrice: newPrice,
+              setSale: setSale,
+              setNew: setNew,
+              discountPercentage: discountPercentage,
+              productDetails: productDetails,
+              productID: product._id,
+            }}
+            onClose={closeModal}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" className="green-background-button" onClick={closeModal}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <div class="product-line"></div>
+      <div className="product-rating">
+        {Array.from({ length: rating }, (_, index) => (
+          <FontAwesomeIcon icon={faStar} className="icon" key={index} />
+        ))}
+        <p>({rating})</p>
+      </div>
+      <div className="product-name">{productName}</div>
+      <div className="product-price">
+        <span className="oldPrice">{oldPrice}</span>
+        <span className="newPrice">{newPrice}/piece</span>
+      </div>
+      <div
+        className="add-to-cart-icon"
+        onClick={() => {
+          handleClick(product);
+        }}
+      >
+        <FontAwesomeIcon icon={faShoppingBag} className="card-icon" />
+        {backToCart ? <span>Go Cart</span> : <span>Add</span>}
+      </div>
+    </div>
+  );
 };
 
 ProductCard.propTypes = {
-	imgSrc: PropTypes.string.isRequired,
-	imageSlider: PropTypes.arrayOf(PropTypes.string).isRequired,
-	rating: PropTypes.number.isRequired,
-	productName: PropTypes.string.isRequired,
-	oldPrice: PropTypes.number.isRequired,
-	newPrice: PropTypes.number.isRequired,
-	setSale: PropTypes.bool.isRequired,
-	setNew: PropTypes.bool.isRequired,
-	discountPercentage: PropTypes.number.isRequired,
-	productDetails: PropTypes.string.isRequired,
+  imgSrc: PropTypes.string.isRequired,
+  imageSlider: PropTypes.arrayOf(PropTypes.string).isRequired,
+  rating: PropTypes.number.isRequired,
+  productName: PropTypes.string.isRequired,
+  oldPrice: PropTypes.number.isRequired,
+  newPrice: PropTypes.number.isRequired,
+  setSale: PropTypes.bool.isRequired,
+  setNew: PropTypes.bool.isRequired,
+  discountPercentage: PropTypes.number.isRequired,
+  productDetails: PropTypes.string.isRequired,
 };
 
 export default ProductCard;
