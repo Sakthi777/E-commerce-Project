@@ -62,13 +62,11 @@ function App() {
             <Route path="/comingSoon" element={<ProtectedLoginRoute Component={ComingSoon} />} />
             <Route path="/footer" element={<Footer />} />
             <Route path="/shop" element={<ProtectedLoginRoute Component={ShopPage} />}></Route>
-            <Route path="/myProfile" element={<ProtectedLoginRoute Component={MyProfile} />} />
+            <Route path="/myProfile" element={<MyProfile />} />
             <Route path="/about" element={<ProtectedLoginRoute Component={AboutUs} />} />
             <Route path="/myWallet" element={<ProtectedLoginRoute Component={MyWallet} />} />
             <Route path="/transactionDetails" element={<TransactionDetails />} />
-
             {/* admin panel */}
-
             <Route
               path="/admin/*"
               element={
@@ -91,7 +89,6 @@ function App() {
                 </OffCanvasProvider>
               }
             />
-
             <Route path="*" element={<NotFound></NotFound>}></Route>
           </Routes>
         </SliderProvider>

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 // import { FaEye } from "react-icons/fa";
 import { AiFillHeart } from "react-icons/ai";
 import "../../styles/user/productCard.css";
@@ -25,14 +25,29 @@ const ProductCard = ({ liked, imgSrc, imageSlider, rating, productName, oldPrice
 	const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem } = useSlider();
 	const dispatch = useDispatch();
 	const wishLength = useSelector((state) => state.wishLength.length);
+	// const [ref, setRef] = useState(false);
+	useEffect(() => {
+		fetchUserCartDetails();
+	}, []);
+	const fetchUserCartDetails = async () => {
+		try {
+			const response = await axios.get(`http://localhost:8000/get-userCartDetails/${token}`);
+			if (response.data.AddtoCardItems) {
+				setUserCartItem(response.data.AddtoCardItems);
+			}
+		} catch (error) {
+			console.log("Error fetching user cart details:", error);
+		}
+	};
 	useEffect(() => {
 		userCartItem.map((prod) => {
+			// setBacktoCart(false);
 			if (prod.productID === product._id) {
 				setBacktoCart(true);
-				// console.log(prod);
+				// console.log(prod.productID);
 			}
 		});
-	}, [backToCart]);
+	}, [userCartItem, isSidebarOpen]);
 	const url = `http://localhost:8000`;
 	const toggleLike = async () => {
 		// setLiked(!liked);
@@ -57,6 +72,7 @@ const ProductCard = ({ liked, imgSrc, imageSlider, rating, productName, oldPrice
 	const handleGoCartClick = () => {
 		setSidebarOpen(true);
 	};
+
 	const handleClick = (product) => {
 		if (backToCart) {
 			handleGoCartClick();
@@ -75,16 +91,21 @@ const ProductCard = ({ liked, imgSrc, imageSlider, rating, productName, oldPrice
 		console.log(prod._id);
 		console.log(token);
 		const productID = prod._id;
-		axios
-			.post("http://localhost:8000/post-AddToCardDetails", { productID, token })
-			.then((response) => {
-				console.log("Product added to cart:", response.data);
-				setUserCartItem(response.data);
-			})
-			.catch((error) => {
-				console.error("Error adding product to cart:", error);
-			});
-		setBacktoCart(true);
+		if (token !== "") {
+			axios
+				.post("http://localhost:8000/post-AddToCardDetails", { productID, token })
+				.then((response) => {
+					console.log("Product added to cart:", response.data);
+					setUserCartItem(response.data);
+				})
+				.catch((error) => {
+					console.error("Error adding product to cart:", error);
+				});
+
+			// setBacktoCart(true);
+		} else {
+			Navigate("/login");
+		}
 	};
 	return (
 		<div className="product-card">

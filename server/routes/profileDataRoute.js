@@ -1,4 +1,5 @@
 const express = require("express");
+const { authenticate } = require("../middlewares/authMiddleWare")
 const {
 	getProfileDataControllers,
 	postProfileDataContactControllers,
@@ -21,11 +22,19 @@ const profileDataRouter = express.Router();
 
 profileDataRouter.get("/:token", getProfileDataControllers);
 
-profileDataRouter.post("/contact", postProfileDataContactControllers);
+// profileDataRouter.post("/contact", postProfileDataContactControllers);
 
-profileDataRouter.post("/address", postProfileDataAddressControllers);
+profileDataRouter.route("/contact").post(authenticate, postProfileDataContactControllers)
 
-profileDataRouter.post("/card", postProfileDataCardControllers);
+// profileDataRouter.post("/address", postProfileDataAddressControllers);
+
+profileDataRouter.route("/address").post(authenticate, postProfileDataAddressControllers)
+
+
+// profileDataRouter.post("/card", postProfileDataCardControllers);
+
+profileDataRouter.route("/card").post(authenticate, postProfileDataCardControllers);
+
 
 profileDataRouter.post("/postImage", profileImageUpload.single("profileImage"), postProfileImageControllers);
 
