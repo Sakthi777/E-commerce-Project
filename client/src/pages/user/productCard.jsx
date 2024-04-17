@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 // import { FaEye } from "react-icons/fa";
 import { AiFillHeart } from "react-icons/ai";
 import "../../styles/user/productCard.css";
@@ -12,27 +12,51 @@ import { faShoppingBag, faStar } from "@fortawesome/free-solid-svg-icons";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProductDescriptionCard from "../../pages/user/productDescriptionCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setWishLength } from "../../features/slice/wishlistLength";
 import { useSlider } from "../../pages/user/home";
 import axios from "axios";
-const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPrice, setSale, setNew, discountPercentage, productDetails, product }) => {
-  const [liked, setLiked] = useState(false);
+
+const ProductCard = ({ liked, imgSrc, imageSlider, rating, productName, oldPrice, newPrice, setSale, setNew, discountPercentage, productDetails, product }) => {
+  const [isliked, setIsLiked] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [productList, setProductList] = useState("");
+  const [wishList, setWishList] = useState([]);
   const [backToCart, setBacktoCart] = useState(false);
   const token = useSelector((state) => state.tokenDetails.token);
   const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem } = useSlider();
+  const dispatch = useDispatch();
+  const wishLength = useSelector((state) => state.wishLength.length);
+
   useEffect(() => {
+    let foundInCart = false;
     userCartItem.map((prod) => {
       if (prod.productID === product._id) {
-        setBacktoCart(true);
-        console.log(prod);
+        foundInCart = true;
+        console.log(prod.productID);
       }
     });
-  }, [backToCart]);
+    setBacktoCart(foundInCart);
+  }, [userCartItem]);
+
+  const fetchWishList = async () => {
+    await axios.get(`http://localhost:8000/wishlist/${token}`).then((res) => {
+      setWishList(res.data.productID);
+    });
+  };
+  useEffect(() => {
+    if (token) {
+      fetchWishList();
+    }
+  }, [token]);
+  useEffect(() => {
+    if (wishList) {
+      setIsLiked(wishList.includes(product._id));
+      dispatch(setWishLength(wishList.length));
+    }
+  }, [wishList]);
+
   const url = `http://localhost:8000`;
   const toggleLike = async () => {
-    setLiked(!liked);
     const wishListPostData = {
       token: token,
       productId: product._id,
@@ -40,7 +64,8 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
     await axios
       .post(`${url}/wishlist/`, wishListPostData)
       .then((res) => {
-        console.log(res.data);
+        setWishList(res.data.productID);
+        console.log(res.data.productID);
       })
       .catch((err) => {
         console.log(err);
@@ -49,6 +74,7 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
   const handleGoCartClick = () => {
     setSidebarOpen(true);
   };
+
   const handleClick = (product) => {
     if (backToCart) {
       handleGoCartClick();
@@ -67,20 +93,25 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
     console.log(prod._id);
     console.log(token);
     const productID = prod._id;
-    axios
-      .post("http://localhost:8000/post-AddToCardDetails", { productID, token })
-      .then((response) => {
-        console.log("Product added to cart:", response.data);
-        setUserCartItem(response.data);
-      })
-      .catch((error) => {
-        console.error("Error adding product to cart:", error);
-      });
-    setBacktoCart(true);
+    if (token !== "") {
+      axios
+        .post("http://localhost:8000/post-AddToCardDetails", { productID, token })
+        .then((response) => {
+          console.log("Product added to cart:", response.data);
+          setUserCartItem(response.data);
+        })
+        .catch((error) => {
+          console.error("Error adding product to cart:", error);
+        });
+
+      // setBacktoCart(true);
+    } else {
+      Navigate("/login");
+    }
   };
   return (
     <div className="product-card">
-      <div className={`productLike ${liked ? "liked" : ""}`} onClick={toggleLike}>
+      <div className={`productLike ${isliked ? "liked" : ""}`} onClick={toggleLike}>
         <AiFillHeart className="icon" style={{ verticalAlign: "unset" }} />
       </div>
       <div className="product-img-container">
@@ -91,7 +122,7 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
           <FontAwesomeIcon icon={faEye} />
         </div>
       </div>
-      <Modal show={showModal} className="model-container" onHide={closeModal} centered size="lg">
+      <Modal show={showModal} className="model-container" onHide={closeModal} centered size="xl">
         <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
           <ProductDescriptionCard
@@ -106,6 +137,7 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
               setNew: setNew,
               discountPercentage: discountPercentage,
               productDetails: productDetails,
+              productID: product._id,
             }}
             onClose={closeModal}
           />

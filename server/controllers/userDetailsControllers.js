@@ -32,7 +32,7 @@ exports.postAddToCardDetailsControllers = async (req, res) => {
 exports.getAddToCardDetailsControllers = asyncHandler(async (req, res, next) => {
   try {
     const { userID } = req.params;
-    console.log("hello ..." + userID);
+    // console.log("hello ..." + userID);
     const details = await userDetails.findOne({ userID: userID });
     res.send(details);
   } catch (error) {

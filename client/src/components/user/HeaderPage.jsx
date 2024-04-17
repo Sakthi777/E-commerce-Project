@@ -18,10 +18,13 @@ import { Link } from "react-router-dom";
 import products from "../../pages/user/productList";
 import Cookies from "js-cookie";
 import { useSelector, useDispatch } from "react-redux";
-import { setSearch } from "../../features/slice/searchSlice";
+import { setSearchProductDetails } from "../../features/slice/searchProductSlice";
+import { setSearchValue } from "../../features/slice/searchSlice";
 import { useSlider } from "../../pages/user/home";
+import { setWishLength } from "../../features/slice/wishlistLength";
+import { setToken } from "../../features/slice/tokenSlice";
 const HeaderPage = () => {
-  const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails } = useSlider();
+  const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails, wishlistCount } = useSlider();
   const [isFixed, setIsFixed] = useState(false);
   const [prevScrollY, setPrevScrollY] = useState(0);
   const cardRef = useRef(null);
@@ -30,19 +33,42 @@ const HeaderPage = () => {
   const [totalCardPrice, setTotalCardPrice] = useState(0);
   const [totalCartItem, setTotalCartItem] = useState(0);
   const token = useSelector((state) => state.tokenDetails.token);
-  const search = useSelector((state) => state.searchValue.search);
+  const search = useSelector((state) => state.searchVal.search);
+  const wishlistLength = useSelector((state) => state.wishLength.length);
 
-  const [searchVal, setSearchVal] = useState("");
+  const nav = useNavigate();
+
+  const [searchVal, setSearchVal] = useState(search);
   const dispatch = useDispatch();
 
+  const fetchProduct = async () => {
+    await axios
+      .get(`http://localhost:8000/get-searchProductDetails/?q=${searchVal}`)
+      .then((res) => {
+        dispatch(setSearchProductDetails(res.data.data));
+      })
+      .catch((err) => console.log(err));
+  };
+
   let responseUserArray = [];
-  useEffect(() => {
-    fetchUserCartDetails();
-  }, []);
 
   useEffect(() => {
-    dispatch(setSearch(searchVal));
+    fetchProduct();
+    dispatch(setSearchValue(searchVal));
   }, [searchVal]);
+
+  const fetchWishList = async () => {
+    await axios.get(`http://localhost:8000/wishlist/${token}`).then((res) => {
+      const wishListData = res.data.productID;
+      dispatch(setWishLength(wishListData.length));
+    });
+  };
+  useEffect(() => {
+    if (token) {
+      fetchUserCartDetails();
+      fetchWishList();
+    }
+  }, [token]);
 
   // useEffect(() => {
   //   let totalPrice = 0;
@@ -70,25 +96,25 @@ const HeaderPage = () => {
   };
 
   useEffect(() => {
-    console.log(userCartItem);
+    // console.log(userCartItem);
     if (userCartItem.length == 0) {
       setTotalCardPrice(0);
       setTotalCartItem(0);
     }
     userCartItem.map((items) => {
       const productID = items.productID;
-      console.log(items);
+      // console.log(items);
       axios
         .get(`http://localhost:8000/get-userDetails/${productID}`)
         .then((response) => {
-          console.log(response.data.data);
+          // console.log(response.data.data);
           const productResponse = response.data.data;
           const userItem = {
             productdetail: productResponse,
             quantity: items.quantity,
           };
           responseUserArray.push(userItem);
-          console.log(responseUserArray);
+          // console.log(responseUserArray);
           let totalPrice = 0;
           let count = 0;
 
@@ -96,9 +122,9 @@ const HeaderPage = () => {
             totalPrice += product.productdetail.newPrice * product.quantity;
             count = count + 1;
           });
-          console.log("Price" + totalPrice);
+          // console.log("Price" + totalPrice);
           setTotalCardPrice(totalPrice);
-          console.log("product count " + count);
+          // console.log("product count " + count);
           setTotalCartItem(count);
         })
         .catch((error) => {
@@ -161,6 +187,13 @@ const HeaderPage = () => {
       axios.delete(`http://localhost:8000/DeleteProductFromCart/${id}/${token}`).then((res) => {
         console.log(res.data);
         setUserCartItem(res.data);
+        userCartItem.map((prod) => {
+          // setBacktoCart(false);
+          //   if (prod.productID == product.productdetail._id) {
+          //     console.log("working" + prod.productID);
+          //     setBacktoCart(false);
+          //   }
+        });
       });
     } catch (error) {
       console.log(error);
@@ -172,6 +205,8 @@ const HeaderPage = () => {
   };
   const logout = () => {
     Cookies.remove("LoginToken");
+    dispatch(setToken(""));
+    dispatch(setWishLength(0));
     window.location.reload();
   };
 
@@ -233,8 +268,9 @@ const HeaderPage = () => {
             </div>
           </Link>
           <div className="search-container">
-            <input type="text" className="search-bar" value={search} placeholder="Search..." onChange={(e) => setSearchVal(e.target.value)} />
-            <span className="search-icon">
+            <input type="text" className="search-bar" value={searchVal} placeholder="Search..." onChange={(e) => setSearchVal(e.target.value)} />
+
+            <span className="search-icon" onClick={() => nav("/shop")}>
               <IoIosSearch />
             </span>
           </div>
@@ -243,7 +279,7 @@ const HeaderPage = () => {
               <FontAwesomeIcon icon={faHeart} className="heart-icon" />
             </div>
             <div className="pop-up-item">
-              <p>9+</p>
+              <p>{wishlistLength}</p>
             </div>
           </div>
           <div className="card-container">
@@ -269,30 +305,32 @@ const HeaderPage = () => {
           </div>
           <div className="offcanvas-body">
             <div className="offcanvas-grid">
-              {productDetails.map((product, index) => (
-                <div className="offcanvas-card">
-                  <div className="offcanvas-img">
-                    <img src={`http://localhost:8000/uploads/productImage/${product.productdetail.image}`} alt="product" className="offcanvas-prod-img" />
-                    <div className="overlay" onClick={() => DeleteCartProduct(product)} style={{ cursor: "pointer" }}>
-                      <FontAwesomeIcon icon={faTrash} className="delete-icon" />
+              {productDetails
+                .filter((product) => product.productdetail)
+                .map((product, index) => (
+                  <div className="offcanvas-card">
+                    <div className="offcanvas-img">
+                      <img src={`http://localhost:8000/uploads/productImage/${product.productdetail.image}`} alt="product" className="offcanvas-prod-img" />
+                      <div className="overlay" onClick={() => DeleteCartProduct(product)} style={{ cursor: "pointer" }}>
+                        <FontAwesomeIcon icon={faTrash} className="delete-icon" />
+                      </div>
+                    </div>
+                    <div className="offcanvas-content">
+                      <h6>{product.productdetail.productName}</h6>
+                      <p>Unit Price {product.productdetail.newPrice}</p>
+                      <div className="card-item-selector">
+                        <button className="selector-button" onClick={() => handleDecrement(product.productdetail._id)}>
+                          -
+                        </button>
+                        <span className="selector-value">{product.quantity}</span>
+                        <button className="selector-button" onClick={() => handleIncrement(product.productdetail._id)}>
+                          +
+                        </button>
+                        <p>${product.productdetail.newPrice * product.quantity}</p>
+                      </div>
                     </div>
                   </div>
-                  <div className="offcanvas-content">
-                    <h6>{product.productdetail.productName}</h6>
-                    <p>Unit Price {product.productdetail.newPrice}</p>
-                    <div className="card-item-selector">
-                      <button className="selector-button" onClick={() => handleDecrement(product.productdetail._id)}>
-                        -
-                      </button>
-                      <span className="selector-value">{product.quantity}</span>
-                      <button className="selector-button" onClick={() => handleIncrement(product.productdetail._id)}>
-                        +
-                      </button>
-                      <p>${product.productdetail.newPrice * product.quantity}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
           <div className="card">
@@ -390,7 +428,7 @@ const HeaderPage = () => {
             <FontAwesomeIcon icon={faHeart} className="heart-icon" onClick={naviagteWhislist} />
             <span>Wishlist</span>
             <div className="pop-up-cart">
-              <p>9+</p>
+              <p>{wishlistCount}</p>
             </div>
           </div>
           <div className="icon-container cart">
@@ -402,8 +440,6 @@ const HeaderPage = () => {
           </div>
         </div>
       </div>
-
-      <button>addcard</button>
     </>
   );
 };
