@@ -54,10 +54,15 @@
   border-radius: 8px;
 }
 .feature-des {
+  overflow: hidden;
   color: #555;
   line-height: 20px;
   margin-bottom: 20px;
   font-size: 15px;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 .featureLike {
   position: absolute;

@@ -18,7 +18,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useSlider } from "../../pages/user/home";
 import { setWishLength } from "../../features/slice/wishlistLength";
 const Wishlist = () => {
-  const { wishlistCount, setwishlistCount } = useSlider();
   const [liked, setLiked] = useState(false);
   const url = `http://localhost:8000`;
   const toggleLike = () => {
@@ -113,7 +112,6 @@ const Wishlist = () => {
 
   const fetchProducts = async () => {
     const uniqueProductIds = Array.from(new Set(wishlist)); // Filter out duplicate ids
-    setwishlistCount(uniqueProductIds.length);
     dispatch(setWishLength(wishlistLength));
     const uniqueProductDetails = [];
     for (const id of uniqueProductIds) {

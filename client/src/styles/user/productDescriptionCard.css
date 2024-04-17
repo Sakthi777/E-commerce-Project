@@ -3,12 +3,16 @@
   flex-direction: row;
   justify-content: space-between;
   overflow: auto;
+  height: 50%;
 }
 .model-container .modal-header {
   text-decoration: none;
-  padding-top: 7px;
+  padding-top: 5px;
   padding-bottom: 0px;
   border: none;
+}
+.model-body {
+  padding: 10px 1rem;
 }
 .model-container .modal-footer {
   text-decoration: none;
@@ -28,7 +32,8 @@
 }
 .description-image img {
   position: relative;
-  width: 100%;
+  width: 90%;
+  height: 90%;
 }
 .description-image span {
   position: absolute;
