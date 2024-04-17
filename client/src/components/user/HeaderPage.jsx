@@ -98,14 +98,14 @@ const HeaderPage = () => {
 			axios
 				.get(`http://localhost:8000/get-userDetails/${productID}`)
 				.then((response) => {
-					console.log(response.data.data);
+					// console.log(response.data.data);
 					const productResponse = response.data.data;
 					const userItem = {
 						productdetail: productResponse,
 						quantity: items.quantity,
 					};
 					responseUserArray.push(userItem);
-					console.log(responseUserArray);
+					// console.log(responseUserArray);
 					let totalPrice = 0;
 					let count = 0;
 
@@ -113,9 +113,9 @@ const HeaderPage = () => {
 						totalPrice += product.productdetail.newPrice * product.quantity;
 						count = count + 1;
 					});
-					console.log("Price" + totalPrice);
+					// console.log("Price" + totalPrice);
 					setTotalCardPrice(totalPrice);
-					console.log("product count " + count);
+					// console.log("product count " + count);
 					setTotalCartItem(count);
 				})
 				.catch((error) => {

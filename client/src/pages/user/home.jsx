@@ -33,6 +33,7 @@ export const useSlider = () => useContext(SliderContext);
 const ProductGrid = ({ products }) => {
 	const token = useSelector((state) => state.tokenDetails.token);
 	const [selectedOption, setSelectedOption] = useState("Top Order");
+	const [wishList, setWishList] = useState([]);
 
 	const handleOptionClick = (option) => {
 		setSelectedOption(option);
@@ -54,6 +55,15 @@ const ProductGrid = ({ products }) => {
 			.catch((error) => {
 				console.error("Error fetching product data:", error);
 			});
+	}, []);
+
+	const fetchWishList = async () => {
+		await axios.get(`http://localhost:8000/wishlist/${token}`).then((res) => {
+			setWishList(res.data.productID);
+		});
+	};
+	useEffect(() => {
+		fetchWishList();
 	}, []);
 
 	//CountDown Time start
@@ -89,6 +99,9 @@ const ProductGrid = ({ products }) => {
 				<div className="product-grid">
 					{productDetails.map((product) => (
 						<ProductCard
+							liked={() => {
+								return wishList.includes(product._id) ? true : false;
+							}}
 							key={product._id}
 							imgSrc={product.image}
 							imageSlider={product.imageSlider}
