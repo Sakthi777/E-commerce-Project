@@ -430,7 +430,6 @@ const HeaderPage = () => {
 				</div>
 			</div>
 
-			<button>addcard</button>
 		</>
 	);
 };
