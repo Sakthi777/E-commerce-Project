@@ -4,6 +4,8 @@ import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import * as IoIcons from "react-icons/io";
 import * as MDIcons from "react-icons/md";
+// import { icon } from "@fortawesome/fontawesome-svg-core";
+// import * as FaIcons from "react-icons/fa"
 
 export const SidebarData = [
   {
@@ -32,6 +34,11 @@ export const SidebarData = [
         title: "Canceled Orders",
         path: "/admin/canceledOrders",
         icon: <MDIcons.MdCancel className="icon" />,
+      },
+      {
+        title: "User Register Data",
+        path: "/admin/registerdata",
+        icon : <FaIcons.FaUser className="icon" />,
       },
     ],
   },

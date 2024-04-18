@@ -12,6 +12,7 @@ import FeaturedItems from "./featuredItems";
 import "../../styles/user/featuredItem.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Highlight } from "../../components/user/homePageCarousels";
 import { useSelector } from "react-redux";
 
@@ -21,9 +22,8 @@ export const SliderProvider = ({ children }) => {
 	const [isSidebarOpen, setSidebarOpen] = useState(false);
 	const [userCartItem, setUserCartItem] = useState([]);
 	const [productDetails, setProductDetails] = useState([]);
-	const [wishlistCount, setwishlistCount] = useState(0);
 
-	return <SliderContext.Provider value={{ isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails, wishlistCount, setwishlistCount }}>{children}</SliderContext.Provider>;
+	return <SliderContext.Provider value={{ isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails }}>{children}</SliderContext.Provider>;
 };
 
 export const useSlider = () => useContext(SliderContext);
@@ -47,6 +47,10 @@ const ProductGrid = ({ products }) => {
 				console.error("Error fetching product data:", error);
 			});
 	}, []);
+
+	const handleShowMore = () => {
+		navigate("/shop");
+	};
 
 	//CountDown Time start
 
@@ -80,7 +84,7 @@ const ProductGrid = ({ products }) => {
 				{/* <button onClick={() => console.log(wishList)}>Show list</button> */}
 				<div className="productTitle">Recently Sold Items</div>
 				<div className="product-grid">
-					{productDetails.map((product) => (
+					{productDetails.slice(0, 5).map((product) => (
 						<ProductCard
 							key={product._id}
 							imgSrc={product.image}
@@ -98,7 +102,7 @@ const ProductGrid = ({ products }) => {
 					))}
 				</div>
 				<div className="showMoreButton">
-					<button className="show-more-button">
+					<button className="show-more-button" onClick={handleShowMore}>
 						<FaArrowCircleDown className="showmore-icon" />
 						SHOW MORE
 					</button>
@@ -108,28 +112,30 @@ const ProductGrid = ({ products }) => {
 				</div>
 				<div className="productTitle">Our Featured Items</div>
 				<div className="featuredItem-grid">
-					{productDetails.map(
-						(product) =>
-							product.featuredItems && (
-								<FeaturedItems
-									key={product._id}
-									imgSrc={product.image}
-									imageSlider={product.imageSlider}
-									rating={product.rating}
-									productName={product.productName}
-									oldPrice={product.oldPrice}
-									newPrice={product.newPrice}
-									setNew={product.newProduct}
-									setSale={product.sale}
-									discountPercentage={product.discountPercentage}
-									productDetails={product.productDescription}
-									product={product}
-								/>
-							),
-					)}
+					{productDetails
+						.slice(0, 5)
+						.map(
+							(product) =>
+								product.featuredItems && (
+									<FeaturedItems
+										key={product._id}
+										imgSrc={product.image}
+										imageSlider={product.imageSlider}
+										rating={product.rating}
+										productName={product.productName}
+										oldPrice={product.oldPrice}
+										newPrice={product.newPrice}
+										setNew={product.newProduct}
+										setSale={product.sale}
+										discountPercentage={product.discountPercentage}
+										productDetails={product.productDescription}
+										product={product}
+									/>
+								),
+						)}
 				</div>
 				<div className="showMoreButton">
-					<button className="show-more-button">
+					<button className="show-more-button" onClick={handleShowMore}>
 						<FaArrowCircleDown className="showmore-icon" />
 						SHOW MORE
 					</button>
@@ -186,28 +192,30 @@ const ProductGrid = ({ products }) => {
 				<div className="productTitle">Collected New Items</div>
 				{/* {console.log(productDetails)} */}
 				<div className="product-grid">
-					{productDetails.map(
-						(product) =>
-							product.newProduct && (
-								<ProductCard
-									key={product._id}
-									imgSrc={product.image}
-									imageSlider={product.imageSlider}
-									rating={product.rating}
-									productName={product.productName}
-									oldPrice={product.oldPrice}
-									newPrice={product.newPrice}
-									setNew={product.newProduct}
-									setSale={product.sale}
-									discountPercentage={product.discountPercentage}
-									productDetails={product.productDescription}
-									product={product}
-								/>
-							),
-					)}
+					{productDetails
+						.slice(0, 5)
+						.map(
+							(product) =>
+								product.newProduct && (
+									<ProductCard
+										key={product._id}
+										imgSrc={product.image}
+										imageSlider={product.imageSlider}
+										rating={product.rating}
+										productName={product.productName}
+										oldPrice={product.oldPrice}
+										newPrice={product.newPrice}
+										setNew={product.newProduct}
+										setSale={product.sale}
+										discountPercentage={product.discountPercentage}
+										productDetails={product.productDescription}
+										product={product}
+									/>
+								),
+						)}
 				</div>
 				<div className="showMoreButton">
-					<button className="show-more-button">
+					<button className="show-more-button" onClick={handleShowMore}>
 						<FaArrowCircleDown className="showmore-icon" />
 						SHOW MORE
 					</button>
@@ -235,77 +243,83 @@ const ProductGrid = ({ products }) => {
 				<div className="topNiche">
 					{selectedOption === "Top Order" && (
 						<div className="product-grid">
-							{productDetails.map(
-								(product) =>
-									product.sale && (
-										<ProductCard
-											key={product._id}
-											imgSrc={product.image}
-											imageSlider={product.imageSlider}
-											rating={product.rating}
-											productName={product.productName}
-											oldPrice={product.oldPrice}
-											newPrice={product.newPrice}
-											setNew={product.newProduct}
-											setSale={product.sale}
-											discountPercentage={product.discountPercentage}
-											productDetails={product.productDescription}
-											product={product}
-										/>
-									),
-							)}
+							{productDetails
+								.slice(0, 5)
+								.map(
+									(product) =>
+										product.sale && (
+											<ProductCard
+												key={product._id}
+												imgSrc={product.image}
+												imageSlider={product.imageSlider}
+												rating={product.rating}
+												productName={product.productName}
+												oldPrice={product.oldPrice}
+												newPrice={product.newPrice}
+												setNew={product.newProduct}
+												setSale={product.sale}
+												discountPercentage={product.discountPercentage}
+												productDetails={product.productDescription}
+												product={product}
+											/>
+										),
+								)}
 						</div>
 					)}
 
 					{selectedOption === "Top Rating" && (
 						<div className="featuredItem-grid">
-							{productDetails.map(
-								(product) =>
-									product.featuredItems && (
-										<FeaturedItems
-											key={product._id}
-											imgSrc={product.image}
-											imageSlider={product.imageSlider}
-											rating={product.rating}
-											productName={product.productName}
-											oldPrice={product.oldPrice}
-											newPrice={product.newPrice}
-											setNew={product.newProduct}
-											setSale={product.sale}
-											discountPercentage={product.discountPercentage}
-											productDetails={product.productDescription}
-											product={product}
-										/>
-									),
-							)}
+							{productDetails
+								.slice(0, 5)
+								.map(
+									(product) =>
+										product.featuredItems && (
+											<FeaturedItems
+												key={product._id}
+												imgSrc={product.image}
+												imageSlider={product.imageSlider}
+												rating={product.rating}
+												productName={product.productName}
+												oldPrice={product.oldPrice}
+												newPrice={product.newPrice}
+												setNew={product.newProduct}
+												setSale={product.sale}
+												discountPercentage={product.discountPercentage}
+												productDetails={product.productDescription}
+												product={product}
+											/>
+										),
+								)}
 						</div>
 					)}
 					{selectedOption === "Top Discount" && (
 						<div className="product-grid">
-							{productDetails.map(
-								(product) =>
-									product.newProduct && (
-										<ProductCard
-											key={product._id}
-											imgSrc={product.image}
-											imageSlider={product.imageSlider}
-											rating={product.rating}
-											productName={product.productName}
-											oldPrice={product.oldPrice}
-											newPrice={product.newPrice}
-											setNew={product.newProduct}
-											setSale={product.sale}
-											discountPercentage={product.discountPercentage}
-											productDetails={product.productDescription}
-											product={product}
-										/>
-									),
-							)}
+							{productDetails
+								.slice(0, 5)
+								.map(
+									(product) =>
+										product.newProduct && (
+											<ProductCard
+												key={product._id}
+												imgSrc={product.image}
+												imageSlider={product.imageSlider}
+												rating={product.rating}
+												productName={product.productName}
+												oldPrice={product.oldPrice}
+												newPrice={product.newPrice}
+												setNew={product.newProduct}
+												setSale={product.sale}
+												discountPercentage={product.discountPercentage}
+												productDetails={product.productDescription}
+												product={product}
+											/>
+										),
+								)}
 						</div>
 					)}
 				</div>
 				<div className="showMoreButton">
-					<button className="show-more-button">
+					<button className="show-more-button" onClick={handleShowMore}>
 						<FaArrowCircleDown className="showmore-icon" />
 						SHOW MORE
 					</button>

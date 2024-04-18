@@ -301,30 +301,32 @@ const HeaderPage = () => {
 					</div>
 					<div className="offcanvas-body">
 						<div className="offcanvas-grid">
-							{productDetails.map((product, index) => (
-								<div className="offcanvas-card">
-									<div className="offcanvas-img">
-										<img src={`http://localhost:8000/uploads/productImage/${product.productdetail.image}`} alt="product" className="offcanvas-prod-img" />
-										<div className="overlay" onClick={() => DeleteCartProduct(product)} style={{ cursor: "pointer" }}>
-											<FontAwesomeIcon icon={faTrash} className="delete-icon" />
+							{productDetails
+								.filter((product) => product.productdetail)
+								.map((product, index) => (
+									<div className="offcanvas-card">
+										<div className="offcanvas-img">
+											<img src={`http://localhost:8000/uploads/productImage/${product.productdetail.image}`} alt="product" className="offcanvas-prod-img" />
+											<div className="overlay" onClick={() => DeleteCartProduct(product)} style={{ cursor: "pointer" }}>
+												<FontAwesomeIcon icon={faTrash} className="delete-icon" />
+											</div>
+										</div>
+										<div className="offcanvas-content">
+											<h6>{product.productdetail.productName}</h6>
+											<p>Unit Price {product.productdetail.newPrice}</p>
+											<div className="card-item-selector">
+												<button className="selector-button" onClick={() => handleDecrement(product.productdetail._id)}>
+													-
+												</button>
+												<span className="selector-value">{product.quantity}</span>
+												<button className="selector-button" onClick={() => handleIncrement(product.productdetail._id)}>
+													+
+												</button>
+												<p>${product.productdetail.newPrice * product.quantity}</p>
+											</div>
 										</div>
 									</div>
-									<div className="offcanvas-content">
-										<h6>{product.productdetail.productName}</h6>
-										<p>Unit Price {product.productdetail.newPrice}</p>
-										<div className="card-item-selector">
-											<button className="selector-button" onClick={() => handleDecrement(product.productdetail._id)}>
-												-
-											</button>
-											<span className="selector-value">{product.quantity}</span>
-											<button className="selector-button" onClick={() => handleIncrement(product.productdetail._id)}>
-												+
-											</button>
-											<p>${product.productdetail.newPrice * product.quantity}</p>
-										</div>
-									</div>
-								</div>
-							))}
+								))}
 						</div>
 					</div>
 					<div className="card">

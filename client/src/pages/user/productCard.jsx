@@ -130,7 +130,7 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
 					<FontAwesomeIcon icon={faEye} />
 				</div>
 			</div>
-			<Modal show={showModal} className="model-container" onHide={closeModal} centered size="lg">
+			<Modal show={showModal} className="model-container" onHide={closeModal} centered size="xl">
 				<Modal.Header closeButton></Modal.Header>
 				<Modal.Body>
 					<ProductDescriptionCard
@@ -145,6 +145,7 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
 							setNew: setNew,
 							discountPercentage: discountPercentage,
 							productDetails: productDetails,
+							productID: product._id,
 						}}
 						onClose={closeModal}
 					/>

@@ -18,7 +18,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useSlider } from "../../pages/user/home";
 import { setWishlist } from "../../features/slice/wishListSlice";
 const Wishlist = () => {
-	const { wishlistCount, setwishlistCount } = useSlider();
 	const wishlist = useSelector((state) => state.wishlist.wishlist);
 	const [liked, setLiked] = useState(false);
 	const url = `http://localhost:8000`;
@@ -166,7 +165,7 @@ const Wishlist = () => {
 			<div className="showMoreButton">
 				<button className="show-more-button">LOAD MORE ITEMS</button>
 			</div>
-			<Modal show={showModal} onHide={handleCloseModal} centered size="lg">
+			<Modal show={showModal} onHide={handleCloseModal} centered size="xl">
 				<Modal.Header closeButton>
 					<Modal.Title>Wishlist Product</Modal.Title>
 				</Modal.Header>
