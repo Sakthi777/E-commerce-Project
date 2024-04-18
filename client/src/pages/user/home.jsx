@@ -31,6 +31,7 @@ export const useSlider = () => useContext(SliderContext);
 const ProductGrid = ({ products }) => {
 	const token = useSelector((state) => state.tokenDetails.token);
 	const [selectedOption, setSelectedOption] = useState("Top Order");
+	const navigate = useNavigate();
 
 	const handleOptionClick = (option) => {
 		setSelectedOption(option);

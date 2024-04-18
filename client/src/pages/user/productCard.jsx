@@ -56,6 +56,7 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
 	};
 
 	useEffect(() => {
+		console.log(wishlist);
 		if (wishlist) {
 			dispatch(setWishlist(...wishlist, wishListData));
 		} else {

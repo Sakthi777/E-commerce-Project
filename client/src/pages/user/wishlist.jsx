@@ -15,7 +15,6 @@ import "slick-carousel/slick/slick-theme.css";
 import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ProductDescriptionCard from "../../pages/user/productDescriptionCard";
 import { useDispatch, useSelector } from "react-redux";
-import { useSlider } from "../../pages/user/home";
 import { setWishlist } from "../../features/slice/wishListSlice";
 const Wishlist = () => {
 	const wishlist = useSelector((state) => state.wishlist.wishlist);
@@ -112,7 +111,6 @@ const Wishlist = () => {
 
 	const fetchProducts = async () => {
 		const uniqueProductIds = Array.from(new Set(wishlistData));
-		setwishlistCount(uniqueProductIds.length);
 		const uniqueProductDetails = [];
 		for (const id of uniqueProductIds) {
 			try {
