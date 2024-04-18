@@ -19,7 +19,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useSlider } from "../../pages/user/home";
 import axios from "axios";
 import { toastWarn } from "./myProfile";
-import { toastWarn } from "./myProfile";
 
 function CheckOut() {
 	const profiles = document.querySelectorAll(".profiles-content");
