@@ -67,7 +67,7 @@ const Wishlist = () => {
 			.catch((err) => {
 				console.log(err);
 			});
-		// console.log("Delete");
+		console.log("Delete");
 	};
 
 	const renderTable = () => {
