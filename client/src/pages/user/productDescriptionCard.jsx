@@ -165,7 +165,8 @@ const ProductDescriptionCard = ({ product, onClose }) => {
 				</div>
 				<div className="des-add-to-like-icon" onClick={toggleLike}>
 					<FontAwesomeIcon icon={faHeart} className="like" />
-					<span>ADD TO WISH</span>
+					{wishlist.includes(productID) && <span>REMOVE FROM WISH</span>}
+					{!wishlist.includes(productID) && <span>ADD TO WISH</span>}
 				</div>
 			</div>
 		</div>
