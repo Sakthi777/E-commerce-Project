@@ -5,7 +5,7 @@ import { tokenReducer } from "../slice/tokenSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { searchValReducer } from "../slice/searchSlice";
-import { wishLengthReducer } from "../slice/wishlistLength";
+import { wishlistReducer } from "../slice/wishListSlice";
 const persistConfig = {
 	key: "root",
 	storage,
@@ -17,7 +17,7 @@ const persistedReducer = persistReducer(
 		userProfileDetails: userProfileReducer,
 		tokenDetails: tokenReducer,
 		searchVal: searchValReducer,
-		wishLength: wishLengthReducer,
+		wishlist: wishlistReducer,
 		searchProductDetails: searchProductsReducer,
 	}),
 );
