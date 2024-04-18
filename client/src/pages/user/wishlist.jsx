@@ -15,6 +15,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ProductDescriptionCard from "../../pages/user/productDescriptionCard";
 import { useDispatch, useSelector } from "react-redux";
+import { useSlider } from "../../pages/user/home";
 import { setWishlist } from "../../features/slice/wishListSlice";
 const Wishlist = () => {
 	const wishlist = useSelector((state) => state.wishlist.wishlist);

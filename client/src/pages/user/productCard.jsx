@@ -56,16 +56,10 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
 	};
 
 	useEffect(() => {
-		console.log(wishlist);
 		if (wishlist) {
-			dispatch(setWishlist(...wishlist, wishListData));
+			dispatch(setWishlist(wishListData));
 		} else {
 			dispatch(setWishlist(wishListData));
-		}
-		if (wishlist.includes(product._id)) {
-			setLiked(true);
-		} else {
-			setLiked(false);
 		}
 	}, [wishListData]);
 
@@ -109,7 +103,7 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
 	};
 	return (
 		<div className="product-card">
-			<div className={`productLike ${liked ? "liked" : ""}`} onClick={toggleLike}>
+			<div className={`productLike ${wishlist.includes(product._id) ? "liked" : ""}`} onClick={toggleLike}>
 				<AiFillHeart className="icon" style={{ verticalAlign: "unset" }} />
 			</div>
 			<div className="product-img-container">
