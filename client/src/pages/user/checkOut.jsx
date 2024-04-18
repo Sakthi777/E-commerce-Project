@@ -19,18 +19,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { useSlider } from "../../pages/user/home";
 import axios from "axios";
 import { toastWarn } from "./myProfile";
+import { toastWarn } from "./myProfile";
 
 function CheckOut() {
 	const profiles = document.querySelectorAll(".profiles-content");
 	const token = useSelector((state) => state.tokenDetails.token);
-	const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails } = useSlider();
+	const [productDetails, setProductDetails] = useState([]);
+	const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem } = useSlider();
 	let responseUserArray = [];
-
+	const url = "http://localhost:8000";
 	const [totalCardPrice, setTotalCardPrice] = useState(0);
 	const [totalCartItem, setTotalCartItem] = useState(0);
-
 	useEffect(() => {
-		console.log(userCartItem);
 		if (userCartItem.length == 0) {
 			setTotalCardPrice(0);
 			setTotalCartItem(0);
@@ -69,6 +69,50 @@ function CheckOut() {
 		setProductDetails(responseUserArray);
 	}, [userCartItem]);
 
+	const makeOrder = (amount) => {
+		console.log(amount);
+		if (amount != 0) {
+			const postData = {
+				token: token,
+				amountToAdd: amount,
+			};
+
+			var options = {
+				key: "rzp_test_wHOtfkPpntJDBS",
+				key_secret: "LEwbicytmeNgeSaggWwGfNTJ",
+				amount: amount * 100,
+				currency: "INR",
+				name: "Demo",
+				description: "for testing purpose",
+				handler: async (response) => {
+					if (response.razorpay_payment_id) {
+						await axios
+							.post(`${url}/walletData`, postData)
+
+							.catch((err) => {
+								console.log(err);
+							});
+					} else {
+						toastWarn("Payment failed");
+					}
+				},
+				prefill: {
+					name: "IDM Techpark",
+					email: "idm@gmail.com",
+					contact: "7904425541",
+				},
+				notes: {
+					address: "Razorpay Corporate office",
+				},
+				theme: {
+					color: "#119744",
+				},
+			};
+			var pay = new window.Razorpay(options);
+			pay.open();
+		}
+	};
+
 	const DeleteCartProduct = (product) => {
 		console.log(product.productdetail._id);
 		const id = product.productdetail._id;
@@ -90,7 +134,6 @@ function CheckOut() {
 	});
 
 	const [show, setShow] = useState(false);
-	const url = "http://localhost:8000";
 
 	const [showContact, setShowContact] = useState(false);
 	const [showEditContact, setShowEditContact] = useState(false);
@@ -657,6 +700,9 @@ function CheckOut() {
 						<div className="payment-option-content profiles-content-containers">{renderCardDetails()}</div>
 					</div>
 				</div>
+				<div className="makeOrder">
+					<button onClick={() => makeOrder(totalCardPrice)}>Place Order</button>
+				</div>
 			</div>
 			<Modal show={showModal} className="model-container" onHide={closeModal} centered size="lg">
 				<Modal.Header closeButton></Modal.Header>
@@ -674,6 +720,7 @@ function CheckOut() {
 								setNew: selectedProduct.productdetail.newProduct,
 								discountPercentage: selectedProduct.productdetail.discountPercentage,
 								productDetails: selectedProduct.productdetail.productDescription,
+								productID: selectedProduct.productdetail._id,
 							}}
 							onClose={closeModal}
 						/>
