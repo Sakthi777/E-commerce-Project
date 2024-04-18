@@ -24,27 +24,16 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
 	const dispatch = useDispatch();
 	// const [ref, setRef] = useState(false);
 	useEffect(() => {
-		fetchUserCartDetails();
-	}, []);
-	const fetchUserCartDetails = async () => {
-		try {
-			const response = await axios.get(`http://localhost:8000/get-userCartDetails/${token}`);
-			if (response.data.AddtoCardItems) {
-				setUserCartItem(response.data.AddtoCardItems);
-			}
-		} catch (error) {
-			console.log("Error fetching user cart details:", error);
-		}
-	};
-	useEffect(() => {
+		let foundInCart = false;
 		userCartItem.map((prod) => {
-			// setBacktoCart(false);
 			if (prod.productID === product._id) {
-				setBacktoCart(true);
-				// console.log(prod.productID);
+				foundInCart = true;
+				console.log(prod.productID);
 			}
 		});
-	}, [userCartItem, isSidebarOpen]);
+		setBacktoCart(foundInCart);
+	}, [userCartItem]);
+
 	const url = `http://localhost:8000`;
 
 	const wishlist = useSelector((state) => state.wishlist.wishlist);
