@@ -38,7 +38,6 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
 
 	const wishlist = useSelector((state) => state.wishlist.wishlist);
 	const [wishListData, setwishListData] = useState(wishlist);
-	const [liked, setLiked] = useState(false);
 
 	const toggleLike = async () => {
 		const wishListPostData = {

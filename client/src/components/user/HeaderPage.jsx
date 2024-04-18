@@ -275,7 +275,7 @@ const HeaderPage = () => {
 							<FontAwesomeIcon icon={faHeart} className="heart-icon" />
 						</div>
 						<div className="pop-up-item">
-							<p>{wishlistData ? wishlistData.length : 0}</p>
+							<p>{wishlist ? wishlist.length : 0}</p>
 						</div>
 					</div>
 					<div className="card-container">
