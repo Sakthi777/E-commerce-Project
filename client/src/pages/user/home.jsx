@@ -13,8 +13,7 @@ import "../../styles/user/featuredItem.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Highlight } from "../../components/user/homePageCarousels";
-import { useDispatch, useSelector } from "react-redux";
-import { setWishLength } from "../../features/slice/wishlistLength";
+import { useSelector } from "react-redux";
 
 export const SliderContext = createContext();
 
@@ -32,7 +31,6 @@ export const useSlider = () => useContext(SliderContext);
 const ProductGrid = ({ products }) => {
 	const token = useSelector((state) => state.tokenDetails.token);
 	const [selectedOption, setSelectedOption] = useState("Top Order");
-	const [wishList, setWishList] = useState([]);
 
 	const handleOptionClick = (option) => {
 		setSelectedOption(option);

@@ -13,42 +13,19 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProductDescriptionCard from "../../pages/user/productDescriptionCard";
 import { useDispatch, useSelector } from "react-redux";
-import { setWishLength } from "../../features/slice/wishlistLength";
 import { useSlider } from "../../pages/user/home";
 import axios from "axios";
-const ProductCard = ({ liked, imgSrc, imageSlider, rating, productName, oldPrice, newPrice, setSale, setNew, discountPercentage, productDetails, product }) => {
-	const [isliked, setIsLiked] = useState(false);
+import { setWishlist } from "../../features/slice/wishListSlice";
+const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPrice, setSale, setNew, discountPercentage, productDetails, product }) => {
 	const [showModal, setShowModal] = useState(false);
-	const [wishList, setWishList] = useState([]);
 	const [backToCart, setBacktoCart] = useState(false);
 	const token = useSelector((state) => state.tokenDetails.token);
 	const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem } = useSlider();
 	const dispatch = useDispatch();
-	const wishLength = useSelector((state) => state.wishLength.length);
 	// const [ref, setRef] = useState(false);
-
-	const fetchWishList = async () => {
-		await axios.get(`http://localhost:8000/wishlist/${token}`).then((res) => {
-			setWishList(res.data.productID);
-		});
-	};
-
-	useEffect(() => {
-		if (token) {
-			fetchWishList();
-		}
-	}, [token]);
-
 	useEffect(() => {
 		fetchUserCartDetails();
 	}, []);
-
-	useEffect(() => {
-		if (wishList) {
-			setIsLiked(wishList.includes(product._id));
-			dispatch(setWishLength(wishList.length));
-		}
-	}, [wishList]);
 	const fetchUserCartDetails = async () => {
 		try {
 			const response = await axios.get(`http://localhost:8000/get-userCartDetails/${token}`);
@@ -69,6 +46,11 @@ const ProductCard = ({ liked, imgSrc, imageSlider, rating, productName, oldPrice
 		});
 	}, [userCartItem, isSidebarOpen]);
 	const url = `http://localhost:8000`;
+
+	const wishlist = useSelector((state) => state.wishlist.wishlist);
+	const [wishListData, setwishListData] = useState(wishlist);
+	const [liked, setLiked] = useState(false);
+
 	const toggleLike = async () => {
 		const wishListPostData = {
 			token: token,
@@ -77,13 +59,26 @@ const ProductCard = ({ liked, imgSrc, imageSlider, rating, productName, oldPrice
 		await axios
 			.post(`${url}/wishlist/`, wishListPostData)
 			.then((res) => {
-				setWishList(res.data.productID);
-				console.log(res.data.productID);
+				setwishListData(res.data.productID);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	};
+
+	useEffect(() => {
+		if (wishlist) {
+			dispatch(setWishlist(...wishlist, wishListData));
+		} else {
+			dispatch(setWishlist(wishListData));
+		}
+		if (wishlist.includes(product._id)) {
+			setLiked(true);
+		} else {
+			setLiked(false);
+		}
+	}, [wishListData]);
+
 	const handleGoCartClick = () => {
 		setSidebarOpen(true);
 	};
@@ -124,7 +119,7 @@ const ProductCard = ({ liked, imgSrc, imageSlider, rating, productName, oldPrice
 	};
 	return (
 		<div className="product-card">
-			<div className={`productLike ${isliked ? "liked" : ""}`} onClick={toggleLike}>
+			<div className={`productLike ${liked ? "liked" : ""}`} onClick={toggleLike}>
 				<AiFillHeart className="icon" style={{ verticalAlign: "unset" }} />
 			</div>
 			<div className="product-img-container">

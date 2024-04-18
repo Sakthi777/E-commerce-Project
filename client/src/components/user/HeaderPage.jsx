@@ -21,8 +21,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSearchProductDetails } from "../../features/slice/searchProductSlice";
 import { setSearchValue } from "../../features/slice/searchSlice";
 import { useSlider } from "../../pages/user/home";
-import { setWishLength } from "../../features/slice/wishlistLength";
 import { setToken } from "../../features/slice/tokenSlice";
+import { setWishlist } from "../../features/slice/wishListSlice";
 const HeaderPage = () => {
 	const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails, wishlistCount } = useSlider();
 	const [isFixed, setIsFixed] = useState(false);
@@ -34,7 +34,7 @@ const HeaderPage = () => {
 	const [totalCartItem, setTotalCartItem] = useState(0);
 	const token = useSelector((state) => state.tokenDetails.token);
 	const search = useSelector((state) => state.searchVal.search);
-	const wishlistLength = useSelector((state) => state.wishLength.length);
+	const wishlist = useSelector((state) => state.wishlist.wishlist);
 
 	const nav = useNavigate();
 
@@ -57,10 +57,10 @@ const HeaderPage = () => {
 		dispatch(setSearchValue(searchVal));
 	}, [searchVal]);
 
+	const [wishlistData, setWishlistData] = useState([]);
 	const fetchWishList = async () => {
 		await axios.get(`http://localhost:8000/wishlist/${token}`).then((res) => {
-			const wishListData = res.data.productID;
-			dispatch(setWishLength(wishListData.length));
+			setWishlistData(res.data.productID);
 		});
 	};
 	useEffect(() => {
@@ -68,20 +68,17 @@ const HeaderPage = () => {
 			fetchWishList();
 			fetchUserCartDetails();
 		}
-	}, []);
+	}, [token]);
 
-	// useEffect(() => {
-	//   let totalPrice = 0;
-	//   let count = 0;
-	//   productDetails.forEach((product) => {
-	//     totalPrice += product.productdetail.newPrice * product.quantity;
-	//     count = count + 1;
-	//   });
-	//   console.log("Price" + totalPrice);
-	//   setTotalCardPrice(totalPrice);
-	//   console.log("product count " + count);
-	//   setTotalCartItem(count);
-	// }, [setProductDetails]);
+	useEffect(() => {
+		if (wishlistData) {
+			dispatch(setWishlist(wishlistData));
+		}
+	}, [wishlistData]);
+
+	useEffect(() => {
+		console.log("wishlist", wishlist);
+	}, [wishlist]);
 
 	const fetchUserCartDetails = async () => {
 		try {
@@ -206,7 +203,6 @@ const HeaderPage = () => {
 	const logout = () => {
 		Cookies.remove("LoginToken");
 		dispatch(setToken(""));
-		dispatch(setWishLength(0));
 		window.location.reload();
 	};
 
@@ -279,7 +275,7 @@ const HeaderPage = () => {
 							<FontAwesomeIcon icon={faHeart} className="heart-icon" />
 						</div>
 						<div className="pop-up-item">
-							<p>{wishlistLength}</p>
+							<p>{wishlistData ? wishlistData.length : 0}</p>
 						</div>
 					</div>
 					<div className="card-container">
@@ -438,7 +434,6 @@ const HeaderPage = () => {
 					</div>
 				</div>
 			</div>
-
 		</>
 	);
 };
