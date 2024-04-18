@@ -25,6 +25,51 @@ const Wishlist = () => {
   };
   const [showModal, setShowModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem } = useSlider();
+
+  // useEffect(() => {
+  //   let foundInCart = false;
+  //   userCartItem.map((prod) => {
+  //     console.log(wishProduct);
+  //     console.log(userCartItem);
+  //     if (prod.productID === productID) {
+  //       foundInCart = true;
+  //       console.log(prod.productID);
+  //     }
+
+  //   setBacktoCart(foundInCart);
+  // }, [userCartItem]);
+
+  const handleGoCartClick = () => {
+    setSidebarOpen(true);
+  };
+
+  const handleAddToCard = (prod) => {
+    console.log(prod);
+    console.log(token);
+    const productID = prod;
+    if (token !== "") {
+      axios
+        .post("http://localhost:8000/post-AddToCardDetails", { productID, token })
+        .then((response) => {
+          console.log("Product added to cart:", response.data);
+          setUserCartItem(response.data);
+        })
+        .catch((error) => {
+          console.error("Error adding product to cart:", error);
+        });
+    }
+  };
+  const handleClick = (product) => {
+    const cartItemIds = new Set(userCartItem.map((item) => item.productID));
+    const isInCart = cartItemIds.has(product);
+    if (isInCart) {
+      handleGoCartClick();
+    } else {
+      handleAddToCard(product);
+    }
+  };
+
   const handleShowModal = (product) => {
     setSelectedProduct(product);
     setShowModal(true);
@@ -50,14 +95,6 @@ const Wishlist = () => {
   // 		});
   // }, [setwishProduct]);
 
-  function timeout(ms) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, ms);
-    });
-  }
-
-  let isMounted = true;
-
   const deleteWishList = async (id, index) => {
     await axios
       .delete(`http://localhost:8000/wishlist/${token}/${id}`)
@@ -75,27 +112,37 @@ const Wishlist = () => {
 
   const renderTable = () => {
     if (wishProduct) {
-      return wishProduct.map((product, index) => (
-        <tr>
-          <td>{index + 1}</td>
-          <td>
-            <img src={`http://localhost:8000/uploads/productImage/${product.image}`} alt="" />
-          </td>
-          <td>{product.productName}</td>
-          <td>{product.newPrice}</td>
-          <td>Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
-          <td>In Stock</td>
-          <td className="wishlist-card">
-            <div className="wishlist-add-to-cart">
-              <span>Add To Cart</span>
-            </div>
-          </td>
-          <td>
-            <FontAwesomeIcon icon={faEye} className="wishlist-view" onClick={() => handleShowModal(product)} />
-            <FontAwesomeIcon icon={faTrash} className="wishlist-delete" onClick={() => deleteWishList(product._id, index)} />
-          </td>
-        </tr>
-      ));
+      return wishProduct.map((product, index) => {
+        const cartItemIds = new Set(userCartItem.map((item) => item.productID));
+        const isInCart = cartItemIds.has(product._id);
+
+        return (
+          <tr>
+            <td>{index + 1}</td>
+            <td>
+              <img src={`http://localhost:8000/uploads/productImage/${product.image}`} alt="" />
+            </td>
+            <td>{product.productName}</td>
+            <td>{product.newPrice}</td>
+            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
+            <td>In Stock</td>
+            <td className="wishlist-card">
+              <div
+                className="wishlist-add-to-cart"
+                onClick={() => {
+                  handleClick(product._id);
+                }}
+              >
+                {isInCart ? <span>Go To Cart</span> : <span>Add To Cart</span>}
+              </div>
+            </td>
+            <td>
+              <FontAwesomeIcon icon={faEye} className="wishlist-view" onClick={() => handleShowModal(product)} />
+              <FontAwesomeIcon icon={faTrash} className="wishlist-delete" onClick={() => deleteWishList(product._id, index)} />
+            </td>
+          </tr>
+        );
+      });
     }
   };
 
@@ -182,6 +229,7 @@ const Wishlist = () => {
                 setNew: selectedProduct.newProduct,
                 discountPercentage: selectedProduct.discountPercentage,
                 productDetails: selectedProduct.productDescription,
+                productID: selectedProduct._id,
               }}
             />
           )}

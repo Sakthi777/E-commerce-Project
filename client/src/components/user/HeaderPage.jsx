@@ -40,7 +40,9 @@ const HeaderPage = () => {
 
   const [searchVal, setSearchVal] = useState(search);
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    fetchUserCartDetails();
+  }, []);
   const fetchProduct = async () => {
     await axios
       .get(`http://localhost:8000/get-searchProductDetails/?q=${searchVal}`)
@@ -65,7 +67,6 @@ const HeaderPage = () => {
   };
   useEffect(() => {
     if (token) {
-      fetchUserCartDetails();
       fetchWishList();
     }
   }, [token]);
