@@ -6,6 +6,8 @@ body {
   background-color: #fff;
   border-radius: 8px;
   padding: 3%;
+  position: relative;
+  display: grid;
 }
 .add-image-title p {
   padding-top: 30px;
@@ -32,14 +34,24 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  border: 1px solid lightgray;
-  width: 300px;
+  width: 5rem;
   height: auto;
   background-color: #fff;
 }
+.image-upload-box .gridbutton{
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  color: #f3f4f6;
+  background-color: rgb(235, 62, 62);
+  cursor: pointer;
+  box-shadow: black;
+  height: 2rem;
+  width: 10rem;
+}
 .image-box {
-  width: 200px;
-  margin: 20px auto;
+  width: 300px;
+  margin-right: 50px;
+  margin-left: 50px;
 }
 
 .center-image {
@@ -258,6 +270,10 @@ body {
   background-color: #fff;
   top: 3rem;
   padding: 1rem;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  
 }
 .imgview img{
 border-radius: 8px;
@@ -272,11 +288,7 @@ margin-bottom: 10px;
   color:#f44336;
   text-decoration: line-through;
 }
-.product-preview{
-  position: relative;
-display: flex;
-flex-direction: row;
-}
+
 
 /* edit product */
 
@@ -353,7 +365,7 @@ flex-direction: row;
     border: 1px solid lightgray;
     border-radius: 4px;
     color: #f3f4f6;
-    background-color: green;
+    background-color: rgba(2, 92, 2, 0.63);
     cursor: pointer;
     box-shadow: black;
     height: 3rem;
@@ -390,4 +402,14 @@ flex-direction: row;
     grid-gap: 10px;
     margin-top: 20px;
   }
+  .image-box {
+  width: 300px;
+  margin-left: 200px;
+}
+
+.center-image {
+  max-width: 70%;
+  max-height: 70%;
+  display: block;
+}
 }

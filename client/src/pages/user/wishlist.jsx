@@ -16,8 +16,9 @@ import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ProductDescriptionCard from "../../pages/user/productDescriptionCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useSlider } from "../../pages/user/home";
-import { setWishLength } from "../../features/slice/wishlistLength";
+import { setWishlist } from "../../features/slice/wishListSlice";
 const Wishlist = () => {
+  const wishlist = useSelector((state) => state.wishlist.wishlist);
   const [liked, setLiked] = useState(false);
   const url = `http://localhost:8000`;
   const toggleLike = () => {
@@ -77,9 +78,8 @@ const Wishlist = () => {
   const handleCloseModal = () => setShowModal(false);
 
   let delIndex = null;
-
   const [wishProduct, setwishProduct] = useState([]);
-  const [wishlist, setWishList] = useState([]);
+  const [wishlistData, setWishListData] = useState([]);
 
   const token = useSelector((state) => state.tokenDetails.token);
   const dispatch = useDispatch();
@@ -99,15 +99,14 @@ const Wishlist = () => {
     await axios
       .delete(`http://localhost:8000/wishlist/${token}/${id}`)
       .then((res) => {
-        setWishList(res.data.productID);
+        setWishListData(res.data.productID);
         delIndex = index;
         // console.log(res.data.productID);
       })
       .catch((err) => {
         console.log(err);
       });
-    dispatch(setWishLength(wishlist.length - 1));
-    // console.log("Delete");
+    console.log("Delete");
   };
 
   const renderTable = () => {
@@ -149,16 +148,19 @@ const Wishlist = () => {
   useEffect(() => {
     const fetchWishList = async () => {
       await axios.get(`${url}/wishlist/${token}`).then((res) => {
-        setWishList(res.data.productID);
-        console.log(wishlist);
+        setWishListData(res.data.productID);
       });
     };
     fetchWishList();
   }, []);
 
+  useEffect(() => {
+    dispatch(setWishlist(wishlistData));
+    console.log(wishlist);
+  }, [wishlistData]);
+
   const fetchProducts = async () => {
-    const uniqueProductIds = Array.from(new Set(wishlist)); // Filter out duplicate ids
-    dispatch(setWishLength(uniqueProductIds.length));
+    const uniqueProductIds = Array.from(new Set(wishlistData));
     const uniqueProductDetails = [];
     for (const id of uniqueProductIds) {
       try {
