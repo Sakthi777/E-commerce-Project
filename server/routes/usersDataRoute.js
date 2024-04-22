@@ -1,6 +1,7 @@
 const express = require("express");
 const userDatas = express.Router();
 const { userDatasControllers, loginUserControllers, logOutUserControllers, forgetUserControllers, changePasswordControllers, getUserDataController, getUserDataControllers, getSingleUserDataControllers, CountdownTimedate, getCountdownDate } = require("../controllers/usersDataControllers");
+const { authenticateParams } = require("../middlewares/authMiddleWare");
 
 userDatas.route("/users").post(userDatasControllers);
 
@@ -10,7 +11,7 @@ userDatas.route("/userData/:email").get(getUserDataController);
 
 userDatas.route("/getuser").get(getUserDataControllers);
 
-userDatas.route("/getuser/:id").get(getSingleUserDataControllers);
+userDatas.route("/getuser/:token").get(authenticateParams, getSingleUserDataControllers);
 
 userDatas.route("/logOutUser").post(logOutUserControllers);
 

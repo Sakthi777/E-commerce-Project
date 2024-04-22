@@ -104,7 +104,7 @@ exports.getUserDataControllers = asyncHandler(async (req, res, next) => {
 // get single user data with id
 exports.getSingleUserDataControllers = asyncHandler(async (req, res, next) => {
 	try {
-		const { id } = req.params;
+		const { id } = req.userParams;
 		const userDetails = await userDataSchema.findById(id);
 		const userData = {
 			email: userDetails.email,
@@ -115,6 +115,7 @@ exports.getSingleUserDataControllers = asyncHandler(async (req, res, next) => {
 		res.send(err);
 	}
 });
+
 
 // user-Logout - /logOut/logOutUser
 exports.logOutUserControllers = asyncHandler((req, res) => {

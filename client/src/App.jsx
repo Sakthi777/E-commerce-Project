@@ -1,12 +1,11 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import RegisterPage from "./pages/user/registerPage";
 import Login from "./pages/user/loginPage";
 import ResetPassword from "./pages/user/resetPasswordPage";
 import ChangePassword from "./pages/user/changePasswordPage";
 //import HeaderPage from "./components/user/HeaderPage";
 import Wishlist from "./pages/user/wishlist";
-import products from "./pages/user/productList";
 import NotFound from "./pages/user/NotFound";
 import Privacy from "./pages/user/Privacy";
 import Footer from "./pages/user/Footer";
@@ -62,7 +61,7 @@ function App() {
             <Route path="/comingSoon" element={<ProtectedLoginRoute Component={ComingSoon} />} />
             <Route path="/footer" element={<Footer />} />
             <Route path="/shop" element={<ProtectedLoginRoute Component={ShopPage} />}></Route>
-            <Route path="/myProfile" element={<MyProfile />} />
+            <Route path="/myProfile" element={<ProtectedLoginRoute Component={MyProfile} />} />
             <Route path="/about" element={<ProtectedLoginRoute Component={AboutUs} />} />
             <Route path="/myWallet" element={<ProtectedLoginRoute Component={MyWallet} />} />
             <Route path="/transactionDetails" element={<TransactionDetails />} />
