@@ -15,7 +15,6 @@ import { Button, Modal } from "react-bootstrap";
 import Footer from "./Footer";
 
 import { useSelector } from "react-redux";
-import { jwtDecode } from "jwt-decode";
 
 import { ToastContainer, toast } from "react-toastify";
 
@@ -99,7 +98,7 @@ function MyProfile() {
 	const handleContactClose = () => {
 		const contactType = document.getElementById("contactType").value;
 		const contactNumber = document.getElementById("contact-number").value;
-		if (contactNumber.length != 10) {
+		if (contactNumber.length !== 10) {
 			toastWarn("Phone Must Contains 10 digit");
 			return;
 		}
@@ -135,7 +134,7 @@ function MyProfile() {
 	const handleContactEditClose = async () => {
 		const contactType = document.getElementById("contactType").value;
 		const contactNumber = document.getElementById("contact-number").value;
-		if (contactNumber.length != 10) {
+		if (contactNumber.length !== 10) {
 			toastWarn("Phone Must Contains 10 digit");
 			return;
 		}
@@ -285,8 +284,9 @@ function MyProfile() {
 		const findUser = async () => {
 			try {
 				const id = token;
-				const userData = await axios.get(`${url}/login/getuser/${id}`);
-				setUserDetails(userData.data);
+				axios.get(`${url}/login/getuser/${id}`).then((res)=>{
+					setUserDetails(res.data);
+				})
 			} catch (error) {
 				console.log(error);
 			}
@@ -294,7 +294,7 @@ function MyProfile() {
 		findUser();
 		fetchData();
 		console.log(token);
-	}, []);
+	}, [token]);
 
 	const handelDeleteContact = async (index) => {
 		await axios
@@ -415,7 +415,7 @@ function MyProfile() {
 	};
 
 	useEffect(() => {
-		if (profilePic == "") {
+		if (profilePic === "") {
 			renderProfilePic();
 		}
 	}, [profilePic]);
@@ -435,6 +435,7 @@ function MyProfile() {
 		if (cardDetails) renderCardDetails();
 	}, [cardDetails]);
 
+	
 	return (
 		<>
 			<HeaderPage />

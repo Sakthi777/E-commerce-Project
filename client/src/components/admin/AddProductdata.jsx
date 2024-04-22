@@ -2,8 +2,8 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import "../../styles/admin/addProduct.css";
-import upload from 'react'
-// import upload from "../../../src/assets/images/AddProduct/upload.png";
+
+import upload from "../../../src/assets/images/AddProduct/upload.png";
 // import ipay from "../../../src/assets/images/AddProduct/applepay.svg";
 // import bpay from "../../../src/assets/images/AddProduct/bitpay.svg";
 // import gpay from "../../../src/assets/images/AddProduct/googlepay.svg";
@@ -70,6 +70,8 @@ export default function AddProductdata() {
     setImageSlider(ArrayoffilleList);
     const newImages = ArrayoffilleList.map((file) => URL.createObjectURL(file));
     setArrayOfImages(newImages);
+    console.log(fileList);
+
   };
   const handlePublish = () => {
     handleSubmit();
@@ -136,6 +138,7 @@ export default function AddProductdata() {
   return (
     <>
       <AdminHeader />
+      <form action="reset">
       <div className={`adddata ${showOffCanvas ? "content-shifted" : ""} `} style={{ padding: "20px" }}>
         <div>
           <div className="head1">
@@ -214,15 +217,15 @@ export default function AddProductdata() {
               <div className="label-id">
                 <div class="user-product-input">
                   <label>Product Title*</label>
-                  <input type="text" placeholder="Enter Product Name" value={productName} onChange={(e) => setProductName(e.target.value)} />
+                  <input type="text" placeholder="Enter Product Name" value={productName} onChange={(e) => setProductName(e.target.value)}  required />
                 </div>
                 <div className="user-product-input">
                   <label>Old Price*</label>
-                  <input type="text" placeholder="Enter Old Price" value={oldPrice} onChange={(e) => setOldPrice(e.target.value)}></input>
+                  <input type="text" placeholder="Enter Old Price" value={oldPrice} onChange={(e) => setOldPrice(e.target.value)} required ></input>
                 </div>
                 <div className="user-product-input">
                   <label>New Price*</label>
-                  <input type="text" placeholder="Enter New Price" value={newPrice} onChange={(e) => setNewPrice(e.target.value)}></input>
+                  <input type="text" placeholder="Enter New Price" value={newPrice} onChange={(e) => setNewPrice(e.target.value)} required ></input>
                 </div>
               </div>
               <div className="label-id">
@@ -245,7 +248,7 @@ export default function AddProductdata() {
               <div className="label-id">
                 <div className="user-product-input label-id-input">
                   <label>Discount Percentage*</label>
-                  <input type="text" value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value)}></input>
+                  <input type="text" value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value)} required ></input>
                 </div>
                 <div className="user-product-input">
                   <label>FeaturedItems*</label>
@@ -257,91 +260,120 @@ export default function AddProductdata() {
               </div>
             </div>
             <div>
-              <div className="label-id" style={{ marginTop: '30px', borderColor: '#F0F4F8' }}>
+              <p htmlFor="">Main Image</p>
+              <div className="label-id" style={{  borderColor: '#F0F4F8',height:"28vh" }}>
+
                 <div className="image-input">
                   <div>
                     <label htmlFor="category-image">
                       <span style={{ fontSize: "256%" }}>
-                        <br />
-                        <FontAwesomeIcon icon={faCloudArrowUp} />
-                      </span>
-                      <br />
-                      <br />
+                        
+                        <FontAwesomeIcon icon={faCloudArrowUp}  className="fonticon" />
+                      </span><br/>
                       <span>
                         <span style={{ color: "#009f7f" }}>Drag and drop your product images or browse  your product images</span>
-                        <br />
-                        <br />
                       </span>
-                      <br />
-                      <br />
                     </label>
+
                   </div>
-                  <input type="file" onChange={handleImageChange} accept="image/*" name="category-image" id="category-image" multiple style={{ display: "none", border: "lightgray" }} />
-                  <input type="file" id="multi-file-upload" style={{ display: "none", cursor: "pointer" }} onChange={handleImageSliderChange} accept="image/*" multiple />
+                  <div className="imageInputFiled">
+                    <input type="file" onChange={handleImageChange} accept="image/*" name="category-image" id="category-image" style={{ display: "none", border: "lightgray" }} required  /></div>
                   <div className="image-box">
                     <img src={preImage ? preImage : upload} alt="" className="center-image" />
                   </div>
                 </div>
               </div>
-              <div className="image-grid" >
-                {ArrayOfimages.map((image, index) => (
-                  <div className="image-upload-box">
-                    <div className="image-box">
-                      <img key={index} src={image ? image : upload} alt={`${index + 1}`} className="center-image" />
-                    </div>
-                    <button className="gridbutton">delete</button>
+            </div>
+            <div>
+              <p htmlFor="" >Model Multi Image</p>
+              <div className="" style={{  borderColor: '#F0F4F8' }}>
+
+                <div className="image-input multiImg" style={{height:"25vh"}}>
+                  <div>
+                    <label htmlFor="multi-file-upload">
+                      <span style={{ fontSize: "256%" }}>
+                        
+                        <FontAwesomeIcon icon={faCloudArrowUp} />
+                      </span><br/>
+                      <span>
+                        <span style={{ color: "#009f7f" }}>Drag and drop your product images or browse  your product images</span>
+                        
+                      </span>
+                      
+                    </label>
+                    <div className="imageInputFiled">
+                      <input type="file" name="multi-file-upload" id="multi-file-upload" style={{ cursor: "pointer", display: "none" }} onChange={handleImageSliderChange} accept="image/*" multiple  required /></div>
+
                   </div>
-                ))}
+                </div>
+                <br />
+              </div>
+              <div className="image-grid-multi" >
+                {
+                  ArrayOfimages.map((image, index) => (
+                    <div className="image-upload-box">
+                      <div className="imgborder">
+                        <div className="image-box-multi">
+                          <img key={index} src={image ? image : upload} alt={`product${index + 1}`} className="center-image"></img>
+                        </div>
+                        <div className="imgbutton">
+                        <button>delete</button>
+                        </div>
+                      </div>
+                    </div>
+
+                  ))
+                }
+
               </div>
             </div>
             <div className="label-id">
               <div className="user-product-input">
                 <p htmlFor="">Description*</p>
-                <textarea name="details" id="details" style={{ paddingLeft: '10px' }} cols="10" rows="5" placeholder="Enter Description"></textarea>
+                <textarea name="details" id="details" style={{ paddingLeft: '10px' }} cols="10" rows="5" placeholder="Enter Description" required></textarea>
               </div>
             </div>
-            <div className="label-id payment-images">
+            {/* <div className="label-id payment-images">
               <div className="user-product-input label-id-input">
-                {/* <label>Payment Methods</label> */}
+                <label>Payment Methods</label>
                 <div className="payment-option">
-                  {/* <div className="payments">
+                  <div className="payments">
                     <input class="hidden" type="radio" id="" value={""}></input>
                     <img src={ipay} alt="" width={"40px"} />
-                  </div> */}
-                  {/* <div className="payments">
+                  </div>
+                  <div className="payments">
                     <input class="hidden" type="radio" id="" value={""}></input>
                     <img src={gpay} alt="" width={"40px"} />
-                  </div> */}
-                  {/* <div className="payments">
+                  </div>
+                  <div className="payments">
                   <input class="hidden" type="radio" id="" value={""}></input>
                   <img src={bpay} alt="" width={"40px"} />
-                </div> */}
-                  {/* <div className="payments">
+                </div>
+                  <div className="payments">
                   <input class="hidden" type="radio" id="" value={""}></input>
                   <img src={paypalpay} alt="" width={"40px"} />
-                </div> */}
-                  {/* <div className="payments">
+                </div>
+                  <div className="payments">
                     <input class="hidden" type="radio" id="" value={""}></input>
                     <img src={vpay} alt="" width={"40px"} />
-                  </div> */}
-                  {/* <div className="payments">
+                  </div>
+                  <div className="payments">
                   <input class="hidden" type="radio" id="" value={""}></input>
                   <img src={mcpay} alt="" width={"40px"} />
-                </div> */}
+                </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="products-button">
               <div className="pro-btn">
-                <button>Reset</button>
+                <button type="reset">Reset</button>
               </div>
               <div className="pro-btn">
                 <button onClick={handlePublish}>Publish Product</button>
               </div>
             </div>
-
           </div>
-          <div className="product-preview ">
+          {/* <div className="product-preview ">
             <div className="previewproduct">
               <div>
                 <label htmlFor="">Product card Preview</label>
@@ -356,9 +388,10 @@ export default function AddProductdata() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div >
+      </form>
       <ToastContainer />
     </>
   );
