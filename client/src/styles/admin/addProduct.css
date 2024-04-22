@@ -1,7 +1,7 @@
 body {
-  background-color: #F0F4F8;
+  background-color: #f0f4f8;
 }
-.add-image-title{
+.add-image-title {
   border: 1px solid #fff;
   background-color: #fff;
   border-radius: 8px;
@@ -10,8 +10,8 @@ body {
   display: grid;
 }
 .add-image-title p {
-  padding-top: 30px;
-  padding-bottom: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .head1 {
@@ -29,16 +29,30 @@ body {
   align-items: center;
   justify-content: center;
 }
-.image-upload-box {
+.image-grid-multi {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  gap: 10px 10px;
+  flex-wrap: wrap;
+  padding: 3%;
   align-items: center;
-  text-align: center;
-  width: 5rem;
+  justify-self: center;
+}
+/* .image-upload-box {
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 7rem;
   height: auto;
   background-color: #fff;
+  /* border: 1px solid lightgrey;
+  border-radius: 8px; }*/
+
+.image-upload-box img {
+  text-align: center;
+  border-radius: 4px;
 }
-.image-upload-box .gridbutton{
+
+.image-upload-box .gridbutton {
   border: 1px solid lightgray;
   border-radius: 4px;
   color: #f3f4f6;
@@ -50,14 +64,33 @@ body {
 }
 .image-box {
   width: 300px;
-  margin-right: 50px;
-  margin-left: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* margin-left: 200px; */
+}
+.imgborder {
+  border: 1px solid lightgray;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  width: 130px;
+}
+.imgborder button {
+  background-color: rgb(219, 56, 56);
+  color: #fff;
+  border: 1px solid rgb(219, 56, 56);
+  border-radius: 4px;
+  width: 4rem;
+  height: 2.5rem;
+  margin: 8%;
+  margin-left: 30px;
 }
 
 .center-image {
-  max-width: 100%;
-  max-height: 100%;
-  display: block;
+  width: 100px;
+  height: 100px;
+  
 }
 .ImageFileName p {
   font-size: 16px;
@@ -95,7 +128,30 @@ body {
   width: 100%;
   height: auto;
 }
+.category-image .fonticon{
+  align-items: center;
+  justify-content: center;
+}
+.image-item{
+  display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25vh;
+    width: 100%;
+    border: 0.3vh #1f2937 dashed;
+    border-radius: 1.5vh;
+    text-align: center;
+}
 
+.image-inputfile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 0.3vh #1f2937 dashed;
+  border-radius: 1.5vh;
+  text-align: center;
+}
 .hovering a {
   text-decoration: none;
   color: green;
@@ -154,21 +210,20 @@ body {
   flex-direction: column;
   width: 100%;
 }
-.checkboxmodel{
+.checkboxmodel {
   display: flex;
   flex-direction: row;
-
 }
-.checkboxmodel input[type='checkbox']{
+.checkboxmodel input[type="checkbox"] {
   accent-color: red;
-    transform: scale(0.5);
+  transform: scale(0.5);
 }
-.checkboxsize{
+.checkboxsize {
   display: flex;
   flex-direction: row;
 }
-.checkboxsize input[type='checkbox']{
-    transform: scale(0.5);
+.checkboxsize input[type="checkbox"] {
+  transform: scale(0.5);
 }
 
 /* .user-product select {
@@ -182,7 +237,7 @@ body {
   border-radius: 4px;
   padding: 20px;
 }
-.user-product-input textarea{
+.user-product-input textarea {
   border-radius: 8px;
   margin-top: 10px;
 }
@@ -242,15 +297,21 @@ body {
   top: 15px;
   left: 25px;
 }
+.image-box-multi{
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8%;
+}
 
 .products-button {
   margin-top: 5%;
   position: relative;
   display: flex;
   flex-direction: row;
-  gap: 5rem;
+  gap: 1.5rem;
   align-items: center;
-  justify-content: center;
+  justify-content: right;
 }
 
 .pro-btn button {
@@ -261,23 +322,22 @@ body {
   cursor: pointer;
   box-shadow: black;
   height: 3rem;
-  width: 15rem;
+  width: 10rem;
 }
 .product-preview {
   border-radius: 8px;
   border: 1px solid #fff;
   border: none;
   background-color: #fff;
-  top: 3rem;
+  top: 2rem;
   padding: 1rem;
   position: relative;
   display: flex;
   flex-direction: row;
-  
 }
-.imgview img{
-border-radius: 8px;
-margin-bottom: 10px;
+.imgview img {
+  border-radius: 8px;
+  margin-bottom: 10px;
 }
 .newprice {
   color: #119744;
@@ -285,10 +345,9 @@ margin-bottom: 10px;
   flex-direction: row;
 }
 .oldprice {
-  color:#f44336;
+  color: #f44336;
   text-decoration: line-through;
 }
-
 
 /* edit product */
 
@@ -352,13 +411,11 @@ margin-bottom: 10px;
   }
 
   .products-button {
-    margin-top: 20%;
     position: relative;
     display: flex;
-    flex-direction: column;
-    gap: 3rem;
+    /* flex-direction: column; */
     align-items: center;
-    justify-content: center;
+    justify-content: right;
   }
 
   .pro-btn button {
@@ -369,7 +426,7 @@ margin-bottom: 10px;
     cursor: pointer;
     box-shadow: black;
     height: 3rem;
-    width: 15rem;
+    width: 10rem;
   }
 
   .label-id {
@@ -403,13 +460,34 @@ margin-bottom: 10px;
     margin-top: 20px;
   }
   .image-box {
-  width: 300px;
-  margin-left: 200px;
-}
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* margin-left: 200px; */
+  }
 
-.center-image {
-  max-width: 70%;
-  max-height: 70%;
-  display: block;
-}
+  .center-image {
+    width: 100px;
+    height: 100px;
+    
+  }
+  .imgborder {
+    border: 1px solid lightgray;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    width: 130px;
+  }
+  .imgborder button {
+    background-color: rgb(219, 56, 56);
+    color: #fff;
+    border: 1px solid rgb(219, 56, 56);
+    border-radius: 4px;
+    width: 4rem;
+    height: 2.5rem;
+    margin: 8%;
+    align-items: center;
+    margin-left: 30px;
+  }
 }
