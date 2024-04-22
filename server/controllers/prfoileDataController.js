@@ -1,4 +1,5 @@
 const MainModel = require("../models/profileDataSchema");
+const userDataSchema = require("../models/userDataSchema")
 const asyncHandler = require("../middlewares/catchAsyncError");
 const fs = require("fs");
 
@@ -8,22 +9,25 @@ const fs = require("fs");
 
 exports.getProfileDataControllers = asyncHandler(async (req, res) => {
 	try {
-		const { token } = req.params;
-		const profileData = await MainModel.findOne({ token });
+		const {id}  = req.userParams;
+
+		const profileData = await MainModel.findOne({id});
+
 		if (!profileData) {
 			return res.status(404).send("Profile data not found");
 		}
 		res.json(profileData);
 	} catch (error) {
-		// console.error("Error fetching profile data:", error);
 		res.status(500).send("Error fetching profile data");
 	}
 });
 
+
 exports.postProfileDataContactControllers = asyncHandler(async (req, res) => {
 	try {
-		const { token, contactNumbers } = req.body;
-		let existingDocument = await MainModel.findOne({ token });
+		const { contactNumbers } = req.body;
+		const { id } = req.user;
+		let existingDocument = await MainModel.findOne({ id });
 
 		if (existingDocument) {
 			if (existingDocument.contactNumbers && existingDocument.contactNumbers.length > 0) {
@@ -36,7 +40,7 @@ exports.postProfileDataContactControllers = asyncHandler(async (req, res) => {
 				res.send(existingDocument);
 			}
 		} else {
-			const newDocument = await MainModel.create({ token, contactNumbers });
+			const newDocument = await MainModel.create({ id, contactNumbers });
 			res.send(newDocument);
 		}
 	} catch (error) {
@@ -47,8 +51,9 @@ exports.postProfileDataContactControllers = asyncHandler(async (req, res) => {
 
 exports.postProfileDataAddressControllers = asyncHandler(async (req, res) => {
 	try {
-		const { token, addresses } = req.body;
-		let existingDocument = await MainModel.findOne({ token });
+		const { addresses } = req.body;
+		const { id } = req.user;
+		let existingDocument = await MainModel.findOne({ id });
 
 		if (existingDocument) {
 			if (existingDocument.addresses && existingDocument.addresses.length > 0) {
@@ -61,7 +66,7 @@ exports.postProfileDataAddressControllers = asyncHandler(async (req, res) => {
 				res.send(existingDocument);
 			}
 		} else {
-			const newDocument = await MainModel.create({ token, addresses });
+			const newDocument = await MainModel.create({ id, addresses });
 			res.send(newDocument);
 		}
 	} catch (error) {
@@ -72,8 +77,9 @@ exports.postProfileDataAddressControllers = asyncHandler(async (req, res) => {
 
 exports.postProfileDataCardControllers = asyncHandler(async (req, res) => {
 	try {
-		const { token, cardType, cardNumber, ownerName } = req.body;
-		let existingDocument = await MainModel.findOne({ token });
+		const { cardType, cardNumber, ownerName } = req.body;
+		const { id } = req.user;
+		let existingDocument = await MainModel.findOne({ id });
 
 		if (existingDocument) {
 			if (existingDocument.cards && existingDocument.cards.length > 0) {
@@ -87,7 +93,7 @@ exports.postProfileDataCardControllers = asyncHandler(async (req, res) => {
 			}
 		} else {
 			const newDocument = await MainModel.create({
-				token,
+				id,
 				cards: [{ cardType, cardNumber, ownerName }],
 			});
 			res.send(newDocument);

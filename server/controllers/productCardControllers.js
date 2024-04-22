@@ -214,7 +214,6 @@ exports.getUserDetails = async (req, res) => {
   console.log(productID);
   try {
     const productDetails = await userProductDetails.findById(productID);
-    console.log(productDetails);
     res.json({ status: "ok", data: productDetails });
   } catch (error) {
     console.error("Error fetching products:", error);

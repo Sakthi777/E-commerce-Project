@@ -71,7 +71,20 @@
 .checkout-summary span h5 {
   padding: 0 20px;
 }
-
+.makeOrder {
+  width: 90%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+.makeOrder button {
+  background-color: #119744;
+  color: white;
+  padding: 12px 40%;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 @media (max-width: 840px) {
   .checkout-summary {
     padding: 0 10%;

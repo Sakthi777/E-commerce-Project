@@ -68,8 +68,11 @@ const LoginCmp = () => {
 					setDisable(true);
 					if (token) {
 						//Redux State Global Token
-						const id = jwtDecode(token);
-						dispatch(setToken(id.userId));
+						// const id = jwtDecode(token);
+						// dispatch(setToken(id.userId));
+
+						dispatch(setToken(token));
+
 
 						setUserData({ ...userData, email: "", password: "" });
 						toast.success("Login Successfull !", {
