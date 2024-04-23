@@ -105,9 +105,9 @@ exports.postProfileDataCardControllers = asyncHandler(async (req, res) => {
 
 exports.postProfileImageControllers = asyncHandler(async (req, res, next) => {
 	try {
-		const token = req.user.id;
+		const {id} = req.user;
 		const imageName = req.file.filename;
-		const existingDocument = await MainModel.findOne({ token });
+		const existingDocument = await MainModel.findOne({ id });
 
 		// console.log(existingImage);
 		if (existingDocument) {
@@ -120,7 +120,7 @@ exports.postProfileImageControllers = asyncHandler(async (req, res, next) => {
 			}
 			// console.log(imageName);
 		} else {
-			await MainModel.create({ token: token, profilePicture: imageName }).then((response) => {
+			await MainModel.create({ token: id, profilePicture: imageName }).then((response) => {
 				res.send(response);
 			});
 		}
@@ -132,24 +132,27 @@ exports.postProfileImageControllers = asyncHandler(async (req, res, next) => {
 exports.editContactController = asyncHandler(async (req, res, next) => {
 	const { index } = req.params;
 	const { contactNumbers } = req.body;
-	const token = req.user.id;
+	const {id} = req.user;
 	try {
-		const doc = await MainModel.findOne({ token });
+		const doc = await MainModel.findOne( {id} );
+		console.log(doc);
 		doc.contactNumbers[index] = contactNumbers[0];
 		await doc.save();
+		console.log(doc)
 		res.send(doc);
 	} catch (error) {
 		console.log(error);
 		res.status(500).json({ success: false, message: "Internal server error" });
 	}
-});
+}
+);
 
 exports.editProfileDataAddressControllers = asyncHandler(async (req, res, next) => {
 	const { index } = req.params;
 	const { addresses } = req.body;
-	const token = req.userParams._id;
+	const {id} = req.user;
 	try {
-		const doc = await MainModel.findOne({ token });
+		const doc = await MainModel.findOne({ id });
 		doc.addresses[index] = addresses[0];
 		await doc.save();
 		res.send(doc);
@@ -159,9 +162,9 @@ exports.editProfileDataAddressControllers = asyncHandler(async (req, res, next) 
 });
 
 exports.delProfilePicControllers = asyncHandler(async (req, res, next) => {
-	const token = req.params._id;
+	const {id} = req.userParams;
 	try {
-		const doc = await MainModel.findOne({ token });
+		const doc = await MainModel.findOne({ id });
 		if (doc.profilePicture) {
 			fs.unlinkSync("./uploads/profilePicture/" + doc.profilePicture);
 			doc.profilePicture = "";
@@ -177,9 +180,9 @@ exports.delProfilePicControllers = asyncHandler(async (req, res, next) => {
 
 exports.delContactControllers = asyncHandler(async (req, res, next) => {
 	const { index } = req.params;
-	const token = req.userParams._id;
+	const {id} = req.userParams;
 	try {
-		const doc = await MainModel.findOne({ token });
+		const doc = await MainModel.findOne({ id });
 		doc.contactNumbers.splice(index, 1);
 		await doc.save();
 		res.send(doc);
@@ -190,9 +193,9 @@ exports.delContactControllers = asyncHandler(async (req, res, next) => {
 
 exports.delAddressControllers = asyncHandler(async (req, res, next) => {
 	const { index } = req.params;
-	const token = req.userParams._id;
+	const {id} = req.userParams;
 	try {
-		const doc = await MainModel.findOne({ token });
+		const doc = await MainModel.findOne({ id });
 		doc.addresses.splice(index, 1);
 		await doc.save();
 		res.send(doc);
@@ -203,9 +206,9 @@ exports.delAddressControllers = asyncHandler(async (req, res, next) => {
 
 exports.delCardControllers = asyncHandler(async (req, res, next) => {
 	const { index } = req.params;
-	const token = req.userParams._id;
+	const {id} = req.userParams;
 	try {
-		const doc = await MainModel.findOne({ token });
+		const doc = await MainModel.findOne({ id });
 		doc.cards.splice(index, 1);
 		await doc.save();
 		res.send(doc);
