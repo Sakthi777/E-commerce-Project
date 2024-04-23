@@ -7,13 +7,86 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { toastWarn } from "./myProfile";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Footer from "../../pages/user/Footer";
 import { useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
 const ShopPage = ({ products }) => {
 	const [productDetails, setProductDetails] = useState([]);
 	const searchedProducts = useSelector((state) => state.searchProductDetails.productDetails);
+
+	const [minPrice, setMinPrice] = useState(0);
+	const [maxPrice, setMaxPrice] = useState(0);
+	const handlePriceFilter = () => {
+		console.log(parseInt(minPrice) > parseInt(maxPrice));
+		if (parseInt(minPrice) > parseInt(maxPrice)) {
+			toastWarn("Minimum Price Must be Higher than Maximum Price");
+			return;
+		}
+		const filteredProducts = searchedProducts.filter((product) => {
+			const productPrice = product.newPrice;
+			return (!minPrice || productPrice >= parseInt(minPrice)) && (!maxPrice || productPrice <= parseInt(maxPrice));
+		});
+		setProductDetails(filteredProducts);
+	};
+
+	const [selectedRatings, setSelectedRatings] = useState([]);
+	const handleRatingChange = (rating) => {
+		const isRatingSelected = selectedRatings.includes(rating);
+
+		if (isRatingSelected) {
+			setSelectedRatings(selectedRatings.filter((selectedRating) => selectedRating !== rating));
+		} else {
+			setSelectedRatings([...selectedRatings, rating]);
+		}
+	};
+
+	useEffect(() => {
+		filterProductsByRating();
+	}, [selectedRatings]);
+
+	// Function to filter products based on selected ratings
+	const filterProductsByRating = () => {
+		if (selectedRatings.length === 0) {
+			setProductDetails(searchedProducts);
+		} else {
+			const filteredProducts = searchedProducts.filter((product) => selectedRatings.includes(product.rating));
+			setProductDetails(filteredProducts);
+		}
+	};
+
+	const renderFilterByRating = () => {
+		return [5, 4, 3, 2, 1].map((star) => {
+			const productsWithStarRating = searchedProducts.filter((product) => product.rating === star);
+			const productCount = productsWithStarRating.length;
+			return (
+				<div className="filter-rating" style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+					<div className="filter-star">
+						<label key={star} style={{ display: "flex", padding: "10px" }}>
+							<input type="checkbox" style={{ marginRight: "5px" }} onChange={() => handleRatingChange(star)} checked={selectedRatings.includes(star)} />
+							{[...Array(5)].map((_, index) => (
+								<FontAwesomeIcon key={index} icon={faStar} style={{ color: star >= index + 1 ? "gold" : "gray", marginRight: "5px" }} />
+							))}
+						</label>
+					</div>
+					<div className="ratingCount">
+						<p style={{ padding: "7px" }}>{productCount}</p>
+					</div>
+				</div>
+			);
+		});
+	};
+
+	const search = useSelector((state) => state.searchVal.search);
+
+	useEffect(() => {
+		setMaxPrice(0);
+		setMinPrice(0);
+		setSelectedRatings([]);
+	}, [search]);
+
 	useEffect(() => {
 		// axios
 		//   .get(`http://localhost:8000/get-productDetails`)
@@ -47,10 +120,16 @@ const ShopPage = ({ products }) => {
 							<div className="filterHr"></div>
 							<div className="filter-price-content">
 								<div className="filter-input">
-									<input type="text" placeholder="Min-00" className="input1" />
-									<input type="text" placeholder="Max-5k" />
+									<div>
+										<label htmlFor="">Min Price</label>
+										<input type="text" placeholder="Min-00" value={minPrice} onChange={(e) => setMinPrice(e.target.value)} className="min-price" />
+									</div>
+									<div>
+										<label htmlFor="">Max Price</label>
+										<input type="text" placeholder="Max-5k" value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} className="max-price" />
+									</div>
 								</div>
-								<div className="filter-search">
+								<div className="filter-search" onClick={handlePriceFilter}>
 									<FontAwesomeIcon icon={faSearch} />
 									<span>Search</span>
 								</div>
@@ -58,25 +137,9 @@ const ShopPage = ({ products }) => {
 						</div>
 						<div className="filter-card">
 							<span className="filter-tile">FILTER BY RATING</span>
-							<div className="filterHr"></div>
-							{[1, 2, 3, 4, 5].map((star) => (
-								<div className="filter-rating" style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-									<div className="filter-star">
-										<label key={star} style={{ display: "flex", padding: "10px" }}>
-											<input type="checkbox" style={{ marginRight: "5px" }} />
-											<FontAwesomeIcon icon={faStar} style={{ color: 5 >= star ? "gold" : "gray", marginRight: "5px" }} />
-											<FontAwesomeIcon icon={faStar} style={{ color: 4 >= star ? "gold" : "gray", marginRight: "5px" }} />
-											<FontAwesomeIcon icon={faStar} style={{ color: 3 >= star ? "gold" : "gray", marginRight: "5px" }} />
-											<FontAwesomeIcon icon={faStar} style={{ color: 2 >= star ? "gold" : "gray", marginRight: "5px" }} />
-											<FontAwesomeIcon icon={faStar} style={{ color: 1 >= star ? "gold" : "gray", marginRight: "5px" }} />
-										</label>
-									</div>
-									<div className="ratingCount">
-										<p style={{ padding: "7px" }}>(13)</p>
-									</div>
-								</div>
-							))}
-							<div className="filter-search">
+							<div className="filterHr">{renderFilterByRating()}</div>
+
+							<div className="filter-search" onClick={() => setSelectedRatings([])}>
 								<FontAwesomeIcon icon={faTrashAlt} />
 								<span>Clear Filter</span>
 							</div>
@@ -266,6 +329,21 @@ const ShopPage = ({ products }) => {
 					</div>
 				</div>
 			</div>
+
+			<ToastContainer
+				//container
+				position="top-center"
+				autoClose={5000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+				theme="light"
+			/>
+
 			<Footer />
 		</>
 	);

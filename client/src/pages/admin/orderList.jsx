@@ -3,6 +3,8 @@ import "../../styles/admin/orderList.css";
 import { completedOrders, pendingOrders, canceledOrders } from "../../pages/user/productList";
 import AdminHomePage from "../../components/admin/adminHeader";
 import { useOffCanvasContext } from "../../components/admin/adminHeader";
+import axios from "axios";
+import { useEffect, useState } from "react";
 const getStatusColor = (status) => {
   let statusColor;
 
@@ -29,7 +31,19 @@ const getStatusColor = (status) => {
     cursor: "pointer",
   };
 };
+
 const CompletedOrders = () => {
+  const [order, setOrder] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/getOrderDetails`)
+      .then((response) => {
+        setOrder(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching product data:", error);
+      });
+  }, []);
   const { showOffCanvas } = useOffCanvasContext();
 
   return (
@@ -43,37 +57,48 @@ const CompletedOrders = () => {
               <th>Order ID</th>
               <th>Product </th>
               <th>Name</th>
-              <th>Address</th>
+              <th>Email</th>
               <th>Date</th>
               <th>Price</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            {completedOrders.map((product) => (
-              <tr key={product.id}>
+            {console.log(order)}
+            {order.map((order, index) => (
+              <tr key={index + 1}>
                 <td>
-                  <p>{product.id}</p>
+                  <p>{index + 1}</p>
                 </td>
                 <td>
-                  <p>#71625353A12</p>
+                  <p>{order.orderId}</p>
                 </td>
                 <td>
-                  <img src={product.imgSrc} alt="" />
+                  <ul>
+                    {order.productDetails.map((detail) => (
+                      <li key={detail.productId}>
+                        {detail.productId} (Quantity: {detail.quantity})
+                      </li>
+                    ))}
+                  </ul>
                 </td>
                 <td>
-                  <p>{product.productName}</p>
+                  {order.userDetails.map((user) => (
+                    <p>{user.name}</p>
+                  ))}
                 </td>
                 <td>
-                  <p>354 Washington Ave, Manchester</p>
+                  {order.userDetails.map((user) => (
+                    <p>{user.email}</p>
+                  ))}
                 </td>
                 <td>
-                  <p>29/02/2024</p>
+                  <p>{order.paymentDate}</p>
                 </td>
-                <td>${product.newPrice}</td>
+                <td>${order.amount}</td>
                 <td className="orderList-status">
-                  <div className="status" style={getStatusColor(product.status)}>
-                    <span>{product.status}</span>
+                  <div className="status" style={getStatusColor("Complete")}>
+                    <span>Completed</span>
                   </div>
                 </td>
               </tr>

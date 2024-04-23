@@ -24,6 +24,7 @@ const userDetailsDatas = require("./routes/userDetailsRoute");
 const profileDataRouter = require("./routes/profileDataRoute");
 const walletRouter = require("./routes/walletRoute");
 const wishListRouter = require("./routes/wishListRoute");
+const orderDetailsRouter = require("./routes/orderDetailsRoute");
 mongoose.set("strictQuery", true);
 
 // middlewares
@@ -52,7 +53,7 @@ app.use(userDatas);
 
 app.use(productCardDatas);
 app.use(userDetailsDatas);
-
+app.use(orderDetailsRouter);
 app.use("/wishlist", wishListRouter);
 
 app.use("/profileData", profileDataRouter);
@@ -70,16 +71,16 @@ app.use("/datetime", userDatas);
 const db = process.env.MONGODB_URL;
 
 mongoose
-	.connect(db, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-	})
-	.then(() => {
-		console.log("DB connected Successfully !");
-	})
-	.catch((err) => {
-		console.log(err);
-	});
+  .connect(db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("DB connected Successfully !");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // server
 
@@ -89,7 +90,7 @@ app.use("/uploads/productImage", express.static(path.join(__dirname, "uploads", 
 app.use("/uploads/profilePicture", express.static(path.join(__dirname, "uploads", "profilePicture")));
 
 app.listen(port, () => {
-	console.log(`Server connected in port ${port} in ${process.env.NODE_ENV}`);
+  console.log(`Server connected in port ${port} in ${process.env.NODE_ENV}`);
 });
 
 ////////////////////////////////////////////////////  MULTER    //////////////////////////////////////////////
