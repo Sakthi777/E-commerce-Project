@@ -35,12 +35,23 @@ export const SidebarData = [
         path: "/admin/canceledOrders",
         icon: <MDIcons.MdCancel className="icon" />,
       },
-      {
-        title: "User Register Data",
-        path: "/admin/registerdata",
-        icon : <FaIcons.FaUser className="icon" />,
-      },
+      // {
+      //   title: "User Register Data",
+      //   path: "/admin/registerdata",
+      //   icon : <FaIcons.FaUser className="icon" />,
+      // },
     ],
+  },{
+    title : "Users Data",
+    path : "",
+    icon : <FaIcons.FaUser className="icon" />,
+    subNav : [
+      {
+        title : "Register List",
+        path : "/admin/registerdata",
+        icon : <FaIcons.FaUsers className="icon" />,
+      }
+    ]
   },
   {
     title: "Category",

@@ -135,8 +135,6 @@
 // }
 
 import React from "react";
-import HeaderPage from "../user/HeaderPage";
-import Footer from "../../pages/user/Footer";
 import "../../styles/admin/RegisterData.css";
 import banner from "../../assets/images/banner/single-banner.jpg";
 import { useEffect, useState } from "react";
@@ -144,6 +142,8 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import AdminHeader, { useOffCanvasContext } from "../../components/admin/adminHeader";
+
 
 export default function RegisterData() {
   const [users, setUsers] = useState([]);
@@ -184,17 +184,18 @@ export default function RegisterData() {
 
   return (
     <div>
-      <HeaderPage />
-      <div className="offers-banner">
+      <AdminHeader />
+      {/* <div className="offers-banner">
         <img src={banner} alt="Offer Banner" />
         <div className="offer-banner-content">
           <h1>REGISTER DATA</h1>
           <a href="/">Home</a>/<a href="#.">Register Data</a>
         </div>
-      </div>
+      </div> */}
       <div className="registerAdmindata">
         <div className="table-row">
           <div className="table-listdata">
+              <h5 style={{textAlign:"center",alignItems:"center",paddingBottom:"4%"}}>Register's Data</h5>
             <table>
               <thead className="tablehead">
                 <tr>
@@ -275,7 +276,6 @@ export default function RegisterData() {
           </ul>
         </nav>
       </div>
-      <Footer />
     </div>
   );
 }

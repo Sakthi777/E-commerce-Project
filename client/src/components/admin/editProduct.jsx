@@ -9,6 +9,10 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import uploa from "../../../src/assets/images/AddProduct/upload.png";
+
 const EditProduct = () => {
   const imageDiv = {
     width: "150px",
@@ -247,8 +251,8 @@ const EditProduct = () => {
             <h6>Product Settings</h6>
           </div>
           <div className="add-image-title">
-            <p>Product Images</p>
-            <div className="panel">
+            {/* <p>Product Images</p> */}
+            {/* <div className="panel">
               <div className="image-upload-box">
                 <div className="image-box">{image ? <img src={preImage} alt={`product 2`} className="center-image" /> : <img src={`http://localhost:8000/uploads/productImage/${upload}`} alt={`product 2`} className="center-image" />}</div>
               </div>
@@ -285,9 +289,137 @@ const EditProduct = () => {
                   <input type="file" id="add-multi-file-upload" style={{ display: "none" }} onChange={(e) => handleAddImages(e, productID)} accept="image/*" multiple />
                 </div>
               </div>
-            </div>
+            </div> */}
             <br />
-            <div className="cont-attribute">
+            <div className="user-product">
+              <div className="label-id">
+                <div className="user-product-input">
+                  <p>Attributes</p>
+                  <select className="select-wid" name="cars" id="cars">
+                    <option value="volvo">Simple Product</option>
+                    <option value="saab">Grouped Product</option>
+                    <option value="opel">Variable Product</option>
+                    <option value="audi">Services product</option>
+                  </select>
+                </div>
+                <div className="user-product-input">
+                  <p>Rating*</p>
+                  <input type="text" value={rating} onChange={(e) => setRating(e.target.value)} /></div>
+              </div>
+              <div className="label-id">
+                <div class="user-product-input">
+                  <label>Product Title*</label>
+                  <input type="text" placeholder="Enter Product Name" value={productName} onChange={(e) => setProductName(e.target.value)} required />
+                </div>
+                <div className="user-product-input">
+                  <label>Old Price*</label>
+                  <input type="text" placeholder="Enter Old Price" value={oldPrice} onChange={(e) => setOldPrice(e.target.value)} required ></input>
+                </div>
+                <div className="user-product-input">
+                  <label>New Price*</label>
+                  <input type="text" placeholder="Enter New Price" value={newPrice} onChange={(e) => setNewPrice(e.target.value)} required ></input>
+                </div>
+              </div>
+              <div className="label-id">
+                <div className="user-product-input">
+                  <label>setSale*</label>
+                  <select className="select-wid" name="car" id="car" onChange={(e) => setSale(e.target.value === "true")}>
+                    <option value="false">False</option>
+                    <option value="true">True</option>
+                  </select>
+                </div>
+                <div className="user-product-input">
+                  <label>setNew*</label>
+                  <select className="select-wid" name="cas" id="cas" onChange={(e) => setNewProduct(e.target.value === "true")}>
+                    <option value="false">False</option>
+                    <option value="true">True</option>
+                  </select>
+                </div>
+
+              </div>
+              <div className="label-id">
+                <div className="user-product-input label-id-input">
+                  <label>Discount Percentage*</label>
+                  <input type="text" value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value)} required ></input>
+                </div>
+                <div className="user-product-input">
+                  <label>FeaturedItems*</label>
+                  <select className="select-wid" name="car" id="car" onChange={(e) => setFeaturedItems(e.target.value === "true")}>
+                    <option value="false">False</option>
+                    <option value="true">True</option>
+                  </select>
+                </div>
+              </div></div>
+            <div>
+              <p htmlFor="">Main Image</p>
+              <div className="label-id" style={{ borderColor: '#F0F4F8', height: "28vh" }}>
+
+                <div className="image-input">
+                  <div>
+                    <label htmlFor="category-image">
+                      <span style={{ fontSize: "256%" }}>
+
+                        <FontAwesomeIcon icon={faCloudArrowUp} className="fonticon" />
+                      </span><br />
+                      <span>
+                        <span style={{ color: "#009f7f" }}>Drag and drop your product images or browse  your product images</span>
+                      </span>
+                    </label>
+
+                  </div>
+                  <div className="imageInputFiled">
+                    <input type="file" onChange={handleImageChange} accept="image/*" name="category-image" id="category-image" style={{ display: "none", border: "lightgray" }} required /></div>
+                  <div className="image-box">{image ? <img src={preImage} alt={`product 2`} className="center-image" /> : <img src={`http://localhost:8000/uploads/productImage/${upload}`} alt={`product 2`} className="center-image" />}</div>
+                </div>
+              </div>
+            </div>
+            <div className="ImageSliderUpload" >
+              <p>Model Multi Image</p>
+              <div style={{ border: "1px solid lightgray", borderRadius: "8px" }}>
+                <div className="image-grid-multi" >
+                  {ArrayOfimages.map((image, index) => (
+                    <div>
+                      <div className="image-upload-box">
+                        <div className="imgborder">
+                          <div className="image-box-multi">{image && <img src={`http://localhost:8000/uploads/productImage/${image}`} alt={`product 1`} className="center-image" />}</div>
+                        </div>
+                      </div>
+                      {/* <div className="ImageFileName">
+                        <p>{image}</p>
+                      </div> */}
+                    </div>
+                  ))}
+                </div>
+                <div className="imageInputFiled" style={{ justifyContent: "center", textAlign: "center" }}>
+                  <button className="Delete-button" onClick={handleShowDeleteModal}>
+                    Delete
+                  </button>
+                  <button className="Delete-button edit" onClick={handleShowEditModal}>
+                    Edit
+                  </button>
+                  <label htmlFor="add-multi-file-upload">Add Images</label>
+                  <input type="file" id="add-multi-file-upload" style={{ display: "none" }} onChange={(e) => handleAddImages(e, productID)} accept="image/*" multiple />
+                </div>
+              </div>
+            </div>
+
+            <div className="label-id">
+              <div className="user-product-input">
+                <p htmlFor="">Description*</p>
+                <textarea name="details" id="details" style={{ paddingLeft: '10px' }} cols="10" rows="5" placeholder="Enter Description" required></textarea>
+              </div></div>
+            <div className="products-button">
+              <div className="pro-btn">
+                <button type="reset">Reset</button>
+              </div>
+              <div className="pro-btn">
+                <button onClick={''}>Save</button>
+              </div>
+            </div>
+
+
+
+            {/* <div className="cont-attribute">
               <div className="pu-attribute">
                 <div className="pu-attribute-input">
                   <p>Attributes</p>
@@ -307,10 +439,10 @@ const EditProduct = () => {
                 <p>Product Name*</p>
                 <input type="text" placeholder="Enter Product Name" value={productName} onChange={(e) => setProductName(e.target.value)} />
               </div>
-            </div>
+            </div> */}
           </div>
           <br />
-          <div className="user-product">
+          {/* <div className="user-product">
             <div className="user-product-input pro-in">
               <label className="user-product-label">Description*</label>
               <input type="text" placeholder="Enter Description" value={productDescription} onChange={(e) => setProductDescription(e.target.value)}></input>
@@ -392,7 +524,7 @@ const EditProduct = () => {
                 <button onClick={handleEditProduct}>Edit Product</button>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
