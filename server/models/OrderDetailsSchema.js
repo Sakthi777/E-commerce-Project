@@ -20,13 +20,13 @@ const OrderDetails = mongoose.Schema({
   productDetails: [
     {
       productdetail: {
-        type: [String],
-        required: true,
+        type: String,
+        //required: true,
       },
       quantity: {
         type: Number,
         default: 1,
-        required: true,
+        //required: true,
       },
     },
   ],

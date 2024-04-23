@@ -2,7 +2,9 @@ import "../../styles/admin/orderList.css";
 // import products from "../../pages/user/productList";
 import { completedOrders, pendingOrders, canceledOrders } from "../../pages/user/productList";
 import AdminHomePage from "../../components/admin/adminHeader";
+import { Modal, Button } from "react-bootstrap";
 import { useOffCanvasContext } from "../../components/admin/adminHeader";
+import { FaEye } from "react-icons/fa";
 import axios from "axios";
 import { useEffect, useState } from "react";
 const getStatusColor = (status) => {
@@ -30,6 +32,159 @@ const getStatusColor = (status) => {
     margin: "0px 10px",
     cursor: "pointer",
   };
+};
+
+const YourOrders = () => {
+  const [order, setOrder] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [productDetails, setProductDetails] = useState([]);
+  const [productDetailArray, setProductDetailArray] = useState([]);
+  const handleShowModal = (productDetail) => {
+    setProductDetailArray(productDetail);
+    setShowModal(true);
+  };
+  let responseUserArray = [];
+  useEffect(() => {
+    productDetailArray.map((product) => {
+      try {
+        const response = axios.get(`http://localhost:8000/get-userDetails/${product.productdetail}`).then((response) => {
+          // console.log(response.data.data);
+          const productResponse = response.data.data;
+          const userItem = {
+            productdetail: productResponse,
+            quantity: product.quantity,
+          };
+          responseUserArray.push(userItem);
+        });
+      } catch (error) {
+        console.error("Error fetching product details:", error);
+      }
+    });
+    setProductDetails(responseUserArray);
+  }, [productDetailArray]);
+  console.log(productDetails);
+
+  const handleCloseModal = () => setShowModal(false);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/getOrderDetails`)
+      .then((response) => {
+        setOrder(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching product data:", error);
+      });
+  }, []);
+  const { showOffCanvas } = useOffCanvasContext();
+
+  return (
+    <>
+      <AdminHomePage />
+      <div className={`orderList-container ${showOffCanvas ? "content-shifted" : ""} `}>
+        <table className="orderList-table">
+          <thead>
+            <tr>
+              <th>Serial</th>
+              <th>Order ID</th>
+              <th>Product </th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Date</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {console.log(order)}
+            {order.map((order, index) => (
+              <tr key={index + 1}>
+                <td>
+                  <p>{index + 1}</p>
+                </td>
+                <td>
+                  <p>{order.orderId}</p>
+                </td>
+                <td>{order.productDetails.length}</td>
+                <td>
+                  {order.userDetails.map((user) => (
+                    <p>{user.name}</p>
+                  ))}
+                </td>
+                <td>
+                  {order.userDetails.map((user) => (
+                    <p>{user.email}</p>
+                  ))}
+                </td>
+                <td>
+                  <p>{order.paymentDate}</p>
+                </td>
+                <td>${order.amount}</td>
+                <td className="orderList-status">
+                  <div className="status" style={getStatusColor("Complete")}>
+                    <span>Completed</span>
+                  </div>
+                </td>
+                <td>
+                  <FaEye
+                    onClick={() => {
+                      handleShowModal(order.productDetails);
+                    }}
+                  />
+                  <Modal show={showModal} onHide={handleCloseModal} centered size="xl">
+                    <Modal.Header closeButton>
+                      <Modal.Title>Payment ID : {order.orderId}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <table className="orderList-table">
+                        <thead>
+                          <tr>
+                            <th>Serial</th>
+                            <th>Product </th>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total Price</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {productDetails.map((product, index) => (
+                            <tr key={index + 1}>
+                              <td>
+                                <p>{index + 1}</p>
+                              </td>
+                              <td>
+                                <img src={`http://localhost:8000/uploads/productImage/${product.productdetail.image}`} alt="product" />
+                              </td>
+                              <td>
+                                <p>{product.productdetail.productName}</p>
+                              </td>
+                              <td>
+                                <p>{product.quantity}</p>
+                              </td>
+                              <td>
+                                <p>{product.productdetail.newPrice}</p>
+                              </td>
+                              <td>${product.productdetail.newPrice * product.quantity}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" className="green-background-button">
+                        Close
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
 };
 
 const CompletedOrders = () => {
@@ -73,15 +228,7 @@ const CompletedOrders = () => {
                 <td>
                   <p>{order.orderId}</p>
                 </td>
-                <td>
-                  <ul>
-                    {order.productDetails.map((detail) => (
-                      <li key={detail.productId}>
-                        {detail.productId} (Quantity: {detail.quantity})
-                      </li>
-                    ))}
-                  </ul>
-                </td>
+                <td>{order.productDetails.length}</td>
                 <td>
                   {order.userDetails.map((user) => (
                     <p>{user.name}</p>
@@ -222,4 +369,4 @@ const CanceledOrders = () => {
   );
 };
 
-export { CompletedOrders, PendingOrders, CanceledOrders };
+export { CompletedOrders, PendingOrders, CanceledOrders, YourOrders };

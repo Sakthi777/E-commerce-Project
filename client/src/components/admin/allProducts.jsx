@@ -32,7 +32,7 @@ const AllProducts = () => {
       console.log(id);
       const res = await axios.delete(`http://localhost:8000/delete-productDetails/${id}`);
       console.log(res.data);
-      window.location.reload();
+      // window.location.reload();
     } catch (err) {
       console.log(err);
     }
