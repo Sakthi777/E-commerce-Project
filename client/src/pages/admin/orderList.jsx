@@ -54,17 +54,21 @@ const YourOrders = () => {
             productdetail: productResponse,
             quantity: product.quantity,
           };
-          responseUserArray.push(userItem);
+          // responseUserArray.push(userItem);
+          setProductDetails((product) => [...product, userItem]);
         });
       } catch (error) {
         console.error("Error fetching product details:", error);
       }
     });
-    setProductDetails(responseUserArray);
   }, [productDetailArray]);
   console.log(productDetails);
 
-  const handleCloseModal = () => setShowModal(false);
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setProductDetails([]);
+    setProductDetailArray([]);
+  };
   useEffect(() => {
     axios
       .get(`http://localhost:8000/getOrderDetails`)
@@ -171,11 +175,11 @@ const YourOrders = () => {
                         </tbody>
                       </table>
                     </Modal.Body>
-                    <Modal.Footer>
+                    {/* <Modal.Footer>
                       <Button variant="secondary" className="green-background-button">
                         Close
                       </Button>
-                    </Modal.Footer>
+                    </Modal.Footer> */}
                   </Modal>
                 </td>
               </tr>
