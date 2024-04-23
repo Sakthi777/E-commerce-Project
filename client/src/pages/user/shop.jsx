@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Footer from "../../pages/user/Footer";
 import { useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
 const ShopPage = ({ products }) => {
 	const [productDetails, setProductDetails] = useState([]);
 	const searchedProducts = useSelector((state) => state.searchProductDetails.productDetails);
@@ -19,17 +20,16 @@ const ShopPage = ({ products }) => {
 	const [minPrice, setMinPrice] = useState(0);
 	const [maxPrice, setMaxPrice] = useState(0);
 	const handlePriceFilter = () => {
+		console.log(parseInt(minPrice) > parseInt(maxPrice));
+		if (parseInt(minPrice) > parseInt(maxPrice)) {
+			toastWarn("Minimum Price Must be Higher than Maximum Price");
+			return;
+		}
 		const filteredProducts = searchedProducts.filter((product) => {
 			const productPrice = product.newPrice;
-			if (minPrice < maxPrice) {
-				return (!minPrice || productPrice >= parseInt(minPrice)) && (!maxPrice || productPrice <= parseInt(maxPrice));
-			} else {
-				toastWarn("Maximum price must be higher than minimum");
-				return productDetails;
-			}
+			return (!minPrice || productPrice >= parseInt(minPrice)) && (!maxPrice || productPrice <= parseInt(maxPrice));
 		});
 		setProductDetails(filteredProducts);
-		console.log(productDetails);
 	};
 
 	const [selectedRatings, setSelectedRatings] = useState([]);
@@ -56,6 +56,36 @@ const ShopPage = ({ products }) => {
 			setProductDetails(filteredProducts);
 		}
 	};
+
+	const renderFilterByRating = () => {
+		return [5, 4, 3, 2, 1].map((star) => {
+			const productsWithStarRating = searchedProducts.filter((product) => product.rating === star);
+			const productCount = productsWithStarRating.length;
+			return (
+				<div className="filter-rating" style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+					<div className="filter-star">
+						<label key={star} style={{ display: "flex", padding: "10px" }}>
+							<input type="checkbox" style={{ marginRight: "5px" }} onChange={() => handleRatingChange(star)} checked={selectedRatings.includes(star)} />
+							{[...Array(5)].map((_, index) => (
+								<FontAwesomeIcon key={index} icon={faStar} style={{ color: star >= index + 1 ? "gold" : "gray", marginRight: "5px" }} />
+							))}
+						</label>
+					</div>
+					<div className="ratingCount">
+						<p style={{ padding: "7px" }}>{productCount}</p>
+					</div>
+				</div>
+			);
+		});
+	};
+
+	const search = useSelector((state) => state.searchVal.search);
+
+	useEffect(() => {
+		setMaxPrice(0);
+		setMinPrice(0);
+		setSelectedRatings([]);
+	}, [search]);
 
 	useEffect(() => {
 		// axios
@@ -107,27 +137,7 @@ const ShopPage = ({ products }) => {
 						</div>
 						<div className="filter-card">
 							<span className="filter-tile">FILTER BY RATING</span>
-							<div className="filterHr">
-								{[5, 4, 3, 2, 1].map((star) => {
-									const productsWithStarRating = searchedProducts.filter((product) => product.rating === star);
-									const productCount = productsWithStarRating.length;
-									return (
-										<div className="filter-rating" style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-											<div className="filter-star">
-												<label key={star} style={{ display: "flex", padding: "10px" }}>
-													<input type="checkbox" style={{ marginRight: "5px" }} onChange={() => handleRatingChange(star)} checked={selectedRatings.includes(star)} />
-													{[...Array(5)].map((_, index) => (
-														<FontAwesomeIcon key={index} icon={faStar} style={{ color: star >= index + 1 ? "gold" : "gray", marginRight: "5px" }} />
-													))}
-												</label>
-											</div>
-											<div className="ratingCount">
-												<p style={{ padding: "7px" }}>{productCount}</p>
-											</div>
-										</div>
-									);
-								})}
-							</div>
+							<div className="filterHr">{renderFilterByRating()}</div>
 
 							<div className="filter-search" onClick={() => setSelectedRatings([])}>
 								<FontAwesomeIcon icon={faTrashAlt} />
@@ -319,6 +329,21 @@ const ShopPage = ({ products }) => {
 					</div>
 				</div>
 			</div>
+
+			<ToastContainer
+				//container
+				position="top-center"
+				autoClose={5000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+				theme="light"
+			/>
+
 			<Footer />
 		</>
 	);
