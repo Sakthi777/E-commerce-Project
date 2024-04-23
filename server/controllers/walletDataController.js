@@ -3,7 +3,8 @@ const walletModel = require("../models/walletDataSchema");
 
 exports.postWalletData = asyncHandler(async (req, res, next) => {
 	try {
-		const { token, amountToAdd } = req.body;
+		const { amountToAdd } = req.body;
+		const token = req.user.id;
 		let existingDoc = await walletModel.findOne({ token });
 		if (existingDoc) {
 			existingDoc.currentBalance += parseInt(amountToAdd);
@@ -29,7 +30,7 @@ exports.postWalletData = asyncHandler(async (req, res, next) => {
 
 exports.getWalletData = asyncHandler(async (req, res, next) => {
 	try {
-		const { token } = req.params;
+		const token = req.userParams._id;
 		let doc = await walletModel.findOne({ token });
 		if (doc) {
 			res.send(doc);
