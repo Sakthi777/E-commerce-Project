@@ -21,6 +21,11 @@ export const SidebarData = [
         icon: <AiIcons.AiTwotoneDashboard className="icon" />,
       },
       {
+        title: "Your Orders",
+        path: "/admin/yourOrders",
+        icon: <FaIcons.FaCheckCircle className="icon" />,
+      },
+      {
         title: "Completed Orders",
         path: "/admin/completedOrders",
         icon: <FaIcons.FaCheckCircle className="icon" />,

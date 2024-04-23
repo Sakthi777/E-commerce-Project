@@ -3,7 +3,8 @@ const wishListModel = require("../models/wishListSchema");
 
 exports.postWishListController = asyncHandler(async (req, res, next) => {
 	try {
-		const { token, productId } = req.body;
+		const { productId } = req.body;
+		const token = req.user.id;
 		let doc = await wishListModel.findOne({ token });
 		if (doc) {
 			if (doc.productID.includes(productId)) {
@@ -14,9 +15,9 @@ exports.postWishListController = asyncHandler(async (req, res, next) => {
 			await doc.save();
 			res.send(doc);
 		} else {
-			const newDoc = await wishListModel.create({ token: token, productID: [productId] }).then((response) => {
-				res.send(response);
-			});
+			const newDoc = await wishListModel.create({ token: token, productID: [productId] });
+			await newDoc.save();
+			res.send(newDoc);
 		}
 	} catch (err) {
 		res.send(err);
@@ -25,7 +26,8 @@ exports.postWishListController = asyncHandler(async (req, res, next) => {
 
 exports.getWishListController = asyncHandler(async (req, res, next) => {
 	try {
-		const { token } = req.params;
+		const token = req.userParams._id;
+		console.log(token);
 		await wishListModel
 			.findOne({ token })
 			.then((response) => {
@@ -41,11 +43,12 @@ exports.getWishListController = asyncHandler(async (req, res, next) => {
 
 exports.deleteWishListController = asyncHandler(async (req, res, next) => {
 	try {
-		const { token, id } = req.params;
+		const { id } = req.params;
+		const token = req.userParams._id;
 		let doc = await wishListModel.findOne({ token });
 		doc.productID = doc.productID.filter((item) => item !== id);
 		await doc.save();
-		res.send(doc);
+		await res.send(doc);
 	} catch (err) {
 		console.log(err);
 	}

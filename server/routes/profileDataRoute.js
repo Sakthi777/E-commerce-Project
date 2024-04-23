@@ -26,22 +26,22 @@ profileDataRouter.route("/:token").get(authenticateParams, getProfileDataControl
 
 profileDataRouter.route("/contact").post(authenticate, postProfileDataContactControllers);
 
-profileDataRouter.route("/address").post(authenticate, postProfileDataAddressControllers)
+profileDataRouter.route("/address").post(authenticate, postProfileDataAddressControllers);
 
 profileDataRouter.route("/card").post(authenticate, postProfileDataCardControllers);
 
-profileDataRouter.post("/postImage", profileImageUpload.single("profileImage"), postProfileImageControllers);
+profileDataRouter.post("/postImage", authenticate, profileImageUpload.single("profileImage"), postProfileImageControllers);
 
-profileDataRouter.put("/editContact/:index", editContactController);
+profileDataRouter.put("/editContact/:index", authenticate, editContactController);
 
-profileDataRouter.put("/address/:index", editProfileDataAddressControllers);
+profileDataRouter.put("/address/:index", authenticate, editProfileDataAddressControllers);
 
-profileDataRouter.delete("/delProfilePic/:token", delProfilePicControllers);
+profileDataRouter.delete("/delProfilePic/:token", authenticateParams, delProfilePicControllers);
 
-profileDataRouter.delete("/delContact/:token/:index", delContactControllers);
+profileDataRouter.delete("/delContact/:token/:index", authenticateParams, delContactControllers);
 
-profileDataRouter.delete("/delAddress/:token/:index", delAddressControllers);
+profileDataRouter.delete("/delAddress/:token/:index", authenticateParams, delAddressControllers);
 
-profileDataRouter.delete("/delCard/:token/:index", delCardControllers);
+profileDataRouter.delete("/delCard/:token/:index", authenticateParams, delCardControllers);
 
 module.exports = profileDataRouter;

@@ -1,17 +1,17 @@
 const express = require("express");
 const productCardDatas = express.Router();
 const {
-	postProductCardDetailsControllers,
-	getProductCardDetailsControllers,
-	deleteProductCardDetailsControllers,
-	updateProductCardDetailsControllers,
-	deleteProductSliderImageControllers,
-	updateProductSliderImageControllers,
-	deleteAllSliderImageControllers,
-	editSliderImageControllers,
-	updateProductMainImageControllers,
-	getUserDetails,
-	getSearchDataControllers,
+  postProductCardDetailsControllers,
+  getProductCardDetailsControllers,
+  deleteProductCardDetailsControllers,
+  updateProductCardDetailsControllers,
+  deleteProductSliderImageControllers,
+  updateProductSliderImageControllers,
+  deleteAllSliderImageControllers,
+  editSliderImageControllers,
+  updateProductMainImageControllers,
+  getUserDetails,
+  getSearchDataControllers,
 } = require("../controllers/productCardControllers");
 const upload = require("../middlewares/multerMiddleWare");
 

@@ -1,5 +1,5 @@
 const MainModel = require("../models/profileDataSchema");
-const userDataSchema = require("../models/userDataSchema")
+const userDataSchema = require("../models/userDataSchema");
 const asyncHandler = require("../middlewares/catchAsyncError");
 const fs = require("fs");
 
@@ -9,9 +9,9 @@ const fs = require("fs");
 
 exports.getProfileDataControllers = asyncHandler(async (req, res) => {
 	try {
-		const {id}  = req.userParams;
+		const { id } = req.userParams;
 
-		const profileData = await MainModel.findOne({id});
+		const profileData = await MainModel.findOne({ id });
 
 		if (!profileData) {
 			return res.status(404).send("Profile data not found");
@@ -21,7 +21,6 @@ exports.getProfileDataControllers = asyncHandler(async (req, res) => {
 		res.status(500).send("Error fetching profile data");
 	}
 });
-
 
 exports.postProfileDataContactControllers = asyncHandler(async (req, res) => {
 	try {
@@ -106,7 +105,7 @@ exports.postProfileDataCardControllers = asyncHandler(async (req, res) => {
 
 exports.postProfileImageControllers = asyncHandler(async (req, res, next) => {
 	try {
-		const token = req.body.token;
+		const token = req.user.id;
 		const imageName = req.file.filename;
 		const existingDocument = await MainModel.findOne({ token });
 
@@ -132,8 +131,8 @@ exports.postProfileImageControllers = asyncHandler(async (req, res, next) => {
 
 exports.editContactController = asyncHandler(async (req, res, next) => {
 	const { index } = req.params;
-	const { token, contactNumbers } = req.body;
-
+	const { contactNumbers } = req.body;
+	const token = req.user.id;
 	try {
 		const doc = await MainModel.findOne({ token });
 		doc.contactNumbers[index] = contactNumbers[0];
@@ -147,7 +146,8 @@ exports.editContactController = asyncHandler(async (req, res, next) => {
 
 exports.editProfileDataAddressControllers = asyncHandler(async (req, res, next) => {
 	const { index } = req.params;
-	const { token, addresses } = req.body;
+	const { addresses } = req.body;
+	const token = req.userParams._id;
 	try {
 		const doc = await MainModel.findOne({ token });
 		doc.addresses[index] = addresses[0];
@@ -159,7 +159,7 @@ exports.editProfileDataAddressControllers = asyncHandler(async (req, res, next) 
 });
 
 exports.delProfilePicControllers = asyncHandler(async (req, res, next) => {
-	const { token } = req.params;
+	const token = req.params._id;
 	try {
 		const doc = await MainModel.findOne({ token });
 		if (doc.profilePicture) {
@@ -176,7 +176,8 @@ exports.delProfilePicControllers = asyncHandler(async (req, res, next) => {
 });
 
 exports.delContactControllers = asyncHandler(async (req, res, next) => {
-	const { token, index } = req.params;
+	const { index } = req.params;
+	const token = req.userParams._id;
 	try {
 		const doc = await MainModel.findOne({ token });
 		doc.contactNumbers.splice(index, 1);
@@ -188,7 +189,8 @@ exports.delContactControllers = asyncHandler(async (req, res, next) => {
 });
 
 exports.delAddressControllers = asyncHandler(async (req, res, next) => {
-	const { token, index } = req.params;
+	const { index } = req.params;
+	const token = req.userParams._id;
 	try {
 		const doc = await MainModel.findOne({ token });
 		doc.addresses.splice(index, 1);
@@ -200,7 +202,8 @@ exports.delAddressControllers = asyncHandler(async (req, res, next) => {
 });
 
 exports.delCardControllers = asyncHandler(async (req, res, next) => {
-	const { token, index } = req.params;
+	const { index } = req.params;
+	const token = req.userParams._id;
 	try {
 		const doc = await MainModel.findOne({ token });
 		doc.cards.splice(index, 1);

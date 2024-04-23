@@ -23,8 +23,7 @@ import AboutUs from "./pages/user/aboutUs";
 // import ProductDescriptionCard from "./pages/user/productDescriptionCard";
 import Home from "./pages/user/home";
 import TransactionDetails from "./pages/admin/transactionDetails";
-
-import { CanceledOrders, CompletedOrders, PendingOrders } from "./pages/admin/orderList";
+import { YourOrders, CanceledOrders, CompletedOrders, PendingOrders } from "./pages/admin/orderList";
 import ShopPage from "./pages/user/shop";
 // import AdminHeader from "./components/admin/adminHeader";
 import { OffCanvasProvider } from "../../client/src/components/admin/adminHeader";
@@ -78,12 +77,12 @@ function App() {
                     <Route path="editProduct" element={<EditProduct />} />
                     <Route path="addProduct" element={<AddProductdata />} />
                     <Route path="completedOrders" element={<CompletedOrders />} />
+                    <Route path="yourOrders" element={<YourOrders />} />
                     <Route path="pendingOrders" element={<PendingOrders />} />
                     <Route path="canceledOrders" element={<CanceledOrders />} />
                     <Route path="/registerdata" element={<RegisterData />} />
                     <Route path="/offertime" element={<OfferTime />} />
                     <Route path="/addnewproduct" element={<AddNewProduct />} />
-
                   </Routes>
                 </OffCanvasProvider>
               }
