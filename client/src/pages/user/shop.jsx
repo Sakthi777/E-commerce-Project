@@ -19,18 +19,16 @@ const ShopPage = ({ products }) => {
 
 	const [minPrice, setMinPrice] = useState(0);
 	const [maxPrice, setMaxPrice] = useState(0);
-	const handlePriceFilter = () => {
-		console.log(parseInt(minPrice) > parseInt(maxPrice));
-		if (parseInt(minPrice) > parseInt(maxPrice)) {
-			toastWarn("Minimum Price Must be Higher than Maximum Price");
-			return;
-		}
+	const filterByPrice = () => {
 		const filteredProducts = searchedProducts.filter((product) => {
 			const productPrice = product.newPrice;
 			return (!minPrice || productPrice >= parseInt(minPrice)) && (!maxPrice || productPrice <= parseInt(maxPrice));
 		});
 		setProductDetails(filteredProducts);
 	};
+	useEffect(() => {
+		filterByPrice();
+	}, [minPrice, maxPrice]);
 
 	const [selectedRatings, setSelectedRatings] = useState([]);
 	const handleRatingChange = (rating) => {
@@ -42,10 +40,48 @@ const ShopPage = ({ products }) => {
 			setSelectedRatings([...selectedRatings, rating]);
 		}
 	};
-
 	useEffect(() => {
 		filterProductsByRating();
 	}, [selectedRatings]);
+
+	const [tag, setTag] = useState({
+		newItem: false,
+		saleItem: false,
+		featured: false,
+	});
+	const filteredProductsByTag = () => {
+		let filteredProducts = productDetails;
+
+		if (tag.newItem) {
+			filteredProducts = filteredProducts.filter((product) => product.newProduct);
+		}
+		if (tag.saleItem) {
+			filteredProducts = filteredProducts.filter((product) => product.sale);
+		}
+		if (tag.featured) {
+			filteredProducts = filteredProducts.filter((product) => product.featuredItems);
+		}
+		setProductDetails(filteredProducts);
+	};
+	useEffect(() => {
+		filteredProductsByTag();
+		if (!tag.featured && !tag.saleItem && !tag.newItem) {
+			setProductDetails(searchedProducts);
+		}
+	}, [tag]);
+
+	const [newItemsCount, setNewItemsCount] = useState(0);
+	const [saleItemCount, setSaleItemCount] = useState(0);
+	const [featuredCount, setFeaturedCount] = useState(0);
+
+	useEffect(() => {
+		let newCount = productDetails.filter((product) => product.newProduct).length;
+		setNewItemsCount(newCount);
+		newCount = productDetails.filter((product) => product.sale).length;
+		setSaleItemCount(newCount);
+		newCount = productDetails.filter((product) => product.featuredItems).length;
+		setFeaturedCount(newCount);
+	}, [tag, searchedProducts, productDetails]);
 
 	// Function to filter products based on selected ratings
 	const filterProductsByRating = () => {
@@ -59,21 +95,21 @@ const ShopPage = ({ products }) => {
 
 	const renderFilterByRating = () => {
 		return [5, 4, 3, 2, 1].map((star) => {
-			const productsWithStarRating = searchedProducts.filter((product) => product.rating === star);
-			const productCount = productsWithStarRating.length;
+			// const productsWithStarRating = searchedProducts.filter((product) => product.rating === star);
+			// const productCount = productsWithStarRating.length;
 			return (
 				<div className="filter-rating" style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-					<div className="filter-star">
+					<div className="filter-star" onChange={() => handleRatingChange(star)}>
 						<label key={star} style={{ display: "flex", padding: "10px" }}>
-							<input type="checkbox" style={{ marginRight: "5px" }} onChange={() => handleRatingChange(star)} checked={selectedRatings.includes(star)} />
+							<input type="checkbox" style={{ marginRight: "5px" }} checked={selectedRatings.includes(star)} />
 							{[...Array(5)].map((_, index) => (
 								<FontAwesomeIcon key={index} icon={faStar} style={{ color: star >= index + 1 ? "gold" : "gray", marginRight: "5px" }} />
 							))}
 						</label>
 					</div>
-					<div className="ratingCount">
+					{/* <div className="ratingCount">
 						<p style={{ padding: "7px" }}>{productCount}</p>
-					</div>
+					</div> */}
 				</div>
 			);
 		});
@@ -129,16 +165,25 @@ const ShopPage = ({ products }) => {
 										<input type="text" placeholder="Max-5k" value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} className="max-price" />
 									</div>
 								</div>
-								<div className="filter-search" onClick={handlePriceFilter}>
+								{/* <div className="filter-search" onClick={handlePriceFilter}>
 									<FontAwesomeIcon icon={faSearch} />
 									<span>Search</span>
+								</div> */}
+								<div
+									className="filter-search"
+									onClick={() => {
+										setMaxPrice(0);
+										setMinPrice(0);
+									}}>
+									<FontAwesomeIcon icon={faTrashAlt} />
+									<span>Clear Filter</span>
 								</div>
 							</div>
 						</div>
 						<div className="filter-card">
 							<span className="filter-tile">FILTER BY RATING</span>
-							<div className="filterHr">{renderFilterByRating()}</div>
-
+							<div className="filterHr"></div>
+							{renderFilterByRating()}
 							<div className="filter-search" onClick={() => setSelectedRatings([])}>
 								<FontAwesomeIcon icon={faTrashAlt} />
 								<span>Clear Filter</span>
@@ -148,42 +193,53 @@ const ShopPage = ({ products }) => {
 							<span className="filter-tile">FILTER BY TAG</span>
 							<div className="filterHr"></div>
 							<div className="filter-tag" style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", margin: "10px 0px" }}>
-								<div className="f-tag">
-									<input type="checkbox" style={{ marginRight: "10px" }} />
+								<div
+									className="f-tag"
+									onClick={() => {
+										setTag((prevState) => ({ ...prevState, newItem: !prevState.newItem }));
+									}}>
+									<input type="checkbox" style={{ marginRight: "10px" }} checked={tag.newItem} />
 									<span>New Item</span>
 								</div>
 								<div className="tag-count">
-									<span>(13)</span>
+									<span>{newItemsCount}</span>
 								</div>
 							</div>
 							<div className="filter-tag" style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", margin: "10px 0px" }}>
-								<div className="f-tag">
-									<input type="checkbox" style={{ marginRight: "10px" }} />
+								<div
+									className="f-tag"
+									onClick={() => {
+										setTag((prevState) => ({ ...prevState, saleItem: !prevState.saleItem }));
+									}}>
+									<input type="checkbox" style={{ marginRight: "10px" }} checked={tag.saleItem} />
 									<span>Sale Item</span>
 								</div>
 								<div className="tag-count">
-									<span>(13)</span>
+									<span>{saleItemCount}</span>
 								</div>
 							</div>
 							<div className="filter-tag" style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", margin: "10px 0px" }}>
-								<div className="f-tag">
-									<input type="checkbox" style={{ marginRight: "10px" }} />
-									<span>Rating Item</span>
-								</div>
-								<div className="tag-count">
-									<span>(13)</span>
-								</div>
-							</div>
-							<div className="filter-tag" style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", margin: "10px 0px" }}>
-								<div className="f-tag">
-									<input type="checkbox" style={{ marginRight: "10px" }} />
+								<div
+									className="f-tag"
+									onClick={() => {
+										setTag((prevState) => ({ ...prevState, featured: !prevState.featured }));
+									}}>
+									<input type="checkbox" style={{ marginRight: "10px" }} checked={tag.featured} />
 									<span>Feature Item</span>
 								</div>
 								<div className="tag-count">
-									<span>(13)</span>
+									<span>{featuredCount}</span>
 								</div>
 							</div>
-							<div className="filter-search">
+							<div
+								className="filter-search"
+								onClick={() =>
+									setTag({
+										saleItem: false,
+										featured: false,
+										newItem: false,
+									})
+								}>
 								<FontAwesomeIcon icon={faTrashAlt} />
 								<span>Clear Filter</span>
 							</div>
