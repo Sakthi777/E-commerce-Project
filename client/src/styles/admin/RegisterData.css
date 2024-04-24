@@ -1,107 +1,109 @@
 .registerAdmindata {
-    position: relative;
-    display: flex;
-    flex-wrap: nowrap;
-    width: 100%;
-    height: auto;
-    align-items: center;
-    justify-content: center;
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+}
+.content-shifted {
+  margin-left: 280px;
+  transition: margin-left 0.3s ease;
 }
 .table-listdata {
-    width: 100%;
-    position: relative;
-    align-items: center;
-    justify-content: center;
-    margin-top: 150px;
+  width: 100%;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  margin-top: 150px;
 }
 .table-row thead tr {
-    background-color: green;
+  background-color: green;
 }
 .tablehead tr th {
-    font-size: 17px; 
-    font-weight: 500;
-    white-space: nowrap;
-    text-align: center;
-    padding: 12px 20px;
-    color: #fff;
-    /* border-right: 1px solid #e8e8e8; */
-    border: 1px solid #e8e8e8;
-
+  font-size: 17px;
+  font-weight: 500;
+  white-space: nowrap;
+  text-align: center;
+  padding: 12px 20px;
+  color: #fff;
+  /* border-right: 1px solid #e8e8e8; */
+  border: 1px solid #e8e8e8;
 }
 
 .tablehead tr th:first-child {
-    border-radius: 6px 0px 0px 6px
+  border-radius: 6px 0px 0px 6px;
 }
 
 .tablehead tr th:last-child {
-    border-right: none;
-    border-radius: 0px 6px 6px 0px
+  border-right: none;
+  border-radius: 0px 6px 6px 0px;
 }
 
 .tablebodydata tr td {
-    padding: 12px 20px;
-    text-align: center;
-    border: 1px solid #e8e8e8;
-    align-items: center;
-    justify-items: center;
+  padding: 12px 20px;
+  text-align: center;
+  border: 1px solid #e8e8e8;
+  align-items: center;
+  justify-items: center;
 }
 .tablebodydata button {
-    display: flex;
-    align-items: center;
-    padding: 5px 10px;
-    border: 2px solid #F3F4F5;
-    font-size: 16px;
-    background-color: #F3F4F6;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background-color 0.3s, color 0.3s;
-    list-style: none;
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  border: 2px solid #f3f4f5;
+  font-size: 16px;
+  background-color: #f3f4f6;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s, color 0.3s;
+  list-style: none;
 
-  
-    &:hover {
-      background-color: green;
-      color: white;
-    }
+  &:hover {
+    background-color: green;
+    color: white;
   }
+}
 .tablebody tr td:last-child {
-    border-right: none;
-    border-left: none;
+  border-right: none;
+  border-left: none;
 }
 .tablename {
-    white-space: nowrap;
-    text-transform: capitalize;
+  white-space: nowrap;
+  text-transform: capitalize;
 }
 .registerData-page-buttons {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	align-items: center;
-	padding-right: 5%;
-    margin-top: 3%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+  padding-right: 5%;
+  margin-top: 3%;
 }
 
 .registerData-page-buttons button {
-	border: none;
-	margin: 3px;
-	height: 25px;
-	width: 25px;
-	border-radius: 50%;
-	background-color: #119744;
-	color: #ffffff;
+  border: none;
+  margin: 3px;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  background-color: #119744;
+  color: #ffffff;
 }
 
 /* .tablebody tr:nth-child(even){
     background-color: rgb(163, 231, 136);
 } */
-@media (max-width: 840px){
-.registerAdmindata {
+@media (max-width: 840px) {
+  .registerAdmindata {
     overflow-x: scroll;
-}
-.table-row{
+  }
+  .table-row {
     width: 100%;
     margin-top: 70%;
-}
-.registerData-page-buttons {
+  }
+  .registerData-page-buttons {
     padding-right: 5%;
-}
+  }
 }

@@ -39,8 +39,11 @@ const YourOrders = () => {
   const [showModal, setShowModal] = useState(false);
   const [productDetails, setProductDetails] = useState([]);
   const [productDetailArray, setProductDetailArray] = useState([]);
-  const handleShowModal = (productDetail) => {
-    setProductDetailArray(productDetail);
+  const [orderID, setOrderID] = useState([]);
+  const handleShowModal = (order) => {
+    console.log(order.productDetails);
+    setOrderID(order.orderId);
+    setProductDetailArray(order.productDetails);
     setShowModal(true);
   };
   let responseUserArray = [];
@@ -100,7 +103,6 @@ const YourOrders = () => {
             </tr>
           </thead>
           <tbody>
-            {console.log(order)}
             {order.map((order, index) => (
               <tr key={index + 1}>
                 <td>
@@ -132,48 +134,50 @@ const YourOrders = () => {
                 <td>
                   <FaEye
                     onClick={() => {
-                      handleShowModal(order.productDetails);
+                      handleShowModal(order);
                     }}
                   />
                   <Modal show={showModal} onHide={handleCloseModal} centered size="xl">
                     <Modal.Header closeButton>
-                      <Modal.Title>Payment ID : {order.orderId}</Modal.Title>
+                      <Modal.Title>Payment ID : {orderID}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      <table className="orderList-table">
-                        <thead>
-                          <tr>
-                            <th>Serial</th>
-                            <th>Product </th>
-                            <th>Name</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Total Price</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {productDetails.map((product, index) => (
-                            <tr key={index + 1}>
-                              <td>
-                                <p>{index + 1}</p>
-                              </td>
-                              <td>
-                                <img src={`http://localhost:8000/uploads/productImage/${product.productdetail.image}`} alt="product" />
-                              </td>
-                              <td>
-                                <p>{product.productdetail.productName}</p>
-                              </td>
-                              <td>
-                                <p>{product.quantity}</p>
-                              </td>
-                              <td>
-                                <p>{product.productdetail.newPrice}</p>
-                              </td>
-                              <td>${product.productdetail.newPrice * product.quantity}</td>
+                      <div className="orderList-container">
+                        <table className="orderList-table">
+                          <thead>
+                            <tr>
+                              <th>Serial</th>
+                              <th>Product </th>
+                              <th>Name</th>
+                              <th>Quantity</th>
+                              <th>Price</th>
+                              <th>Total Price</th>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                          </thead>
+                          <tbody>
+                            {productDetails.map((product, index) => (
+                              <tr key={index + 1}>
+                                <td>
+                                  <p>{index + 1}</p>
+                                </td>
+                                <td>
+                                  <img src={`http://localhost:8000/uploads/productImage/${product.productdetail.image}`} alt="product" />
+                                </td>
+                                <td>
+                                  <p>{product.productdetail.productName}</p>
+                                </td>
+                                <td>
+                                  <p>{product.quantity}</p>
+                                </td>
+                                <td>
+                                  <p>{product.productdetail.newPrice}</p>
+                                </td>
+                                <td>${product.productdetail.newPrice * product.quantity}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                     </Modal.Body>
                     {/* <Modal.Footer>
                       <Button variant="secondary" className="green-background-button">
