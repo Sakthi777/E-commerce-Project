@@ -25,6 +25,7 @@ const profileDataRouter = require("./routes/profileDataRoute");
 const walletRouter = require("./routes/walletRoute");
 const wishListRouter = require("./routes/wishListRoute");
 const orderDetailsRouter = require("./routes/orderDetailsRoute");
+const pendingOrdersRouter = require("./routes/pendingOrdersRoute");
 mongoose.set("strictQuery", true);
 
 // middlewares
@@ -54,6 +55,7 @@ app.use(userDatas);
 app.use(productCardDatas);
 app.use(userDetailsDatas);
 app.use(orderDetailsRouter);
+app.use(pendingOrdersRouter);
 app.use("/wishlist", wishListRouter);
 
 app.use("/profileData", profileDataRouter);

@@ -4,6 +4,12 @@
   position: relative;
   top: 70px;
 }
+.orderList-container.modelTable {
+  text-align: center;
+  overflow: auto;
+  position: relative;
+  top: 2px;
+}
 .content-shifted {
   margin-left: 280px;
   transition: margin-left 0.3s ease;

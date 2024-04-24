@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const OrderDetails = mongoose.Schema({
+const OrderDetails = new mongoose.Schema({
 	token: {
 		type: String,
 		//required: true,

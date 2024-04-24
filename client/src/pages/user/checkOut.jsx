@@ -102,6 +102,7 @@ function CheckOut() {
 		const address = document.getElementById("select-adress").value;
 		setSelectedAdd(address);
 		console.log(selectedAdd);
+		console.log(selectedAdd);
 		makeOrder(totalCardPrice);
 		setSelectAddress(false);
 	};
