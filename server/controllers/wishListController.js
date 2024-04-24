@@ -27,7 +27,6 @@ exports.postWishListController = asyncHandler(async (req, res, next) => {
 exports.getWishListController = asyncHandler(async (req, res, next) => {
 	try {
 		const token = req.userParams._id;
-		console.log(token);
 		await wishListModel
 			.findOne({ token })
 			.then((response) => {
