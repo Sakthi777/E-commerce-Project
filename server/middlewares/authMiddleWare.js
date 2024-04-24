@@ -25,7 +25,6 @@ const authenticateParams = asyncHandler(async (req, res, next) => {
 	if (token) {
 		try {
 			const decodeToken = await jwt.verify(token, process.env.JWT_SECRET_KEY);
-			console.log(decodeToken);
 			if (decodeToken) {
 				req.userParams = await userDataSchema.findById(decodeToken.userId).select("-password -confirmPassword");
 				next();
