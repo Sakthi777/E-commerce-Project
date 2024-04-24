@@ -147,6 +147,7 @@ function MyProfile() {
 				},
 			],
 		};
+		console.log(postData)
 		await axios
 			.put(`${url}/profileData/editContact/${editIndex}`, postData)
 			.then((res) => {

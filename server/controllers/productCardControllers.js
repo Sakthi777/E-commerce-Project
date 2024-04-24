@@ -211,6 +211,8 @@ exports.updateProductMainImageControllers = async (req, res) => {
 
 exports.getUserDetails = async (req, res) => {
   const { productID } = req.params;
+  console.log(productID);
+
   try {
     const productDetails = await userProductDetails.findById(productID);
     res.json({ status: "ok", data: productDetails });
