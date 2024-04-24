@@ -4,11 +4,11 @@ const asyncHandler = require("../middlewares/catchAsyncError");
 exports.postOrderDetailsControllers = async (req, res) => {
   console.log(req.body);
   try {
-    const { token, orderId, amount, paymentDate, productDetails, userDetails } = req.body;
-
+    const { orderId, amount, paymentDate, productDetails, userDetails } = req.body;
+    const { id } = req.user;
     // Use Order.create to create and save a new Order document
     const Order = await orderDetails.create({
-      token,
+      token: id,
       orderId,
       amount,
       paymentDate: new Date(paymentDate),

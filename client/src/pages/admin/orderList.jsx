@@ -36,10 +36,31 @@ const getStatusColor = (status) => {
 
 const YourOrders = () => {
   const [order, setOrder] = useState([]);
+  const [acceptedOrder, setAcceptOrder] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [productDetails, setProductDetails] = useState([]);
   const [productDetailArray, setProductDetailArray] = useState([]);
   const [orderID, setOrderID] = useState([]);
+  const [showAcceptModal, setAcceptModal] = useState(false);
+  const [showCancelModal, setCancelModal] = useState(false);
+
+  const handleAccept = (order) => {
+    setAcceptOrder(order);
+    setAcceptModal(true);
+  };
+  const handleCancelModel = () => {
+    setCancelModal(true);
+  };
+  const handleConfirm = () => {
+    console.log(acceptedOrder);
+    setAcceptModal(false);
+  };
+
+  const handleCancel = () => {
+    setAcceptModal(false);
+    setCancelModal(false);
+  };
+
   const handleShowModal = (order) => {
     console.log(order.productDetails);
     setOrderID(order.orderId);
@@ -98,7 +119,8 @@ const YourOrders = () => {
               <th>Email</th>
               <th>Date</th>
               <th>Price</th>
-              <th>Status</th>
+              <th>Accept</th>
+              <th>Cancel</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -127,8 +149,22 @@ const YourOrders = () => {
                 </td>
                 <td>${order.amount}</td>
                 <td className="orderList-status">
-                  <div className="status" style={getStatusColor("Complete")}>
-                    <span>Completed</span>
+                  <div className="status">
+                    <Button
+                      variant="success"
+                      onClick={() => {
+                        handleAccept(order);
+                      }}
+                    >
+                      Accept
+                    </Button>
+                  </div>
+                </td>
+                <td className="orderList-status">
+                  <div className="status">
+                    <Button variant="danger" onClick={handleCancelModel}>
+                      Cancel
+                    </Button>
                   </div>
                 </td>
                 <td>
@@ -137,60 +173,89 @@ const YourOrders = () => {
                       handleShowModal(order);
                     }}
                   />
-                  <Modal show={showModal} onHide={handleCloseModal} centered size="xl">
-                    <Modal.Header closeButton>
-                      <Modal.Title>Payment ID : {orderID}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <div className="orderList-container">
-                        <table className="orderList-table">
-                          <thead>
-                            <tr>
-                              <th>Serial</th>
-                              <th>Product </th>
-                              <th>Name</th>
-                              <th>Quantity</th>
-                              <th>Price</th>
-                              <th>Total Price</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {productDetails.map((product, index) => (
-                              <tr key={index + 1}>
-                                <td>
-                                  <p>{index + 1}</p>
-                                </td>
-                                <td>
-                                  <img src={`http://localhost:8000/uploads/productImage/${product.productdetail.image}`} alt="product" />
-                                </td>
-                                <td>
-                                  <p>{product.productdetail.productName}</p>
-                                </td>
-                                <td>
-                                  <p>{product.quantity}</p>
-                                </td>
-                                <td>
-                                  <p>{product.productdetail.newPrice}</p>
-                                </td>
-                                <td>${product.productdetail.newPrice * product.quantity}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </Modal.Body>
-                    {/* <Modal.Footer>
-                      <Button variant="secondary" className="green-background-button">
-                        Close
-                      </Button>
-                    </Modal.Footer> */}
-                  </Modal>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      <Modal show={showModal} onHide={handleCloseModal} centered size="xl">
+        <Modal.Header closeButton>
+          <Modal.Title>Payment ID : {orderID}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="orderList-container modelTable">
+            <table className="orderList-table">
+              <thead>
+                <tr>
+                  <th>Serial</th>
+                  <th>Product </th>
+                  <th>Name</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Total Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {productDetails.map((product, index) => (
+                  <tr key={index + 1}>
+                    <td>
+                      <p>{index + 1}</p>
+                    </td>
+                    <td>
+                      <img src={`http://localhost:8000/uploads/productImage/${product.productdetail.image}`} alt="product" />
+                    </td>
+                    <td>
+                      <p>{product.productdetail.productName}</p>
+                    </td>
+                    <td>
+                      <p>{product.quantity}</p>
+                    </td>
+                    <td>
+                      <p>{product.productdetail.newPrice}</p>
+                    </td>
+                    <td>${product.productdetail.newPrice * product.quantity}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Modal.Body>
+        {/* <Modal.Footer>
+                      <Button variant="secondary" className="green-background-button">
+                        Close
+                      </Button>
+                    </Modal.Footer> */}
+      </Modal>
+      <Modal show={showAcceptModal} onHide={handleCancel}>
+        <Modal.Header closeButton>
+          <Modal.Title>Acceptance Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to accept this order?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={handleCancel}>
+            No
+          </Button>
+          <Button variant="success" onClick={handleConfirm}>
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showCancelModal} onHide={handleCancel}>
+        <Modal.Header closeButton>
+          <Modal.Title>Cancel Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to cancel this order?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={handleCancel}>
+            No
+          </Button>
+          <Button variant="success" onClick={handleConfirm}>
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
@@ -212,7 +277,7 @@ const CompletedOrders = () => {
   return (
     <>
       <AdminHomePage />
-      <div className={`orderList-container ${showOffCanvas ? "content-shifted" : ""} `}>
+      <div className={`orderList-container  ${showOffCanvas ? "content-shifted" : ""} `}>
         <table className="orderList-table">
           <thead>
             <tr>
