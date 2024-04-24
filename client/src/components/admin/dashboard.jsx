@@ -2,6 +2,16 @@ import React, { useState } from "react";
 import "../../styles/admin/dashboard.css";
 import greenyIcon from "../../assets/images/logo.png";
 import AdminHeader, { useOffCanvasContext } from "../../components/admin/adminHeader";
+// import * as AiIcons from "react-icons/ai";
+import ordercomplete from "../../../src/assets/images/AddProduct/ordercompleted.png";
+import orderpending from "../../../src/assets/images/AddProduct/pending.png";
+import ordercancel from "../../../src/assets/images/AddProduct/cancel.png";
+import totalorder from "../../../src/assets/images/AddProduct/totalorders.png";
+import dispatch from "../../../src/assets/images/AddProduct/dispatch.png";
+
+
+
+
 function Dashboard() {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -38,6 +48,49 @@ function Dashboard() {
 		<>
 			<AdminHeader />
 			<div className={`orderList-container ${showOffCanvas ? "content-shifted" : ""} `}>
+				<div className="dashboard-card">
+					<div className="dashboard-body-item1">
+						<div className="body-cards">
+							<div className="ordericon">
+								<img src={ordercomplete} alt="" />
+							</div>
+							<h5>Completed Order</h5>
+							
+						</div>
+					</div>
+					<div className="dashboard-body-item2">
+						<div className="body-cards">
+						<div className="ordericon">
+								<img src={ordercancel} alt="" />
+							</div>
+							<h5>Cancel Order</h5>
+						</div>
+					</div>
+					<div className="dashboard-body-item3">
+						<div className="body-cards">
+						<div className="ordericon">
+								<img src={orderpending} alt="" />
+							</div>
+							<h5>Pending Order</h5>
+						</div>
+					</div>
+					<div className="dashboard-body-item4">
+						<div className="body-cards">
+						<div className="ordericon">
+								<img src={totalorder} alt="" />
+							</div>
+							<h5>Total Order</h5>
+						</div>
+					</div>
+					{/* <div className="dashboard-body-item4">
+						<div className="body-cards">
+						<div className="ordericon">
+								<img src={dispatch} alt="" />
+							</div>
+							<h5>Dispatch Order</h5>
+						</div>
+					</div> */}
+				</div>
 				<div className="category-table-page">
 					<div className="rows-per-page-dropdown">
 						<label htmlFor="rowsPerPage">Rows per page:</label>

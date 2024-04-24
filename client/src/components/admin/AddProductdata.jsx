@@ -136,7 +136,20 @@ export default function AddProductdata() {
     }
   };
   const handleReset = () =>{
-     setRating("");
+    setPreImage(null);
+    setArrayOfImages([]);
+    setFileName("");
+    setImage(null);
+    setImageSlider([]);
+    setRating("");
+    setProductName("");
+    setProductDescription("");
+    setOldPrice("");
+    setNewPrice("");
+    setSale(false);
+    setNewProduct(false);
+    setFeaturedItems(false);
+    setDiscountPercentage("");
   }
   return (
     <>
@@ -346,7 +359,7 @@ export default function AddProductdata() {
               </div>
               <div className="label-id">
                 <div className="user-product-input">
-                  <p htmlFor="">Description*</p>
+                  <p htmlFor="reset">Description*</p>
                   <textarea name="details" id="details" style={{ paddingLeft: '10px' }} cols="10" rows="5" placeholder="Enter Description" required></textarea>
                 </div>
               </div>
@@ -386,7 +399,7 @@ export default function AddProductdata() {
                   <button onClick={handleReset}>Reset</button>
                 </div>
                 <div className="pro-btn">
-                  <button onClick={handlePublish}>Save</button>
+                  <button onClick={handlePublish}>Publish</button>
                 </div>
               </div>
             </div>

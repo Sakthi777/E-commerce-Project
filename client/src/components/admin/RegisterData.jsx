@@ -241,9 +241,7 @@ export default function RegisterData() {
                 </tbody>
               </table>
             </div>
-          </div>
-        </div>
-        <div className="registerData-page-buttons">
+            <div className="registerData-page-buttons" >
           <nav>
             <ul className="pagination">
               <li className="page-item">
@@ -271,6 +269,10 @@ export default function RegisterData() {
             </ul>
           </nav>
         </div>
+          </div>
+          
+        </div>
+        
       </div>
     </div>
   );

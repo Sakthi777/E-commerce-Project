@@ -78,11 +78,11 @@ export const SidebarData = [
         path: "/admin/allProducts",
         icon: <IoIcons.IoIosPaper className="icon" />,
       },
-      {
-        title: "Edit Product",
-        path: "/admin/editProduct",
-        icon: <IoIcons.IoIosPaper className="icon" />,
-      },
+      // {
+      //   title: "Edit Product",
+      //   path: "/admin/editProduct",
+      //   icon: <IoIcons.IoIosPaper className="icon" />,
+      // },
     ],
   },
   {

@@ -1,3 +1,63 @@
+.dashboard-card{
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 5%;
+  gap: 1.5rem;
+}
+.dashboard-body-item1{
+  gap: 2rem;
+  border: 1px solid lightgray;
+  width: 15rem;
+  height: 12rem;
+  padding: 3%;
+  border-radius: 8px;
+  background-color: #D2F4EE;
+  border: none;
+  box-shadow:  0 0px 3px 0 lightgray;
+  text-align: center;
+}.dashboard-body-item2{
+  gap: 2rem;
+  border: 1px solid lightgray;
+  width: 15rem;
+  height: 12rem;
+  padding: 3%;
+  border-radius: 8px;
+  box-shadow: lightgray;
+  background-color: #FFEDD5;border: none;
+  box-shadow:  0 0px 3px 0 lightgray;
+  text-align: center;
+}.dashboard-body-item3{
+  gap: 2rem;
+  border: 1px solid lightgray;
+  width: 15rem;
+  height: 12rem;
+  padding: 3%;
+  border-radius: 8px;
+  box-shadow: lightgray;
+  background-color: #E0F2FE;border: none;
+  box-shadow:  0 0px 3px 0 lightgray;
+  text-align: center;
+}.dashboard-body-item4{
+  gap: 2rem;
+  border: 1px solid lightgray;
+  width: 15rem;
+  height: 12rem;
+  padding: 3%;
+  border-radius: 8px;
+  box-shadow: lightgray;
+  background-color: #F3E8FF;border: none;
+  box-shadow:  0 0px 3px 0 lightgray;
+  text-align: center;
+}
+.body-cards{
+  padding: 1.2rem;
+}
+.ordericon img{
+  width: 50px;
+  height: 50px;
+}
 .category-table-page {
   padding: 3%;
 }

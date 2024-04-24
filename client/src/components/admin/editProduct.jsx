@@ -410,7 +410,7 @@ const EditProduct = () => {
               </div></div>
             <div className="products-button">
               <div className="pro-btn">
-                <button type="reset">Reset</button>
+                <button type="reset">Cancel</button>
               </div>
               <div className="pro-btn">
                 <button onClick={''}>Save</button>
