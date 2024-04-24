@@ -8,7 +8,7 @@ const authenticate = asyncHandler(async (req, res, next) => {
 		try {
 			const decodeToken = await jwt.verify(token, process.env.JWT_SECRET_KEY);
 			req.user = await userDataSchema.findById(decodeToken.userId).select("-password -confirmPassword");
-			console.log(req.user);
+			// console.log(req.user);
 			next();
 		} catch (error) {
 			res.status(400);

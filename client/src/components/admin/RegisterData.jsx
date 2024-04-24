@@ -183,7 +183,7 @@ export default function RegisterData() {
   const handleShow = () => setShow(true);
 
   return (
-    <div>
+    <div >
       <AdminHeader />
       {/* <div className="offers-banner">
         <img src={banner} alt="Offer Banner" />
