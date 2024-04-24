@@ -289,23 +289,25 @@ const YourOrders = () => {
 };
 
 const CompletedOrders = () => {
-  const [order, setOrder] = useState([]);
+  const [pendingOrder, setPendingOrder] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/getOrderDetails`)
+      .get(`http://localhost:8000/getPendingOrders`)
       .then((response) => {
-        setOrder(response.data);
+        setPendingOrder(response.data);
       })
       .catch((error) => {
         console.error("Error fetching product data:", error);
       });
   }, []);
+  console.log(pendingOrder);
+
   const { showOffCanvas } = useOffCanvasContext();
 
   return (
     <>
       <AdminHomePage />
-      <div className={`orderList-container  ${showOffCanvas ? "content-shifted" : ""} `}>
+      {/* <div className={`orderList-container  ${showOffCanvas ? "content-shifted" : ""} `}>
         <table className="orderList-table">
           <thead>
             <tr>
@@ -353,14 +355,25 @@ const CompletedOrders = () => {
             ))}
           </tbody>
         </table>
-      </div>
+      </div> */}
     </>
   );
 };
 
 const PendingOrders = () => {
   const { showOffCanvas } = useOffCanvasContext();
-
+  const [pendingOrder, setPendingOrder] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8000/getPendingOrders`)
+      .then((response) => {
+        setPendingOrder(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching product data:", error);
+      });
+  }, []);
+  console.log(pendingOrder);
   return (
     <>
       <AdminHomePage />
@@ -372,38 +385,63 @@ const PendingOrders = () => {
               <th>Order ID</th>
               <th>Product </th>
               <th>Name</th>
-              <th>Address</th>
+              <th>Email</th>
               <th>Date</th>
               <th>Price</th>
-              <th>Status</th>
+              <th>Accept</th>
+              <th>Cancel</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {pendingOrders.map((product) => (
-              <tr key={product.id}>
+            {pendingOrder.map((order, index) => (
+              <tr key={index + 1}>
                 <td>
-                  <p>{product.id}</p>
+                  <p>{index + 1}</p>
                 </td>
                 <td>
-                  <p>#71625353A12</p>
+                  <p>{order.orderId}</p>
+                </td>
+                <td>{order.productDetails.length}</td>
+                <td>
+                  {order.userDetails.map((user) => (
+                    <p>{user.name}</p>
+                  ))}
                 </td>
                 <td>
-                  <img src={product.imgSrc} alt="" />
+                  {order.userDetails.map((user) => (
+                    <p>{user.email}</p>
+                  ))}
                 </td>
                 <td>
-                  <p>{product.productName}</p>
+                  <p>{order.paymentDate}</p>
                 </td>
-                <td>
-                  <p>354 Washington Ave, Manchester</p>
-                </td>
-                <td>
-                  <p>29/02/2024</p>
-                </td>
-                <td>${product.newPrice}</td>
-                <td className="orderList-status">
-                  <div className="status" style={getStatusColor(product.status)}>
-                    <span>{product.status}</span>
+                <td>${order.amount}</td>
+                {/* <td className="orderList-status">
+                  <div className="status">
+                    <Button
+                      variant="success"
+                      onClick={() => {
+                        handleAccept(order);
+                      }}
+                    >
+                      Accept
+                    </Button>
                   </div>
+                </td>
+                <td className="orderList-status">
+                  <div className="status">
+                    <Button variant="danger" onClick={handleCancelModel}>
+                      Cancel
+                    </Button>
+                  </div>
+                </td> */}
+                <td>
+                  {/* <FaEye
+                    onClick={() => {
+                      handleShowModal(order);
+                    }}
+                  /> */}
                 </td>
               </tr>
             ))}

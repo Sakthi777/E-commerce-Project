@@ -4,11 +4,11 @@ const asyncHandler = require("../middlewares/catchAsyncError");
 exports.postPendingOrdersControllers = async (req, res) => {
   console.log(req.body);
   try {
-    const { orderId, amount, paymentDate, productDetails, userDetails, contact, address } = req.body;
-    const { id } = req.user;
+    const { orderId, amount, paymentDate, productDetails, userDetails, contact, address, token } = req.body;
+
     // Use Order.create to create and save a new Order document
     const PendingOrder = await pendingOrders.create({
-      token: id,
+      token,
       orderId,
       amount,
       paymentDate: new Date(paymentDate),
@@ -25,12 +25,12 @@ exports.postPendingOrdersControllers = async (req, res) => {
   }
 };
 
-// exports.getOrderDetailsController = async (req, res) => {
-//   try {
-//     const orders = await orderDetails.find();
-//     res.send(orders);
-//   } catch (error) {
-//     console.error("Error fetching orders:", error);
-//     res.status(500).json({ error: "Failed to fetch orders" });
-//   }
-// };
+exports.getPendingOrdersController = async (req, res) => {
+  try {
+    const pendingorders = await pendingOrders.find();
+    res.send(pendingorders);
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    res.status(500).json({ error: "Failed to fetch orders" });
+  }
+};
