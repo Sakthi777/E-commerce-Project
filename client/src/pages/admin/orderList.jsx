@@ -51,8 +51,36 @@ const YourOrders = () => {
   const handleCancelModel = () => {
     setCancelModal(true);
   };
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     console.log(acceptedOrder);
+    try {
+      // Create payload object with order details
+      const pendingOrderDetails = {
+        token: acceptedOrder.token,
+        orderId: acceptedOrder.orderId,
+        amount: acceptedOrder.amount,
+        paymentDate: acceptedOrder.paymentDate,
+        productDetails: acceptedOrder.productDetails,
+        userDetails: acceptedOrder.userDetails,
+        address: acceptedOrder.address,
+        contact: acceptedOrder.contact,
+      };
+      console.log(pendingOrderDetails);
+
+      await axios
+        .post(`http://localhost:8000/postPendingOrders`, pendingOrderDetails, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+        });
+
+      console.log("Order details sent successfully!");
+    } catch (error) {
+      console.error("Error sending order details:", error);
+    }
     setAcceptModal(false);
   };
 

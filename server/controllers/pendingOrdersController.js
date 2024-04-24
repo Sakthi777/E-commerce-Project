@@ -1,13 +1,13 @@
-const orderDetails = require("../models/OrderDetailsSchema");
+const pendingOrders = require("../models/PendingOrderSchema");
 const asyncHandler = require("../middlewares/catchAsyncError");
 
-exports.postOrderDetailsControllers = async (req, res) => {
+exports.postPendingOrdersControllers = async (req, res) => {
   console.log(req.body);
   try {
     const { orderId, amount, paymentDate, productDetails, userDetails, contact, address } = req.body;
     const { id } = req.user;
     // Use Order.create to create and save a new Order document
-    const Order = await orderDetails.create({
+    const PendingOrder = await pendingOrders.create({
       token: id,
       orderId,
       amount,
@@ -18,19 +18,19 @@ exports.postOrderDetailsControllers = async (req, res) => {
       address,
     });
 
-    res.send(Order);
+    res.send(PendingOrder);
   } catch (error) {
     console.error("Error saving order details:", error);
     res.status(500).json({ error: "Failed to save order details" });
   }
 };
 
-exports.getOrderDetailsController = async (req, res) => {
-  try {
-    const orders = await orderDetails.find();
-    res.send(orders);
-  } catch (error) {
-    console.error("Error fetching orders:", error);
-    res.status(500).json({ error: "Failed to fetch orders" });
-  }
-};
+// exports.getOrderDetailsController = async (req, res) => {
+//   try {
+//     const orders = await orderDetails.find();
+//     res.send(orders);
+//   } catch (error) {
+//     console.error("Error fetching orders:", error);
+//     res.status(500).json({ error: "Failed to fetch orders" });
+//   }
+// };
