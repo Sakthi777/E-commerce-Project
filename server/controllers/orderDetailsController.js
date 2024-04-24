@@ -2,7 +2,7 @@ const orderDetails = require("../models/OrderDetailsSchema");
 const asyncHandler = require("../middlewares/catchAsyncError");
 
 exports.postOrderDetailsControllers = async (req, res) => {
-	console.log(req.body);
+	// console.log(req.body);
 	try {
 		const { orderId, amount, paymentDate, productDetails, userDetails, contact, address } = req.body;
 		const { id } = req.user;
@@ -41,8 +41,7 @@ exports.getSingleOrderDetailController = asyncHandler(async (req, res, next) => 
 	try {
 		const { id } = req.userParams;
 		const orders = await orderDetails.find({ token: id });
-		console.log(orders.data);
-		res.send(id);
+		res.send(orders);
 	} catch (error) {
 		console.error("Error fetching orders:", error);
 		res.status(500).json({ error: "Failed to fetch orders" });
