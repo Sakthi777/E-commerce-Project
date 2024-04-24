@@ -24,7 +24,7 @@ import ProductCard from "../../pages/user/productCard";
 export default function AddProductdata() {
   const { showOffCanvas } = useOffCanvasContext();
   const [preImage, setPreImage] = useState(null);
-  const [ArrayOfimages, setArrayOfImages] = useState([upload, upload, upload, upload]);
+  const [ArrayOfimages, setArrayOfImages] = useState([]);
   const [fileName, setFileName] = useState("");
   const [image, setImage] = useState(null);
   const [imageSlider, setImageSlider] = useState([]);
@@ -135,6 +135,9 @@ export default function AddProductdata() {
       console.error("Upload error:", error);
     }
   };
+  const handleReset = () =>{
+     setRating("");
+  }
   return (
     <>
       <AdminHeader />
@@ -380,7 +383,7 @@ export default function AddProductdata() {
             </div> */}
               <div className="products-button">
                 <div className="pro-btn">
-                  <button type="reset">Reset</button>
+                  <button onClick={handleReset}>Reset</button>
                 </div>
                 <div className="pro-btn">
                   <button onClick={handlePublish}>Save</button>
