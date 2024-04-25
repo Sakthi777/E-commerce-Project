@@ -49,10 +49,64 @@ exports.getSingleOrderDetailController = asyncHandler(async (req, res, next) => 
 
 exports.editOrderDetailsController = asyncHandler(async (req, res, next) => {
   try {
-    const orderId = req.params;
+    const { orderId } = req.params;
     console.log(orderId);
-    const prodDetails = await orderDetails.findById(orderId);
-    console.log(prodDetails);
+    const updatedOrder = await orderDetails.findByIdAndUpdate(orderId, { pending: true }, { new: true });
+
+    if (!updatedOrder) {
+      return res.send({ error: "Order not found" });
+    } else {
+      res.send(updatedOrder);
+    }
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    res.status(500).json({ error: "Failed to fetch orders" });
+  }
+});
+exports.editCancelOrderDetailsController = asyncHandler(async (req, res, next) => {
+  try {
+    const { orderId } = req.params;
+    console.log(orderId);
+    const updatedOrder = await orderDetails.findByIdAndUpdate(orderId, { pending: false }, { new: true });
+
+    if (!updatedOrder) {
+      return res.send({ error: "Order not found" });
+    } else {
+      res.send(updatedOrder);
+    }
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    res.status(500).json({ error: "Failed to fetch orders" });
+  }
+});
+
+exports.editDispatchOrderDetailsController = asyncHandler(async (req, res, next) => {
+  try {
+    const { orderId } = req.params;
+    console.log(orderId);
+    const updatedOrder = await orderDetails.findByIdAndUpdate(orderId, { dispatch: true, pending: false }, { new: true });
+
+    if (!updatedOrder) {
+      return res.send({ error: "Order not found" });
+    } else {
+      res.send(updatedOrder);
+    }
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    res.status(500).json({ error: "Failed to fetch orders" });
+  }
+});
+exports.editDispatchCancelOrderDetailsController = asyncHandler(async (req, res, next) => {
+  try {
+    const { orderId } = req.params;
+    console.log(orderId);
+    const updatedOrder = await orderDetails.findByIdAndUpdate(orderId, { dispatch: false, pending: true }, { new: true });
+
+    if (!updatedOrder) {
+      return res.send({ error: "Order not found" });
+    } else {
+      res.send(updatedOrder);
+    }
   } catch (error) {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Failed to fetch orders" });
