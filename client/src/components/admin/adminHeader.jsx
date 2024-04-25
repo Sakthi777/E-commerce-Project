@@ -85,8 +85,8 @@ const Sidebar = () => {
           <FaIcon.FaBars onClick={handleToggleOffCanvas} className="menu-bar" />
         </Link>
         <div className="right-section">
-          <button className="nav-button">Create Shop</button>
-          <button className="nav-button">Visit Site</button>
+          <button className="nav-button" >Create product</button>
+          <button className="nav-button" >Visit Site</button>
           <div className="profile-container" onClick={toggleProfileCard}>
             <CgProfile className="profile-icon" />
             <div className="profile-info">
