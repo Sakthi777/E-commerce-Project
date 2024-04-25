@@ -52,7 +52,16 @@ const YourOrders = () => {
     setCancelModal(true);
   };
   const handleConfirm = () => {
-    console.log(acceptedOrder);
+    console.log(acceptedOrder._id);
+    const orderId = acceptedOrder._id;
+
+    try {
+      axios.put(`http://localhost:8000/editOrderDetails/${orderId}`).then((res) => {
+        console.log(res.data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
     setAcceptModal(false);
   };
 
