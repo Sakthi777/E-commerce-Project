@@ -114,7 +114,7 @@ justify-content: center;
 align-items: center;
 text-align: center;
 box-shadow:  0 0px 3px 0 lightgray;
-margin-top: 8.5rem;
+margin-top: 9rem;
 margin-bottom: 20px;
 background-color: #fff;
 }
@@ -125,14 +125,37 @@ background-color: #fff;
   border-radius: 50%;
   box-shadow:  0 0px 3px 0 lightgray;
 text-align: center;
+}.usertext-head{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
 }
-.usertext p{
+.usertext {
   padding: 2% 2% 2% 0%;
   font-size: large;
   gap: 1rem;
   padding: 1%;
+  /* border-bottom: 1px solid lightgray;
+  box-shadow:  0 1px 0 0 lightgray; */
+  border: none;
+  /* text-decoration: underline; */
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 10px;
+  padding: 10px;
+  text-align: justify;
 }
-@media (max-width: 899px) {
+.usertext > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  /* text-align: center; */
+  /* padding: 20px 0; */
+  /* font-size: 30px; */
+}
+.modelhandling {
+  display: none;
+}
+@media (max-width: 999px) {
   .registerAdmindata {
     position: relative;
     display: flex;
@@ -167,9 +190,13 @@ text-align: center;
     align-items: center;
     text-align: center;
     box-shadow:  0 0px 3px 0 lightgray;
-    /* margin-top: 8.5rem; */
+    margin-top: 0;
     margin-bottom: 20px;
     background-color: #fff;
+    }
+    .modelbody{
+      justify-content: center;
+      align-items: center;
     }
     .user-details-body img{
       border: 1px solid lightgray;
@@ -184,5 +211,8 @@ text-align: center;
       font-size: large;
       gap: 1rem;
       padding: 1%;
+    }
+    .modelhandling{
+      display: block;
     }
 }

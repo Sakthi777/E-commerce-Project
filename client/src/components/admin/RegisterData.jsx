@@ -46,7 +46,16 @@ export default function RegisterData() {
   }
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // const handleShow = () => setShow(true);
+  function TriggerModal() {
+    console.log(window.innerWidth);
+    if (window.innerWidth <= 999) {
+      setShow(true);
+    }
+    else {
+      setShow(false);
+    }
+  }
 
   return (
     <div >
@@ -84,33 +93,40 @@ export default function RegisterData() {
                         <td>{d.userName}</td>
                         <td>{d.email}</td>
                         <td>
-                          <button className="viewicons" onClick={handleShow}>
+                          <button className="viewicons" onClick={TriggerModal}>
                             view
                           </button>
                         </td>
                       </tr>
                     );
                   })}
-                  <Modal show={show} onHide={handleClose}>
+                  <Modal show={show} onHide={handleClose} className="modelhandling">
                     <Modal.Header closeButton>
                       <Modal.Title>User Details</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>Name : Greeny</Modal.Body>
-                    <Modal.Body>Email: greeny@gmail.com
-                      {/* <div className="user-details-card">
+                    {/* <Modal.Body>Name : Greeny</Modal.Body> */}
+                    <Modal.Body className="modelbody">
+                      <div className="user-details-card">
                         <div className="user-details-body">
                           <div className="userimg">
                             <img src={user} alt="Avatar" /></div>
-                          <div className="usertext">
-                            <p>Name : Greeny</p>
-                            <p>Email : greeny@gmail.com</p>
-                            <p>contact : 1234567890</p>
-                            <p>Delivary Address : IDM Techpark, Ram Nagar, Coimbatore.</p>
+                          <div className="usertext-head">
+                            <div className="usertext">
+                              <div className="item1">Name </div>
+                              <div className="item2">: Greeny</div>
+                              <div className="item3">Email</div>
+                              <div className="item4">: greeny@gmail.com</div>
+                              <div className="item5">Contact</div>
+                              <div className="item6">: 1234567890</div>
+                              <div className="item7">Wallet</div>
+                              <div className="item8">: $12</div>
+                              <div className="item9">Delivary Address</div>
+                              <div className="item10">: Coimbatore</div>
+                            </div>
                           </div>
                         </div>
-                      </div> */}
+                      </div>
                     </Modal.Body>
-
                     <Modal.Footer>
                       <Button variant="secondary" onClick={handleClose}>
                         Close
@@ -155,10 +171,16 @@ export default function RegisterData() {
               <div className="userimg">
                 <img src={user} alt="Avatar" /></div>
               <div className="usertext">
-                <p>Name : Greeny</p>
-                <p>Email : greeny@gmail.com</p>
-                <p>contact : 1234567890</p>
-                <p>Delivary Address : IDM Techpark, Ram Nagar, Coimbatore.</p>
+                <div className="item1">Name </div>
+                <div className="item2">: Greeny</div>
+                <div className="item3">Email</div>
+                <div className="item4">: greeny@gmail.com</div>
+                <div className="item5">Contact</div>
+                <div className="item6">: 1234567890</div>
+                <div className="item7">Wallet</div>
+                <div className="item8">: $12</div>
+                <div className="item9">Delivary Address</div>
+                <div className="item10">: Coimbatore</div>
               </div>
             </div>
           </div>
