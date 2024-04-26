@@ -105,7 +105,7 @@ export default function RegisterData() {
                       <Modal.Title>User Details</Modal.Title>
                     </Modal.Header>
                     {/* <Modal.Body>Name : Greeny</Modal.Body> */}
-                    <Modal.Body className="modelbody">
+                    <Modal.Body className="modelbody" style={{display:"flex",textAlign:"center"}}>
                       <div className="user-details-card">
                         <div className="user-details-body">
                           <div className="userimg">
