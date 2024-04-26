@@ -26,19 +26,19 @@ export const SidebarData = [
         icon: <FaIcons.FaCheckCircle className="icon" />,
       },
       {
-        title: "Completed Orders",
-        path: "/admin/completedOrders",
-        icon: <FaIcons.FaCheckCircle className="icon" />,
-      },
-      {
         title: "Pending Orders",
         path: "/admin/pendingOrders",
         icon: <MDIcons.MdOutlinePendingActions className="icon" />,
       },
       {
-        title: "Canceled Orders",
-        path: "/admin/canceledOrders",
+        title: "Dispatched Orders",
+        path: "/admin/dispatchOrders",
         icon: <MDIcons.MdCancel className="icon" />,
+      },
+      {
+        title: "Completed Orders",
+        path: "/admin/completedOrders",
+        icon: <FaIcons.FaCheckCircle className="icon" />,
       },
       // {
       //   title: "User Register Data",
@@ -46,17 +46,18 @@ export const SidebarData = [
       //   icon : <FaIcons.FaUser className="icon" />,
       // },
     ],
-  },{
-    title : "Users Data",
-    path : "",
-    icon : <FaIcons.FaUser className="icon" />,
-    subNav : [
+  },
+  {
+    title: "Users Data",
+    path: "",
+    icon: <FaIcons.FaUser className="icon" />,
+    subNav: [
       {
-        title : "Register List",
-        path : "/admin/registerdata",
-        icon : <FaIcons.FaUsers className="icon" />,
-      }
-    ]
+        title: "Register List",
+        path: "/admin/registerdata",
+        icon: <FaIcons.FaUsers className="icon" />,
+      },
+    ],
   },
   {
     title: "Category",

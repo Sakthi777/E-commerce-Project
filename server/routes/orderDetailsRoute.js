@@ -9,6 +9,8 @@ const {
   getSingleOrderDetailController,
   editOrderDetailsController,
   editCancelOrderDetailsController,
+  editCompleteOrderDetailsController,
+  editCompleteCancelOrderDetailsController,
 } = require("../controllers/orderDetailsController");
 
 orderDetailsDatas.post("/orderDetails", authenticate, postOrderDetailsControllers);
@@ -18,6 +20,8 @@ orderDetailsDatas.put("/editCancelOrderDetails/:orderId", editCancelOrderDetails
 orderDetailsDatas.get("/getOrderDetails/:token", authenticateParams, getSingleOrderDetailController);
 orderDetailsDatas.put("/editDispatchOrderDetails/:orderId", editDispatchOrderDetailsController);
 orderDetailsDatas.put("/editDispatchCancelOrderDetails/:orderId", editDispatchCancelOrderDetailsController);
+orderDetailsDatas.put("/editCompleteOrderDetails/:orderId", editCompleteOrderDetailsController);
+orderDetailsDatas.put("/editCompleteCancelOrderDetails/:orderId", editCompleteCancelOrderDetailsController);
 
 // getSingleOrderDetailController;
 
