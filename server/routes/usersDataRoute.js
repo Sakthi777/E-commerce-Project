@@ -1,6 +1,6 @@
 const express = require("express");
 const userDatas = express.Router();
-const { userDatasControllers, loginUserControllers, logOutUserControllers, forgetUserControllers, changePasswordControllers, getUserDataController, getUserDataControllers, getSingleUserDataControllers, CountdownTimedate, getCountdownDate } = require("../controllers/usersDataControllers");
+const { userDatasControllers, loginUserControllers, logOutUserControllers, forgetUserControllers, changePasswordControllers, getUserDataController, getUserDataControllers, getSingleUserDataControllers, CountdownTimedate, getCountdownDate , getAdminSingleUserDataControllers} = require("../controllers/usersDataControllers");
 const { authenticateParams } = require("../middlewares/authMiddleWare");
 
 userDatas.route("/users").post(userDatasControllers);
@@ -22,5 +22,10 @@ userDatas.route("/changeUserPassword/:token").post(changePasswordControllers);
 userDatas.route("/countdown").post(CountdownTimedate);
 
 userDatas.route("/getCountdown").get(getCountdownDate);
+
+// admin detail get
+
+userDatas.route("/getuserData/:token/:id").get(authenticateParams, getAdminSingleUserDataControllers);
+
 
 module.exports = userDatas;

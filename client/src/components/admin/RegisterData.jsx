@@ -8,11 +8,15 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import AdminHeader, { useOffCanvasContext } from "../../components/admin/adminHeader";
 import user from "../../../src/assets/images/AddProduct/user.png";
-
+import { useSelector } from "react-redux";
 
 export default function RegisterData() {
   const [users, setUsers] = useState([]);
   const { showOffCanvas } = useOffCanvasContext();
+  const url = "http://localhost:8000";
+
+  const token = useSelector((state)=> state.tokenDetails.token)
+
   useEffect(() => {
     axios
       .get("http://localhost:8000/login/getuser")
@@ -22,6 +26,7 @@ export default function RegisterData() {
       .catch((err) => console.log(err));
   }, []);
 
+  console.log(users)
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 5;
   const lastIndex = currentPage * recordPerPage;
@@ -47,8 +52,28 @@ export default function RegisterData() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   // const handleShow = () => setShow(true);
-  function TriggerModal() {
+
+  const [ modalUserData, setModalUserData] = useState("");
+
+  const [ modalAddress, setModalAddress ] = useState("");
+
+  const [modalContact, setModalContact] = useState("");
+
+  function TriggerModal(id) {
     console.log(window.innerWidth);
+    axios
+    .get(`http://localhost:8000/login/getuserData/${token}/${id}`)
+    .then((res) => {
+      console.log(res.data)
+      setModalUserData(res.data);
+    })
+    axios.get(`${url}/profileData/getData/${token}/${id}`).then((res)=>{
+      console.log(res.data);
+ 
+      const data = res.data;
+      setModalAddress(data.addresses[0].address);
+      setModalContact(data.contactNumbers[0].contactNumber)
+    })
     if (window.innerWidth <= 999) {
       setShow(true);
     }
@@ -56,7 +81,6 @@ export default function RegisterData() {
       setShow(false);
     }
   }
-
   return (
     <div >
       <AdminHeader />
@@ -93,7 +117,7 @@ export default function RegisterData() {
                         <td>{d.userName}</td>
                         <td>{d.email}</td>
                         <td>
-                          <button className="viewicons" onClick={TriggerModal}>
+                          <button className="viewicons" onClick={()=>{TriggerModal(d._id)}}>
                             view
                           </button>
                         </td>
@@ -113,9 +137,9 @@ export default function RegisterData() {
                           <div className="usertext-head">
                             <div className="usertext">
                               <div className="item1">Name </div>
-                              <div className="item2">: Greeny</div>
+                              <div className="item2">: {modalUserData.name}</div>
                               <div className="item3">Email</div>
-                              <div className="item4">: greeny@gmail.com</div>
+                              <div className="item4">:{modalUserData.email}</div>
                               <div className="item5">Contact</div>
                               <div className="item6">: 1234567890</div>
                               <div className="item7">Wallet</div>
@@ -172,15 +196,15 @@ export default function RegisterData() {
                 <img src={user} alt="Avatar" /></div>
               <div className="usertext">
                 <div className="item1">Name </div>
-                <div className="item2">: Greeny</div>
+                <div className="item2">: {modalUserData !== "" ? modalUserData.name : "###"}</div>
                 <div className="item3">Email</div>
-                <div className="item4">: greeny@gmail.com</div>
+                <div className="item4">: {modalUserData !== "" ? modalUserData.email : "###@gmail.com"} </div>
                 <div className="item5">Contact</div>
-                <div className="item6">: 1234567890</div>
+                <div className="item6">: {modalContact !== "" ? modalContact : "#######890"}</div>
                 <div className="item7">Wallet</div>
-                <div className="item8">: $12</div>
+                <div className="item8">: $ ##</div>
                 <div className="item9">Delivary Address</div>
-                <div className="item10">: Coimbatore</div>
+                <div className="item10">: {modalAddress !== "" ? modalAddress : "#### ### ###"} </div>
               </div>
             </div>
           </div>
