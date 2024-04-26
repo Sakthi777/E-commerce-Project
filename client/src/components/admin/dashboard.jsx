@@ -8,6 +8,12 @@ import orderpending from "../../../src/assets/images/AddProduct/pending.png";
 import ordercancel from "../../../src/assets/images/AddProduct/cancel.png";
 import totalorder from "../../../src/assets/images/AddProduct/totalorders.png";
 import dispatch from "../../../src/assets/images/AddProduct/dispatch.png";
+import wallet from "../../../src/assets/images/AddProduct/wallet.png";
+import user from "../../../src/assets/images/AddProduct/user.png";
+import product from "../../../src/assets/images/AddProduct/totalproduct.png";
+
+
+
 
 
 
@@ -44,52 +50,97 @@ function Dashboard() {
 	};
 	const { showOffCanvas } = useOffCanvasContext();
 
+	let valueDisplay = document.querySelectorAll(".num");
+	let interval = 1000;
+
+	valueDisplay.forEach((valueDisplay) => {
+		let startValue = 0;
+		let endValue = parseInt(valueDisplay.getAttribute("value"));
+		let duration = Math.floor(interval/endValue);
+		let counter = setInterval(function(){
+			startValue +=1;
+			valueDisplay.textContent = startValue;
+			if(startValue === endValue){
+				clearInterval(counter);
+			}
+		}, duration);
+	})
+
 	return (
 		<>
 			<AdminHeader />
 			<div className={`orderList-container ${showOffCanvas ? "content-shifted" : ""} `}>
 				<div className="dashboard-card">
+					<div className="dashboard-body-item4">
+						<div className="body-cards">
+							<div className="ordericon">
+								<img src={totalorder} alt="" />
+							</div>
+							<span className="num" value="600">00</span>
+							<h6>Total Order</h6>
+						</div>
+					</div>
+					<div className="dashboard-body-item3">
+						<div className="body-cards">
+							<div className="ordericon">
+								<img src={orderpending} alt="" />
+							</div>
+							<span className="num" value="40">00</span>
+							<h6>Pending Order</h6>
+						</div>
+					</div>
+					<div className="dashboard-body-item5">
+						<div className="body-cards">
+							<div className="ordericon">
+								<img src={dispatch} alt="" />
+							</div>
+							<span className="num" value="240">00</span>
+							<h6>Dispatch Order</h6>
+						</div>
+					</div>
+					<div className="dashboard-body-item2">
+						<div className="body-cards">
+							<div className="ordericon">
+								<img src={ordercancel} alt="" />
+							</div>
+							<span className="num" value="100">00</span>
+							<h6>Cancel Order</h6>
+						</div>
+					</div>
 					<div className="dashboard-body-item1">
 						<div className="body-cards">
 							<div className="ordericon">
 								<img src={ordercomplete} alt="" />
 							</div>
-							<h5>Completed Order</h5>
-							
+							<span className="num" value="350">00</span>
+							<h6>Completed Order</h6>
 						</div>
 					</div>
-					<div className="dashboard-body-item2">
+					<div className="dashboard-body-item6">
 						<div className="body-cards">
-						<div className="ordericon">
-								<img src={ordercancel} alt="" />
+							<div className="ordericon">
+								<img src={wallet} alt="" />
 							</div>
-							<h5>Cancel Order</h5>
+							<span className="num" value="400">00</span>
+							<h6>Wallet Amount</h6>
+						</div>
+					</div><div className="dashboard-body-item7">
+						<div className="body-cards">
+							<div className="ordericon">
+								<img src={user} alt="" />
+							</div>
+							<span className="num" value="32">00</span>
+							<h6>Registerd User</h6>
+						</div>
+					</div><div className="dashboard-body-item8">
+						<div className="body-cards">
+							<div className="ordericon">
+								<img src={product} alt="" />
+							</div>
+							<span className="num" value="600">00</span>
+							<h6>Total Products</h6>
 						</div>
 					</div>
-					<div className="dashboard-body-item3">
-						<div className="body-cards">
-						<div className="ordericon">
-								<img src={orderpending} alt="" />
-							</div>
-							<h5>Pending Order</h5>
-						</div>
-					</div>
-					<div className="dashboard-body-item4">
-						<div className="body-cards">
-						<div className="ordericon">
-								<img src={totalorder} alt="" />
-							</div>
-							<h5>Total Order</h5>
-						</div>
-					</div>
-					{/* <div className="dashboard-body-item4">
-						<div className="body-cards">
-						<div className="ordericon">
-								<img src={dispatch} alt="" />
-							</div>
-							<h5>Dispatch Order</h5>
-						</div>
-					</div> */}
 				</div>
 				<div className="category-table-page">
 					<div className="rows-per-page-dropdown">
