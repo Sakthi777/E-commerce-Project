@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderPage from "../../components/user/HeaderPage";
 import Footer from "./Footer";
 import "../../styles/user/OrderHistory.css";
@@ -15,14 +15,248 @@ import { useSelector } from "react-redux";
 
 export default function OrderHistory() {
 	const token = useSelector((state) => state.tokenDetails.token);
+	const [orderHist, setOrderHist] = useState([]);
+	const [productDetails, setProductDetails] = useState([]);
 	const url = "http://localhost:8000";
 	const fetchOrderHistory = async () => {
 		const orderHistory = await axios.get(`${url}/getOrderDetails/${token}`);
-		console.log(orderHistory.data);
+		setOrderHist(orderHistory.data);
 	};
 	useEffect(() => {
 		fetchOrderHistory();
 	}, []);
+
+	const fetchProducts = async (products, index) => {
+		const id = products.productdetail;
+		// console.log(id);
+		const res = await axios.get(`${url}/get-userDetails/${id}`);
+		const productDet = res.data;
+		return (
+			<tr>
+				<td>
+					<h6>{index}</h6>
+				</td>
+				<td className="tablename">
+					<img src={`${url}/productImage/${productDet.image}`} alt="" />
+				</td>
+				<td>
+					<h6>{productDet.productName}</h6>
+				</td>
+				<td>
+					<h6>$19/kilo</h6>
+				</td>
+				<td>
+					<h6>Fresh Company</h6>
+				</td>
+				<td>
+					<h6>{products.quantity}</h6>
+				</td>
+			</tr>
+		);
+	};
+
+	const renderOrderHistory = () => {
+		return orderHist.map((order, index) => {
+			return (
+				<div className="list-of-order">
+					<div className="order-list">
+						<div>
+							<div className="order1">
+								<h5>Order#{index + 1}</h5>
+								<h5>Order Recieved</h5>
+							</div>
+							<div className="order-track">
+								<li className="track-item active">
+									<i>
+										<FontAwesomeIcon icon={faCheck} />
+									</i>
+									<span>Order Recieved</span>
+								</li>
+								<li className="track-item">
+									<i class="fa-solid fa-xmark"></i>
+									<span>Order Processed</span>
+								</li>
+								<li className="track-item">
+									<i class="fa-solid fa-xmark"></i>
+									<span>Order Shipped</span>
+								</li>
+								<li className="track-item">
+									<i class="fa-solid fa-xmark"></i>
+									<span>Order Delivered</span>
+								</li>
+							</div>
+							<div className="delivary-list">
+								<div className="order-details">
+									<li>
+										<h6>Order ID</h6>
+										<p>14667</p>
+									</li>
+									<li>
+										<h6>Totl Item</h6>
+										<p>{order.productDetails.length} Items</p>
+									</li>
+									<li>
+										<h6>Order Time</h6>
+										<p>{order.paymentDate.slice(0, 10)}</p>
+									</li>
+									<li>
+										<h6>Delivery Time</h6>
+										<p>{order.paymentDate.slice(0, 10)}</p>
+									</li>
+								</div>
+								<div className="order-details">
+									<li>
+										<h6>Sub Total</h6>
+										<p>Rs.{order.amount}</p>
+									</li>
+									<li>
+										<h6>Discount</h6>
+										<p>Rs.0</p>
+									</li>
+									<li>
+										<h6>Delivery Fee</h6>
+										<p>Rs.0</p>
+									</li>
+									<li>
+										<h6>Total(Incl. VAT)</h6>
+										<p>Rs.{order.amount}</p>
+									</li>
+								</div>
+								<div className="order-address">
+									<h6>Delivery Location</h6>
+									<p>{order.address}</p>
+								</div>
+							</div>
+							<div className="registerAdmindata1">
+								<div className="table-row1">
+									<div className="table-listdata1">
+										<table>
+											<thead className="tablehead">
+												<tr>
+													<th>Serial</th>
+													<th>Product</th>
+													<th>Name</th>
+													<th>Price</th>
+													<th>Brand</th>
+													<th>Quantity</th>
+												</tr>
+											</thead>
+											<tbody className="tablebody">
+												{order &&
+													order.productDetails.forEach((product, index) => {
+														fetchProducts(product, index + 1);
+													})}
+												{/* <tr>
+													<td>
+														<h6>01</h6>
+													</td>
+													<td className="tablename">
+														<img src={product1} alt="" />
+													</td>
+													<td>
+														<h6>Product Name</h6>
+													</td>
+													<td>
+														<h6>$19/kilo</h6>
+													</td>
+													<td>
+														<h6>Fresh Company</h6>
+													</td>
+													<td>
+														<h6>3</h6>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<h6>02</h6>
+													</td>
+													<td className="tablename">
+														<img src={product2} alt="" />
+													</td>
+													<td>
+														<h6>Product Name</h6>
+													</td>
+													<td>
+														<h6>$19/kilo</h6>
+													</td>
+													<td>
+														<h6>Fresh Company</h6>
+													</td>
+													<td>
+														<h6>3</h6>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<h6>03</h6>
+													</td>
+													<td className="tablename">
+														<img src={product3} alt="" />
+													</td>
+													<td>
+														<h6>Product Name</h6>
+													</td>
+													<td>
+														<h6>$19/kilo</h6>
+													</td>
+													<td>
+														<h6>Fresh Company</h6>
+													</td>
+													<td>
+														<h6>3</h6>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<h6>04</h6>
+													</td>
+													<td className="tablename">
+														<img src={product4} alt="" />
+													</td>
+													<td>
+														<h6>Product Name</h6>
+													</td>
+													<td>
+														<h6>$19/kilo</h6>
+													</td>
+													<td>
+														<h6>Fresh Company</h6>
+													</td>
+													<td>
+														<h6>3</h6>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<h6>05</h6>
+													</td>
+													<td className="tablename">
+														<img src={product5} alt="" />
+													</td>
+													<td>
+														<h6>Product Name</h6>
+													</td>
+													<td>
+														<h6>$19/kilo</h6>
+													</td>
+													<td>
+														<h6>Fresh Company</h6>
+													</td>
+													<td>
+														<h6>3</h6>
+													</td>
+												</tr> */}
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			);
+		});
+	};
 	return (
 		<div>
 			<HeaderPage />
@@ -47,7 +281,8 @@ export default function OrderHistory() {
 						</select>
 					</div>
 				</div>
-				<div className="list-of-order">
+				{renderOrderHistory()}
+				{/* <div className="list-of-order">
 					<div className="order-list">
 						<div>
 							<div className="order1">
@@ -818,7 +1053,7 @@ export default function OrderHistory() {
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> */}
 			</div>
 			<Footer />
 		</div>
