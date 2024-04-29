@@ -1,6 +1,6 @@
 import React from "react";
 import "../../styles/admin/RegisterData.css";
-import banner from "../../assets/images/banner/single-banner.jpg";
+// import banner from "../../assets/images/banner/single-banner.jpg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -15,7 +15,7 @@ export default function RegisterData() {
   const { showOffCanvas } = useOffCanvasContext();
   const url = "http://localhost:8000";
 
-  const token = useSelector((state)=> state.tokenDetails.token)
+  const token = useSelector((state) => state.tokenDetails.token);
 
   useEffect(() => {
     axios
@@ -26,7 +26,7 @@ export default function RegisterData() {
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(users)
+  console.log(users);
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 5;
   const lastIndex = currentPage * recordPerPage;
@@ -53,36 +53,33 @@ export default function RegisterData() {
   const handleClose = () => setShow(false);
   // const handleShow = () => setShow(true);
 
-  const [ modalUserData, setModalUserData] = useState("");
+  const [modalUserData, setModalUserData] = useState("");
 
-  const [ modalAddress, setModalAddress ] = useState("");
+  const [modalAddress, setModalAddress] = useState("");
 
   const [modalContact, setModalContact] = useState("");
 
   function TriggerModal(id) {
     console.log(window.innerWidth);
-    axios
-    .get(`http://localhost:8000/login/getuserData/${token}/${id}`)
-    .then((res) => {
-      console.log(res.data)
-      setModalUserData(res.data);
-    })
-    axios.get(`${url}/profileData/getData/${token}/${id}`).then((res)=>{
+    axios.get(`http://localhost:8000/login/getuserData/${token}/${id}`).then((res) => {
       console.log(res.data);
- 
+      setModalUserData(res.data);
+    });
+    axios.get(`${url}/profileData/getData/${token}/${id}`).then((res) => {
+      console.log(res.data);
+
       const data = res.data;
       setModalAddress(data.addresses[0].address);
-      setModalContact(data.contactNumbers[0].contactNumber)
-    })
+      setModalContact(data.contactNumbers[0].contactNumber);
+    });
     if (window.innerWidth <= 999) {
       setShow(true);
-    }
-    else {
+    } else {
       setShow(false);
     }
   }
   return (
-    <div >
+    <div>
       <AdminHeader />
       {/* <div className="offers-banner">
         <img src={banner} alt="Offer Banner" />
@@ -117,7 +114,12 @@ export default function RegisterData() {
                         <td>{d.userName}</td>
                         <td>{d.email}</td>
                         <td>
-                          <button className="viewicons" onClick={()=>{TriggerModal(d._id)}}>
+                          <button
+                            className="viewicons"
+                            onClick={() => {
+                              TriggerModal(d._id);
+                            }}
+                          >
                             view
                           </button>
                         </td>
@@ -129,11 +131,12 @@ export default function RegisterData() {
                       <Modal.Title>User Details</Modal.Title>
                     </Modal.Header>
                     {/* <Modal.Body>Name : Greeny</Modal.Body> */}
-                    <Modal.Body className="modelbody" style={{display:"flex",textAlign:"center"}}>
+                    <Modal.Body className="modelbody" style={{ display: "flex", textAlign: "center" }}>
                       <div className="user-details-card">
                         <div className="user-details-body">
                           <div className="userimg">
-                            <img src={user} alt="Avatar" /></div>
+                            <img src={user} alt="Avatar" />
+                          </div>
                           <div className="usertext-head">
                             <div className="usertext">
                               <div className="item1">Name </div>
@@ -160,7 +163,7 @@ export default function RegisterData() {
                 </tbody>
               </table>
             </div>
-            <div className="registerData-page-buttons" >
+            <div className="registerData-page-buttons">
               <nav>
                 <ul className="pagination">
                   <li className="page-item">
@@ -193,7 +196,8 @@ export default function RegisterData() {
           <div className="user-details-card">
             <div className="user-details-body">
               <div className="userimg">
-                <img src={user} alt="Avatar" /></div>
+                <img src={user} alt="Avatar" />
+              </div>
               <div className="usertext">
                 <div className="item1">Name </div>
                 <div className="item2">: {modalUserData !== "" ? modalUserData.name : "###"}</div>
@@ -209,7 +213,6 @@ export default function RegisterData() {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
