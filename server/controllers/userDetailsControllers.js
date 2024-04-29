@@ -4,7 +4,7 @@ const asyncHandler = require("../middlewares/catchAsyncError");
 exports.postAddToCardDetailsControllers = async (req, res) => {
 	try {
 		const { productID } = req.body;
-		const token = req.user.id;
+		const token = req.user._id;
 		console.log("Received product:", productID);
 		console.log("Received token:", token);
 		let user = await userDetails.findOne({ userID: token });

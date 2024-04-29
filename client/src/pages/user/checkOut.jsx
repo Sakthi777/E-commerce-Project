@@ -76,7 +76,7 @@ function CheckOut() {
           console.error("Error fetching product data:", error);
         });
     });
-
+    console.log(responseUserArray);
     setProductDetails(responseUserArray);
     findUser();
   }, [userCartItem]);
