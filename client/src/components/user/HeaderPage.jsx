@@ -290,7 +290,7 @@ const HeaderPage = () => {
           </div>
           <div className="price">
             <p>TOTAL PRICE</p>
-            <h6>{totalCardPrice}</h6>
+            <h6>${totalCardPrice}</h6>
           </div>
         </div>
 
@@ -336,7 +336,7 @@ const HeaderPage = () => {
             <div className="offcanvas-border" onClick={navigateCheckout} style={{ cursor: "pointer" }}>
               <p>Proceed To Checkout</p>
               <p className="hrLine"></p>
-              <p>{totalCardPrice}</p>
+              <p>$ {totalCardPrice}</p>
             </div>
           </div>
         </div>

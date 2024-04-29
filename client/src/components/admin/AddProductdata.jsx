@@ -18,9 +18,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import footimg from "../../../src/assets/images/footer-img/back-faq.jpg";
 import ProductCard from "../../pages/user/productCard";
 
-
-
-
 export default function AddProductdata() {
   const { showOffCanvas } = useOffCanvasContext();
   const [preImage, setPreImage] = useState(null);
@@ -71,7 +68,6 @@ export default function AddProductdata() {
     const newImages = ArrayoffilleList.map((file) => URL.createObjectURL(file));
     setArrayOfImages(newImages);
     console.log(fileList);
-
   };
   const handlePublish = () => {
     handleSubmit();
@@ -135,7 +131,7 @@ export default function AddProductdata() {
       console.error("Upload error:", error);
     }
   };
-  const handleReset = () =>{
+  const handleReset = () => {
     setPreImage(null);
     setArrayOfImages([]);
     setFileName("");
@@ -150,7 +146,7 @@ export default function AddProductdata() {
     setNewProduct(false);
     setFeaturedItems(false);
     setDiscountPercentage("");
-  }
+  };
   return (
     <>
       <AdminHeader />
@@ -242,7 +238,8 @@ export default function AddProductdata() {
                   </div>
                   <div className="user-product-input">
                     <p>Rating*</p>
-                    <input type="text" value={rating} onChange={(e) => setRating(e.target.value)} /></div>
+                    <input type="text" value={rating} onChange={(e) => setRating(e.target.value)} />
+                  </div>
                 </div>
                 <div className="label-id">
                   <div class="user-product-input">
@@ -251,11 +248,11 @@ export default function AddProductdata() {
                   </div>
                   <div className="user-product-input">
                     <label>Old Price*</label>
-                    <input type="text" placeholder="Enter Old Price" value={oldPrice} onChange={(e) => setOldPrice(e.target.value)} required ></input>
+                    <input type="text" placeholder="Enter Old Price" value={oldPrice} onChange={(e) => setOldPrice(e.target.value)} required></input>
                   </div>
                   <div className="user-product-input">
                     <label>New Price*</label>
-                    <input type="text" placeholder="Enter New Price" value={newPrice} onChange={(e) => setNewPrice(e.target.value)} required ></input>
+                    <input type="text" placeholder="Enter New Price" value={newPrice} onChange={(e) => setNewPrice(e.target.value)} required></input>
                   </div>
                 </div>
                 <div className="label-id">
@@ -273,12 +270,11 @@ export default function AddProductdata() {
                       <option value="true">True</option>
                     </select>
                   </div>
-
                 </div>
                 <div className="label-id">
                   <div className="user-product-input label-id-input">
                     <label>Discount Percentage*</label>
-                    <input type="text" value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value)} required ></input>
+                    <input type="text" value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value)} required></input>
                   </div>
                   <div className="user-product-input">
                     <label>FeaturedItems*</label>
@@ -291,23 +287,22 @@ export default function AddProductdata() {
               </div>
               <div>
                 <p htmlFor="">Main Image</p>
-                <div className="label-id" style={{ borderColor: '#F0F4F8', height: "28vh" }}>
-
+                <div className="label-id" style={{ borderColor: "#F0F4F8", height: "28vh" }}>
                   <div className="image-input">
                     <div>
                       <label htmlFor="category-image">
                         <span style={{ fontSize: "256%" }}>
-
                           <FontAwesomeIcon icon={faCloudArrowUp} className="fonticon" />
-                        </span><br />
+                        </span>
+                        <br />
                         <span>
-                          <span style={{ color: "#009f7f" }}>Drag and drop your product images or browse  your product images</span>
+                          <span style={{ color: "#009f7f" }}>Drag and drop your product images or browse your product images</span>
                         </span>
                       </label>
-
                     </div>
                     <div className="imageInputFiled">
-                      <input type="file" onChange={handleImageChange} accept="image/*" name="category-image" id="category-image" style={{ display: "none", border: "lightgray" }} required /></div>
+                      <input type="file" onChange={handleImageChange} accept="image/*" name="category-image" id="category-image" style={{ display: "none", border: "lightgray" }} required />
+                    </div>
                     <div className="image-box">
                       <img src={preImage ? preImage : upload} alt="" className="center-image" />
                     </div>
@@ -315,52 +310,45 @@ export default function AddProductdata() {
                 </div>
               </div>
               <div>
-                <p htmlFor="" >Model Multi Image</p>
-                <div className="" style={{ borderColor: '#F0F4F8' }}>
-
+                <p htmlFor="">Model Multi Image</p>
+                <div className="" style={{ borderColor: "#F0F4F8" }}>
                   <div className="image-input multiImg" style={{ height: "25vh" }}>
                     <div>
                       <label htmlFor="multi-file-upload">
                         <span style={{ fontSize: "256%" }}>
-
                           <FontAwesomeIcon icon={faCloudArrowUp} />
-                        </span><br />
-                        <span>
-                          <span style={{ color: "#009f7f" }}>Drag and drop your product images or browse  your product images</span>
-
                         </span>
-
+                        <br />
+                        <span>
+                          <span style={{ color: "#009f7f" }}>Drag and drop your product images or browse your product images</span>
+                        </span>
                       </label>
                       <div className="imageInputFiled">
-                        <input type="file" name="multi-file-upload" id="multi-file-upload" style={{ cursor: "pointer", display: "none" }} onChange={handleImageSliderChange} accept="image/*" multiple required /></div>
-
+                        <input type="file" name="multi-file-upload" id="multi-file-upload" style={{ cursor: "pointer", display: "none" }} onChange={handleImageSliderChange} accept="image/*" multiple required />
+                      </div>
                     </div>
                   </div>
                   <br />
                 </div>
-                <div className="image-grid-multi" >
-                  {
-                    ArrayOfimages.map((image, index) => (
-                      <div className="image-upload-box">
-                        <div className="imgborder">
-                          <div className="image-box-multi">
-                            <img key={index} src={image ? image : upload} alt={`product${index + 1}`} className="center-image"></img>
-                          </div>
-                          <div className="imgbutton">
-                            <button>delete</button>
-                          </div>
+                <div className="image-grid-multi">
+                  {ArrayOfimages.map((image, index) => (
+                    <div className="image-upload-box">
+                      <div className="imgborder">
+                        <div className="image-box-multi">
+                          <img key={index} src={image ? image : upload} alt={`product${index + 1}`} className="center-image"></img>
+                        </div>
+                        <div className="imgbutton">
+                          <button>delete</button>
                         </div>
                       </div>
-
-                    ))
-                  }
-
+                    </div>
+                  ))}
                 </div>
               </div>
               <div className="label-id">
                 <div className="user-product-input">
                   <p htmlFor="reset">Description*</p>
-                  <textarea name="details" id="details" style={{ paddingLeft: '10px' }} cols="10" rows="5" placeholder="Enter Description" required></textarea>
+                  <textarea name="details" id="details" style={{ paddingLeft: "10px" }} cols="10" rows="5" placeholder="Enter Description" value={productDescription} onChange={(e) => setProductDescription(e.target.value)} required></textarea>
                 </div>
               </div>
               {/* <div className="label-id payment-images">
@@ -420,7 +408,7 @@ export default function AddProductdata() {
             </div>
           </div> */}
           </div>
-        </div >
+        </div>
       </form>
       <ToastContainer />
     </>

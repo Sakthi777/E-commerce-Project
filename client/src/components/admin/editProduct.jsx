@@ -304,7 +304,8 @@ const EditProduct = () => {
                 </div>
                 <div className="user-product-input">
                   <p>Rating*</p>
-                  <input type="text" value={rating} onChange={(e) => setRating(e.target.value)} /></div>
+                  <input type="text" value={rating} onChange={(e) => setRating(e.target.value)} />
+                </div>
               </div>
               <div className="label-id">
                 <div class="user-product-input">
@@ -313,11 +314,11 @@ const EditProduct = () => {
                 </div>
                 <div className="user-product-input">
                   <label>Old Price*</label>
-                  <input type="text" placeholder="Enter Old Price" value={oldPrice} onChange={(e) => setOldPrice(e.target.value)} required ></input>
+                  <input type="text" placeholder="Enter Old Price" value={oldPrice} onChange={(e) => setOldPrice(e.target.value)} required></input>
                 </div>
                 <div className="user-product-input">
                   <label>New Price*</label>
-                  <input type="text" placeholder="Enter New Price" value={newPrice} onChange={(e) => setNewPrice(e.target.value)} required ></input>
+                  <input type="text" placeholder="Enter New Price" value={newPrice} onChange={(e) => setNewPrice(e.target.value)} required></input>
                 </div>
               </div>
               <div className="label-id">
@@ -335,12 +336,11 @@ const EditProduct = () => {
                     <option value="true">True</option>
                   </select>
                 </div>
-
               </div>
               <div className="label-id">
                 <div className="user-product-input label-id-input">
                   <label>Discount Percentage*</label>
-                  <input type="text" value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value)} required ></input>
+                  <input type="text" value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value)} required></input>
                 </div>
                 <div className="user-product-input">
                   <label>FeaturedItems*</label>
@@ -349,34 +349,34 @@ const EditProduct = () => {
                     <option value="true">True</option>
                   </select>
                 </div>
-              </div></div>
+              </div>
+            </div>
             <div>
               <p htmlFor="">Main Image</p>
-              <div className="label-id" style={{ borderColor: '#F0F4F8', height: "28vh" }}>
-
+              <div className="label-id" style={{ borderColor: "#F0F4F8", height: "28vh" }}>
                 <div className="image-input">
                   <div>
                     <label htmlFor="category-image">
                       <span style={{ fontSize: "256%" }}>
-
                         <FontAwesomeIcon icon={faCloudArrowUp} className="fonticon" />
-                      </span><br />
+                      </span>
+                      <br />
                       <span>
-                        <span style={{ color: "#009f7f" }}>Drag and drop your product images or browse  your product images</span>
+                        <span style={{ color: "#009f7f" }}>Drag and drop your product images or browse your product images</span>
                       </span>
                     </label>
-
                   </div>
                   <div className="imageInputFiled">
-                    <input type="file" onChange={handleImageChange} accept="image/*" name="category-image" id="category-image" style={{ display: "none", border: "lightgray" }} required /></div>
+                    <input type="file" onChange={handleImageChange} accept="image/*" name="category-image" id="category-image" style={{ display: "none", border: "lightgray" }} required />
+                  </div>
                   <div className="image-box">{image ? <img src={preImage} alt={`product 2`} className="center-image" /> : <img src={`http://localhost:8000/uploads/productImage/${upload}`} alt={`product 2`} className="center-image" />}</div>
                 </div>
               </div>
             </div>
-            <div className="ImageSliderUpload" >
+            <div className="ImageSliderUpload">
               <p>Model Multi Image</p>
               <div style={{ border: "1px solid lightgray", borderRadius: "8px" }}>
-                <div className="image-grid-multi" >
+                <div className="image-grid-multi">
                   {ArrayOfimages.map((image, index) => (
                     <div>
                       <div className="image-upload-box">
@@ -406,18 +406,17 @@ const EditProduct = () => {
             <div className="label-id">
               <div className="user-product-input">
                 <p htmlFor="">Description*</p>
-                <textarea name="details" id="details" style={{ paddingLeft: '10px' }} cols="10" rows="5" placeholder="Enter Description" required></textarea>
-              </div></div>
+                <textarea name="details" id="details" style={{ paddingLeft: "10px" }} cols="10" rows="5" placeholder="Enter Description" value={productDescription} onChange={(e) => setProductDescription(e.target.value)} required></textarea>
+              </div>
+            </div>
             <div className="products-button">
               <div className="pro-btn">
                 <button type="reset">Cancel</button>
               </div>
               <div className="pro-btn">
-                <button onClick={''}>Save</button>
+                <button onClick={""}>Save</button>
               </div>
             </div>
-
-
 
             {/* <div className="cont-attribute">
               <div className="pu-attribute">
