@@ -15,6 +15,7 @@ const {
 } = require("../controllers/prfoileDataController");
 const profileImageUpload = require("../middlewares/profileImageMulter");
 const profileDataRouter = express.Router();
+const {getAdminRegisterDataController} = require("../controllers/prfoileDataController")
 
 // exports.postProfileDataControllers = async (req, res) => {
 // 	console.log(req.body);
@@ -43,5 +44,9 @@ profileDataRouter.route("/delContact/:token/:index").delete( authenticateParams,
 profileDataRouter.route("/delAddress/:token/:index").delete( authenticateParams, delAddressControllers);
 
 profileDataRouter.route("/delCard/:token/:index").delete( authenticateParams, delCardControllers);
+
+// admin route
+
+profileDataRouter.route("/getData/:token/:id").get(authenticateParams, getAdminRegisterDataController)
 
 module.exports = profileDataRouter;

@@ -26,19 +26,19 @@ export const SidebarData = [
         icon: <FaIcons.FaCheckCircle className="icon" />,
       },
       {
-        title: "Completed Orders",
-        path: "/admin/completedOrders",
-        icon: <FaIcons.FaCheckCircle className="icon" />,
-      },
-      {
         title: "Pending Orders",
         path: "/admin/pendingOrders",
         icon: <MDIcons.MdOutlinePendingActions className="icon" />,
       },
       {
-        title: "Canceled Orders",
-        path: "/admin/canceledOrders",
+        title: "Dispatched Orders",
+        path: "/admin/dispatchOrders",
         icon: <MDIcons.MdCancel className="icon" />,
+      },
+      {
+        title: "Completed Orders",
+        path: "/admin/completedOrders",
+        icon: <FaIcons.FaCheckCircle className="icon" />,
       },
       // {
       //   title: "User Register Data",
@@ -46,19 +46,91 @@ export const SidebarData = [
       //   icon : <FaIcons.FaUser className="icon" />,
       // },
     ],
-  },{
-    title : "Users Data",
-    path : "",
-    icon : <FaIcons.FaUser className="icon" />,
-    subNav : [
-      {
-        title : "Register List",
-        path : "/admin/registerdata",
-        icon : <FaIcons.FaUsers className="icon" />,
-      }
-    ]
   },
   {
+    title: "Users Data",
+    path: "",
+    icon: <FaIcons.FaUser className="icon" />,
+    subNav: [
+      {
+        title: "Register List",
+        path: "/admin/registerdata",
+        icon: <FaIcons.FaUsers className="icon" />,
+      },
+    ],
+  },
+  
+  // {
+  //   title: "My Shops",
+  //   path: "/my Shops",
+  //   icon: <FaIcons.FaCartPlus className="icon" />,
+  // },
+  // {
+    // heading: "Product Management",
+    // title: "Products",
+    // path: "",
+    // icon: <IoIcons.IoMdHelpCircle className="icon" />,
+
+    // subNav: [
+    //   {
+    //     title: "All Products",
+    //     path: "/products/all-product",
+    //     icon: <IoIcons.IoIosPaper className="icon" />,
+    //   },
+    //   {
+    //     title: "My Draft products",
+    //     path: "/products/my-draft-products",
+    //     icon: <IoIcons.IoIosPaper className="icon" />,
+    //   },
+    //   {
+    //     title: "All Low & Out of stock products",
+    //     path: "/products/out-of-stocks",
+    //     icon: <IoIcons.IoIosPaper className="icon" />,
+    //   },
+    //   {
+    //     title: "Add New Product",
+    //     path: "/addProduct",
+    //     icon: <MDIcons.MdPlaylistAdd className="icon" />,
+    //   },
+    // ],
+  // },
+  // {
+  //   title: "Inactive/New shops",
+  //   path: "/shops/new-shops",
+  //   icon: <IoIcons.IoIosPaper className="icon" />,
+  // },
+  // {
+  //   title: "Inventory",
+  //   path: "/shops/new-shops",
+  //   icon: <IoIcons.IoIosPaper className="icon" />,
+  // },
+  // {
+  //   title: "Categories",
+  //   path: "/shops/new-shops",
+  //   icon: <IoIcons.IoIosPaper className="icon" />,
+  // },
+  // {
+  //   title: "Tags",
+  //   path: "/shops/new-shops",
+  //   icon: <IoIcons.IoIosPaper className="icon" />,
+  // },
+  // {
+  //   title: "Attributes",
+  //   path: "/shops/new-shops",
+  //   icon: <IoIcons.IoIosPaper className="icon" />,
+  // },
+  // {
+  //   title: "Manufactures/Publications",
+  //   path: "/shops/new-shops",
+  //   icon: <IoIcons.IoIosPaper className="icon" />,
+  // },
+  // {
+  //   title: "Author",
+  //   path: "/shops/new-shops",
+  //   icon: <IoIcons.IoIosPaper className="icon" />,
+  // },
+  {
+    heading: "Product Management",
     title: "Category",
     path: "",
     icon: <IoIcons.IoIosPaper className="icon" />,
@@ -84,74 +156,5 @@ export const SidebarData = [
       //   icon: <IoIcons.IoIosPaper className="icon" />,
       // },
     ],
-  },
-  {
-    title: "My Shops",
-    path: "/my Shops",
-    icon: <FaIcons.FaCartPlus className="icon" />,
-  },
-  {
-    heading: "Product Management",
-    title: "Products",
-    path: "",
-    icon: <IoIcons.IoMdHelpCircle className="icon" />,
-
-    subNav: [
-      {
-        title: "All Products",
-        path: "/products/all-product",
-        icon: <IoIcons.IoIosPaper className="icon" />,
-      },
-      {
-        title: "My Draft products",
-        path: "/products/my-draft-products",
-        icon: <IoIcons.IoIosPaper className="icon" />,
-      },
-      {
-        title: "All Low & Out of stock products",
-        path: "/products/out-of-stocks",
-        icon: <IoIcons.IoIosPaper className="icon" />,
-      },
-      {
-        title: "Add New Product",
-        path: "/addProduct",
-        icon: <MDIcons.MdPlaylistAdd className="icon" />,
-      },
-    ],
-  },
-  {
-    title: "Inactive/New shops",
-    path: "/shops/new-shops",
-    icon: <IoIcons.IoIosPaper className="icon" />,
-  },
-  {
-    title: "Inventory",
-    path: "/shops/new-shops",
-    icon: <IoIcons.IoIosPaper className="icon" />,
-  },
-  {
-    title: "Categories",
-    path: "/shops/new-shops",
-    icon: <IoIcons.IoIosPaper className="icon" />,
-  },
-  {
-    title: "Tags",
-    path: "/shops/new-shops",
-    icon: <IoIcons.IoIosPaper className="icon" />,
-  },
-  {
-    title: "Attributes",
-    path: "/shops/new-shops",
-    icon: <IoIcons.IoIosPaper className="icon" />,
-  },
-  {
-    title: "Manufactures/Publications",
-    path: "/shops/new-shops",
-    icon: <IoIcons.IoIosPaper className="icon" />,
-  },
-  {
-    title: "Author",
-    path: "/shops/new-shops",
-    icon: <IoIcons.IoIosPaper className="icon" />,
   },
 ];

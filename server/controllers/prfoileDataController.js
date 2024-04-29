@@ -215,3 +215,18 @@ exports.delCardControllers = asyncHandler(async (req, res, next) => {
 		res.send("Something went wrong");
 	}
 });
+
+
+// admin profile register data
+
+exports.getAdminRegisterDataController = asyncHandler(async(req, res, next)=>{
+	try {
+		const id  = req.params.id;
+
+		const profileData = await MainModel.findOne({ id });
+		console.log(profileData);
+		await res.json(profileData);
+	} catch (error) {
+		res.status(500).send("Error fetching profile data");
+	}
+})

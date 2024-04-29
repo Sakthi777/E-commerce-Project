@@ -58,6 +58,16 @@ const OrderDetails = new mongoose.Schema({
     default: false,
     //required: true,
   },
+  dispatch: {
+    type: Boolean,
+    default: false,
+    //required: true,
+  },
+  complete: {
+    type: Boolean,
+    default: false,
+    //required: true,
+  },
 });
 
 module.exports = mongoose.model("orderDetails", OrderDetails);

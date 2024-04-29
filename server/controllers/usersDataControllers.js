@@ -253,3 +253,17 @@ exports.getProductDetailsControllers = async (req, res) => {
 		res.status(500).json({ error: "Internal Server Error" });
 	}
 };
+
+exports.getAdminSingleUserDataControllers = asyncHandler(async (req, res, next) => {
+	try {
+		const  id  = req.params.id;
+		const userDetails = await userDataSchema.findById(id);
+		const userData = {
+			email: userDetails.email,
+			name: userDetails.userName,
+		};
+		res.send(userData);
+	} catch (err) {
+		res.send(err);
+	}
+});
