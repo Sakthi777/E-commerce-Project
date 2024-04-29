@@ -71,12 +71,13 @@ function CheckOut() {
 					setTotalCardPrice(totalPrice);
 					console.log("product count " + count);
 					setTotalCartItem(count);
+					
 				})
 				.catch((error) => {
 					console.error("Error fetching product data:", error);
 				});
 		});
-
+		console.log(responseUserArray);
 		setProductDetails(responseUserArray);
 		findUser();
 	}, [userCartItem]);
@@ -507,6 +508,7 @@ function CheckOut() {
 	const [showModal, setShowModal] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState(null);
 
+	
 	const toggleDescription = (product) => {
 		setSelectedProduct(product);
 		setShowModal(true);
