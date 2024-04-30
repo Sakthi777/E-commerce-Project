@@ -6,13 +6,13 @@ import * as CiIcon from "react-icons/ci";
 const ProfileCard = () => {
   return (
     <div className="profile-card">
-      <div className="profile-container">
+      {/* <div className="profile-container">
         <CgIcon.CgProfile className="profile-icon" />
         <div className="profile-info visible">
           <span className="profile-name">Sakthi</span>
           <span className="profile-role">Super Admin</span>
         </div>
-      </div>
+      </div> */}
 
       <div className="profile-list">
         <ul>
