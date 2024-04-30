@@ -11,41 +11,10 @@ export const SidebarData = [
   {
     heading: "Main",
     title: "Dashboard",
-    path: "",
+    path: "/admin/dashboard",
     icon: <AiIcons.AiFillHome className="icon" />,
     isFirstHeading: true,
-    subNav: [
-      {
-        title: "Total Orders",
-        path: "/admin/dashboard",
-        icon: <AiIcons.AiTwotoneDashboard className="icon" />,
-      },
-      {
-        title: "Your Orders",
-        path: "/admin/yourOrders",
-        icon: <FaIcons.FaCheckCircle className="icon" />,
-      },
-      {
-        title: "Pending Orders",
-        path: "/admin/pendingOrders",
-        icon: <MDIcons.MdOutlinePendingActions className="icon" />,
-      },
-      {
-        title: "Dispatched Orders",
-        path: "/admin/dispatchOrders",
-        icon: <MDIcons.MdCancel className="icon" />,
-      },
-      {
-        title: "Completed Orders",
-        path: "/admin/completedOrders",
-        icon: <FaIcons.FaCheckCircle className="icon" />,
-      },
-      // {
-      //   title: "User Register Data",
-      //   path: "/admin/registerdata",
-      //   icon : <FaIcons.FaUser className="icon" />,
-      // },
-    ],
+  
   },
   {
     title: "Users Data",
@@ -135,11 +104,11 @@ export const SidebarData = [
     path: "",
     icon: <IoIcons.IoIosPaper className="icon" />,
     subNav: [
-      {
-        title: "Add Category",
-        path: "/admin/addcategory",
-        icon: <IoIcons.IoIosPaper className="icon" />,
-      },
+      // {
+      //   title: "Add Category",
+      //   path: "/admin/addcategory",
+      //   icon: <IoIcons.IoIosPaper className="icon" />,
+      // },
       {
         title: "Add Product",
         path: "/admin/addProduct",
@@ -157,4 +126,38 @@ export const SidebarData = [
       // },
     ],
   },
+
+  {
+    heading: "Order Management",
+    title: "Order",
+    path: "",
+    icon: <FaIcons.FaCartPlus className="icon" />,
+    subNav: [
+      {
+        title: "Your Orders",
+        path: "/admin/yourOrders",
+        icon: <FaIcons.FaCheckCircle className="icon" />,
+      },
+      {
+        title: "Pending Orders",
+        path: "/admin/pendingOrders",
+        icon: <MDIcons.MdOutlinePendingActions className="icon" />,
+      },
+      {
+        title: "Dispatched Orders",
+        path: "/admin/dispatchOrders",
+        icon: <MDIcons.MdCancel className="icon" />,
+      },
+      {
+        title: "Completed Orders",
+        path: "/admin/completedOrders",
+        icon: <FaIcons.FaCheckCircle className="icon" />,
+      },
+      // {
+      //   title: "User Register Data",
+      //   path: "/admin/registerdata",
+      //   icon : <FaIcons.FaUser className="icon" />,
+      // },
+    ],
+  }
 ];
