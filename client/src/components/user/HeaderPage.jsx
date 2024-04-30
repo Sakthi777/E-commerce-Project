@@ -68,7 +68,7 @@ const HeaderPage = () => {
 		dispatch(setSearchValue(searchVal));
 	}, [searchVal]);
 
-	const [profilePic, setProfilePic] = useState("");
+	const [profilePic, setProfilePic] = useState(profileImage);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -238,7 +238,8 @@ const HeaderPage = () => {
 	const logout = () => {
 		Cookies.remove("LoginToken");
 		dispatch(setToken(""));
-		dispatch(setProfilePicture(""));
+		// dispatch(setProfilePicture(profileImage));
+		setProfilePic(profileImage);
 		window.location.reload();
 	};
 
@@ -280,7 +281,7 @@ const HeaderPage = () => {
 					<div className="alignItem">
 						<Link to="/">
 							<div className="alignMyAccount">
-								<img src={profile} alt=""></img>
+								<img src={profilePic} alt=""></img>
 							</div>
 						</Link>
 						<div className="alignlogo" onClick={() => navigate("/")}>
@@ -296,14 +297,14 @@ const HeaderPage = () => {
 					{LogOut ? (
 						<Link to="/login" style={{ textDecoration: "none" }}>
 							<div className="myAccount">
-								<img src={profile} alt="" className="profile-logo" />
+								<img src={profilePic} alt="" className="profile-logo" />
 								<p className="join">Join</p>
 							</div>
 						</Link>
 					) : (
 						<Link onClick={logout} style={{ textDecoration: "none" }}>
 							<div className="myAccount">
-								<img src={profile} alt="" className="profile-logo" />
+								<img src={profilePic} alt="" className="profile-logo" />
 								<p className="join">LogOut</p>
 							</div>
 						</Link>
