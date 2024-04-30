@@ -148,8 +148,8 @@ const FeaturedItems = ({ imgSrc, imageSlider, rating, productName, oldPrice, new
 					<p>({rating})</p>
 				</div>
 				<div className="feature-price">
-					<span className="oldPrice">{oldPrice}</span>
-					<span className="newPrice">{newPrice}/piece</span>
+					<span className="oldPrice">₹{oldPrice}</span>
+					<span className="newPrice">₹{newPrice}/piece</span>
 				</div>
 				<div className="feature-des">{productDetails}</div>
 				<div className="add-to-cart-icon" onClick={() => handleClick(product._id)}>

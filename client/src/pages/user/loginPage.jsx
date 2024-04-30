@@ -10,9 +10,10 @@ import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../features/slice/tokenSlice";
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
+import { Url } from "../../config/config";
+
 const LoginCmp = () => {
-	const url = "http://localhost:8000";
 
 	const nav = useNavigate();
 	const navigate = useNavigate();
@@ -27,6 +28,8 @@ const LoginCmp = () => {
 		email: { status: false, message: "" },
 		password: { status: false, message: "" },
 	});
+
+	// const [adminStatus, setAdminStatus] = useState("");
 
 	const [disable, setDisable] = useState(false);
 	let cookieToken = null;
@@ -60,7 +63,7 @@ const LoginCmp = () => {
 			console.log(handlePost);
 			setUserData({ ...userData, loader: true });
 			await axios
-				.post(`${url}/login/loginUser`, handlePost)
+				.post(`${Url}/login/loginUser`, handlePost)
 				.then((res) => {
 					console.log(res.data);
 					const token = res.data;
@@ -69,20 +72,39 @@ const LoginCmp = () => {
 					if (token) {
 						//Redux State Global Token
 						// const id = jwtDecode(token);
-						// dispatch(setToken(id.userId));
-
-						dispatch(setToken(token));
-
-
-						setUserData({ ...userData, email: "", password: "" });
-						toast.success("Login Successfull !", {
-							autoClose: 2000,
-							onClose: () => {
-								setTimeout(() => {
-									nav("/");
-								}, 200);
-							},
-						});
+						// console.log(id);
+						axios.get(`${Url}/userDatas/getuser/${token}`).then((res) => {
+							console.log(res.data)
+							const adminStatus = res.data.isAdmin;
+							console.log(adminStatus);
+							if (adminStatus === true) {
+								dispatch(setToken(token));
+								setUserData({ ...userData, email: "", password: "" });
+								toast.success("Login Successfull !", {
+									autoClose: 2000,
+									onClose: () => {
+										setTimeout(() => {
+											nav("/admin/dashboard");
+										}, 200);
+									},
+								});
+							}
+							else if (adminStatus === false) {
+								dispatch(setToken(token));
+								setUserData({ ...userData, email: "", password: "" });
+								toast.success("Login Successfull !", {
+									autoClose: 2000,
+									onClose: () => {
+										setTimeout(() => {
+											nav("/");
+										}, 200);
+									},
+								});
+							}
+						}).catch((err) => {
+							console.log(err);
+						})
+						
 					}
 				})
 				.catch((error) => {
@@ -94,6 +116,7 @@ const LoginCmp = () => {
 				});
 		}
 	};
+
 
 	useEffect(() => {
 		cookieToken = Cookies.get("LoginToken");

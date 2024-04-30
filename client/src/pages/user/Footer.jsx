@@ -141,43 +141,43 @@ export default function Footer() {
             <div className="table">
               <tr>
                 <td>
-                  <a href="...">My&nbsp;&nbsp;Account</a>
+                  <a href="/myProfile">My&nbsp;&nbsp;Profile</a>
                 </td>
 
                 <td>
-                  <a href="...">Location</a>
+                  <a href="/checkout">Checkout</a>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <a href="...">Order&nbsp;&nbsp;History</a>
+                  <a href="/orderHistory">Order&nbsp;&nbsp;History</a>
                 </td>
                 <td>
-                  <a href="...">Affiliates</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="...">Order&nbsp;&nbsp;Tracking</a>
-                </td>
-                <td>
-                  <a href="...">Contact</a>
+                  <a href="/shop">Shop</a>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <a href="...">Best Seller</a>
+                  <a href="/wishlist">Wishlist</a>
                 </td>
                 <td>
-                  <a href="...">Carrer</a>
+                  <a href="/us">Contact</a>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <a href="...">New Arrivals</a>
+                  <a href="/privacy">Privacy Policy</a>
                 </td>
                 <td>
-                  <a href="...">Faq</a>
+                  <a href="/myWallet">Wallet</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="/offers">Offers</a>
+                </td>
+                <td>
+                  <a href="/faq">Faq</a>
                 </td>
               </tr>
             </div>
@@ -201,7 +201,7 @@ export default function Footer() {
       <div className="coder">
         <p className="copytext">
           © All Copyrights Reserved by
-          <a href="..."> Mironcoder</a>
+          <a href="..."> Segolsys</a>
         </p>
         <div className="coder-card">
           <a href="...">

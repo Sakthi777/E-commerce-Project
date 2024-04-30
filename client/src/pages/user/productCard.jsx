@@ -148,8 +148,8 @@ const ProductCard = ({ imgSrc, imageSlider, rating, productName, oldPrice, newPr
 			</div>
 			<div className="product-name">{productName}</div>
 			<div className="product-price">
-				<span className="oldPrice">{oldPrice}</span>
-				<span className="newPrice">{newPrice}/piece</span>
+				<span className="oldPrice">₹{oldPrice}</span>
+				<span className="newPrice">₹{newPrice}/piece</span>
 			</div>
 			<div
 				className="add-to-cart-icon"

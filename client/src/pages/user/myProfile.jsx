@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Modal } from "react-bootstrap";
 import Footer from "./Footer";
+import { jwtDecode } from "jwt-decode";
 
 import { useSelector } from "react-redux";
 
@@ -71,7 +72,6 @@ function MyProfile() {
 				formData.append("profileImage", image);
 			});
 			formData.append("token", token);
-			// console.log(Object.fromEntries(formData));
 			try {
 				const response = await axios
 					.post(`${url}/profileData/postImage`, formData, {
@@ -82,12 +82,7 @@ function MyProfile() {
 					.then((res) => {
 						setProfilePic(`${url}/uploads/profilePicture/${res.data.profilePicture}`);
 					});
-				console.log("Upload successful:", response.data);
-			} catch (error) {
-				console.error("Error uploading images:", error);
-			}
-		} else {
-			console.log("No images selected.");
+			} catch (error) {}
 		}
 
 		setShowProfile(false);
@@ -111,11 +106,9 @@ function MyProfile() {
 				},
 			],
 		};
-		console.log(postData);
 		axios
 			.post(`${url}/profileData/contact`, postData)
 			.then((response) => {
-				console.log("Data posted successfully:", response.data);
 				setContactDetails(response.data.contactNumbers);
 			})
 			.catch((error) => {
@@ -147,7 +140,7 @@ function MyProfile() {
 				},
 			],
 		};
-		console.log(postData)
+		console.log(postData);
 		await axios
 			.put(`${url}/profileData/editContact/${editIndex}`, postData)
 			.then((res) => {
@@ -226,6 +219,11 @@ function MyProfile() {
 		const cardNumber = document.getElementById("card-number").value;
 		const cardOwnerName = document.getElementById("card-owner-name").value;
 		let validationError = false;
+		if (!cardOwnerName) {
+			toastWarn("Name should not be empty");
+			validationError = true;
+			return;
+		}
 		if (cardNumber.length !== 16) {
 			toastWarn("Card Number Must Contain 16 Digits");
 			validationError = true;
@@ -270,10 +268,10 @@ function MyProfile() {
 				setContactDetails(profileDataRes.data.contactNumbers);
 				setAddressDetails(profileDataRes.data.addresses);
 				setCardDetails(profileDataRes.data.cards);
-				console.log(profileDataRes.data.profilePicture);
+				// console.log(profileDataRes.data.profilePicture);
 				if (profileDataRes.data.profilePicture) {
 					setProfilePic(`${url}/uploads/profilePicture/${profileDataRes.data.profilePicture}`);
-					console.log(profileDataRes.data.profilePicture + "hi");
+					// console.log(profileDataRes.data.profilePicture + "hi");
 				} else {
 					setProfilePic(profileImage);
 				}
@@ -285,16 +283,18 @@ function MyProfile() {
 		const findUser = async () => {
 			try {
 				const id = token;
-				axios.get(`${url}/login/getuser/${id}`).then((res)=>{
+				axios.get(`${url}/login/getuser/${id}`).then((res) => {
 					setUserDetails(res.data);
-				})
+				});
 			} catch (error) {
 				console.log(error);
 			}
 		};
-		findUser();
-		fetchData();
-		console.log(token);
+		if (token) {
+			findUser();
+			fetchData();
+			console.log(jwtDecode(token));
+		}
 	}, [token]);
 
 	const handelDeleteContact = async (index) => {
@@ -391,7 +391,7 @@ function MyProfile() {
 					<img src={cardImage} alt="" />
 					<h5>
 						Card Number <br />
-						************{card.cardNumber.slice(-4)}
+						**** **** ****{card.cardNumber.slice(-4)}
 					</h5>
 					<p>{card.ownerName}</p>
 					<button className="profile-action-del-btn">
@@ -436,7 +436,6 @@ function MyProfile() {
 		if (cardDetails) renderCardDetails();
 	}, [cardDetails]);
 
-	
 	return (
 		<>
 			<HeaderPage />

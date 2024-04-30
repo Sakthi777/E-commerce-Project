@@ -9,7 +9,9 @@
     align-items: center;
     justify-content: space-between
 }
-
+.order-history{
+    padding: 4%;
+}
 .order-selection {
     display: flex;
     align-items: center;

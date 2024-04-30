@@ -140,15 +140,15 @@ export default function RegisterData() {
                           <div className="usertext-head">
                             <div className="usertext">
                               <div className="item1">Name </div>
-                              <div className="item2">: {modalUserData.name}</div>
+                              <div className="item2">:&nbsp; {modalUserData.name}</div>
                               <div className="item3">Email</div>
-                              <div className="item4">:{modalUserData.email}</div>
+                              <div className="item4">:&nbsp;{modalUserData.email}</div>
                               <div className="item5">Contact</div>
-                              <div className="item6">: 1234567890</div>
+                              <div className="item6">:&nbsp; 1234567890</div>
                               <div className="item7">Wallet</div>
-                              <div className="item8">: $12</div>
+                              <div className="item8">:&nbsp; $12</div>
                               <div className="item9">Delivary Address</div>
-                              <div className="item10">: Coimbatore</div>
+                              <div className="item10">:&nbsp; Coimbatore</div>
                             </div>
                           </div>
                         </div>
@@ -200,15 +200,15 @@ export default function RegisterData() {
               </div>
               <div className="usertext">
                 <div className="item1">Name </div>
-                <div className="item2">: {modalUserData !== "" ? modalUserData.name : "###"}</div>
+                <div className="item2">:&nbsp; {modalUserData !== "" ? modalUserData.name : "###"}</div>
                 <div className="item3">Email</div>
-                <div className="item4">: {modalUserData !== "" ? modalUserData.email : "###@gmail.com"} </div>
+                <div className="item4">:&nbsp; {modalUserData !== "" ? modalUserData.email : "###@gmail.com"} </div>
                 <div className="item5">Contact</div>
-                <div className="item6">: {modalContact !== "" ? modalContact : "#######890"}</div>
+                <div className="item6">:&nbsp; {modalContact !== "" ? modalContact : "#######890"}</div>
                 <div className="item7">Wallet</div>
-                <div className="item8">: $ ##</div>
+                <div className="item8">:&nbsp; $ ##</div>
                 <div className="item9">Delivary Address</div>
-                <div className="item10">: {modalAddress !== "" ? modalAddress : "#### ### ###"} </div>
+                <div className="item10">:&nbsp; {modalAddress !== "" ? modalAddress : "#### ### ###"} </div>
               </div>
             </div>
           </div>
