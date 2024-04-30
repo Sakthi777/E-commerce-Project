@@ -11,7 +11,7 @@ exports.getProfileDataControllers = asyncHandler(async (req, res) => {
 	try {
 		const { id } = req.userParams;
 
-		const profileData = await MainModel.findOne({ id });
+		const profileData = await MainModel.findOne({ token: id });
 
 		if (!profileData) {
 			return res.status(404).send("Profile data not found");
@@ -26,7 +26,7 @@ exports.postProfileDataContactControllers = asyncHandler(async (req, res) => {
 	try {
 		const { contactNumbers } = req.body;
 		const { id } = req.user;
-		let existingDocument = await MainModel.findOne({ id });
+		let existingDocument = await MainModel.findOne({ token: id });
 
 		if (existingDocument) {
 			if (existingDocument.contactNumbers && existingDocument.contactNumbers.length > 0) {
@@ -39,7 +39,7 @@ exports.postProfileDataContactControllers = asyncHandler(async (req, res) => {
 				await res.send(existingDocument);
 			}
 		} else {
-			const newDocument = await MainModel.create({ id, contactNumbers });
+			const newDocument = await MainModel.create({ token: id, contactNumbers });
 			await res.send(newDocument);
 		}
 	} catch (error) {
@@ -52,7 +52,7 @@ exports.postProfileDataAddressControllers = asyncHandler(async (req, res) => {
 	try {
 		const { addresses } = req.body;
 		const { id } = req.user;
-		let existingDocument = await MainModel.findOne({ id });
+		let existingDocument = await MainModel.findOne({ token: id });
 
 		if (existingDocument) {
 			if (existingDocument.addresses && existingDocument.addresses.length > 0) {
@@ -65,7 +65,7 @@ exports.postProfileDataAddressControllers = asyncHandler(async (req, res) => {
 				await res.send(existingDocument);
 			}
 		} else {
-			const newDocument = await MainModel.create({ id, addresses });
+			const newDocument = await MainModel.create({ token: id, addresses });
 			await res.send(newDocument);
 		}
 	} catch (error) {
@@ -78,7 +78,7 @@ exports.postProfileDataCardControllers = asyncHandler(async (req, res) => {
 	try {
 		const { cardType, cardNumber, ownerName } = req.body;
 		const { id } = req.user;
-		let existingDocument = await MainModel.findOne({ id });
+		let existingDocument = await MainModel.findOne({ token: id });
 
 		if (existingDocument) {
 			if (existingDocument.cards && existingDocument.cards.length > 0) {
@@ -92,7 +92,7 @@ exports.postProfileDataCardControllers = asyncHandler(async (req, res) => {
 			}
 		} else {
 			const newDocument = await MainModel.create({
-				id,
+				token: id,
 				cards: [{ cardType, cardNumber, ownerName }],
 			});
 			await res.send(newDocument);
@@ -107,7 +107,7 @@ exports.postProfileImageControllers = asyncHandler(async (req, res, next) => {
 	try {
 		const { id } = req.user;
 		const imageName = req.file.filename;
-		const existingDocument = await MainModel.findOne({ id });
+		const existingDocument = await MainModel.findOne({ token: id });
 
 		// console.log(existingImage);
 		if (existingDocument) {
@@ -134,7 +134,7 @@ exports.editContactController = asyncHandler(async (req, res, next) => {
 	const { contactNumbers } = req.body;
 	const { id } = req.user;
 	try {
-		const doc = await MainModel.findOne({ id });
+		const doc = await MainModel.findOne({ token: id });
 		console.log(doc);
 		doc.contactNumbers[index] = contactNumbers[0];
 		await doc.save();
@@ -151,7 +151,7 @@ exports.editProfileDataAddressControllers = asyncHandler(async (req, res, next) 
 	const { addresses } = req.body;
 	const { id } = req.user;
 	try {
-		const doc = await MainModel.findOne({ id });
+		const doc = await MainModel.findOne({ token: id });
 		doc.addresses[index] = addresses[0];
 		await doc.save();
 		await res.send(doc);
@@ -163,7 +163,7 @@ exports.editProfileDataAddressControllers = asyncHandler(async (req, res, next) 
 exports.delProfilePicControllers = asyncHandler(async (req, res, next) => {
 	const { id } = req.userParams;
 	try {
-		const doc = await MainModel.findOne({ id });
+		const doc = await MainModel.findOne({ token: id });
 		if (doc.profilePicture) {
 			fs.unlinkSync("./uploads/profilePicture/" + doc.profilePicture);
 			doc.profilePicture = "";
@@ -181,7 +181,7 @@ exports.delContactControllers = asyncHandler(async (req, res, next) => {
 	const { index } = req.params;
 	const { id } = req.userParams;
 	try {
-		const doc = await MainModel.findOne({ id });
+		const doc = await MainModel.findOne({ token: id });
 		doc.contactNumbers.splice(index, 1);
 		await doc.save();
 		await res.send(doc);
@@ -194,7 +194,7 @@ exports.delAddressControllers = asyncHandler(async (req, res, next) => {
 	const { index } = req.params;
 	const { id } = req.userParams;
 	try {
-		const doc = await MainModel.findOne({ id });
+		const doc = await MainModel.findOne({ token: id });
 		doc.addresses.splice(index, 1);
 		await doc.save();
 		await res.send(doc);
@@ -207,7 +207,7 @@ exports.delCardControllers = asyncHandler(async (req, res, next) => {
 	const { index } = req.params;
 	const { id } = req.userParams;
 	try {
-		const doc = await MainModel.findOne({ id });
+		const doc = await MainModel.findOne({ token: id });
 		doc.cards.splice(index, 1);
 		await doc.save();
 		await res.send(doc);
@@ -216,17 +216,16 @@ exports.delCardControllers = asyncHandler(async (req, res, next) => {
 	}
 });
 
-
 // admin profile register data
 
-exports.getAdminRegisterDataController = asyncHandler(async(req, res, next)=>{
+exports.getAdminRegisterDataController = asyncHandler(async (req, res, next) => {
 	try {
-		const id  = req.params.id;
+		const { id } = req.userParams;
 
-		const profileData = await MainModel.findOne({ id });
+		const profileData = await MainModel.findOne({ token: id });
 		console.log(profileData);
 		await res.json(profileData);
 	} catch (error) {
 		res.status(500).send("Error fetching profile data");
 	}
-})
+});
