@@ -9,7 +9,7 @@ function ComingSoon({ comingSoonData }) {
 
   //CountDown Time start
 
-	const [seconds, setSeconds] = useState(24 * 60 * 60);
+	const [seconds, setSeconds] = useState(1296000);
 	useEffect(() => {
 	  const interval = setInterval(() => {
 		setSeconds(prevSeconds => {
@@ -22,9 +22,10 @@ function ComingSoon({ comingSoonData }) {
   
 	  return () => clearInterval(interval);
 	}, []);
-	const hours = Math.floor(seconds / 3600);
-	const minutes = Math.floor((seconds % 3600) / 60);
-	const remainingSeconds = seconds % 60;
+	const days = Math.floor(seconds / (60 * 60 * 24));
+	const hours = Math.floor((seconds % (60 * 60 * 24)) / (60 * 60));
+    const minutes = Math.floor((seconds % (60 * 60)) / 60);
+    const second = seconds % 60;
 		// const calculateTimeLeft = (countdownEndDate) => {
 		//   const difference = new Date(countdownEndDate) - new Date();
 		//   if (difference > 0) {
@@ -61,7 +62,7 @@ function ComingSoon({ comingSoonData }) {
 						<div className="days">
 						
 							<span className="countdown-time">
-								00
+								{days}
 								<span>:</span>
 							</span>
 							<p>days</p>
@@ -84,7 +85,7 @@ function ComingSoon({ comingSoonData }) {
 						</div>
 
 						<div className="seconds">
-							<span className="countdown-time">{remainingSeconds}</span>
+							<span className="countdown-time">{second}</span>
 							<p>seconds</p>
 						</div>
 					</div>
