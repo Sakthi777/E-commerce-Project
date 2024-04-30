@@ -477,7 +477,7 @@ h3.footer-title.link1{
   justify-content: space-between;
   background-color: #119744;
   align-items: center;
-  margin: 75px auto 0 auto;
+  margin: auto auto 0 auto;
 }
 
 .coder .copytext {
@@ -548,6 +548,7 @@ h3.footer-title.link1{
         transition: all linear .3s;
         -webkit-transition: all linear .3s;
         animation: animi1 1.5s infinite linear;
+        cursor: pointer;
 }
 @keyframes animi1{
     0%{
@@ -573,7 +574,7 @@ h3.footer-title.link1{
         bottom: 55px;
         bottom: 10%;
         animation: animi2 1.5s infinite linear;
-
+        cursor: pointer;
     }
 }
 

@@ -150,7 +150,7 @@ export default function Footer() {
               </tr>
               <tr>
                 <td>
-                  <a href="...">Order&nbsp;&nbsp;History</a>
+                  <a href="/orderHistory">Order&nbsp;&nbsp;History</a>
                 </td>
                 <td>
                   <a href="...">Affiliates</a>
@@ -161,7 +161,7 @@ export default function Footer() {
                   <a href="...">Order&nbsp;&nbsp;Tracking</a>
                 </td>
                 <td>
-                  <a href="...">Contact</a>
+                  <a href="/us">Contact</a>
                 </td>
               </tr>
               <tr>
@@ -177,7 +177,7 @@ export default function Footer() {
                   <a href="...">New Arrivals</a>
                 </td>
                 <td>
-                  <a href="...">Faq</a>
+                  <a href="/faq">Faq</a>
                 </td>
               </tr>
             </div>

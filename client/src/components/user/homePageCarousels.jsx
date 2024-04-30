@@ -20,8 +20,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingBasket, faPercent } from "@fortawesome/free-solid-svg-icons";
+import { faShoppingBasket, faPercent, faAddressCard } from "@fortawesome/free-solid-svg-icons";
 import { NextArrow, PrevArrow } from "../../pages/user/aboutUs";
+import { Navigate, useNavigate } from "react-router";
 
 const Highlight = () => {
 	const data = [
@@ -45,6 +46,13 @@ const Highlight = () => {
 		prevArrow: <PrevArrow />,
 		nextArrow: <NextArrow />,
 	};
+	const navigate = useNavigate();
+	const handleClick = ()=>{
+		navigate("/shop");
+	}
+	const handleAbout = () =>{
+		navigate("/about")
+	}
 	return (
 		<>
 			<div className="highlight">
@@ -58,13 +66,13 @@ const Highlight = () => {
 									<h1>Free Home Delivery Within 24 Hours Now</h1>
 									<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure sunt accusantium quod molestiae voluptatum, laboriosam dolor quis reprehenderit voluptatibus ad.</p>
 									<div className="banner-btn">
-										<button id="shop">
+										<button id="shop" onClick={handleClick}>
 											<FontAwesomeIcon icon={faShoppingBasket} />
 											Shop Now
 										</button>
-										<button id="offer">
-											<FontAwesomeIcon icon={faPercent} />
-											Get Offer
+										<button id="offer" onClick={handleAbout}>
+											<FontAwesomeIcon icon={faAddressCard} />
+											About Us
 										</button>
 									</div>
 								</div>

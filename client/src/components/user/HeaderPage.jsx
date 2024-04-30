@@ -383,7 +383,7 @@ const HeaderPage = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/aboutus">
+                <Link to="/about">
                   About Us
                   {/* <FiChevronDown /> */}
                 </Link>
