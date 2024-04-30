@@ -304,7 +304,7 @@ const HeaderPage = () => {
           </div>
           <div className="price">
             <p>TOTAL PRICE</p>
-            <h6>${totalCardPrice}</h6>
+            <h6>₹{totalCardPrice}</h6>
           </div>
         </div>
 
@@ -329,7 +329,7 @@ const HeaderPage = () => {
                     </div>
                     <div className="offcanvas-content">
                       <h6>{product.productdetail.productName}</h6>
-                      <p>Unit Price {product.productdetail.newPrice}</p>
+                      <p>Unit Price ₹{product.productdetail.newPrice}</p>
                       <div className="card-item-selector">
                         <button className="selector-button" onClick={() => handleDecrement(product.productdetail._id)}>
                           -
@@ -338,7 +338,7 @@ const HeaderPage = () => {
                         <button className="selector-button" onClick={() => handleIncrement(product.productdetail._id)}>
                           +
                         </button>
-                        <p>${product.productdetail.newPrice * product.quantity}</p>
+                        <p>₹{product.productdetail.newPrice * product.quantity}</p>
                       </div>
                     </div>
                   </div>
@@ -350,7 +350,7 @@ const HeaderPage = () => {
             <div className="offcanvas-border" onClick={navigateCheckout} style={{ cursor: "pointer" }}>
               <p>Proceed To Checkout</p>
               <p className="hrLine"></p>
-              <p>$ {totalCardPrice}</p>
+              <p>₹ {totalCardPrice}</p>
             </div>
           </div>
         </div>
