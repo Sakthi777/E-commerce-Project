@@ -109,6 +109,7 @@ exports.getSingleUserDataControllers = asyncHandler(async (req, res, next) => {
 		const userData = {
 			email: userDetails.email,
 			name: userDetails.userName,
+			isAdmin:userDetails.isAdmin
 		};
 		res.send(userData);
 	} catch (err) {

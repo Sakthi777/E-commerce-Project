@@ -23,6 +23,11 @@ userDatas.route("/countdown").post(CountdownTimedate);
 
 userDatas.route("/getCountdown").get(getCountdownDate);
 
+// auth status
+
+
+
+
 // admin detail get
 
 userDatas.route("/getuserData/:token/:id").get(authenticateParams, getAdminSingleUserDataControllers);
