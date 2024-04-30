@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "../../styles/admin/dashboard.css";
 import greenyIcon from "../../assets/images/logo.png";
 import AdminHeader, { useOffCanvasContext } from "../../components/admin/adminHeader";
@@ -19,9 +19,9 @@ import product from "../../../src/assets/images/AddProduct/totalproduct.png";
 
 
 function Dashboard() {
-	const [currentPage, setCurrentPage] = useState(1);
-	const [rowsPerPage, setRowsPerPage] = useState(10);
-	const categoriesPerPage = rowsPerPage;
+	// const [currentPage, setCurrentPage] = useState(1);
+	// const [rowsPerPage, setRowsPerPage] = useState(10);
+	// const categoriesPerPage = rowsPerPage;
 
 	const categories = [];
 
@@ -38,16 +38,16 @@ function Dashboard() {
 	};
 	loopList();
 
-	const indexOfLastCategory = currentPage * categoriesPerPage;
-	const indexOfFirstCategory = indexOfLastCategory - categoriesPerPage;
-	const currentCategories = categories.slice(indexOfFirstCategory, indexOfLastCategory);
+	// const indexOfLastCategory = currentPage * categoriesPerPage;
+	// const indexOfFirstCategory = indexOfLastCategory - categoriesPerPage;
+	// const currentCategories = categories.slice(indexOfFirstCategory, indexOfLastCategory);
 
-	const paginate = (pageNumber) => setCurrentPage(pageNumber);
+	// const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-	const handleRowsPerPageChange = (event) => {
-		setRowsPerPage(Number(event.target.value));
-		setCurrentPage(1);
-	};
+	// const handleRowsPerPageChange = (event) => {
+	// 	setRowsPerPage(Number(event.target.value));
+	// 	setCurrentPage(1);
+	// };
 	const { showOffCanvas } = useOffCanvasContext();
 
 	let valueDisplay = document.querySelectorAll(".num");
@@ -70,7 +70,7 @@ function Dashboard() {
 		<>
 			<AdminHeader />
 			<div className={`orderList-container ${showOffCanvas ? "content-shifted" : ""} `}>
-				<div className="dashboard-card">
+				<div className="dashboard-card"  >
 					<div className="dashboard-body-item4">
 						<div className="body-cards">
 							<div className="ordericon">
@@ -142,7 +142,9 @@ function Dashboard() {
 						</div>
 					</div>
 				</div>
-				<div className="category-table-page">
+
+
+				{/* <div className="category-table-page">
 					<div className="rows-per-page-dropdown">
 						<label htmlFor="rowsPerPage">Rows per page:</label>
 						<select id="rowsPerPage" value={rowsPerPage} onChange={handleRowsPerPageChange}>
@@ -193,7 +195,9 @@ function Dashboard() {
 							))}
 						</ul>
 					</div>
-				</div>
+				</div> */}
+
+
 			</div>
 		</>
 	);

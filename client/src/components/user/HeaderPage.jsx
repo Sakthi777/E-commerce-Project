@@ -35,12 +35,17 @@ const HeaderPage = () => {
   const token = useSelector((state) => state.tokenDetails.token);
   const search = useSelector((state) => state.searchVal.search);
   const wishlist = useSelector((state) => state.wishlist.wishlist);
+  const [LogOut, setLogOut] = useState(false);
 
   const nav = useNavigate();
-
   const [searchVal, setSearchVal] = useState(search);
   const dispatch = useDispatch();
   useEffect(() => {
+    if (token) {
+      setLogOut(false);
+    } else {
+      setLogOut(true);
+    }
     fetchUserCartDetails();
   }, []);
   const fetchProduct = async () => {
@@ -259,12 +264,21 @@ const HeaderPage = () => {
           <div className="logo">
             <img src={image} alt="" className="logo" onClick={() => navigate("/")} />
           </div>
-          <Link to="/login" style={{ textDecoration: "none" }}>
-            <div className="myAccount">
-              <img src={profile} alt="" className="profile-logo" />
-              <p className="join">Join</p>
-            </div>
-          </Link>
+          {LogOut ? (
+            <Link to="/login" style={{ textDecoration: "none" }}>
+              <div className="myAccount">
+                <img src={profile} alt="" className="profile-logo" />
+                <p className="join">Join</p>
+              </div>
+            </Link>
+          ) : (
+            <Link onClick={logout} style={{ textDecoration: "none" }}>
+              <div className="myAccount">
+                <img src={profile} alt="" className="profile-logo" />
+                <p className="join">LogOut</p>
+              </div>
+            </Link>
+          )}
           <div className="search-container">
             <input type="text" className="search-bar" value={searchVal} placeholder="Search..." onChange={(e) => setSearchVal(e.target.value)} />
 
