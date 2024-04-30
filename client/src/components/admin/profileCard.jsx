@@ -2,8 +2,15 @@ import React from "react";
 import "../../styles/admin/adminHeader.css";
 import * as CgIcon from "react-icons/cg";
 import * as CiIcon from "react-icons/ci";
-
+import { useNavigate } from "react-router-dom";
 const ProfileCard = () => {
+  const navigate = useNavigate();
+  const ShopFun = () => {
+    navigate("/shop");
+  };
+  const ProductFun = () => {
+    navigate("/admin/allProducts");
+  };
   return (
     <div className="profile-card">
       {/* <div className="profile-container">
@@ -20,13 +27,13 @@ const ProfileCard = () => {
             <CgIcon.CgProfile />
             <span>Profile</span>
           </li>
-          <li>
+          <li onClick={ShopFun}>
             <CiIcon.CiShoppingCart />
-            <span>Create Shop</span>
+            <span>Shop</span>
           </li>
-          <li>
+          <li onClick={ProductFun}>
             <CiIcon.CiSettings />
-            <span>Setting</span>
+            <span>All product</span>
           </li>
           <li>
             <CiIcon.CiLogout />

@@ -59,8 +59,10 @@ const Sidebar = () => {
   }, [setShowOffCanvas]);
 
   const toggleProfileCard = () => {
+    setShowOffCanvas(false);
     setShowProfileCard(!showProfileCard);
   };
+  const handleToggle = () => setShowProfileCard(!showProfileCard);
   const handleClickOutside = (event) => {
     if (profileCardRef.current && !profileCardRef.current.contains(event.target)) {
       setShowProfileCard(false);
@@ -85,12 +87,22 @@ const Sidebar = () => {
           <FaIcon.FaBars onClick={handleToggleOffCanvas} className="menu-bar" />
         </Link>
         <div className="right-section">
-          <button className="nav-button"  onClick={()=>{
-            window.location = '/admin/addproduct';
-          }}>Create product</button>
-          <button className="nav-button" onClick={()=>{
-            window.location = '/';
-          }} >Visit Site</button>
+          <button
+            className="nav-button"
+            onClick={() => {
+              window.location = "/admin/addproduct";
+            }}
+          >
+            Create product
+          </button>
+          <button
+            className="nav-button"
+            onClick={() => {
+              window.location = "/";
+            }}
+          >
+            Visit Site
+          </button>
           <div className="profile-container" onClick={toggleProfileCard}>
             <CgProfile className="profile-icon" />
             <div className="profile-info">
@@ -98,9 +110,10 @@ const Sidebar = () => {
               <span className="profile-role">Super Admin</span>
             </div>
           </div>
+          {showProfileCard && <ProfileCard></ProfileCard>}
         </div>
       </div>
-      {showProfileCard && <ProfileCard />}
+
       <Offcanvas show={showOffCanvas} onHide={handleClose} placement="start" className="admin-sidebar" style={{ width: "350px", top: "80px" }} backdrop={backdrop} scroll={true}>
         <Offcanvas.Header className="admin-offcanvas-header" onClick={handleClose}>
           <img src={logo} alt="Logo" />
@@ -116,11 +129,18 @@ const Sidebar = () => {
           </div>
         </Offcanvas.Body>
       </Offcanvas>
+      {/* {showProfileCard && (
+        <div>
+          <Offcanvas show={showProfileCard} onHide={handleToggle} placement="end" style={{ width: "200px" }}>
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title>Profile Card</Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body></Offcanvas.Body>
+          </Offcanvas>
+        </div>
+      )} */}
     </>
   );
 };
 
 export default Sidebar;
-
-
-
