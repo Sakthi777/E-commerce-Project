@@ -36,14 +36,19 @@ const HeaderPage = () => {
 	const token = useSelector((state) => state.tokenDetails.token);
 	const search = useSelector((state) => state.searchVal.search);
 	const wishlist = useSelector((state) => state.wishlist.wishlist);
+	const [LogOut, setLogOut] = useState(false);
 
 	const nav = useNavigate();
 	const url = "http://localhost:8000";
-
 	const [searchVal, setSearchVal] = useState(search);
 	const dispatch = useDispatch();
 	useEffect(() => {
 		if (token) {
+			if (token) {
+				setLogOut(false);
+			} else {
+				setLogOut(true);
+			}
 			fetchUserCartDetails();
 		}
 	}, [token]);
@@ -275,7 +280,7 @@ const HeaderPage = () => {
 					<div className="alignItem">
 						<Link to="/">
 							<div className="alignMyAccount">
-								<img src={profilePic} alt=""></img>
+								<img src={profile} alt=""></img>
 							</div>
 						</Link>
 						<div className="alignlogo" onClick={() => navigate("/")}>
@@ -288,12 +293,21 @@ const HeaderPage = () => {
 					<div className="logo">
 						<img src={image} alt="" className="logo" onClick={() => navigate("/")} />
 					</div>
-					<Link to="/login" style={{ textDecoration: "none" }}>
-						<div className="myAccount">
-							<img src={profilePic} alt="" className="profile-logo" />
-							<p className="join">Join</p>
-						</div>
-					</Link>
+					{LogOut ? (
+						<Link to="/login" style={{ textDecoration: "none" }}>
+							<div className="myAccount">
+								<img src={profile} alt="" className="profile-logo" />
+								<p className="join">Join</p>
+							</div>
+						</Link>
+					) : (
+						<Link onClick={logout} style={{ textDecoration: "none" }}>
+							<div className="myAccount">
+								<img src={profile} alt="" className="profile-logo" />
+								<p className="join">LogOut</p>
+							</div>
+						</Link>
+					)}
 					<div className="search-container">
 						<input type="text" className="search-bar" value={searchVal} placeholder="Search..." onChange={(e) => setSearchVal(e.target.value)} />
 
@@ -319,7 +333,7 @@ const HeaderPage = () => {
 					</div>
 					<div className="price">
 						<p>TOTAL PRICE</p>
-						<h6>${totalCardPrice}</h6>
+						<h6>₹{totalCardPrice}</h6>
 					</div>
 				</div>
 
@@ -344,7 +358,7 @@ const HeaderPage = () => {
 										</div>
 										<div className="offcanvas-content">
 											<h6>{product.productdetail.productName}</h6>
-											<p>Unit Price {product.productdetail.newPrice}</p>
+											<p>Unit Price ₹{product.productdetail.newPrice}</p>
 											<div className="card-item-selector">
 												<button className="selector-button" onClick={() => handleDecrement(product.productdetail._id)}>
 													-
@@ -353,7 +367,7 @@ const HeaderPage = () => {
 												<button className="selector-button" onClick={() => handleIncrement(product.productdetail._id)}>
 													+
 												</button>
-												<p>${product.productdetail.newPrice * product.quantity}</p>
+												<p>₹{product.productdetail.newPrice * product.quantity}</p>
 											</div>
 										</div>
 									</div>
@@ -365,7 +379,7 @@ const HeaderPage = () => {
 						<div className="offcanvas-border" onClick={navigateCheckout} style={{ cursor: "pointer" }}>
 							<p>Proceed To Checkout</p>
 							<p className="hrLine"></p>
-							<p>$ {totalCardPrice}</p>
+							<p>₹ {totalCardPrice}</p>
 						</div>
 					</div>
 				</div>
@@ -412,7 +426,7 @@ const HeaderPage = () => {
 								</Link>
 							</li>
 							<li>
-								<Link to="/aboutus">
+								<Link to="/about">
 									About Us
 									{/* <FiChevronDown /> */}
 								</Link>

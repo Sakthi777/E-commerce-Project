@@ -160,6 +160,9 @@ function CheckOut() {
 								});
 
 							console.log("Order details sent successfully!");
+							setUserCartItem([]);
+							setTotalCardPrice(0);
+							setTotalCartItem(0);
 						} catch (error) {
 							console.error("Error sending order details:", error);
 						}

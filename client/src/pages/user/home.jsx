@@ -54,8 +54,8 @@ const ProductGrid = ({ products }) => {
 	};
 
 	//CountDown Time start
-
-	const [seconds, setSeconds] = useState(24 * 60 * 60);
+	
+	const [seconds, setSeconds] = useState(259200);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -69,9 +69,10 @@ const ProductGrid = ({ products }) => {
 
 		return () => clearInterval(interval);
 	}, []);
-	const hours = Math.floor(seconds / 3600);
-	const minutes = Math.floor((seconds % 3600) / 60);
-	const remainingSeconds = seconds % 60;
+	const days = Math.floor(seconds / (60 * 60 * 24));
+	const hours = Math.floor((seconds % (60 * 60 * 24)) / (60 * 60));
+    const minutes = Math.floor((seconds % (60 * 60)) / 60);
+    const second = seconds % 60;
 
 	//CountDown Time end
 
@@ -148,7 +149,7 @@ const ProductGrid = ({ products }) => {
 						<div className="countdown specialdiscount">
 							<div className="days">
 								<span className="countdown-time">
-									00
+									{days}
 									<span>:</span>
 								</span>
 								<p>days</p>
@@ -171,7 +172,7 @@ const ProductGrid = ({ products }) => {
 							</div>
 
 							<div className="seconds">
-								<span className="countdown-time">{remainingSeconds}</span>
+								<span className="countdown-time">{second}</span>
 								<p>seconds</p>
 							</div>
 						</div>

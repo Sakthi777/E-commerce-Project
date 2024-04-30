@@ -153,8 +153,8 @@ const ProductDescriptionCard = ({ product, onClose }) => {
 					<p>({rating} Reviews)</p>
 				</div>
 				<div className="des-product-price">
-					<span className="oldPrice">${oldPrice}</span>
-					<span className="newPrice">${newPrice}/piece</span>
+					<span className="oldPrice">₹{oldPrice}</span>
+					<span className="newPrice">₹{newPrice}/piece</span>
 				</div>
 				<div className="des-product">
 					<p>{productDetails}</p>

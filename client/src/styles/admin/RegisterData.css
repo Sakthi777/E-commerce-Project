@@ -19,6 +19,7 @@
   align-items: center;
   justify-content: center;
   margin-top: 150px;
+  margin-left: 5rem;
 }
 .table-row thead tr {
   background-color: green;
@@ -82,9 +83,7 @@
   align-items: center;
   justify-content: center;
   align-items: center;
-  padding-right: 5%;
-  /* margin-left: 23%; */
-  margin-top: 3%;
+  
 }
 
 .registerData-page-buttons button {
@@ -106,7 +105,7 @@ position: relative;
 display: flex;
 flex-direction: row;
 border: 1px solid lightgray;
-width: 30%;
+width: 37%;
 height: 50%;
 padding: 2%;
 border-radius: 8px;
@@ -173,12 +172,14 @@ text-align: center;
   .table-row {
     width: 100%;
     /* margin-top: 70%; */
+    
   }
   .registerData-page-buttons {
     padding-right: 5%;
   }
   .user-details-card{
-    position: relative;
+    display: none;
+    /* position: relative;
     display: flex;
     flex-direction: column;
     border: 1px solid lightgray;
@@ -192,7 +193,7 @@ text-align: center;
     box-shadow:  0 0px 3px 0 lightgray;
     margin-top: 0;
     margin-bottom: 20px;
-    background-color: #fff;
+    background-color: #fff; */
     }
     .modelbody{
       justify-content: center;
