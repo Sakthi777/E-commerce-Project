@@ -12,6 +12,7 @@ import wallet from "../../../src/assets/images/AddProduct/wallet.png";
 import user from "../../../src/assets/images/AddProduct/user.png";
 import product from "../../../src/assets/images/AddProduct/totalproduct.png";
 import axios from "axios";
+import { Url } from "../../config/config";
 
 function Dashboard() {
   // const [currentPage, setCurrentPage] = useState(1);
@@ -26,7 +27,7 @@ function Dashboard() {
   const [totalProduct, setTotalProduct] = useState(0);
   useEffect(() => {
     axios
-      .get("http://localhost:8000/getOrderDetails")
+      .get(`${Url}/getOrderDetails`)
       .then((response) => {
         setOrderDetails(response.data);
       })
@@ -34,7 +35,7 @@ function Dashboard() {
         console.error("Error fetching order details:", error);
       });
     axios
-      .get(`http://localhost:8000/get-productDetails`)
+      .get(`${Url}/get-productDetails`)
       .then((response) => {
         setTotalProduct(response.data.data.length);
       })

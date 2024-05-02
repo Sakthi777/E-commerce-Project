@@ -6,6 +6,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { searchValReducer } from "../slice/searchSlice";
 import { wishlistReducer } from "../slice/wishListSlice";
+import { adminTokenReducer } from "../slice/adminTokenSlice";
 const persistConfig = {
 	key: "root",
 	storage,
@@ -16,6 +17,7 @@ const persistedReducer = persistReducer(
 	combineReducers({
 		userProfileDetails: userProfileReducer,
 		tokenDetails: tokenReducer,
+		adminTokenDetails:adminTokenReducer,
 		searchVal: searchValReducer,
 		wishlist: wishlistReducer,
 		searchProductDetails: searchProductsReducer,

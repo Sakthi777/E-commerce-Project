@@ -7,6 +7,9 @@ import { FaStar } from "react-icons/fa";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
+import Cookies from "js-cookie";
+
 
 const ResetPassword = () => {
   const url = "http://localhost:8000";
@@ -53,6 +56,22 @@ const ResetPassword = () => {
         });
     }
   };
+
+  let cookieToken = null;
+	let cookieAdminToken = null;
+
+
+  useEffect(() => {
+		cookieToken = Cookies.get("LoginToken");
+		// cookieAdminToken = Cookies.get("LoginAdminToken");
+		if (cookieToken) {
+			nav("/");
+		}
+		// else if(cookieAdminToken){
+		// 	nav("/admin/dashboard")
+		// }
+	}, []);
+
 
   return (
     <div className="Authentic-container">

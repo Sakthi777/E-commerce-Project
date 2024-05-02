@@ -24,6 +24,7 @@ import { useSlider } from "../../pages/user/home";
 import { setToken } from "../../features/slice/tokenSlice";
 import { setWishlist } from "../../features/slice/wishListSlice";
 import { setProfilePicture } from "../../features/slice/profileSlice";
+import { Url } from "../../config/config";
 const HeaderPage = () => {
   const { isSidebarOpen, setSidebarOpen, userCartItem, setUserCartItem, productDetails, setProductDetails, wishlistCount } = useSlider();
   const [isFixed, setIsFixed] = useState(false);
@@ -39,7 +40,6 @@ const HeaderPage = () => {
   const [LogOut, setLogOut] = useState(false);
 
   const nav = useNavigate();
-  const url = "http://localhost:8000";
   const [searchVal, setSearchVal] = useState(search);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -71,14 +71,14 @@ const HeaderPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const profileDataRes = await axios.get(`${url}/profileData/${token}`);
+        const profileDataRes = await axios.get(`${Url}/profileData/${token}`);
         // console.log(token);
         if (profileDataRes.status === 404) {
           return;
         }
         // console.log(profileDataRes.data.profilePicture);
         if (profileDataRes.data.profilePicture) {
-          setProfilePic(`${url}/uploads/profilePicture/${profileDataRes.data.profilePicture}`);
+          setProfilePic(`${Url}/uploads/profilePicture/${profileDataRes.data.profilePicture}`);
           // console.log(profileDataRes.data.profilePicture + "hi");
         } else {
           setProfilePic(profileImage);
@@ -430,12 +430,12 @@ const HeaderPage = () => {
                   {/* <FiChevronDown /> */}
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link onClick={logout}>
                   LogOut
-                  {/* <FiChevronDown /> */}
+                  <FiChevronDown />
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
           <div className="contact-details">

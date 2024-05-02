@@ -9,10 +9,12 @@ const fs = require("fs");
 
 exports.getProfileDataControllers = asyncHandler(async (req, res) => {
 	try {
-		const { id } = req.userParams;
+		const id  = req.params.id;
+		// console.log({"main":id})
 
 		const profileData = await MainModel.findOne({ token: id });
 
+		console.log(profileData)
 		if (!profileData) {
 			return res.status(404).send("Profile data not found");
 		}
@@ -220,8 +222,7 @@ exports.delCardControllers = asyncHandler(async (req, res, next) => {
 
 exports.getAdminRegisterDataController = asyncHandler(async (req, res, next) => {
 	try {
-		const { id } = req.userParams;
-
+		const  id  = req.params.id;
 		const profileData = await MainModel.findOne({ token: id });
 		console.log(profileData);
 		await res.json(profileData);

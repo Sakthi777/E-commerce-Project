@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import uploa from "../../../src/assets/images/AddProduct/upload.png";
+import { Url } from "../../config/config";
 
 const EditProduct = () => {
   const imageDiv = {
@@ -96,7 +97,7 @@ const EditProduct = () => {
     const formData = new FormData();
     formData.append("mainImage", file);
     try {
-      axios.put(`http://localhost:8000/edit-productMainImage/${productID}`, formData).then((res) => {
+      axios.put(`${Url}/edit-productMainImage/${productID}`, formData).then((res) => {
         console.log(res.data.image);
         setFileName(res.data.image);
       });
@@ -118,7 +119,7 @@ const EditProduct = () => {
     console.log(Object.fromEntries(formData));
     try {
       axios
-        .put(`http://localhost:8000/update-ProductSliderImage/${productID}`, formData, {
+        .put(`${Url}/update-ProductSliderImage/${productID}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -152,7 +153,7 @@ const EditProduct = () => {
     }
     console.log(formDataObject);
     axios
-      .put(`http://localhost:8000/update-productDetails/${productID}`, formData)
+      .put(`${Url}/update-productDetails/${productID}`, formData)
       .then((res) => {
         console.log(res.data);
       })
@@ -202,14 +203,14 @@ const EditProduct = () => {
     console.log(id);
     console.log(index);
     try {
-      await axios.delete(`http://localhost:8000/delete-productSliderImage/${id}/${index}`);
+      await axios.delete(`${Url}/delete-productSliderImage/${id}/${index}`);
     } catch (err) {
       console.log(err);
     }
   };
   const handleDeleteAll = (id) => {
     try {
-      axios.delete(`http://localhost:8000/delete-allSliderImage/${id}`);
+      axios.delete(`${Url}/delete-allSliderImage/${id}`);
       setArrayOfImages([]);
     } catch (err) {
       console.log(err);
@@ -230,7 +231,7 @@ const EditProduct = () => {
     console.log(id);
 
     axios
-      .put(`http://localhost:8000/edit-SliderImage/${id}/${editIndex}`, formData)
+      .put(`${Url}/edit-SliderImage/${id}/${editIndex}`, formData)
       .then((res) => {
         console.log(res.data.message);
         setArrayOfImages(res.data.message);
@@ -254,7 +255,7 @@ const EditProduct = () => {
             {/* <p>Product Images</p> */}
             {/* <div className="panel">
               <div className="image-upload-box">
-                <div className="image-box">{image ? <img src={preImage} alt={`product 2`} className="center-image" /> : <img src={`http://localhost:8000/uploads/productImage/${upload}`} alt={`product 2`} className="center-image" />}</div>
+                <div className="image-box">{image ? <img src={preImage} alt={`product 2`} className="center-image" /> : <img src={`${Url}/uploads/productImage/${upload}`} alt={`product 2`} className="center-image" />}</div>
               </div>
               <div className="ImageFileName">{<p>{fileName}</p>}</div>
               <div className="imageInputFiled">
@@ -269,7 +270,7 @@ const EditProduct = () => {
                     <div>
                       <div className="image-upload-box">
                         <div className="image-box">
-                          <div className="image-box">{image && <img src={`http://localhost:8000/uploads/productImage/${image}`} alt={`product 1`} className="center-image" />}</div>
+                          <div className="image-box">{image && <img src={`${Url}/uploads/productImage/${image}`} alt={`product 1`} className="center-image" />}</div>
                         </div>
                       </div>
                       <div className="ImageFileName">
@@ -369,7 +370,7 @@ const EditProduct = () => {
                   <div className="imageInputFiled">
                     <input type="file" onChange={handleImageChange} accept="image/*" name="category-image" id="category-image" style={{ display: "none", border: "lightgray" }} required />
                   </div>
-                  <div className="image-box">{image ? <img src={preImage} alt={`product 2`} className="center-image" /> : <img src={`http://localhost:8000/uploads/productImage/${upload}`} alt={`product 2`} className="center-image" />}</div>
+                  <div className="image-box">{image ? <img src={preImage} alt={`product 2`} className="center-image" /> : <img src={`${Url}/uploads/productImage/${upload}`} alt={`product 2`} className="center-image" />}</div>
                 </div>
               </div>
             </div>
@@ -381,7 +382,7 @@ const EditProduct = () => {
                     <div>
                       <div className="image-upload-box">
                         <div className="imgborder">
-                          <div className="image-box-multi">{image && <img src={`http://localhost:8000/uploads/productImage/${image}`} alt={`product 1`} className="center-image" />}</div>
+                          <div className="image-box-multi">{image && <img src={`${Url}/uploads/productImage/${image}`} alt={`product 1`} className="center-image" />}</div>
                         </div>
                       </div>
                       {/* <div className="ImageFileName">
@@ -536,7 +537,7 @@ const EditProduct = () => {
             <div style={{ display: "flex", overflowX: "scroll", width: "90%" }}>
               {ArrayOfimages.map((image, index) => (
                 <div style={{ padding: "10px" }}>
-                  <img src={`http://localhost:8000/uploads/productImage/${image}`} alt={`product 1`} style={imageDivModal} />
+                  <img src={`${Url}/uploads/productImage/${image}`} alt={`product 1`} style={imageDivModal} />
                   <button className="imageDeleteButton" onClick={() => handleImageDelete(image, productID, index)}>
                     Delete
                   </button>
@@ -561,7 +562,7 @@ const EditProduct = () => {
             <div style={{ display: "flex", overflowX: "scroll", width: "90%" }}>
               {ArrayOfimages.map((image, index) => (
                 <div style={{ padding: "10px" }}>
-                  <img src={`http://localhost:8000/uploads/productImage/${image}`} alt={`product 1`} style={imageDivModal} />
+                  <img src={`${Url}/uploads/productImage/${image}`} alt={`product 1`} style={imageDivModal} />
                   <button
                     className="imageDeleteButton"
                     onClick={() => {
@@ -594,7 +595,7 @@ const EditProduct = () => {
                 </div>
               </div>
               <div>
-                <img src={onChangeImage2 === null ? `http://localhost:8000/uploads/productImage/${onChangeImage}` : URL.createObjectURL(onChangeImage2)} style={{ width: "100px", height: "100px", border: "2px solid black" }} alt="updateImage"></img>
+                <img src={onChangeImage2 === null ? `${Url}/uploads/productImage/${onChangeImage}` : URL.createObjectURL(onChangeImage2)} style={{ width: "100px", height: "100px", border: "2px solid black" }} alt="updateImage"></img>
               </div>
             </div>
           ) : (

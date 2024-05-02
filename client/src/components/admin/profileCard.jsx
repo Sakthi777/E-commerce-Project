@@ -3,14 +3,27 @@ import "../../styles/admin/adminHeader.css";
 import * as CgIcon from "react-icons/cg";
 import * as CiIcon from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setAdminToken } from "../../features/slice/adminTokenSlice";
+import Cookies from "js-cookie";
+
 const ProfileCard = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const ShopFun = () => {
     navigate("/shop");
   };
   const ProductFun = () => {
     navigate("/admin/allProducts");
   };
+  
+  const handleLogOut = ()=>{
+    dispatch(setAdminToken(""));
+    Cookies.remove("LoginAdminToken")
+    navigate("/login");
+  }
+
   return (
     <div className="profile-card">
       {/* <div className="profile-container">
@@ -35,7 +48,7 @@ const ProfileCard = () => {
             <CiIcon.CiSettings />
             <span>All product</span>
           </li>
-          <li>
+          <li onClick={handleLogOut}>
             <CiIcon.CiLogout />
             <span>Logout</span>
           </li>

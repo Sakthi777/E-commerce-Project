@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AdminHeader, { useOffCanvasContext } from "../../components/admin/adminHeader";
 import "../../styles/admin/allProducts.css";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { Url } from "../../config/config";
 const AllProducts = () => {
   const navigate = useNavigate();
   const { showOffCanvas } = useOffCanvasContext();
@@ -14,7 +15,7 @@ const AllProducts = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/get-productDetails`)
+      .get(`${Url}/get-productDetails`)
       .then((response) => {
         setProductDetails(response.data.data);
       })
@@ -30,7 +31,7 @@ const AllProducts = () => {
   const handleProductDelete = async (id) => {
     try {
       console.log(id);
-      const res = await axios.delete(`http://localhost:8000/delete-productDetails/${id}`);
+      const res = await axios.delete(`${Url}/delete-productDetails/${id}`);
       console.log(res.data);
       // window.location.reload();
     } catch (err) {

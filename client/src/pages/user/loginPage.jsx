@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { setToken } from "../../features/slice/tokenSlice";
 // import { jwtDecode } from "jwt-decode";
 import { Url } from "../../config/config";
+import { setAdminToken } from "../../features/slice/adminTokenSlice";
 
 const LoginCmp = () => {
 
@@ -33,6 +34,8 @@ const LoginCmp = () => {
 
 	const [disable, setDisable] = useState(false);
 	let cookieToken = null;
+	let cookieAdminToken = null;
+
 
 	const setCookie = (name, value, days) => {
 		var expires = "";
@@ -67,7 +70,6 @@ const LoginCmp = () => {
 				.then((res) => {
 					console.log(res.data);
 					const token = res.data;
-					setCookie("LoginToken", token, 30);
 					setDisable(true);
 					if (token) {
 						//Redux State Global Token
@@ -78,9 +80,10 @@ const LoginCmp = () => {
 							const adminStatus = res.data.isAdmin;
 							console.log(adminStatus);
 							if (adminStatus === true) {
-								dispatch(setToken(token));
+								setCookie("LoginAdminToken", token, 30);
+								dispatch(setAdminToken(token))
 								setUserData({ ...userData, email: "", password: "" });
-								toast.success("Login Successfull !", {
+								toast.success("Admin Login Successfull !", {
 									autoClose: 2000,
 									onClose: () => {
 										setTimeout(() => {
@@ -90,6 +93,7 @@ const LoginCmp = () => {
 								});
 							}
 							else if (adminStatus === false) {
+								setCookie("LoginToken", token, 30);
 								dispatch(setToken(token));
 								setUserData({ ...userData, email: "", password: "" });
 								toast.success("Login Successfull !", {
@@ -104,7 +108,7 @@ const LoginCmp = () => {
 						}).catch((err) => {
 							console.log(err);
 						})
-						
+
 					}
 				})
 				.catch((error) => {
@@ -120,15 +124,13 @@ const LoginCmp = () => {
 
 	useEffect(() => {
 		cookieToken = Cookies.get("LoginToken");
-		console.log(cookieToken);
-		// if (cookieToken) {
-		//   setToken(cookieToken);
-		// } else {
-		//   setToken(null);
-		// }
+		// cookieAdminToken = Cookies.get("LoginAdminToken");
 		if (cookieToken) {
 			navigate("/");
 		}
+		// else if(cookieAdminToken){
+		// 	navigate("/admin/dashboard")
+		// }
 	}, []);
 	return (
 		<div className="Authentic-container">

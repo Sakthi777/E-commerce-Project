@@ -9,13 +9,13 @@ import Modal from "react-bootstrap/Modal";
 import AdminHeader, { useOffCanvasContext } from "../../components/admin/adminHeader";
 import user from "../../../src/assets/images/AddProduct/user.png";
 import { useSelector } from "react-redux";
+import { Url } from "../../config/config";
 
 export default function RegisterData() {
   const [users, setUsers] = useState([]);
   const { showOffCanvas } = useOffCanvasContext();
-  const url = "http://localhost:8000";
 
-  const token = useSelector((state) => state.tokenDetails.token);
+  const token = useSelector((state) => (console.log(state), state.adminTokenDetails.adminToken));
 
   useEffect(() => {
     axios
@@ -60,17 +60,26 @@ export default function RegisterData() {
   const [modalContact, setModalContact] = useState("");
 
   function TriggerModal(id) {
-    console.log(window.innerWidth);
-    axios.get(`http://localhost:8000/login/getuserData/${token}/${id}`).then((res) => {
+    console.log(id)
+    // console.log(window.innerWidth);
+    axios.get(`${Url}/login/getuserData/${token}/${id}`).then((res) => {
       console.log(res.data);
       setModalUserData(res.data);
     });
-    axios.get(`${url}/profileData/getData/${token}/${id}`).then((res) => {
+    axios.get(`${Url}/profileData/getData/${token}/${id}`).then((res) => {
       console.log(res.data);
-
       const data = res.data;
+      if(data.addresses.length !== 0){
       setModalAddress(data.addresses[0].address);
+      }
+      else if(data.contactNumbers.length !== 0){
       setModalContact(data.contactNumbers[0].contactNumber);
+      }
+      // else{
+        setModalAddress("");
+        setModalContact("")
+
+        // }
     });
     if (window.innerWidth <= 999) {
       setShow(true);

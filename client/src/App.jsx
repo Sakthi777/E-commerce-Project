@@ -32,7 +32,7 @@ import RegisterData from "./components/admin/RegisterData";
 import AllCategory from "./pages/user/AllCategory";
 import AllProducts from "./components/admin/allProducts";
 import EditProduct from "./components/admin/editProduct";
-import { ProtectedLoginRoute } from "./pages/protectRoute/protectedRoute";
+import { ProtectedLoginRoute , ProtectedAdminLoginRoute } from "./pages/protectRoute/protectedRoute";
 import OfferTime from "./components/admin/OfferTime";
 import { SliderProvider } from "../src/pages/user/home";
 import AddNewProduct from "./components/admin/AddNewProduct";
@@ -43,49 +43,56 @@ function App() {
       <Router>
         <SliderProvider>
           <Routes>
+{/* Basic Pages */}
             <Route path="/" element={<Home />} />
-            <Route path="/allCategory" element={<AllCategory />} />
-            <Route path="/wishlist" element={<Wishlist />} />
-            <Route path="/notfound" element={<NotFound />} />
+            <Route path="/shop" element={<ShopPage/>}></Route>
+            <Route path="/offers" element={<Offers/>} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/us" element={<UserContact />} />
-            <Route path="/orderhistory" element={<OrderHistory />} />
-            <Route path="/checkout" element={<CheckOut />} />
-            <Route path="/offers" element={<ProtectedLoginRoute Component={Offers} />} />
+            <Route path="/footer" element={<Footer />} />
+            <Route path="/about" element={<AboutUs/>} />
+
+{/* Protected Route Pages */}
+            <Route path="/allCategory" element={<ProtectedLoginRoute Component={AllCategory} />} />
+            <Route path="/wishlist" element={<ProtectedLoginRoute Component={Wishlist} />} />
+            <Route path="/orderhistory" element={<ProtectedLoginRoute Component={OrderHistory} />} />
+            <Route path="/checkout" element={<ProtectedLoginRoute Component={CheckOut} />} />
+            <Route path="/comingSoon" element={<ProtectedLoginRoute Component={ComingSoon} />} />
+            <Route path="/myProfile" element={<ProtectedLoginRoute Component={MyProfile} />} />
+            <Route path="/myWallet" element={<ProtectedLoginRoute Component={MyWallet} />} />
+            <Route path="/transactionDetails" element={<ProtectedLoginRoute Component={TransactionDetails} />} />
+
+{/* Authenticatee Page */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/resetPassword" element={<ResetPassword />} />
             <Route path="/changePassword/:token" element={<ChangePassword />} />
-            <Route path="/comingSoon" element={<ProtectedLoginRoute Component={ComingSoon} />} />
-            <Route path="/footer" element={<Footer />} />
-            <Route path="/shop" element={<ProtectedLoginRoute Component={ShopPage} />}></Route>
-            <Route path="/myProfile" element={<ProtectedLoginRoute Component={MyProfile} />} />
-            <Route path="/about" element={<ProtectedLoginRoute Component={AboutUs} />} />
-            <Route path="/myWallet" element={<ProtectedLoginRoute Component={MyWallet} />} />
-            <Route path="/transactionDetails" element={<TransactionDetails />} />
-            {/* admin panel */}
+
+{/* admin panel */}
             <Route
               path="/admin/*"
               element={
                 <OffCanvasProvider>
                   <Routes>
-                    {/* <Route path="admin" element={<AdminHeader />} /> */}
-                    <Route path="addcategory" element={<AddCategory />} />
-                    <Route path="dashboard" element={<Dashboard />} />
-                    <Route path="allProducts" element={<AllProducts />} />
-                    <Route path="editProduct" element={<EditProduct />} />
-                    <Route path="addProduct" element={<AddProductdata />} />
-                    <Route path="completedOrders" element={<CompletedOrders />} />
-                    <Route path="yourOrders" element={<YourOrders />} />
-                    <Route path="pendingOrders" element={<PendingOrders />} />
-                    <Route path="dispatchOrders" element={<DispatchedOrders />} />
-                    <Route path="/registerdata" element={<RegisterData />} />
-                    <Route path="/addnewproduct" element={<AddNewProduct />} />
+                    {/* <Route path="addcategory" element={<AddCategory />} /> */}
+                    <Route path="dashboard" element={<ProtectedAdminLoginRoute Component={Dashboard}/>} />
+                    <Route path="allProducts" element={<ProtectedAdminLoginRoute Component={AllProducts}/>}/>
+                    <Route path="editProduct" element={<ProtectedAdminLoginRoute Component={EditProduct} />} />
+                    <Route path="addProduct" element={<ProtectedAdminLoginRoute Component={AddProductdata} />} />
+                    <Route path="completedOrders" element={<ProtectedAdminLoginRoute Component={CompletedOrders} />} />
+                    <Route path="yourOrders" element={<ProtectedAdminLoginRoute Component={YourOrders} />} />
+                    <Route path="pendingOrders" element={<ProtectedAdminLoginRoute Component={PendingOrders} />} />
+                    <Route path="dispatchOrders" element={<ProtectedAdminLoginRoute Component={DispatchedOrders} />} />
+                    <Route path="/registerdata" element={<ProtectedAdminLoginRoute Component={RegisterData} />} />
+                    <Route path="/addnewproduct" element={<ProtectedAdminLoginRoute Component={AddNewProduct} />} />
                   </Routes>
                 </OffCanvasProvider>
               }
             />
+
+{/* Not Found Page */}
+
             <Route path="*" element={<NotFound></NotFound>}></Route>
           </Routes>
         </SliderProvider>

@@ -17,6 +17,7 @@ import { faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import footimg from "../../../src/assets/images/footer-img/back-faq.jpg";
 import ProductCard from "../../pages/user/productCard";
+import { Url } from "../../config/config";
 
 export default function AddProductdata() {
   const { showOffCanvas } = useOffCanvasContext();
@@ -38,7 +39,7 @@ export default function AddProductdata() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/get-productDetails`)
+      .get(`${Url}/get-productDetails`)
       .then((response) => {
         setProductDetails(response.data.data);
       })
@@ -122,7 +123,7 @@ export default function AddProductdata() {
     console.log(Object.fromEntries(formData));
 
     try {
-      axios.post("http://localhost:8000/post-productDetails", formData, {
+      axios.post(`${Url}/post-productDetails`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
